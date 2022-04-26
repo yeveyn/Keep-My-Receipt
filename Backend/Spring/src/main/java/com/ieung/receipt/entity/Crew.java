@@ -64,10 +64,6 @@ public class Crew extends BaseEntity implements UserDetails {
     @Column(length = 255)
     private String refreshToken;
 
-    // 이메일 인증 여부
-    @Column(nullable = false, length = 255)
-    private String authKey;
-
     // =================================================================================================
     // JWT
     // =================================================================================================
@@ -122,10 +118,6 @@ public class Crew extends BaseEntity implements UserDetails {
 
     public void updateNickname(String name){
         this.name = name;
-    }
-
-    public void updateAuthKey(String authKey){
-        this.authKey = authKey;
     }
 
     public void updateIsAllowedPush(YNCode isAllowedPush){
