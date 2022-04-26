@@ -27,19 +27,6 @@ spring:
   flyway:
     enabled: false
 
-  # 메일 전송 시 사용할 설정값
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: keepMyReceiptByIeung@gmail.com
-    password: Receipt!*
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
 server:
   # 프로젝트 환경의 포트 설정
   port: 8185
