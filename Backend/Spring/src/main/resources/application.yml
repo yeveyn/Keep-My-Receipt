@@ -20,7 +20,7 @@ spring:
 
   # 데이터 베이스 연결 설정
   datasource:
-    url: jdbc:mysql://localhost:3306/receipt_db?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://k6d104.p.ssafy.io:3306/receipt_db?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: receipt
     password: Receipt!*

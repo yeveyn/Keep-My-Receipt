@@ -60,7 +60,7 @@ public class Crew extends BaseEntity implements UserDetails {
     @Column(length = 255)
     private String pushToken;
 
-    // 장비 푸시용 토큰
+    // 리프레시 토큰
     @Column(length = 255)
     private String refreshToken;
 
