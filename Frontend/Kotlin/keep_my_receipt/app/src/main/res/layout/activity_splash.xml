@@ -31,7 +31,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="keep my receipt"
+            android:text="영수증을 부탁해"
             android:textSize="30dp"
             android:textColor="@color/white"
             android:fontFamily="@font/foxlite_script"
