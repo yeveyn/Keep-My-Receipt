@@ -16,19 +16,13 @@ class ApplicationClass : Application() {
         // 만들어져있는 SharedPreferences 를 사용해야합니다. 재생성하지 않도록 유념해주세요
         lateinit var sSharedPreferences: SharedPreferencesUtil
 
-        const val SHARED_PREFERENCES_NAME = "cursed_animal_random_chat"
-        lateinit var database : FirebaseDatabase
-        lateinit var databaseRef : DatabaseReference
+        const val SHARED_PREFERENCES_NAME = "keep_my_receipt"
         lateinit var patternFilter: Array<InputFilter>
     }
 
     override fun onCreate() {
         super.onCreate()
         sSharedPreferences = SharedPreferencesUtil(applicationContext)
-
-        database = FirebaseDatabase.getInstance()
-        databaseRef = database.reference
-
         patternFilter = arrayOf(
             InputFilter { src, start, end, dst, dstart, dend ->
                 val ps = Pattern.compile("^[a-zA-Z0-9]*$")
