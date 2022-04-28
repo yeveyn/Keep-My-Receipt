@@ -17,13 +17,15 @@ import com.ssafy.keep_my_receipt.src.main.MainActivity
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        Log.d("싸피", "onNewToken: $token")
+        Log.d("FCM client token", "onNewToken: $token")
+        // TODO 토큰을 서버로 전송
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if(remoteMessage.data.isNotEmpty()){
-            Log.i("바디: ", remoteMessage.data["body"].toString())
-            Log.i("타이틀: ", remoteMessage.data["title"].toString()) // <----------------------------- "공지사항"
+            Log.i("페이로드", remoteMessage.data.toString())
+            //Log.i("바디: ", remoteMessage.data["body"].toString())
+            //Log.i("타이틀: ", remoteMessage.data["title"].toString())
             sendNotification(remoteMessage)
         } else {
             Log.i("수신에러: ", "data가 비어있습니다. 메시지를 수신하지 못했습니다.")
@@ -43,8 +45,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
 //            .setSmallIcon(R.mipmap.ic_launcher_coffee)
-            .setContentTitle(remoteMessage.data["body"].toString())
-            .setContentText(remoteMessage.data["title"].toString())
+            .setContentTitle(remoteMessage.data["title"].toString())
+            .setContentText(remoteMessage.data["body"].toString())
             .setAutoCancel(true)
             .setSound(soundUri)
             .setContentIntent(pendingIntent)
