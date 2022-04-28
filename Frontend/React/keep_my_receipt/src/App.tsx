@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import GroupIndex from './domain/Group/Index/index';
-import GroupCreate from './domain/Group/Create/index';
-import GroupSearch from './domain/Group/Search/index';
+import GroupIndex from './domain/Group/Index';
+import GroupCreate from './domain/Group/Create';
+import GroupSearch from './domain/Group/Search';
 
 function App() {
   return (
