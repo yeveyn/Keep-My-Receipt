@@ -32,7 +32,7 @@ spring:
 
 server:
   # 프로젝트 환경의 포트 설정
-  port: 443
+  port: 8185
   domain: k6d104.p.ssafy.io
   servlet:
     session:
