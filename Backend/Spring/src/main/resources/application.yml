@@ -10,7 +10,7 @@ spring:
     basename: i18n/exception
     encoding: UTF-8
   cors:
-    allowed-origins: "http://localhost:3000", "http://localhost:8185"
+    allowed-origins: "http://localhost:8185"
     allowed-methods: GET, POST, PUT, DELETE, OPTIONS
     allowed-headers: "*"
     max-age: 3600
