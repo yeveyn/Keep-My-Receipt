@@ -28,7 +28,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .addServersItem(new Server().url("https://127.0.0.1"))
+                .addServersItem(new Server().url("https://k6d104.p.ssafy.io:8185"))
                 .info(new Info().title("Keep My Receipt API")
                         .description("Keep My Receipt 명세서입니다.")
                         .version("V1"));
