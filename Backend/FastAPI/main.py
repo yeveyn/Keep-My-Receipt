@@ -5,6 +5,6 @@ app = FastAPI()
 
 
 @app.post("/fast/ocr/receipt")
-async def analysisReceipt(file : UploadFile = File(...)):
-    text = tesseractOCR(file)
+async def analysisReceipt(receipt : UploadFile = File(...)):
+    text = tesseractOCR(receipt.file.read())
     return {"message": text}
