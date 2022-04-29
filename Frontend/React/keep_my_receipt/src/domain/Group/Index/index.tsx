@@ -1,9 +1,26 @@
-import React from 'react';
-import { Grid, Stack, Container } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Grid, Stack, Container, IconButton } from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import IndexItem from './item';
 
+interface groupType {
+  name: string;
+  budget: number;
+}
+
 export default function GroupIndex() {
+  const [groups, setGroups] = useState<groupType[] | null>([]);
+  const getGroups = async () => {
+    console.log('가입한 모임 목록 조회 API 요청');
+    setGroups([
+      { name: '고독한 미식가들', budget: 123000 },
+      { name: '축구', budget: 500000 },
+    ]);
+  };
+  useEffect(() => {
+    getGroups();
+  }, []);
   return (
     <Container maxWidth="md">
       <Grid container direction="column">
@@ -15,13 +32,26 @@ export default function GroupIndex() {
         >
           <h2>내 모임</h2>
           <Stack direction="row" spacing={1} justifyContent="flex-end">
-            <Add fontSize="large" />
-            <Search fontSize="large" />
+            <Link to="../group/create">
+              <IconButton>
+                <Add color="primary" fontSize="large" />
+              </IconButton>
+            </Link>
+            <Link to="../group/search">
+              <IconButton>
+                <Search fontSize="large" />
+              </IconButton>
+            </Link>
           </Stack>
         </Stack>
         <Stack direction="column" alignItems="center" spacing={2}>
-          <IndexItem name="고독한 미식가들" budget={123000} />
-          <IndexItem name="축구" budget={500000} />
+          {groups?.length ? (
+            groups.map((group, index) => (
+              <IndexItem key={index} name={group.name} budget={group.budget} />
+            ))
+          ) : (
+            <p>모임 없음</p>
+          )}
         </Stack>
       </Grid>
     </Container>

@@ -12,8 +12,10 @@ export default function IndexItem({ name, budget }: IndexItemProps) {
         variant="outlined"
         sx={{
           width: 300,
+          boxShadow: 1,
           ':hover': {
             boxShadow: 6,
+            // backgroundColor: '#FFF5E1',
           },
         }}
       >
