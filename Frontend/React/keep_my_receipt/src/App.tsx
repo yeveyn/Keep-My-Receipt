@@ -12,7 +12,7 @@ function App() {
         <Route path="/group/index" element={<GroupIndex />} />
         <Route path="/group/create" element={<GroupCreate />} />
         <Route path="/group/search" element={<GroupSearch />} />
-        <Route path="/book/list" element={<BookIndex />} />
+        <Route path="/book/index" element={<BookIndex />} />
       </Routes>
     </BrowserRouter>
   );
