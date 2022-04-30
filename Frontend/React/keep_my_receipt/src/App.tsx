@@ -6,7 +6,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* 밑에 Route들 추가하시면 됩니다! */}
-        <Route path="/book/list" element={<BookIndex />} />
+        <Route path="/book/index" element={<BookIndex />} />
       </Routes>
     </BrowserRouter>
   );
