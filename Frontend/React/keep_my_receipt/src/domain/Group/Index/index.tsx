@@ -24,6 +24,7 @@ export default function GroupIndex() {
   return (
     <Container maxWidth="md">
       <Grid container direction="column">
+        {/* 상단 */}
         <Stack
           direction="row"
           spacing={2}
@@ -31,19 +32,21 @@ export default function GroupIndex() {
           alignItems="center"
         >
           <h2>내 모임</h2>
-          <Stack direction="row" spacing={1} justifyContent="flex-end">
+          <Stack direction="row" spacing={0.5} justifyContent="flex-end">
             <Link to="../group/create">
-              <IconButton>
-                <Add color="primary" fontSize="large" />
+              <IconButton color="primary">
+                <Add sx={{ fontSize: '2rem' }} />
               </IconButton>
             </Link>
             <Link to="../group/search">
               <IconButton>
-                <Search fontSize="large" />
+                <Search sx={{ color: '#000000', fontSize: '2rem' }} />
               </IconButton>
             </Link>
           </Stack>
         </Stack>
+
+        {/* 리스트 */}
         <Stack direction="column" alignItems="center" spacing={2}>
           {groups?.length ? (
             groups.map((group, index) => (

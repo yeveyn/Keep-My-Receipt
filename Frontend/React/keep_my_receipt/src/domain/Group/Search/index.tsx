@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchItem from './item';
-import { Button, Stack, Grid, TextField, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 export default function GroupSearch() {
   return (
