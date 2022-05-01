@@ -3,6 +3,7 @@ import GroupIndex from './domain/Group/Index';
 import GroupCreate from './domain/Group/Create';
 import GroupSearch from './domain/Group/Search';
 import BookIndex from './domain/Book/Index';
+import ApproveIndex from './domain/Receipt/Approve';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/group/create" element={<GroupCreate />} />
         <Route path="/group/search" element={<GroupSearch />} />
         <Route path="/book/list" element={<BookIndex />} />
+        <Route path="/receipt/approve" element={<ApproveIndex />} />
       </Routes>
     </BrowserRouter>
   );
