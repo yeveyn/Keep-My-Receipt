@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Stack, Container, IconButton } from '@mui/material';
+import {
+  Grid,
+  Stack,
+  Container,
+  IconButton,
+  SwipeableDrawer,
+  Box,
+} from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import IndexItem from './item';
 
@@ -10,6 +17,14 @@ interface groupType {
 }
 
 export default function GroupIndex() {
+  // 검색 drawer
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = (open: boolean) => (evnet: any) => {
+    setDrawer(open);
+  };
+
+  // 모임 목록 조회
   const [groups, setGroups] = useState<groupType[] | null>([]);
   const getGroups = async () => {
     console.log('가입한 모임 목록 조회 API 요청');
@@ -24,6 +39,15 @@ export default function GroupIndex() {
   return (
     <Container maxWidth="md">
       <Grid container direction="column">
+        {/* 검색 drawer */}
+        <SwipeableDrawer
+          anchor="top"
+          open={drawer}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+        >
+          <Box sx={{ width: '100%' }}>검색</Box>
+        </SwipeableDrawer>
         {/* 상단 */}
         <Stack
           direction="row"
@@ -38,11 +62,14 @@ export default function GroupIndex() {
                 <Add sx={{ fontSize: '2rem' }} />
               </IconButton>
             </Link>
-            <Link to="../group/search">
+            {/* <Link to="../group/search">
               <IconButton>
                 <Search sx={{ color: '#000000', fontSize: '2rem' }} />
               </IconButton>
-            </Link>
+            </Link> */}
+            <IconButton onClick={toggleDrawer(true)}>
+              <Search sx={{ color: '#000000', fontSize: '2rem' }} />
+            </IconButton>
           </Stack>
         </Stack>
 
