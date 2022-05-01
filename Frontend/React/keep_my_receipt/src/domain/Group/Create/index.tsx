@@ -8,9 +8,10 @@ import {
   TextField,
   Container,
 } from '@mui/material';
-import { AddPhotoAlternate } from '@mui/icons-material';
+import { AddPhotoAlternate, ArrowBackIosNew, Check } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { kMaxLength } from 'buffer';
 
 const Input = styled('input')({
   display: 'none',
@@ -22,7 +23,8 @@ interface formProps {
   imgFile?: any;
 }
 
-export default function GroupCreate({ history }: any) {
+export default function GroupCreate() {
+  const navigate = useNavigate();
   const [check, setCheck] = useState(false);
   // form
   const [form, setForm] = useState<formProps>({
@@ -46,7 +48,7 @@ export default function GroupCreate({ history }: any) {
     } else {
       setCheck(false);
     }
-    console.log({ form });
+    console.log(form);
     console.log('모임 생성 API 요청');
     // 초기화
     // setForm({
@@ -56,11 +58,11 @@ export default function GroupCreate({ history }: any) {
     // });
 
     // 내 모임으로 이동
+    navigate('../group/index');
   };
 
   // 이미지
   const [imgSrc, setImgSrc] = useState('');
-  const [file, setFile] = useState('');
   const readImage = (input: any) => {
     // 이미지 파일인지 검사(생략)
 
@@ -76,29 +78,39 @@ export default function GroupCreate({ history }: any) {
     reader.readAsDataURL(input.files[0]);
   };
   const onChange = (event: any) => {
-    setFile(event.target.files[0]);
+    setForm({
+      ...form,
+      imgFile: event.target.files[0],
+    });
     readImage(event.target);
   };
-  // src 확인용
+  // // src 확인용
   // useEffect(() => {
   //   console.log(imgSrc);
   // }, [imgSrc]);
   return (
     <Container maxWidth="md">
-      <Grid container direction="column">
+      <Stack direction="column" spacing={4}>
         {/* 상단 */}
         <Stack
           direction="row"
-          spacing={2}
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
+          sx={{ position: 'relative' }}
         >
+          <IconButton
+            onClick={() => {
+              navigate(-1);
+            }}
+            color="inherit"
+            sx={{ position: 'absolute', left: 0 }}
+          >
+            <ArrowBackIosNew sx={{ fontSize: '2rem' }} />
+          </IconButton>
           <h2>모임 만들기</h2>
-          <Button onClick={createGroup} variant="contained">
-            완료
-          </Button>
         </Stack>
 
+        {/* 본문 */}
         {/* 이미지 */}
         <Stack spacing={3}>
           <Grid container direction="column">
@@ -108,7 +120,7 @@ export default function GroupCreate({ history }: any) {
                 sx={{
                   width: 200,
                   height: 200,
-                  // backgroundColor: '#DDDDDD',
+                  backgroundColor: '#DDDDDD',
                   borderRadius: 10,
                   boxShadow: 1,
                   backgroundImage: imgSrc ? `url(${imgSrc})` : 'url()',
@@ -150,44 +162,51 @@ export default function GroupCreate({ history }: any) {
           </Grid>
 
           {/* Form */}
-          <Grid container rowSpacing={2}>
-            <Grid item xs={12}>
-              {check && !name ? (
-                <TextField
-                  fullWidth
-                  error
-                  helperText="모임 이름은 필수입니다"
-                  focused
-                  required
-                  label="모임 이름"
-                  name="name"
-                  value={name}
-                  onChange={onFormChange}
-                />
-              ) : (
-                <TextField
-                  fullWidth
-                  required
-                  label="모임 이름"
-                  name="name"
-                  value={name}
-                  onChange={onFormChange}
-                />
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="모임 소개"
-                multiline
-                name="intro"
-                value={intro}
-                onChange={onFormChange}
-              />
-            </Grid>
-          </Grid>
+          <Stack justifyContent="center">
+            <Container maxWidth="sm">
+              <Grid container rowSpacing={2} justifyContent="center">
+                <Grid item xs={12}>
+                  <TextField
+                    error={check && !name ? true : false}
+                    helperText={
+                      check && !name ? '모임 이름은 필수입니다' : null
+                    }
+                    fullWidth
+                    required
+                    label="모임 이름"
+                    name="name"
+                    value={name}
+                    onChange={onFormChange}
+                    inputProps={{ maxlength: 20 }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="모임 소개"
+                    multiline
+                    name="intro"
+                    value={intro}
+                    onChange={onFormChange}
+                    inputProps={{ maxlength: 50 }}
+                    maxRows={4}
+                  />
+                </Grid>
+                <Grid item xs={12} sx={{ marginTop: 1 }}>
+                  <Button
+                    onClick={createGroup}
+                    variant="contained"
+                    fullWidth
+                    sx={{ marginBottom: 3 }}
+                  >
+                    완료
+                  </Button>
+                </Grid>
+              </Grid>
+            </Container>
+          </Stack>
         </Stack>
-      </Grid>
+      </Stack>
     </Container>
   );
 }
