@@ -39,14 +39,9 @@ function App() {
           </Route>
           <Route path="book" element={<Outlet />}>
             <Route index element={<BookIndex />} />
+            <Route path="create" element={<BookCreate />} />
           </Route>
         </Route>
-
-        {/* <Route path="/club/index" element={<ClubIndex />} />
-        <Route path="/club/create" element={<ClubCreate />} />
-        <Route path="/club/search" element={<ClubSearch />} /> */}
-        <Route path="/book/index" element={<BookIndex />} />
-        <Route path="/book/create" element={<BookCreate />} />
       </Routes>
     </BrowserRouter>
   );
