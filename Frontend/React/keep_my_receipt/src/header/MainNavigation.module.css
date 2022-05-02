@@ -17,9 +17,10 @@
     background-color: #ffaa00;
     box-shadow: 0 1px 4px rgb(255, 169, 63);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 0 10%;
+    padding: 0 3%;
+    /* display: none; */
   }
   .header ul {
     list-style: none;
