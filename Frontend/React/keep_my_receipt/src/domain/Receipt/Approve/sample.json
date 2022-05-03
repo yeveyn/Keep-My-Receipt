@@ -1,19 +1,23 @@
 [
   {
     "date": "2022-05-01",
-    "money": 1000280000,
+    "money": "1000280000",
+    "image": "https://i.ibb.co/zGSDTFL/828820-386910-2556.jpg",
     "items": [
       {
+        "id": 0,
         "content": "축구공",
-        "money": 80000
+        "money": "80000"
       },
       {
+        "id": 1,
         "content": "축구화",
-        "money": 200000
+        "money": "200000"
       },
       {
+        "id": 2,
         "content": "축구장",
-        "money": 1000000000
+        "money": "1000000000"
       }
     ]
   }
