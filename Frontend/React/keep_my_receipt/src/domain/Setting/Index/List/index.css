@@ -23,4 +23,6 @@
 
 .alarm {
   padding-top: 3px;
+  border: 0;
+  background-color: white;
 }
