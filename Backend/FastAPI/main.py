@@ -3,12 +3,12 @@ from tesseract import tesseractOCR
 
 app = FastAPI()
 
-@app.post("/fast/ocr/receiptPic")
+@app.post("/fast/ocr/receipt/photo")
 async def analysisReceipt(receipt : UploadFile = File(...)):
-    text = tesseractOCR(receipt.file.read(), "pic")
-    return {"message": text}
+    result = tesseractOCR(receipt.file.read(), "pic")
+    return result
 
-@app.post("/fast/ocr/receiptImg")
+@app.post("/fast/ocr/receipt/img")
 async def analysisReceipt(receipt : UploadFile = File(...)):
-    text = tesseractOCR(receipt.file.read(), "img")
-    return {"message": text}
+    result = tesseractOCR(receipt.file.read(), "img")
+    return result

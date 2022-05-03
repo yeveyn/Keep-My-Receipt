@@ -1,11 +1,8 @@
 from imutils.perspective import four_point_transform
-from imutils.contours import sort_contours
 import matplotlib.pyplot as plt
 import pytesseract
 import imutils
 import cv2
-import re
-import requests
 import numpy as np
 
 # UploadFile 형식을 numpy array 형식으로 변환
@@ -43,17 +40,21 @@ def findContour(image):
 
     cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
     transform_image = four_point_transform(org_image, screenCnt.reshape(4, 2)*ratio)
-    cv2.imshow("outline", image)
-    cv2.imshow("result", transform_image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
     return transform_image
+
+
 
 def tesseractOCR(receipt, type):
     image = uploadFileToNumpyArray(receipt)
     if type == "pic":
-        img = findContour(image)
-    text = pytesseract.image_to_string(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), lang='kor+eng')
+        image = findContour(image)
+    configs = r'--oem 3 --psm 6'
+    text = pytesseract.image_to_string(image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB), config=configs, lang='kor')
+    text_list = text.split("\n")
+    text_list = list(filter(("").__ne__, text_list))
+    result_text_list = []
+    for text in text_list:
+        result_text_list.append(text.replace("  "," "))
 
-    return text
+    return result_text_list
