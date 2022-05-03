@@ -44,6 +44,7 @@ function App() {
 
         {/* baseUrl/book이면 book index로 접속 */}
         <Route path="/account/index" element={<AccountIndex />} />
+        <Route path="/setting/index" element={<SettingIndex />} />
       </Routes>
     </BrowserRouter>
   );

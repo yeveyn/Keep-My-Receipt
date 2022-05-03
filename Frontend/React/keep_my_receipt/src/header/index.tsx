@@ -17,7 +17,7 @@ const Navigation = () => {
             <Link to="/book">거래내역</Link>
           </li>
           <li className="menu">
-            <Link to="/">분석</Link>
+            <Link to="/club">분석</Link>
           </li>
           <li className="menu">
             <Link to="/">거래등록</Link>
@@ -47,29 +47,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-// <header className={classes.header}>
-//     <div
-//       className={!menuToggle ? 'burger__menu' : 'x__menu'}
-//       onClick={() =>
-//         menuToggle ? setMenuToggle(false) : setMenuToggle(true)
-//       }
-//     >
-//       <div className="burger_line1"></div>
-//       <div className="burger_line2"></div>
-//       <div className="burger_line3"></div>
-//     </div>
-
-//     <div
-//       className={[
-//         'menu__box',
-//         !menuToggle ? 'menu__box__hidden' : 'menu__box__visible',
-//       ].join(' ')}
-//     >
-//       <div className="menu__list">
-//         {menu.map((data) => (
-//           <NavItem
-//             data={data}
-//             key={data.address}
-//             offNav={() => setMenuToggle(false)}
-//           />
-//         ))}

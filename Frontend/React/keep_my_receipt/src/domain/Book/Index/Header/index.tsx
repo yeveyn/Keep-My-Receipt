@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight } from '@mui/icons-material';
 export default function IndexHeader() {
   return (
     <>
-      {/* 월 바꾸는 화살표들*/}
       <Stack direction="row" alignItems="center">
         <IconButton size="large">
           <ArrowLeft />

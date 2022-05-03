@@ -22,7 +22,6 @@ export default function ListItem({ items }: { items: ItemType[] }) {
             {/* 거래내역 태그? */}
             <Typography variant="subtitle2">결제</Typography>
           </Stack>
-
           {/* 거래내역 금액 */}
           <Typography>{item.amount}</Typography>
         </Stack>
