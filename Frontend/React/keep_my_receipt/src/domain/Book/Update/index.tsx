@@ -7,11 +7,11 @@ const sample = [
 ];
 
 export default function BookUpdate() {
-  const { selectedValue, EditableList } = useEditableList(sample);
+  const { selectedItem, EditableList } = useEditableList(sample);
 
   return (
     <>
-      {selectedValue}
+      {selectedItem}
       <EditableList />
     </>
   );
