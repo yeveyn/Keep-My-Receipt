@@ -3,14 +3,13 @@ import {
   Collapse,
   IconButton,
   List,
-  // ListItem,
   ListItemButton,
-  // ListItemIcon,
   ListItemText,
-  Stack,
-  Typography,
 } from '@mui/material';
 import { ExpandLess, ExpandMore, Info } from '@mui/icons-material';
+
+// import useEditableList from '../../../../hooks/useEditableList';
+import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
 
 interface ItemCategoryType {
   name: string;
@@ -19,7 +18,12 @@ interface ItemCategoryType {
   setCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {
+function ItemCategoryEditable({
+  name,
+  list,
+  category,
+  setCategory,
+}: ItemCategoryType) {
   // 세부 목록 열림 / 닫힘 상태
   const [open, setOpen] = useState(false);
 
@@ -35,13 +39,13 @@ function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {
 
   return (
     <>
-      <List>
+      <List disablePadding>
         <ListItemButton onClick={handleExpand}>
           {/* 아이콘 */}
           <IconButton
             // 아이콘 클릭 시 물결 효과 제거
             disableRipple
-            // 아이콘 클릭 시 메뉴 열리는 이벤트 전파 차단
+            // 아이콘 클릭 시 메뉴 열리는 이벤트 차단
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -50,23 +54,7 @@ function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {
           </IconButton>
 
           {/* 분류명 & 선택된 항목 */}
-          <ListItemText
-            primary={
-              <Stack direction="row" alignItems="center">
-                {/* 분류명 */}
-                {name}
-                {/* 선택된 항목 강조 */}
-                <Typography
-                  display="inline"
-                  fontSize="large"
-                  fontWeight="bold"
-                  marginLeft={3}
-                >
-                  {category}
-                </Typography>
-              </Stack>
-            }
-          />
+          <ListItemTextWithSubtext text={name} subtext={category} />
 
           {/* 열기 / 닫기 화살표 */}
           {open ? <ExpandLess /> : <ExpandMore />}
@@ -85,9 +73,6 @@ function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {
                 sx={{ pl: 4 }}
                 key={item}
               >
-                {/* <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon> */}
                 <ListItemText primary={item} />
               </ListItemButton>
             ))}
@@ -98,4 +83,4 @@ function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {
   );
 }
 
-export default memo(ItemCategory);
+export default memo(ItemCategoryEditable);
