@@ -1,15 +1,9 @@
 import { memo, useState } from 'react';
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Stack,
-} from '@mui/material';
-import { AddCircleOutline } from '@mui/icons-material';
+import { List } from '@mui/material';
 
-import ItemOnEdit from './ItemOnEdit';
 import Item from './Item';
+import ItemOnEdit from './ItemOnEdit';
+import ItemAdder from './ItemAdder';
 
 export interface EditableItemType {
   name: string;
@@ -17,7 +11,10 @@ export interface EditableItemType {
 }
 
 /** Todo List 처럼 태그를 CRUD 할 수 있는 리스트 */
-export default function useEditableList(list: EditableItemType[]) {
+export default function useEditableList(
+  list: EditableItemType[],
+  collapsible: boolean,
+) {
   /**
    * useState를 밖에 둔 이유:
    * useState로 관리하는 list 같은 건 컴포넌트 밖에 빼야 함.
@@ -27,8 +24,9 @@ export default function useEditableList(list: EditableItemType[]) {
    * 3. list를 EditableList 안에 넣으면 초기화됨.
    * 반면 바깥에 넣으면 useState로 상태 보존.
    */
-  const [selectedItem, setSelectedItem] = useState('');
   const [itemList, setItemList] = useState(list);
+  const [selectedItem, setSelectedItem] = useState('');
+  const [open, setOpen] = useState(false);
 
   const EditableList = memo(() => {
     return (
@@ -38,7 +36,7 @@ export default function useEditableList(list: EditableItemType[]) {
           {itemList.map((item) =>
             // 수정 버튼을 누른 아이템인 경우
             item.editable ? (
-              // 수정 가능한 아이템 표시
+              // 수정 가능한 텍스트 필드 표시
               <ItemOnEdit item={item} setItemList={setItemList} />
             ) : (
               // 아닌 경우 그냥 아이템 표시
@@ -46,27 +44,18 @@ export default function useEditableList(list: EditableItemType[]) {
                 item={item}
                 setItemList={setItemList}
                 setSelectedItem={setSelectedItem}
+                collapsible={collapsible}
+                setOpen={setOpen}
               />
             ),
           )}
 
-          {/* 리스트 마지막에 태그 추가 가능한 버튼 추가 */}
-          <ListItem>
-            <ListItemButton sx={{ paddingLeft: 4 }}>
-              <ListItemText
-                primary={
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <span>태그 추가</span>
-                    <AddCircleOutline />
-                  </Stack>
-                }
-              />
-            </ListItemButton>
-          </ListItem>
+          {/* 태그 추가 가능한 버튼 맨 아래에 추가 */}
+          <ItemAdder itemList={itemList} setItemList={setItemList} />
         </List>
       </>
     );
   });
 
-  return { selectedItem, EditableList };
+  return { itemList, selectedItem, EditableList, isOpen: open, setOpen };
 }

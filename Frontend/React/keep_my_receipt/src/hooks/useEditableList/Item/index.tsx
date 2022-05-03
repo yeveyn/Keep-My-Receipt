@@ -13,9 +13,17 @@ interface ItemType {
   item: EditableItemType;
   setItemList: React.Dispatch<React.SetStateAction<EditableItemType[]>>;
   setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
+  collapsible: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Item({ item, setItemList, setSelectedItem }: ItemType) {
+export default function Item({
+  item,
+  setItemList,
+  setSelectedItem,
+  collapsible,
+  setOpen,
+}: ItemType) {
   const editItem = (target: EditableItemType): void => {
     setItemList((list) =>
       list.map((item) => {
@@ -50,6 +58,9 @@ export default function Item({ item, setItemList, setSelectedItem }: ItemType) {
           onClick={() => {
             // 클릭 시 값 바꿈
             setSelectedItem(item.name);
+            if (collapsible) {
+              setOpen((open) => !open);
+            }
           }}
           sx={{ paddingLeft: 4 }}
         >

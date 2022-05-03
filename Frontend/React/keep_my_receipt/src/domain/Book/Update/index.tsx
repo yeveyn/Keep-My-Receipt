@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Collapse } from '@mui/material';
 import useEditableList from '../../../hooks/useEditableList';
 
 const sample = [
@@ -7,7 +8,10 @@ const sample = [
 ];
 
 export default function BookUpdate() {
-  const { selectedItem, EditableList } = useEditableList(sample);
+  const { selectedItem, EditableList, isOpen, setOpen } = useEditableList(
+    sample,
+    true,
+  );
 
   return (
     <>
