@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Button, Card, TextField, Stack } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Button,
+  Card,
+  TextField,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
 import ListItem from './Item';
 import sample from './sample.json';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -16,6 +24,7 @@ export default function ApproveIndex() {
   const [newMoney, setMoney] = useState(sample[0].money);
   const imgUrl = sample[0].image;
   const [newItems, setItems] = useState(sample[0].items);
+  const matches = useMediaQuery('(min-width:500px)');
 
   // useEffect(loadingDataFromDB, []);
   // function loadingDataFromDB() {
@@ -87,7 +96,7 @@ export default function ApproveIndex() {
 
   return (
     <Container maxWidth="md">
-      <form>
+      <div style={matches ? { marginTop: 30 } : { marginTop: '0' }}>
         <Grid
           container
           direction="column"
@@ -164,7 +173,7 @@ export default function ApproveIndex() {
           </Grid>
         </Grid>
         <br></br>
-      </form>
+      </div>
     </Container>
   );
 }

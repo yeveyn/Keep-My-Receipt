@@ -11,6 +11,8 @@ import BookUpdate from './domain/Book/Update';
 
 import SettingIndex from './domain/Setting/Index';
 import { Container } from '@mui/material';
+import ApproveIndex from './domain/Receipt/Approve';
+import RequestIndex from './domain/Receipt/Request';
 
 function App() {
   return (
@@ -40,6 +42,13 @@ function App() {
           </Route>
           <Route path="setting" element={<Outlet />}>
             <Route index element={<SettingIndex />} />
+            {/* 추가 */}
+          </Route>
+          <Route path="receipt" element={<Outlet />}>
+            {/* <Route path="camera" element={<BookUpdate />} /> */}
+            <Route path="request" element={<RequestIndex />} />
+            {/* <Route path="request" element={<BookUpdate />} /> */}
+            <Route path="approve" element={<ApproveIndex />} />
             {/* 추가 */}
           </Route>
         </Route>
