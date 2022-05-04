@@ -4,6 +4,7 @@ import pytesseract
 import imutils
 import cv2
 import numpy as np
+import re
 
 # UploadFile 형식을 numpy array 형식으로 변환
 def uploadFileToNumpyArray(imgSrc):
@@ -50,11 +51,40 @@ def tesseractOCR(receipt, type):
     if type == "pic":
         image = findContour(image)
     configs = r'--oem 3 --psm 6'
-    text = pytesseract.image_to_string(image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB), config=configs, lang='kor')
+    text = pytesseract.image_to_string(image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB), config=configs, lang='kor+eng')
     text_list = text.split("\n")
     text_list = list(filter(("").__ne__, text_list))
-    result_text_list = []
-    for text in text_list:
-        result_text_list.append(text.replace("  "," "))
 
-    return result_text_list
+    totalPrice = ""
+    dealDate = ""
+
+    for text in text_list:
+        replaceText = text.replace(" ","")
+        if replaceText.find("받을금액")!=-1:
+            replaceText = replaceText[replaceText.find("받을금액")+4:]
+            totalPrice = replaceText
+        elif replaceText.find("승인금액")!=-1:
+            replaceText = replaceText[replaceText.find("승인금액")+4:]
+            totalPrice = replaceText
+        elif replaceText.find("합계")!=-1:
+            replaceText = replaceText[replaceText.find("합계")+2:]
+            totalPrice = replaceText
+        elif replaceText.find("결제액")!=-1:
+            replaceText = replaceText[replaceText.find("결제액")+3:]
+            totalPrice = replaceText
+
+        if replaceText.find("거래일시")!=-1:
+            replaceText = replaceText[replaceText.find("거래일시")+4:]
+            dealDate = replaceText
+        elif replaceText.find("판매일")!=-1:
+            replaceText = replaceText[replaceText.find("판매일")+3:]
+            dealDate = replaceText
+        elif replaceText.find("2022")!=-1:
+            replaceText = replaceText[replaceText.find("2022"):]
+            dealDate = replaceText
+
+
+    totalPrice = re.sub(r'[^0-9]', '', totalPrice)
+    return {"금액":totalPrice, "거래날짜":dealDate}
+    # print(totalPrice + ", " + dealDate)
+    # return text_list
