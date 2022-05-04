@@ -13,6 +13,7 @@ import SettingIndex from './domain/Setting/Index';
 import { Container } from '@mui/material';
 import ApproveIndex from './domain/Receipt/Approve';
 import RequestIndex from './domain/Receipt/Request';
+import CameraIndex from './domain/Receipt/Camera';
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
             {/* 추가 */}
           </Route>
           <Route path="receipt" element={<Outlet />}>
-            {/* <Route path="camera" element={<BookUpdate />} /> */}
+            <Route path="camera" element={<CameraIndex />} />
             <Route path="request" element={<RequestIndex />} />
             {/* <Route path="request" element={<BookUpdate />} /> */}
             <Route path="approve" element={<ApproveIndex />} />
