@@ -1,0 +1,18 @@
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+}
+
+.board {
+  text-align: center;
+  display: flex;
+  float: left;
+}
+
+.board2 {
+  margin: 0 auto;
+  display: left;
+  float: left;
+}
