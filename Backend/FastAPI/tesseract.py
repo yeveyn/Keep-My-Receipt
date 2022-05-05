@@ -5,6 +5,7 @@ import imutils
 import cv2
 import numpy as np
 import re
+from datetime import datetime
 
 # UploadFile 형식을 numpy array 형식으로 변환
 def uploadFileToNumpyArray(imgSrc):
@@ -73,18 +74,27 @@ def tesseractOCR(receipt, type):
             replaceText = replaceText[replaceText.find("결제액")+3:]
             totalPrice = replaceText
 
-        if replaceText.find("거래일시")!=-1:
-            replaceText = replaceText[replaceText.find("거래일시")+4:]
-            dealDate = replaceText
-        elif replaceText.find("판매일")!=-1:
-            replaceText = replaceText[replaceText.find("판매일")+3:]
-            dealDate = replaceText
-        elif replaceText.find("2022")!=-1:
-            replaceText = replaceText[replaceText.find("2022"):]
-            dealDate = replaceText
+        if replaceText.find("일시")!=-1 or replaceText.find("판매일")!=-1 or replaceText.find("2022")!=-1 :
+            dealDateList = text.split(" ")
+            dealDateList = list(filter(("").__ne__, dealDateList))
+            dateFlag = False
+            timeFlag = False
+            for dealDateItem in dealDateList:
+                if dealDateItem[0] >= '0' and dealDateItem[0] <= '9' :
+                    if dateFlag == False :
+                        dateFlag = True
+                        dealDateItem = dealDateItem.replace(".", "/")
+                        dealDateItem = dealDateItem.replace("-", "/")
+                        dealDate += dealDateItem + " "
+                    elif timeFlag == False :
+                        timeFlag = True
+                        dealDate += dealDateItem
 
+
+    format_data = "%y/%m/%d %H:%M:%S"
+    # dealDate = datetime.strptime(dealDate, format_data)
 
     totalPrice = re.sub(r'[^0-9]', '', totalPrice)
-    return {"금액":totalPrice, "거래날짜":dealDate}
-    # print(totalPrice + ", " + dealDate)
-    # return text_list
+    # return {"금액":totalPrice, "거래날짜":dealDate}
+    print(totalPrice + ", " + dealDate)
+    return text_list
