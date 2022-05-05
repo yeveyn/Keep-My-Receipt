@@ -7,6 +7,13 @@ import SearchList from './List';
 import axios from 'axios';
 import { AnyRecord } from 'dns';
 
+interface listItemTypes {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+}
+
 type LocationState = { propWord: string; used: boolean };
 interface resopnseType {
   pageNumber: number;
@@ -14,7 +21,7 @@ interface resopnseType {
   totalPages: number;
   numberOfElements: number;
   totalElements: number;
-  list: any;
+  list: listItemTypes[];
 }
 
 export default function GroupSearch() {
@@ -30,7 +37,7 @@ export default function GroupSearch() {
     totalPages: 0,
     numberOfElements: 0,
     totalElements: 0,
-    list: {},
+    list: [],
   });
   const {
     pageNumber,
@@ -54,6 +61,8 @@ export default function GroupSearch() {
     if (keyWord) {
       setWord(keyWord);
       getClubList(keyWord);
+    } else {
+      getClubList();
     }
   }, [keyWord]);
 
@@ -64,7 +73,7 @@ export default function GroupSearch() {
         params: {
           name: searchWord,
           page: 0,
-          size: 10,
+          size: 5,
           sort: 'id%2CASC',
         },
       })
@@ -76,14 +85,16 @@ export default function GroupSearch() {
       });
   };
 
-  useEffect(() => {
-    console.log(res);
-    console.log(list);
-  }, [res]);
+  // response 확인
+  // useEffect(() => {
+  //   console.log(res);
+  //   // 여기서는 배열
+  //   console.log(list);
+  // }, [res]);
 
   useEffect(() => {
     const accessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjMiLCJpYXQiOjE2NTE2NTA4MzIsImV4cCI6MTY1MTczNzIzMn0.HPtPiIRfJKu096E-udxfmqcFYZScG8dyTpNdtX7RXew';
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjMiLCJpYXQiOjE2NTE3MTQ4MzQsImV4cCI6MTY1MTgwMTIzNH0.LHy4mt3jBcrxn6MpMoGV4GPl0cxVTq50D7TKf-TtZ4M';
 
     // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -120,11 +131,20 @@ export default function GroupSearch() {
         </Stack>
 
         {/* 검색 결과 */}
-        <Stack direction="column" spacing={2} alignItems="center">
+        <Stack
+          direction="column"
+          spacing={2}
+          alignItems="center"
+          sx={{ marginTop: '1rem' }}
+        >
           {/* 상단 */}
-          <p>검색 결과 리스트</p>
+          {keyWord ? null : '전체 모임 목록'}
           {/* 리스트 */}
-          <SearchList clubList={list} />
+          {list.length > 0 ? (
+            <SearchList clubList={list} />
+          ) : (
+            <p>검색된 모임이 없습니다.</p>
+          )}
           {/* 페이지네이션 */}
           <Stack>
             <p>pageNumber: {pageNumber}</p>
