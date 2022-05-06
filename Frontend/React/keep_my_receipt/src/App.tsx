@@ -15,19 +15,39 @@ import CameraIndex from './domain/Receipt/Camera';
 import RequestIndex from './domain/Receipt/Request';
 import RequestListIndex from './domain/Receipt/RequestList';
 import ApproveIndex from './domain/Receipt/Approve';
+import { AuthContextProvider } from './store/auth-context';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navigation />
-      <Routes>
-        {/* 밑에 Route들 추가하시면 됩니다! */}
-        <Route path="/" element={<Outlet />}>
-          <Route index element={<p>랜딩 페이지</p>} />
-          <Route path="club" element={<Outlet />}>
-            <Route index element={<ClubIndex />} />
-            <Route path="create" element={<ClubCreate />} />
-            <Route path="search" element={<ClubSearch />} />
+    <AuthContextProvider>
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          {/* 밑에 Route들 추가하시면 됩니다! */}
+          <Route path="/" element={<Outlet />}>
+            <Route index element={<p>랜딩 페이지</p>} />
+            <Route path="club" element={<Outlet />}>
+              <Route index element={<ClubIndex />} />
+              <Route path="create" element={<ClubCreate />} />
+              <Route path="search" element={<ClubSearch />} />
+            </Route>
+            <Route path="book" element={<Outlet />}>
+              <Route index element={<BookIndex />} />
+              <Route path="create" element={<BookCreate />} />
+              <Route path="update" element={<BookUpdate />} />
+            </Route>
+            <Route path="alert" element={<Outlet />}>
+              <Route index element={<AlertIndex />} />
+              {/* 추가 */}
+            </Route>
+            <Route path="account" element={<Outlet />}>
+              <Route index element={<AccountIndex />} />
+              {/* 추가 */}
+            </Route>
+            <Route path="setting" element={<Outlet />}>
+              <Route index element={<SettingIndex />} />
+              {/* 추가 */}
+            </Route>
           </Route>
           <Route path="book" element={<Outlet />}>
             <Route index element={<BookIndex />} />
@@ -53,13 +73,13 @@ function App() {
             <Route path="approve" element={<ApproveIndex />} />
             {/* 추가 */}
           </Route>
-        </Route>
 
-        {/* baseUrl/book이면 book index로 접속 */}
-        <Route path="/account/index" element={<AccountIndex />} />
-        <Route path="/setting/index" element={<SettingIndex />} />
-      </Routes>
-    </BrowserRouter>
+          {/* baseUrl/book이면 book index로 접속 */}
+          <Route path="/account/index" element={<AccountIndex />} />
+          <Route path="/setting/index" element={<SettingIndex />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthContextProvider>
   );
 }
 
