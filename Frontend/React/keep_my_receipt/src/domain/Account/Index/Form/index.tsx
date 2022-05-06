@@ -61,7 +61,7 @@ export default function AuthForm() {
       backgroundColor: yellow[800],
     },
   }));
-  // const authCtx = useContext(AuthContext);
+
   //회원가입 - 로그인 형식바꾸는 부분
   const [isLogin, setIsLogin] = useState(true);
   const switchAuthModeHandler = () => {
@@ -91,6 +91,7 @@ export default function AuthForm() {
   const onChangeCheckPassword = (e: any) => {
     setCheckPassword(e.target.value);
   };
+
   getToken(messaging, {
     // FCM에서 웹 사용자 인증 정보 구성
     vapidKey:
@@ -108,37 +109,38 @@ export default function AuthForm() {
     .catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
     });
-
   // 회원가입 API -  useref 훅 이용해 입력 데이터 추출
   const submitHandler = (event: any) => {
     // 형식과 관계없이 확인버튼 눌러서 제출했을 때
     event.preventDefault();
     // 유효성 검사 - useState 사용하기
     // 1. 이메일 @
+
     // 2. 이메일 중복 확인
     // 3. 비밀번호와 비밀번호 확인 일치
     // 4. 비밀번호 8자이상 + (영문 + 숫자 + 특수문자 1개 이상)
+
     setIsLoading(true);
 
     // const fcmToken = token;
-    const option = {
-      method: 'POST',
-      url: 'https://fcm.googleapis.com/fcm/send', //FCM서버의 주소입니다. 그대로 쓰시면 됩니다.
-      json: {
-        to: 'cdi8o5FabrH_8Mi28Ca3It:APA91bFM1cgNBDlul69y6hz-EbMh266fBVG-s0R5q-u_TMg_Pa0BgktjEHWkyx-ZD3i7Hmk69DoCCdVwTTaPB6sGDnE1akM_2Q6F2XfTMv7jEiianA62RNLVhwnI3ivI5jr_h__zWLgV', //2-2에서 복사해놓은 토큰을 사용합니다.
-        notification: {
-          //꼭 notification일 필요는 없습니다. data든 뭐든 바꿔도 됩니다.
-          title: 'hello', //알림의 제목에 해당하는 부분입니다.
-          body: 'world!', //알림의 본문에 해당하는 부분입니다.
-        },
-        //title이나 body이외에도 다른 옵션들이 많으니 찾아보시기 바랍니다.
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization:
-          'AAAAz5nPtxw:APA91bGYoZ_21rR9OlzE2tn6-cBrx0cYHNzvkU8sNrrNhyollqYVvqMuoz7Qmyo286CztOP-lXShqFnfUaiGq4hNZwsyc1x_gUdSQ9FBoRP13gd0D2JhA2yPvb72hK_KXQ2O9_Cv_o7N', //위에서 찾았던 서버키 앞에 'key='을 붙여서 사용합니다.
-      },
-    };
+    // const option = {
+    //   method: 'POST',
+    //   url: 'https://fcm.googleapis.com/fcm/send', //FCM서버의 주소입니다. 그대로 쓰시면 됩니다.
+    //   json: {
+    //     to: 'cdi8o5FabrH_8Mi28Ca3It:APA91bFM1cgNBDlul69y6hz-EbMh266fBVG-s0R5q-u_TMg_Pa0BgktjEHWkyx-ZD3i7Hmk69DoCCdVwTTaPB6sGDnE1akM_2Q6F2XfTMv7jEiianA62RNLVhwnI3ivI5jr_h__zWLgV', //2-2에서 복사해놓은 토큰을 사용합니다.
+    //     notification: {
+    //       //꼭 notification일 필요는 없습니다. data든 뭐든 바꿔도 됩니다.
+    //       title: 'hello', //알림의 제목에 해당하는 부분입니다.
+    //       body: 'world!', //알림의 본문에 해당하는 부분입니다.
+    //     },
+    //     //title이나 body이외에도 다른 옵션들이 많으니 찾아보시기 바랍니다.
+    //   },
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization:
+    //       'AAAAz5nPtxw:APA91bGYoZ_21rR9OlzE2tn6-cBrx0cYHNzvkU8sNrrNhyollqYVvqMuoz7Qmyo286CztOP-lXShqFnfUaiGq4hNZwsyc1x_gUdSQ9FBoRP13gd0D2JhA2yPvb72hK_KXQ2O9_Cv_o7N', //위에서 찾았던 서버키 앞에 'key='을 붙여서 사용합니다.
+    //   },
+    // };
     //모바일에서 로그인 > native app에게 달라고 요청하기
     // const mobileToken = window['Android']['requestToken']();
 
