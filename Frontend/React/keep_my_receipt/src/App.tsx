@@ -15,11 +15,9 @@ import CameraIndex from './domain/Receipt/Camera';
 import RequestIndex from './domain/Receipt/Request';
 import RequestListIndex from './domain/Receipt/RequestList';
 import ApproveIndex from './domain/Receipt/Approve';
-// import { AuthContextProvider } from './store/auth-context';
 
 function App() {
   return (
-    // <AuthContextProvider>
     <BrowserRouter>
       <Navigation />
       <Routes>
@@ -79,7 +77,6 @@ function App() {
         <Route path="/setting/index" element={<SettingIndex />} />
       </Routes>
     </BrowserRouter>
-    // </AuthContextProvider>
   );
 }
 
