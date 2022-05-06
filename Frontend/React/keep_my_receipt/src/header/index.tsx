@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import NavItem from './item';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import classes from '../header/MainNavigation.module.css';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AuthContext from '../store/auth-context';
 
 const Navigation = () => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
@@ -13,9 +16,17 @@ const Navigation = () => {
       </div>
       <nav>
         <ul>
-          <li className="menu">
-            <Link to="/account">로그인</Link>
-          </li>
+          {!isLoggedIn && (
+            <li className="menu">
+              <Link to="/account">로그인</Link>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li className="menu">
+              <Link to="/">로그아웃</Link>
+            </li>
+          )}
+
           <li className="menu">
             <Link to="/book">거래내역</Link>
           </li>
