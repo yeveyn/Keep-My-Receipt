@@ -10,11 +10,15 @@ app = FastAPI()
 @app.post("/fast/ocr/receipt/photo")
 async def analysisReceipt(receipt : UploadFile = File(...)):
     result = tesseractOCR(receipt.file.read(), "pic")
+    imageUrl = uploadImg(receipt)
+    result['이미지 url'] = imageUrl
     return result
 
 @app.post("/fast/ocr/receipt/img")
 async def analysisReceipt(receipt : UploadFile = File(...)):
     result = tesseractOCR(receipt.file.read(), "img")
+    imageUrl = uploadImg(receipt)
+    result['이미지 url'] = imageUrl
     return result
 
 @app.post("/fast/uploadImage")
