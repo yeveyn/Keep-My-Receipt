@@ -1,5 +1,9 @@
 from fastapi import FastAPI, File, UploadFile
+from starlette.responses import FileResponse
+import os.path
+
 from tesseract import tesseractOCR
+from uploadFile import uploadImg
 
 app = FastAPI()
 
@@ -12,3 +16,13 @@ async def analysisReceipt(receipt : UploadFile = File(...)):
 async def analysisReceipt(receipt : UploadFile = File(...)):
     result = tesseractOCR(receipt.file.read(), "img")
     return result
+
+@app.post("/fast/uploadImage")
+async def uploadImage(image: UploadFile = File(...)):
+    return uploadImg(image)
+
+@app.get('/images/{fileName}')
+def getImage(fileName : str):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    IMG_DIR = os.path.join(BASE_DIR, 'images/')
+    return FileResponse(''.join([IMG_DIR, fileName]))
