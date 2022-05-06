@@ -49,7 +49,7 @@ def findContour(image):
 
 
 def tesseractOCR(receipt, type):
-    uploadImg(receipt)
+    imgUrl = uploadImg(receipt)
     image = uploadFileToNumpyArray(receipt)
     if type == "pic":
         image = findContour(image)
@@ -97,6 +97,6 @@ def tesseractOCR(receipt, type):
     # dealDate = datetime.strptime(dealDate, format_data)
 
     totalPrice = re.sub(r'[^0-9]', '', totalPrice)
-    # return {"금액":totalPrice, "거래날짜":dealDate}
-    print(totalPrice + ", " + dealDate)
-    return text_list
+    return {"금액":totalPrice, "거래날짜":dealDate, "이미지 url":imgUrl}
+    # print(totalPrice + ", " + dealDate)
+    # return text_list
