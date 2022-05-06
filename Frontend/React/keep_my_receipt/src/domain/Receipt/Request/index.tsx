@@ -8,9 +8,7 @@ import {
   Stack,
   useMediaQuery,
 } from '@mui/material';
-import ListItem from './Item';
 import sample from './sample.json';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,7 +20,6 @@ export default function RequestIndex() {
   const [newDate, setDate] = useState(sample[0].date);
   const [newMoney, setMoney] = useState(sample[0].money);
   const imgUrl = sample[0].image;
-  const [newItems, setItems] = useState(sample[0].items);
   const matches = useMediaQuery('(min-width:500px)');
 
   // useEffect(loadingDataFromDB, []);
@@ -40,45 +37,14 @@ export default function RequestIndex() {
   //   });
   // }
 
-  function createItem() {
-    const nextItems = [...newItems];
-    const newSize = nextItems.length;
-    nextItems[newSize] = {
-      id: newSize,
-      content: newSize.toString(),
-      money: newSize.toString(),
-    };
-    setItems(nextItems);
-  }
-
-  function renderingItems() {
-    return newItems.map((item, index) => (
-      <ListItem
-        id={item.id}
-        content={item.content}
-        money={item.money}
-        setItems={setItems}
-        newItems={newItems}
-        key={item.money + index}
-      />
-    ));
-  }
-
   function submitHandler(event: any) {
     event.preventDefault();
     const prop = {
       imgUrl: imgUrl,
       date: newDate,
       money: newMoney,
-      items: newItems,
     };
     console.log('submit', prop);
-    newItems.forEach((item) => {
-      if (item.money === '' || item.content === '') {
-        alert('비어있는 항목이 존재합니다');
-        return;
-      }
-    });
 
     // 영수증 db에 저장
     // 알림 삭제
@@ -88,7 +54,7 @@ export default function RequestIndex() {
 
   return (
     <Container maxWidth="md">
-      <div style={matches ? { marginTop: 30 } : { marginTop: '0' }}>
+      <div style={matches ? { marginTop: 30 } : { marginTop: 0 }}>
         <Grid
           container
           direction="column"
@@ -127,18 +93,7 @@ export default function RequestIndex() {
                 onChange={(e: any) => setMoney(e.target.value)}
               />
             </Card>
-            <br></br>
-            {renderingItems()}
           </Stack>
-        </Grid>
-        <br></br>
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-evenly"
-          alignContent="center"
-        >
-          <AddCircleIcon onClick={createItem} />
         </Grid>
         <br></br>
         <br></br>
