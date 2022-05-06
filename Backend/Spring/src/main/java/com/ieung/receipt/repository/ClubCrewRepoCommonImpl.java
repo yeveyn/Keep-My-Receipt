@@ -132,6 +132,27 @@ public class ClubCrewRepoCommonImpl implements ClubCrewRepoCommon {
         return new PageImpl<>(result, pageable, total);
     }
 
+    @Override
+    public Optional<ClubCrew> findByIdWithClub(Long clubCrewId) {
+        Optional<ClubCrew> result = Optional.ofNullable(queryFactory
+                .selectFrom(QClubCrew.clubCrew)
+                .innerJoin(QClubCrew.clubCrew.club, QClub.club)
+                .fetchJoin()
+                .where(QClubCrew.clubCrew.id.eq(clubCrewId))
+                .fetchOne());
+
+        return result;
+    }
+
+    @Override
+    public Boolean findExistLeaderByCrewId(long crewId) {
+        return queryFactory
+                .selectFrom(QClubCrew.clubCrew)
+                .where(QClubCrew.clubCrew.crew.id.eq(crewId),
+                        QClubCrew.clubCrew.auth.eq(AuthCode.LEADER))
+                .fetchFirst() != null;
+    }
+
     // Pageable 객체의 sort를 list로 변환
     private List<OrderSpecifier> getAllOrderSpecifiers(Pageable pageable) {
 

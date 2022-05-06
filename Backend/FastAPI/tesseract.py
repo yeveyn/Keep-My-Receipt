@@ -95,6 +95,4 @@ def tesseractOCR(receipt, type):
     # dealDate = datetime.strptime(dealDate, format_data)
 
     totalPrice = re.sub(r'[^0-9]', '', totalPrice)
-    # return {"금액":totalPrice, "거래날짜":dealDate}
-    print(totalPrice + ", " + dealDate)
-    return text_list
+    return {"금액":totalPrice, "거래날짜":dealDate}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import NavItem from './item';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
@@ -15,6 +15,9 @@ const Navigation = () => {
         <ul>
           <li className="menu">
             <Link to="/account">로그인</Link>
+          </li>
+          <li className="menu">
+            <Link to="/">로그아웃</Link>
           </li>
           <li className="menu">
             <Link to="/book">거래내역</Link>

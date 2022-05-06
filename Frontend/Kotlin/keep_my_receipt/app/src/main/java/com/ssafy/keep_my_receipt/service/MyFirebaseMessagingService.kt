@@ -13,12 +13,13 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ssafy.keep_my_receipt.R
 import com.ssafy.keep_my_receipt.src.main.MainActivity
+import com.ssafy.keep_my_receipt.config.ApplicationClass
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         Log.d("FCM client token", "onNewToken: $token")
-        // TODO 토큰을 서버로 전송
+        ApplicationClass.sSharedPreferences.setToken(token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
