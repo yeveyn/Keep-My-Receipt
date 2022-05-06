@@ -1,49 +1,96 @@
 import React, { useEffect, useState } from 'react';
-import SearchItem from './item';
-import {
-  Container,
-  Box,
-  TextField,
-  IconButton,
-  Grid,
-  Stack,
-} from '@mui/material';
-import { Search, ArrowBackIosNew } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Container, IconButton, Grid, Stack } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from '../../../components/SearchBar';
+import SearchList from './List';
+import axios from 'axios';
+import { AnyRecord } from 'dns';
 
-type LocationState = { propWord: string };
+interface listItemTypes {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+}
+
+type LocationState = { propWord: string; used: boolean };
+interface resopnseType {
+  pageNumber: number;
+  size: number;
+  totalPages: number;
+  numberOfElements: number;
+  totalElements: number;
+  list: listItemTypes[];
+}
 
 export default function GroupSearch() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { propWord } = (location.state as LocationState) || {};
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keyWord = searchParams.get('query');
+  const { propWord, used } = (location.state as LocationState) || {};
   const [word, setWord] = useState('');
-  const [apiResult, setApiResult] = useState('');
-  // const onChange = (e: any) => {
-  //   setWord(e.target.value);
-  // };
-  // const searchWord = (w: string) => {
-  //   if (w.length < 2) {
-  //     console.log('검색은 2글자 이상');
-  //     return;
-  //   }
-  //   console.log('모임 검색 API 요청' + '(검색어: ' + w + ')');
-  // };
+  const [res, setRes] = useState<resopnseType>({
+    pageNumber: 0,
+    size: 0,
+    totalPages: 0,
+    numberOfElements: 0,
+    totalElements: 0,
+    list: [],
+  });
+  const {
+    pageNumber,
+    size,
+    totalPages,
+    numberOfElements,
+    totalElements,
+    list,
+  } = res || null;
 
   useEffect(() => {
-    // 새로고침하면 propWord로 되는 이슈 발생...
-    if (propWord) {
+    if (!used && propWord) {
       console.log(
         'propWord로 모임 검색 API 요청' + '(검색어: ' + propWord + ')',
       );
       setWord(propWord);
+      console.log(location);
     }
   }, []);
-
   useEffect(() => {
-    console.log(apiResult);
-  }, [apiResult]);
+    if (keyWord) {
+      setWord(keyWord);
+      getClubList(keyWord);
+    } else {
+      getClubList();
+    }
+  }, [keyWord]);
+
+  const getClubList = async (w?: string) => {
+    const searchWord = w ? w : word;
+    await axios
+      .get('https://k6d104.p.ssafy.io/api/spring/clubs', {
+        params: {
+          name: searchWord,
+          page: 0,
+          size: 5,
+          sort: 'id%2CASC',
+        },
+      })
+      .then((response) => {
+        setRes(response.data.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  // response 확인
+  // useEffect(() => {
+  //   console.log(res);
+  //   // 여기서는 배열
+  //   console.log(list);
+  // }, [res]);
 
   return (
     <Container maxWidth="md">
@@ -53,57 +100,51 @@ export default function GroupSearch() {
           direction="row"
           justifyContent="center"
           alignItems="center"
+          marginTop={2}
           sx={{ position: 'relative' }}
         >
           <IconButton
             onClick={() => {
+              // navigate('../');
               navigate(-1);
             }}
             color="inherit"
             sx={{ position: 'absolute', left: 0 }}
           >
-            <ArrowBackIosNew sx={{ fontSize: '2rem' }} />
+            <ArrowBack sx={{ fontSize: '1.8rem' }} />
           </IconButton>
-          <h2>모임 검색</h2>
-        </Stack>
-
-        {/* 검색 영역 */}
-        <Stack direction="column" spacing={2} alignItems="center">
           {/* 검색 창 */}
           <SearchBar
             value={word}
             setValue={setWord}
-            api="club"
-            setApiResult={setApiResult}
+            onSearch={getClubList}
+            navi={'.'}
           />
-          {/* <Box
-            height="3rem"
-            sx={{
-              backgroundColor: 'white',
-              paddingLeft: '2rem',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <TextField
-                onChange={onChange}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    searchWord(word);
-                  }
-                }}
-                value={word}
-                variant="standard"
-                sx={{ outlineColor: 'black' }}
-              />
-              <IconButton onClick={() => searchWord(word)}>
-                <Search sx={{ color: 'black', fontSize: '2rem' }} />
-              </IconButton>
-            </Box>
-          </Box> */}
-          {/* 검색 결과 */}
-          <p>검색 결과 리스트</p>
-          <SearchItem />
-          <SearchItem />
+        </Stack>
+
+        {/* 검색 결과 */}
+        <Stack
+          direction="column"
+          spacing={2}
+          alignItems="center"
+          sx={{ marginTop: '1rem' }}
+        >
+          {/* 상단 */}
+          {keyWord ? null : '전체 모임 목록'}
+          {/* 리스트 */}
+          {list.length ? (
+            <SearchList clubList={list} />
+          ) : (
+            <p>검색된 모임이 없습니다.</p>
+          )}
+          {/* 페이지네이션 */}
+          <Stack>
+            <p>pageNumber: {pageNumber}</p>
+            <p>size: {size}</p>
+            <p>totalPages: {totalPages}</p>
+            <p>numberOfElements: {numberOfElements}</p>
+            <p>totalElements: {totalElements}</p>
+          </Stack>
         </Stack>
       </Grid>
     </Container>

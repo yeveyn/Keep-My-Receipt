@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,32 +28,32 @@ public class ClubService {
 
     /**
      * 모임 생성
-     * @param crew, groupReqDTO
+     * @param crew, clubReqDTO
      */
     @Transactional(readOnly = false)
-    public void createClub(Crew crew, ClubReqDTO groupReqDTO) {
+    public void createClub(Crew crew, ClubReqDTO clubReqDTO) {
         // DB에 저장할 Group Entity 세팅
         Club group = Club.builder()
-                .name(groupReqDTO.getName())
-                .description(groupReqDTO.getDescription())
+                .name(clubReqDTO.getName())
+                .description(clubReqDTO.getDescription())
+                .image(clubReqDTO.getImage())
                 .build();
 
         Club resGroup = clubRepository.save(group);
         if (resGroup == null) {
-            throw new ApiMessageException("그룹 생성에 실패했습니다. 다시 시도해 주세요.");
+            throw new ApiMessageException("모임 생성에 실패했습니다. 다시 시도해 주세요.");
         }
 
         // DB에 저장할 Crew (Leader) Entity 세팅
         ClubCrew clubCrew = ClubCrew.builder()
                 .club(resGroup)
                 .crew(crew)
-                .auth(AuthCode.L) // 리더
-                .state(StateCode.A) // 승인 완료
+                .auth(AuthCode.LEADER) // 리더
                 .build();
 
         ClubCrew resClubCrew = clubCrewRepository.save(clubCrew);
         if (resClubCrew == null) {
-            throw new ApiMessageException("그룹 생성에 실패했습니다. 다시 시도해 주세요.");
+            throw new ApiMessageException("모임 생성에 실패했습니다. 다시 시도해 주세요.");
         }
     }
 
@@ -71,7 +72,6 @@ public class ClubService {
      * @param name, pageable
      */
     public Page<Club> getClubs(String name, Pageable pageable) {
-
         return clubRepository.findAllByName(name, pageable);
     }
 
@@ -81,11 +81,11 @@ public class ClubService {
      */
     @Transactional(readOnly = false)
     public void deleteClub(Long crewId, Long clubId) {
-        ClubCrew clubCrew = clubCrewRepository.findByCrewIdAndClubId(crewId, clubId)
-                                                 .orElseThrow(() -> new ApiMessageException("가입된 모임이 아닙니다."));
+        ClubCrew clubCrew = clubCrewRepository.findByClubIdAndCrewId(clubId, crewId)
+                                                 .orElseThrow(() -> new AccessDeniedException(""));
 
-        if (clubCrew.getAuth() == AuthCode.L) {
-            Long clubCrewCnt = clubCrewRepository.findApprovedCountByClubId(clubId);
+        if (clubCrew.getAuth() == AuthCode.LEADER) {
+            Long clubCrewCnt = clubCrewRepository.findCountByClubId(clubId);
 
             if (clubCrewCnt > 1) {
                 new ApiMessageException("회원 수가 1일때만 삭제할 수 있습니다.");
@@ -94,7 +94,7 @@ public class ClubService {
                 clubRepository.delete(clubCrew.getClub());
             }
         } else {
-            throw new ApiMessageException("리더만 삭제할 수 있습니다.");
+            throw new AccessDeniedException("");
         }
     }
 
@@ -104,16 +104,35 @@ public class ClubService {
      */
     @Transactional(readOnly = false)
     public void updateClub(Long crewId, Long clubId, ClubReqDTO clubReqDTO) {
-        ClubCrew clubCrew = clubCrewRepository.findByCrewIdAndClubId(crewId, clubId)
-                                                 .orElseThrow(() -> new ApiMessageException("가입된 모임이 아닙니다."));
+        ClubCrew clubCrew = clubCrewRepository.findByClubIdAndCrewId(clubId, crewId)
+                                                 .orElseThrow(() -> new AccessDeniedException(""));
 
-        if (clubCrew.getAuth() == AuthCode.L) {
+        if (clubCrew.getAuth() == AuthCode.LEADER) {
             Club club = clubCrew.getClub();
             club.updateName(clubReqDTO.getName());
             club.updateDescription(clubReqDTO.getDescription());
+            club.updateImage(clubReqDTO.getImage());
             clubRepository.save(club);
         } else {
-            throw new ApiMessageException("리더만 수정할 수 있습니다.");
+            throw new AccessDeniedException("");
         }
+    }
+
+    /**
+     * 가입한 모임 조회
+     * @param crewId, pageable
+     */
+    @Transactional(readOnly = false)
+    public Page<Club> getJoinedClubs(Long crewId, Pageable pageable) {
+        return clubRepository.findJoinedClubByCrewId(crewId, pageable);
+    }
+
+    /**
+     * 가입 신청한 모임 조회
+     * @param crewId, pageable
+     */
+    @Transactional(readOnly = false)
+    public Page<Club> getRequestedClubs(Long crewId, Pageable pageable) {
+        return clubRepository.findRequestedClubByCrewId(crewId, pageable);
     }
 }

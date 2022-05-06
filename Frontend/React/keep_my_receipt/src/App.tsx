@@ -7,9 +7,13 @@ import ClubIndex from './domain/Club/Index';
 import ClubCreate from './domain/Club/Create';
 import ClubSearch from './domain/Club/Search';
 import BookCreate from './domain/Book/Create';
+import BookUpdate from './domain/Book/Update';
 
 import SettingIndex from './domain/Setting/Index';
 import { Container } from '@mui/material';
+import ApproveIndex from './domain/Receipt/Approve';
+import RequestIndex from './domain/Receipt/Request';
+import CameraIndex from './domain/Receipt/Camera';
 
 function App() {
   return (
@@ -27,6 +31,7 @@ function App() {
           <Route path="book" element={<Outlet />}>
             <Route index element={<BookIndex />} />
             <Route path="create" element={<BookCreate />} />
+            <Route path="update" element={<BookUpdate />} />
           </Route>
           <Route path="alert" element={<Outlet />}>
             <Route index element={<AlertIndex />} />
@@ -38,6 +43,13 @@ function App() {
           </Route>
           <Route path="setting" element={<Outlet />}>
             <Route index element={<SettingIndex />} />
+            {/* 추가 */}
+          </Route>
+          <Route path="receipt" element={<Outlet />}>
+            <Route path="camera" element={<CameraIndex />} />
+            <Route path="request" element={<RequestIndex />} />
+            {/* <Route path="request" element={<BookUpdate />} /> */}
+            <Route path="approve" element={<ApproveIndex />} />
             {/* 추가 */}
           </Route>
         </Route>
