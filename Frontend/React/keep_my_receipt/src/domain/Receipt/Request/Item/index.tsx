@@ -63,7 +63,7 @@ export default function ListItem({
         <Grid
           container
           direction="row"
-          justifyContent="space-between"
+          justifyContent="space-evenly"
           alignItems="center"
           style={{ width: '100%' }}
         >
