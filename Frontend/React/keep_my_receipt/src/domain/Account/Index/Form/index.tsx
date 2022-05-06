@@ -139,6 +139,7 @@ export default function AuthForm() {
       },
     };
     //모바일에서 로그인 > native app에게 달라고 요청하기
+    // const mobileToken = window['Android']['requestToken']();
 
     // 로그인
     if (isLogin) {
@@ -180,7 +181,6 @@ export default function AuthForm() {
             alert(errorMessage);
           } else {
             console.log('회원가입 성공');
-            // console.log(token);
             console.log(response.data);
           }
         })
