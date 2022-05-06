@@ -9,7 +9,7 @@ import CreateForm from './form';
 interface formProps {
   name: any;
   intro?: any;
-  imgFile?: any;
+  imgUrl?: any;
 }
 
 export default function GroupCreate() {
@@ -19,9 +19,9 @@ export default function GroupCreate() {
   const [form, setForm] = useState<formProps>({
     name: '',
     intro: '',
-    imgFile: '',
+    imgUrl: '',
   });
-  const { name, intro, imgFile } = form;
+  const { name, intro, imgUrl } = form;
   const onFormChange = (e: any) => {
     const { name, value } = e.target;
     setForm({
@@ -29,11 +29,26 @@ export default function GroupCreate() {
       [name]: value,
     });
   };
-  const onImgChange = (file: any) => {
-    setForm({
-      ...form,
-      imgFile: file,
-    });
+  const onImgChange = async (file: any) => {
+    // const formData = new FormData();
+    // formData.append('file', file);
+    // await axios
+    //   .post(
+    //     'http://k6d104.p.ssafy.io:5555/fast/uploadImage',
+    //     { image: file },
+    //     {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    //     },
+    //   )
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+    // setForm({
+    //   ...form,
+    //   imgFile: file,
+    // });
   };
 
   const createGroup = async () => {
@@ -48,7 +63,7 @@ export default function GroupCreate() {
         name: name,
         description: intro,
         // image: imgFile,
-        image: '',
+        image: imgUrl ? imgUrl : '',
       })
       .then((response) => {
         console.log(response);
