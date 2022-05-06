@@ -10,7 +10,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.keep_my_receipt.R
 import com.ssafy.keep_my_receipt.config.BaseActivity
 import com.ssafy.keep_my_receipt.databinding.ActivityMainBinding
-
+import kotlinx.android.synthetic.main.activity_main.*
+import com.ssafy.keep_my_receipt.src.main.WebAppInterface
+import com.ssafy.keep_my_receipt.config.ApplicationClass
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private var alarmed: String? = null
     private lateinit var webView: WebView
@@ -44,6 +46,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         webView.settings.javaScriptEnabled = true // 자바스크립트 허용
         webView.webViewClient = WebViewClient() // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
         webView.webChromeClient = WebChromeClient() // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
+        webview.addJavascriptInterface(WebAppInterface(this), "Android")
         webView.loadUrl("https://www.daum.net")
     }
 
@@ -53,7 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             when(it.itemId){
                 R.id.book-> {
                     Log.d("메인 액티비티 BottomNav","장부 클릭")
-                    webView.loadUrl("https://www.google.com")
+                    webView.loadUrl("http://k6d104.p.ssafy.io/receipt/requestList")
                     return@setOnItemSelectedListener true
                 }
 
@@ -90,13 +93,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             val token = task.result
-            Log.d("FCM client token", token)
+            ApplicationClass.sSharedPreferences.setToken(token)
+            //Log.d("FCM client token", token)
         })
 
         alarmed = intent.extras.toString()
         if (alarmed != null) {
-            // Todo Webview Url 설정 (영수증 승인 페이지)
-            // webView.loadUrl("http://k6d104.p.ssafy.io/...")
+            //Todo url 파라미터 설정
+            webView.loadUrl("http://k6d104.p.ssafy.io/receipt/approve")
         }
     }
 }
