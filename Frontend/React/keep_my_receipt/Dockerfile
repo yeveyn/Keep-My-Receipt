@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . /Frontend/React/keep_my_receipt
 
-RUN npm run build
+RUN npm start
 
 CMD ["npx", "serve", "-s", "build"]
 
