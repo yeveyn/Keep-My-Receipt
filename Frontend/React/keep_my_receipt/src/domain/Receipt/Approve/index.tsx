@@ -23,7 +23,9 @@ export default function ApproveIndex() {
   const [newDate, setDate] = useState(sample[0].date);
   const [newMoney, setMoney] = useState(sample[0].money);
   const imgUrl = sample[0].image;
-  const [newItems, setItems] = useState(sample[0].items);
+  const [newItems, setItems] = useState([
+    { id: Math.random().toString(36).substr(2, 11), content: '', money: '' },
+  ]);
   const matches = useMediaQuery('(min-width:500px)');
 
   // useEffect(loadingDataFromDB, []);
@@ -45,22 +47,22 @@ export default function ApproveIndex() {
     const nextItems = [...newItems];
     const newSize = nextItems.length;
     nextItems[newSize] = {
-      id: newSize,
-      content: newSize.toString(),
-      money: newSize.toString(),
+      id: Math.random().toString(36).substr(2, 11),
+      content: '',
+      money: '',
     };
     setItems(nextItems);
   }
 
   function renderingItems() {
-    return newItems.map((item, index) => (
+    return newItems.map((item) => (
       <ListItem
         id={item.id}
         content={item.content}
         money={item.money}
         setItems={setItems}
         newItems={newItems}
-        key={item.money + index}
+        key={item.id}
       />
     ));
   }
@@ -74,12 +76,27 @@ export default function ApproveIndex() {
       items: newItems,
     };
     console.log('submit', prop);
+
+    let sum = 0;
     newItems.forEach((item) => {
       if (item.money === '' || item.content === '') {
         alert('비어있는 항목이 존재합니다');
         return;
       }
+      sum += parseInt(item.money);
     });
+    if (sum !== parseInt(newMoney)) {
+      alert(
+        `항목 금액의 총계(${sum
+          .toString()
+          .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+          .concat('원')})가 총금액(${newMoney
+          .toString()
+          .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+          .concat('원')})과 일치하지 않습니다`,
+      );
+      return;
+    }
 
     // 영수증 db에 저장
     // 알림 삭제
@@ -96,7 +113,7 @@ export default function ApproveIndex() {
 
   return (
     <Container maxWidth="md">
-      <div style={matches ? { marginTop: 30 } : { marginTop: '0' }}>
+      <div style={matches ? { marginTop: 30 } : { marginTop: 0 }}>
         <Grid
           container
           direction="column"

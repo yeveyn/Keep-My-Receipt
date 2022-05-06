@@ -15,6 +15,8 @@ import CameraIndex from './domain/Receipt/Camera';
 import RequestIndex from './domain/Receipt/Request';
 import RequestListIndex from './domain/Receipt/RequestList';
 import ApproveIndex from './domain/Receipt/Approve';
+import MainChartIndex from './domain/Analytics';
+import SubChartIndex from './domain/Analytics/MediumTagChart';
 
 function App() {
   return (
@@ -69,6 +71,11 @@ function App() {
           <Route path="request" element={<RequestIndex />} />
           <Route path="requestList" element={<RequestListIndex />} />
           <Route path="approve" element={<ApproveIndex />} />
+          {/* 추가 */}
+        </Route>
+        <Route path="analytics" element={<Outlet />}>
+          <Route path="mainChart" element={<MainChartIndex />} />
+          <Route path="subChart" element={<SubChartIndex />} />
           {/* 추가 */}
         </Route>
 

@@ -3,13 +3,13 @@ import { Stack, Card, TextField, Grid } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 interface ItemType {
-  id: number;
+  id: string;
   content: string;
   money: string;
 }
 
 interface ListItemType {
-  id: number;
+  id: string;
   content: string;
   money: string;
   setItems: React.Dispatch<React.SetStateAction<ItemType[]>>;
@@ -30,23 +30,17 @@ export default function ListItem({
   const deleteItem = () => {
     const nextItems = newItems.filter((items) => items.id !== newId);
     setItems(nextItems);
-    setId(nextItems[id].id);
-
-    nextItems.map((item, index) => {
-      nextItems[index].id = index;
-    });
-    setItems([...nextItems]);
   };
 
   const updateItem = () => {
     const nextItems = [...newItems];
-    nextItems.find((item, index) => {
-      if (index == newId) {
-        nextItems[index].content = newContent;
-        nextItems[index].money = newMoney;
-        setItems(nextItems);
+    nextItems.forEach((item) => {
+      if (item.id === newId) {
+        item.content = newContent;
+        item.money = newMoney;
       }
     });
+    setItems(nextItems);
   };
 
   useEffect(() => {
