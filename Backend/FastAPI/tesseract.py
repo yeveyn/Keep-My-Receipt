@@ -38,7 +38,7 @@ def findContour(image):
             break
 
     if screenCnt is None:
-        raise Exception("Could not find outline.")
+        return image
 
     cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
     transform_image = four_point_transform(org_image, screenCnt.reshape(4, 2)*ratio)

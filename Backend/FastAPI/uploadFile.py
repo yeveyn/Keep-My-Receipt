@@ -8,7 +8,7 @@ SERVER_IMG_DIR = os.path.join('http://k6d104.p.ssafy.io:5555/', 'images/')
 
 def uploadImg(image):
     currentTime = datetime.datetime.now().strftime("%Y%m%d&H%M%S")
-    saved_file_name = ''.join([currentTime,secrets.token_hex(16)])
+    saved_file_name = ''.join([currentTime,secrets.token_hex(16),".jpg"])
     file_location = os.path.join(IMG_DIR,saved_file_name)
     with open(file_location, "wb+") as fp :
         fp.write(image.file.read())

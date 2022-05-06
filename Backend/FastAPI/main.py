@@ -1,3 +1,5 @@
+import copy
+
 from fastapi import FastAPI, File, UploadFile
 from starlette.responses import FileResponse
 import os.path
@@ -9,20 +11,20 @@ app = FastAPI()
 
 @app.post("/fast/ocr/receipt/photo")
 async def analysisReceipt(receipt : UploadFile = File(...)):
+    copyReceipt = copy.deepcopy(receipt)
     result = tesseractOCR(receipt.file.read(), "pic")
-    imageUrl = uploadImg(receipt)
-    result['이미지 url'] = imageUrl
+    result['이미지 url'] = uploadImage(copyReceipt)
     return result
 
 @app.post("/fast/ocr/receipt/img")
 async def analysisReceipt(receipt : UploadFile = File(...)):
+    copyReceipt = copy.deepcopy(receipt)
     result = tesseractOCR(receipt.file.read(), "img")
-    imageUrl = uploadImg(receipt)
-    result['이미지 url'] = imageUrl
+    result['이미지 url'] = uploadImage(copyReceipt)
     return result
 
 @app.post("/fast/uploadImage")
-async def uploadImage(image: UploadFile = File(...)):
+def uploadImage(image: UploadFile = File(...)):
     return uploadImg(image)
 
 @app.get('/images/{fileName}')
