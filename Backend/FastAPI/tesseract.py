@@ -5,6 +5,7 @@ import imutils
 import cv2
 import numpy as np
 import re
+from uploadFile import uploadImg
 from datetime import datetime
 
 # UploadFile 형식을 numpy array 형식으로 변환
@@ -48,6 +49,7 @@ def findContour(image):
 
 
 def tesseractOCR(receipt, type):
+    uploadImg(receipt)
     image = uploadFileToNumpyArray(receipt)
     if type == "pic":
         image = findContour(image)
