@@ -1,39 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Button, TextField, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import {
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
+import ItemIndex from './Item';
+import sample from './sample.json';
 
 // https://cotak.tistory.com/112
 export default function RequestListIndex() {
-  const navigate = useNavigate();
+  const { params } = useParams();
+  const [requests, setRequests] = useState(sample);
+  const matches = useMediaQuery('(min-width:500px)');
 
   // useEffect(() => {
   //   fetch("http://k6d104.p.ssafy.io/api/spring/")
   //     .then((res) => res.json())
-  //     .then((data) => setPosts(data));
+  //     .then((data) => setRequests(data));
   // }, []);
-
-  function testToken() {
-    const token = window['Android']['requestToken']();
-    alert(token);
-    // if (window['Android']) {
-    //   if (typeof (window["Android"]["requestToken"]) == "function") {
-    //       if (params) {
-    //         window[_CONFIG.android.handler][fn_name].apply(window[_CONFIG.android.handler], params);
-    //       }
-    //       else {
-    //           window[_CONFIG.android.handler][fn_name]();
-    //       }
-    //     }
-    //     else {
-    //         // ERR CASE 2 : 함수가 존재하지 않는 경우
-    //         throw new Error("안드로이드 객체에 함수[" + fn_name + "]가 존재하지 않습니다");
-    //     }
-    // }
-    // else {
-    //     // ERR CASE 1 : 객체가 존재하지 않는 경우
-    //     throw new Error("안드로이드 객체가 존재하지 않습니다");
-    // }
-  }
 
   return (
     <Container maxWidth="md">
@@ -43,20 +31,73 @@ export default function RequestListIndex() {
         justifyContent="center"
         alignItems="center"
         spacing={2}
-        style={{ width: '100%' }}
+        style={
+          matches
+            ? { marginTop: 30, marginBottom: 30, width: '100%' }
+            : { marginTop: 0, marginBottom: 30, width: '100%' }
+        }
       >
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        sdafsdafsa
-        <Button onClick={testToken}>Click</Button>
+        <Card
+          variant="outlined"
+          style={{
+            padding: 15,
+            width: '100%',
+            background: '#FFF5E1',
+          }}
+        >
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+            style={{ width: '100%' }}
+          >
+            <Grid
+              xs={4}
+              sm={4}
+              md={4}
+              container
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CardContent>
+                <Typography style={{ fontWeight: 'bold' }}>날짜</Typography>
+              </CardContent>
+            </Grid>
+            <Grid
+              xs={3}
+              sm={4}
+              md={4}
+              container
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CardContent>
+                <Typography style={{ fontWeight: 'bold' }}>멤버</Typography>
+              </CardContent>
+            </Grid>
+            <Grid
+              xs={5}
+              sm={4}
+              md={4}
+              container
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CardContent>
+                <Typography style={{ fontWeight: 'bold' }}>총금액</Typography>
+              </CardContent>
+            </Grid>
+          </Grid>
+        </Card>
+        {requests.map((request) => (
+          <ItemIndex
+            id={request.id}
+            name={request.name}
+            date={request.date}
+            money={request.money}
+          />
+        ))}
       </Grid>
     </Container>
   );
