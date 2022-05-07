@@ -4,6 +4,7 @@ import { Grid, Container, Stack } from '@mui/material';
 import axios from 'axios';
 import IndexList from './List';
 import IndexHeader from './header';
+import Pagination from '../../../components/Pagination';
 
 interface listItemTypes {
   id: number;
@@ -22,20 +23,28 @@ interface resopnseType {
 }
 export default function ClubIndex() {
   // 모임 목록 조회
-  const [clubList, setClubList] = useState<listItemTypes[]>([]);
-  const getClubList = async () => {
+  const [res, setRes] = useState<resopnseType>({
+    pageNumber: 0,
+    size: 0,
+    totalPages: 0,
+    numberOfElements: 0,
+    totalElements: 0,
+    list: [],
+  });
+  const { list } = res || null;
+  const getClubList = async (page?: number) => {
     await axios
       .get('https://k6d104.p.ssafy.io/api/spring/clubs/joined', {
         params: {
-          page: 0,
+          page: page ? page : 0,
           size: 5,
           sort: 'id,DESC',
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         // console.log(response.data.data);
-        setClubList(response.data.data.list);
+        setRes(response.data.data);
       })
       .catch((e) => {
         console.log(e);
@@ -43,9 +52,15 @@ export default function ClubIndex() {
   };
 
   useEffect(() => {
-    getClubList();
+    getClubList(0);
   }, []);
+  useEffect(() => {
+    const accessToken =
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjMiLCJpYXQiOjE2NTE5MDUzODcsImV4cCI6MTY1MTk5MTc4N30.1qGAqXHhWIKZE3zfdrQNf82VEWZEVwdO1ffBWC0SJn8';
 
+    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  }, []);
   return (
     <Container maxWidth="md">
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
@@ -59,11 +74,11 @@ export default function ClubIndex() {
           alignItems="center"
           sx={{ marginTop: '1rem' }}
         >
-          {clubList.length ? (
-            <IndexList clubList={clubList} />
-          ) : (
-            <p>모임 없음</p>
-          )}
+          {list.length ? <IndexList clubList={list} /> : <p>모임 없음</p>}
+        </Stack>
+        {/* 페이지네이션 */}
+        <Stack>
+          <Pagination pageInfo={res} />
         </Stack>
       </Grid>
     </Container>
