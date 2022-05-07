@@ -29,11 +29,12 @@ export default function ClubIndex() {
         params: {
           page: 0,
           size: 5,
-          sort: 'id%2CASC',
+          sort: 'id,DESC',
         },
       })
       .then((response) => {
-        console.log(response.data.data);
+        console.log(response);
+        // console.log(response.data.data);
         setClubList(response.data.data.list);
       })
       .catch((e) => {
