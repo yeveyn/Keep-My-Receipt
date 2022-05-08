@@ -1,9 +1,8 @@
-import sampleState from './Create/sample.json';
-
 /** 상태 */
 
 /* 상태 타입 선언 */
-type BookItemType = {
+export type BookItemType = {
+  mainCategory: string;
   largeCategory: string;
   mediumCategory: string;
   tag1: string;
@@ -17,9 +16,6 @@ type BookState = {
   totalValue: number;
   items: BookItemType[];
 };
-
-/* 초기 상태 선언 */
-export const initialState: BookState = sampleState;
 
 /** 액션 */
 
@@ -58,13 +54,13 @@ export const deleteItem = (itemIndex: number) => ({
 });
 
 /* 액션 생성함수 타입 */
-type BookAction =
+export type BookAction =
   | ReturnType<typeof createItem>
   | ReturnType<typeof updateItem>
   | ReturnType<typeof deleteItem>;
 
 /** 리듀서 */
-export default function tagListReducer(
+export default function bookReducer(
   state: BookState,
   action: BookAction,
 ): BookState {
@@ -73,6 +69,7 @@ export default function tagListReducer(
       /** 아이템 추가 */
       // 새로 넣을 아이템 정의
       const newItem = {
+        mainCategory: '',
         largeCategory: '',
         mediumCategory: '',
         tag1: '',
