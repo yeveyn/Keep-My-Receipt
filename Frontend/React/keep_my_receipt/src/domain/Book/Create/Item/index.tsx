@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Divider, List, ListItem, Stack } from '@mui/material';
 
 import useToggle from '../../../../hooks/useToggle';
@@ -7,6 +7,7 @@ import ItemCategoryFixed from '../ItemCategoryFixed';
 import ItemInfoOnEdit from '../ItemInfoOnEdit';
 import ItemInfoOnShow from '../ItemInfoOnShow';
 import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
+import { BookAction, BookItemType } from '../../bookReducer';
 
 export interface ItemInfoType {
   name: string;
@@ -53,7 +54,13 @@ const sampleMediumCategories = {
   이자수익: ['이자수익'],
 } as StringArrayObjectType;
 
-export default function Item() {
+interface ItemType {
+  item: BookItemType;
+  itemIndex: number;
+  dispatch: React.Dispatch<BookAction>;
+}
+
+export default function Item({ item, itemIndex, dispatch }: ItemType) {
   // 토글 값과, 토글 버튼 생성
   const { toggleValue, ToggleButtons } = useToggle(classification);
   // 대분류와 중분류 값 관리
@@ -63,10 +70,18 @@ export default function Item() {
 
   const [selectedMediumCategory, setSelectedMediumCategory] = useState('');
   const [itemInfo, setItemInfo] = useState({
-    name: '축구공',
+    name: item.itemName,
     onEdit: false,
-    price: 30000,
+    price: item.itemValue,
   });
+
+  useEffect(() => {
+    setItemInfo((info) => ({
+      ...info,
+      name: item.itemName,
+      price: item.itemValue,
+    }));
+  }, [item]);
 
   // 토글 값이 바뀔 때 대분류와 중분류 초기화
   useEffect(() => {
