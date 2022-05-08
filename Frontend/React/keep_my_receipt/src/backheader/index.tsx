@@ -22,7 +22,7 @@ const pages = [
 const alarms = ['알림', '알림2', '알림3'];
 const settings = ['프로필', '계정[탈퇴]', '로그아웃'];
 
-const ResponsiveAppBar = () => {
+const BackAppBar = () => {
   // 설정 버튼
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -186,4 +186,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default BackAppBar;

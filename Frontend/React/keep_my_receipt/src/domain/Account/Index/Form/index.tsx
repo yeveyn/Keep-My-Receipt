@@ -26,6 +26,8 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { onBackgroundMessage } from 'firebase/messaging/sw';
 
+const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+
 export default function AuthForm() {
   //fcm
   //FCM SDK 추가 및 초기화
@@ -73,10 +75,10 @@ export default function AuthForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
+
   // 대기중 버튼
   const [isLoading, setIsLoading] = useState(false);
 
-  //
   const onChangeName = (e: any) => {
     setNickName(e.target.value);
   };
@@ -109,70 +111,83 @@ export default function AuthForm() {
     .catch((err) => {
       console.log('An error occurred while retrieving token. ', err);
     });
+
   // 회원가입 API -  useref 훅 이용해 입력 데이터 추출
+  function world(name: string) {
+    return `hello ${name}`;
+  }
+
+  function onLogin(email: string, password: string, fcmToken: string) {
+    const data = {
+      email: email,
+      password: password,
+      fcmToken: fcmToken,
+    };
+    axios
+      .post('/login', data)
+      .then(onLoginSuccess)
+      .catch((error) => {
+        // ... 에러 처리
+      });
+  }
+
+  //일반 로그인
+  function onLoginSuccess(response: any) {
+    const { accessToken } = response.data;
+
+    // header accessToken 설정
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+    // accessToken 만료하기 1분 전에 로그인 연장
+    setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
+  }
+
+  //로그인 유지
+  function onSilentRefresh(response: any) {
+    axios
+      .post('/silent-refresh', response)
+      .then(onLoginSuccess)
+      .catch((error) => {
+        console.log('로그인 유지 실패');
+      });
+  }
+
   const submitHandler = (event: any) => {
     // 형식과 관계없이 확인버튼 눌러서 제출했을 때
     event.preventDefault();
     // 유효성 검사 - useState 사용하기
     // 1. 이메일 @
-
     // 2. 이메일 중복 확인
     // 3. 비밀번호와 비밀번호 확인 일치
     // 4. 비밀번호 8자이상 + (영문 + 숫자 + 특수문자 1개 이상)
 
     setIsLoading(true);
-
-    // const fcmToken = token;
-    // const option = {
-    //   method: 'POST',
-    //   url: 'https://fcm.googleapis.com/fcm/send', //FCM서버의 주소입니다. 그대로 쓰시면 됩니다.
-    //   json: {
-    //     to: 'cdi8o5FabrH_8Mi28Ca3It:APA91bFM1cgNBDlul69y6hz-EbMh266fBVG-s0R5q-u_TMg_Pa0BgktjEHWkyx-ZD3i7Hmk69DoCCdVwTTaPB6sGDnE1akM_2Q6F2XfTMv7jEiianA62RNLVhwnI3ivI5jr_h__zWLgV', //2-2에서 복사해놓은 토큰을 사용합니다.
-    //     notification: {
-    //       //꼭 notification일 필요는 없습니다. data든 뭐든 바꿔도 됩니다.
-    //       title: 'hello', //알림의 제목에 해당하는 부분입니다.
-    //       body: 'world!', //알림의 본문에 해당하는 부분입니다.
-    //     },
-    //     //title이나 body이외에도 다른 옵션들이 많으니 찾아보시기 바랍니다.
-    //   },
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization:
-    //       'AAAAz5nPtxw:APA91bGYoZ_21rR9OlzE2tn6-cBrx0cYHNzvkU8sNrrNhyollqYVvqMuoz7Qmyo286CztOP-lXShqFnfUaiGq4hNZwsyc1x_gUdSQ9FBoRP13gd0D2JhA2yPvb72hK_KXQ2O9_Cv_o7N', //위에서 찾았던 서버키 앞에 'key='을 붙여서 사용합니다.
-    //   },
-    // };
     //모바일에서 로그인 > native app에게 달라고 요청하기
     // const mobileToken = window['Android']['requestToken']();
 
-    // 로그인
     if (isLogin) {
       axios
-        .post('https://k6d104.p.ssafy.io/api/spring/crew/login', {
+        .post('/api/spring/crew/login', {
           email: email,
           password: password,
           fcmToken: token,
         })
         .then(function (response) {
           setIsLoading(false);
-          const errorMessage = response.data.msg;
 
           if (response.data.output == 0) {
             console.log('로그인 실패');
-            alert(errorMessage);
           } else {
-            console.log(token);
-            console.log(response.data.data.refreshToken);
-            alert('로그인 성공');
+            onLoginSuccess;
           }
         })
         .catch(function (error) {
-          console.log('오류');
           console.log(error);
         });
     } else {
       // 회원가입 api
       axios
-        .post('https://k6d104.p.ssafy.io/api/spring/crew/signup', {
+        .post('/api/spring/crew/signup', {
           email: email,
           password: password,
           name: nickName,
@@ -192,6 +207,15 @@ export default function AuthForm() {
         });
     }
   };
+
+  // 어플리케이션이 실행될 때마다 다시 로그인 시도
+  class App extends React.Component {
+    componentDidMount() {
+      onSilentRefresh;
+    }
+    // ...
+  }
+
   return (
     <Container maxWidth="sm">
       <h1 className="h1">{isLogin ? '로그인' : '회원가입'}</h1>
