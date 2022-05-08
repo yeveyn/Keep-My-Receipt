@@ -1,7 +1,7 @@
 import './index.css';
-import { useState, useRef, useCallback, useContext } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import {
   Button,
@@ -9,15 +9,8 @@ import {
   Stack,
   TextField,
   Container,
-  Input,
-  Alert,
-  InputAdornment,
-  Dialog,
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
-import React from 'react';
-import { useInput } from '@mui/base';
-import { Password } from '@mui/icons-material';
 
 //FCM SDK 추가 및 초기화
 import firebase from 'firebase/compat/app';
@@ -28,7 +21,7 @@ import { onBackgroundMessage } from 'firebase/messaging/sw';
 
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
-export default function AuthForm() {
+export default function LoginForm() {
   //fcm
   //FCM SDK 추가 및 초기화
   const config = {
@@ -65,23 +58,16 @@ export default function AuthForm() {
   }));
 
   //회원가입 - 로그인 형식바꾸는 부분
-  const [isLogin, setIsLogin] = useState(true);
   const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+    navigate('/signup');
   };
 
   // input value 가져오기
-  const [nickName, setNickName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [checkPassword, setCheckPassword] = useState('');
 
   // 대기중 버튼
   const [isLoading, setIsLoading] = useState(false);
-
-  const onChangeName = (e: any) => {
-    setNickName(e.target.value);
-  };
 
   const onChangeEmail = (e: any) => {
     setEmail(e.target.value);
@@ -89,9 +75,6 @@ export default function AuthForm() {
 
   const onChangePassword = (e: any) => {
     setPassword(e.target.value);
-  };
-  const onChangeCheckPassword = (e: any) => {
-    setCheckPassword(e.target.value);
   };
 
   getToken(messaging, {
@@ -112,24 +95,7 @@ export default function AuthForm() {
       console.log('An error occurred while retrieving token. ', err);
     });
 
-  // 회원가입 API -  useref 훅 이용해 입력 데이터 추출
-  function world(name: string) {
-    return `hello ${name}`;
-  }
-
-  function onLogin(email: string, password: string, fcmToken: string) {
-    const data = {
-      email: email,
-      password: password,
-      fcmToken: fcmToken,
-    };
-    axios
-      .post('/login', data)
-      .then(onLoginSuccess)
-      .catch((error) => {
-        // ... 에러 처리
-      });
-  }
+  const navigate = useNavigate();
 
   //일반 로그인
   function onLoginSuccess(response: any) {
@@ -153,91 +119,38 @@ export default function AuthForm() {
   }
 
   const submitHandler = (event: any) => {
-    // 형식과 관계없이 확인버튼 눌러서 제출했을 때
     event.preventDefault();
-    // 유효성 검사 - useState 사용하기
-    // 1. 이메일 @
-    // 2. 이메일 중복 확인
-    // 3. 비밀번호와 비밀번호 확인 일치
-    // 4. 비밀번호 8자이상 + (영문 + 숫자 + 특수문자 1개 이상)
-
     setIsLoading(true);
     //모바일에서 로그인 > native app에게 달라고 요청하기
     // const mobileToken = window['Android']['requestToken']();
 
-    if (isLogin) {
-      axios
-        .post('/api/spring/crew/login', {
-          email: email,
-          password: password,
-          fcmToken: token,
-        })
-        .then(function (response) {
-          setIsLoading(false);
+    axios
+      .post('/api/spring/crew/login', {
+        email: email,
+        password: password,
+        fcmToken: token,
+      })
+      .then(function (response) {
+        setIsLoading(false);
 
-          if (response.data.output == 0) {
-            console.log('로그인 실패');
-          } else {
-            onLoginSuccess;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-      // 회원가입 api
-      axios
-        .post('/api/spring/crew/signup', {
-          email: email,
-          password: password,
-          name: nickName,
-        })
-        .then(function (response) {
-          setIsLoading(false);
-          const errorMessage = response.data.msg;
-          if (response.data.output == 0) {
-            alert(errorMessage);
-          } else {
-            console.log('회원가입 성공');
-            console.log(response.data);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+        if (response.data.output == 0) {
+          console.log('로그인 실패');
+        } else {
+          onLoginSuccess(response.data);
+          // 로그인 성공 후 메인 페이지로 이동
+          navigate('/');
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
-
-  // 어플리케이션이 실행될 때마다 다시 로그인 시도
-  class App extends React.Component {
-    componentDidMount() {
-      onSilentRefresh;
-    }
-    // ...
-  }
 
   return (
     <Container maxWidth="sm">
-      <h1 className="h1">{isLogin ? '로그인' : '회원가입'}</h1>
+      <h1 className="h1">로그인</h1>
       <form onSubmit={submitHandler}>
         <Stack spacing={1.5}>
-          {!isLogin ? (
-            <TextField
-              onChange={onChangeName}
-              type="text"
-              id="nickname"
-              name="nickname"
-              required
-              fullWidth
-              label="이름"
-              autoComplete="current-password"
-              variant="outlined"
-              size="small"
-            />
-          ) : (
-            ''
-          )}
-
           <TextField
             onChange={onChangeEmail}
             placeholder="이메일을 입력해주세요"
@@ -262,27 +175,8 @@ export default function AuthForm() {
             type="password"
             autoComplete="current-password"
             variant="outlined"
-            helperText="특수문자, 영문, 숫자 모두 포함해야 합니다."
             size="small"
           />
-
-          {!isLogin ? (
-            <TextField
-              onChange={onChangeCheckPassword}
-              type="password"
-              id="password-check"
-              name="password-check"
-              fullWidth
-              label="비밀번호 확인"
-              autoComplete="current-password"
-              variant="outlined"
-              size="small"
-              required
-            />
-          ) : (
-            ''
-          )}
-
           <Stack>
             {!isLoading && (
               <ColorButton variant="contained" type="submit">
@@ -291,11 +185,7 @@ export default function AuthForm() {
             )}
             {isLoading && <Button variant="contained">로딩중...</Button>}
             <Button type="button" onClick={switchAuthModeHandler}>
-              {isLogin ? (
-                <h5>계정이 없으신가요? 회원가입 하러가기</h5>
-              ) : (
-                <h5>계정이 있으신가요? 로그인 하러가기</h5>
-              )}
+              <h5>계정이 없으신가요? 회원가입 하러가기</h5>
             </Button>
           </Stack>
         </Stack>
