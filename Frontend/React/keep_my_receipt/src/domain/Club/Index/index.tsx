@@ -54,13 +54,6 @@ export default function ClubIndex() {
   useEffect(() => {
     getClubList(0);
   }, []);
-  useEffect(() => {
-    const accessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjMiLCJpYXQiOjE2NTE5MDUzODcsImV4cCI6MTY1MTk5MTc4N30.1qGAqXHhWIKZE3zfdrQNf82VEWZEVwdO1ffBWC0SJn8';
-
-    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  }, []);
   return (
     <Container maxWidth="md">
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
@@ -68,17 +61,22 @@ export default function ClubIndex() {
         <IndexHeader />
 
         {/* 리스트 */}
-        <Stack
-          direction="column"
-          spacing={2}
-          alignItems="center"
-          sx={{ marginTop: '1rem' }}
-        >
-          {list.length ? <IndexList clubList={list} /> : <p>모임 없음</p>}
-        </Stack>
-        {/* 페이지네이션 */}
-        <Stack>
-          <Pagination pageInfo={res} />
+        <Stack direction="column" justifyContent="space-between" spacing={2}>
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems="center"
+            sx={{ marginTop: '1rem' }}
+          >
+            {list.length ? <IndexList clubList={list} /> : <p>모임 없음</p>}
+          </Stack>
+          {/* 페이지네이션 */}
+          <Pagination
+            pageInfo={res}
+            paginationSize={5}
+            onClickPage={getClubList}
+            bgColor="#ffaa00"
+          />
         </Stack>
       </Grid>
     </Container>

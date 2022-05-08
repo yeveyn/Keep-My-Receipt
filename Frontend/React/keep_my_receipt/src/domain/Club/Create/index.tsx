@@ -42,7 +42,7 @@ export default function GroupCreate() {
     const imgUrl = imgFile
       ? await axios
           .post(
-            '/fast/uploadImage',
+            'http://k6d104.p.ssafy.io:5555/fast/uploadImage',
             { image: imgFile },
             {
               headers: {
@@ -52,8 +52,10 @@ export default function GroupCreate() {
           )
           .catch((e) => {
             console.log(e);
+            return;
           })
       : '';
+    // console.log(imgUrl);
     // 모임 생성
     await axios
       .post('https://k6d104.p.ssafy.io/api/spring/club', {
