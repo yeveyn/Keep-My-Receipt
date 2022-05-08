@@ -3,15 +3,8 @@ import matplotlib.pyplot as plt
 import pytesseract
 import imutils
 import cv2
-import numpy as np
 import re
 from datetime import datetime
-
-# UploadFile 형식을 numpy array 형식으로 변환
-def uploadFileToNumpyArray(imgSrc):
-    image_nparray = np.asarray(bytearray(imgSrc), dtype=np.uint8)
-    org_image = cv2.imdecode(image_nparray, cv2.IMREAD_COLOR)
-    return org_image
 
 # 영수증의 윤곽선을 찾고 윤곽선에 맞는 이미지로 변환
 def findContour(image):
@@ -38,17 +31,15 @@ def findContour(image):
             break
 
     if screenCnt is None:
-        return image
+        return org_image
 
     cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
     transform_image = four_point_transform(org_image, screenCnt.reshape(4, 2)*ratio)
 
     return transform_image
 
-
-
 def tesseractOCR(receipt, type):
-    image = uploadFileToNumpyArray(receipt)
+    image = plt.imread(receipt)
     if type == "pic":
         image = findContour(image)
     configs = r'--oem 3 --psm 6'
