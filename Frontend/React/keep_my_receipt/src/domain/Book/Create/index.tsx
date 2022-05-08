@@ -1,6 +1,7 @@
 import React, { useReducer, useState } from 'react';
-import { Box, Button, Container, Pagination, Stack } from '@mui/material';
+import { Box, Container, Pagination } from '@mui/material';
 
+import Header from './Header';
 import Item from './Item';
 import bookReducer from '../bookReducer';
 import bookSample from './sample.json';
@@ -16,25 +17,13 @@ export default function BookCreate() {
   return (
     <Container maxWidth="md">
       {/* 화면 위쪽 거래 정보 */}
-      <Stack>
-        <h1 style={{ textAlign: 'center' }}>거래등록</h1>
-        <Stack direction="row" justifyContent="space-between">
-          <p>날짜</p>
-          <p>{state.date}</p>
-        </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <p>총금액</p>
-          <p>{state.totalValue}</p>
-        </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <p>거래 개수</p>
-          <p>{state.items.length}</p>
-        </Stack>
-        <Button variant="contained" color="secondary">
-          영수증 확인하기
-        </Button>
-      </Stack>
+      <Header
+        date={state.date}
+        totalValue={state.totalValue}
+        length={state.items.length}
+      />
 
+      {/* 중간 페이지네이션 버튼들 */}
       <Box>
         <Pagination
           count={state.items.length}
