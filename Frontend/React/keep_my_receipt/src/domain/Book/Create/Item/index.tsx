@@ -40,8 +40,16 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     dispatch(updateItem(itemIndex, 'mediumCategory', ''));
   };
 
+  // 토글 값과, 토글 버튼 생성
+  // 추가적으로 setter 함수도 추가해줌.
+  const { toggleValue, ToggleButtons } = useToggle(
+    mainCategories,
+    setMainCategory,
+  );
+
   // 대분류 바꾸는 함수
   const setLargeCategory = (value: string) => {
+    dispatch(updateItem(itemIndex, 'mainCategory', toggleValue));
     dispatch(updateItem(itemIndex, 'largeCategory', value));
     // 대분류가 바뀔 때, 중분류 초기화
     dispatch(updateItem(itemIndex, 'mediumCategory', ''));
@@ -60,17 +68,6 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     item.itemValue,
     dispatchAdapter('itemValue'),
   );
-
-  // 토글 값과, 토글 버튼 생성
-  // 추가적으로 setter 함수도 추가해줌.
-  const { toggleValue, ToggleButtons } = useToggle(
-    mainCategories,
-    setMainCategory,
-  );
-
-  useEffect(() => {
-    dispatch(updateItem(itemIndex, 'mainCategory', toggleValue));
-  }, []);
 
   useEffect(() => {
     console.log(item);
