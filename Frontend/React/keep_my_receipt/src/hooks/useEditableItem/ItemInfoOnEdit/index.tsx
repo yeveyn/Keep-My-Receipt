@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IconButton,
   TextField,
@@ -8,28 +8,26 @@ import {
   Typography,
 } from '@mui/material';
 import { CheckCircleOutline } from '@mui/icons-material';
-
-import { ItemInfoType } from '../Item';
+import useInput from '../../useInput';
 
 interface ItemInfoOnEditType {
-  itemInfo: ItemInfoType;
-  setItemInfo: React.Dispatch<React.SetStateAction<ItemInfoType>>;
+  titleName: string;
+  itemValue: string | number;
+  setItemValue: (value: string | number) => void;
+  setEditable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function ItemInfoOnEdit({
-  itemInfo,
-  setItemInfo,
+  titleName,
+  itemValue,
+  setItemValue,
+  setEditable,
 }: ItemInfoOnEditType) {
-  const [displayingName, setDisplayingName] = useState(itemInfo.name);
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    setDisplayingName(event.target.value);
-  };
+  const { changedValue, handleChange } = useInput(itemValue);
 
   const confirmEditItem = () => {
-    setItemInfo((info) => ({ ...info, name: displayingName, onEdit: false }));
+    setItemValue(changedValue);
+    setEditable(false);
   };
 
   return (
@@ -41,11 +39,11 @@ export default function ItemInfoOnEdit({
             <Stack direction="row" alignItems="center">
               {/* 분류명 */}
               <Typography display="inline" width="5rem">
-                내용
+                {titleName}
               </Typography>
 
               <TextField
-                value={displayingName}
+                value={changedValue}
                 onChange={handleChange}
                 onKeyDown={(e) => {
                   // Enter 누르면 저장
