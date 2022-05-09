@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Divider, List, Stack } from '@mui/material';
 
 // 컴포넌트
-import ItemCategoryEditable from '../ItemCategoryEditable';
+// import ItemCategoryEditable from '../ItemCategoryEditable';
 import ItemCategoryFixed from '../ItemCategoryFixed';
 // 훅
 import useToggle from '../../../../hooks/useToggle';
@@ -13,7 +13,7 @@ import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 import {
   mainCategories,
   largeCategories,
-  mediumCategories,
+  // mediumCategories,
 } from '../../tagListSample';
 
 interface ItemType {
@@ -23,55 +23,58 @@ interface ItemType {
 }
 
 export default function Item({ item, itemIndex, dispatch }: ItemType) {
-  // 토글 값과, 토글 버튼 생성
-  const { toggleValue, ToggleButtons } = useToggle(mainCategories);
-  // 대분류와 중분류 값 관리
-  const [selectedLargeCategory, setSelectedLargeCategory] = useState('');
-  const [totalMediums, setTotalMediums] = useState(mediumCategories);
-  const [currentMediumCategories, setCurrentMediumCategories] = useState(['']);
+  // dispatch와 다른 함수들을 이어주기 위한 어댑터 선언
+  // key값을 주면, 이 key값을 기반으로 함수 생성해 돌려줌.
+  // 이 함수는 아이템 객체에서 해당 key값을 찾아 value를 업데이트함.
+  const dispatchAdapter = (key: string) => (value: string | number) => {
+    dispatch(updateItem(itemIndex, key, value));
+  };
 
-  const [selectedMediumCategory, setSelectedMediumCategory] = useState('');
+  // 토글 값 바꾸는 함수
+  const setMainCategory = (value: string) => {
+    dispatch(updateItem(itemIndex, 'mainCategory', value));
+    // 토글 값이 바뀔 때 대분류와 중분류 초기화
+    dispatch(updateItem(itemIndex, 'largeCategory', ''));
+    dispatch(updateItem(itemIndex, 'mediumCategory', ''));
+  };
 
-  // 거래 내역 각각의 항목 이름 컴포넌트
+  // 대분류 바꾸는 함수
+  const setLargeCategory = (value: string) => {
+    dispatch(updateItem(itemIndex, 'largeCategory', value));
+    // 대분류가 바뀔 때, 중분류 초기화
+    dispatch(updateItem(itemIndex, 'mediumCategory', ''));
+  };
+
+  // const setMediumCategory = dispatchAdapter('mediumCategory');
+
+  // 항목 이름 컴포넌트
   const EditableItemForName = useEditableItem(
     '내용',
     item.itemName,
-    (value: string | number) => {
-      dispatch(updateItem(itemIndex, 'itemName', value));
-    },
+    dispatchAdapter('itemName'),
   );
 
-  // 거래 내역 각각의 항목별 금액 컴포넌트
+  // 항목 금액 컴포넌트
   const EditableItemForMoney = useEditableItem(
     '금액',
     item.itemValue,
-    (value: string | number) => {
-      dispatch(updateItem(itemIndex, 'itemValue', value));
-    },
+    dispatchAdapter('itemValue'),
   );
 
-  // 토글 값이 바뀔 때 대분류와 중분류 초기화
-  useEffect(() => {
-    setSelectedLargeCategory('');
-    setSelectedMediumCategory('');
-  }, [toggleValue]);
+  // 토글 값과, 토글 버튼 생성
+  // 추가적으로 setter 함수도 추가해줌.
+  const { toggleValue, ToggleButtons } = useToggle(
+    mainCategories,
+    setMainCategory,
+  );
 
-  // 대분류가 바뀔 때, 중분류 초기화
   useEffect(() => {
-    setSelectedMediumCategory('');
-    setCurrentMediumCategories(totalMediums[selectedLargeCategory]);
-  }, [selectedLargeCategory]);
-
-  // 중분류 수정/삭제 시, 기존 중분류 갱신
-  useEffect(() => {
-    setTotalMediums((obj) => ({
-      ...obj,
-      [selectedLargeCategory]: currentMediumCategories,
-    }));
-  }, [currentMediumCategories]);
+    console.log(item);
+  }, [item]);
 
   return (
     <>
+      {/* 주요 분류 (자산, 지출, 수입, 예산) */}
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -83,21 +86,22 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       </Stack>
       <Divider />
 
+      {/* 대분류 */}
       <ItemCategoryFixed
         name="대분류"
         list={largeCategories[toggleValue]}
-        category={selectedLargeCategory}
-        setCategory={setSelectedLargeCategory}
+        category={item.largeCategory}
+        setCategory={setLargeCategory}
       />
       <Divider />
 
-      <ItemCategoryEditable
+      {/* <ItemCategoryEditable
         name="중분류"
         list={currentMediumCategories}
         setList={setCurrentMediumCategories}
         category={selectedMediumCategory}
         setCategory={setSelectedMediumCategory}
-      />
+      /> */}
       <Divider />
 
       <List disablePadding>
