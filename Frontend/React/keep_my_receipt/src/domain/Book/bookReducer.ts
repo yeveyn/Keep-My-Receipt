@@ -109,6 +109,11 @@ export default function bookReducer(
 
     case DELETE_ITEM:
       /** 배열에서 해당 인덱스를 빼고 나머지를 반환 */
+      if (state.items.length < 2) {
+        alert('거래 내역에 아이템은 1개 이상 있어야 합니다!');
+        return state;
+      }
+
       return {
         ...state,
         items: [
