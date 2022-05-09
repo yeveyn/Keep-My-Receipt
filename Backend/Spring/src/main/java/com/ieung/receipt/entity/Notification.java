@@ -50,9 +50,9 @@ public class Notification extends BaseEntity {
     @Column
     private long clubId;
 
-    // 알림과 연관된 청구 reqId
+    // 알림과 연관된 청구 requestId
     @Column
-    private long reqId;
+    private long requestId;
 
     // 알림 열람 여부
     @Convert(converter = YNCodeConverter.class)
@@ -69,7 +69,7 @@ public class Notification extends BaseEntity {
                 .title(title)
                 .body(body)
                 .clubId(clubId)
-                .reqId(reqId)
+                .requestId(requestId)
                 .date(getCreateDate())
                 .isRead(isRead == YNCode.Y)
                 .notiCode(notiCode.getValue())
