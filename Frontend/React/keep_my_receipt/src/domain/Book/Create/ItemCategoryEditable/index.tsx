@@ -8,9 +8,8 @@ import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
 interface ItemCategoryType {
   name: string;
   list: string[];
-  setList: React.Dispatch<React.SetStateAction<string[]>>;
   category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: (value: string) => void;
 }
 
 function ItemCategoryEditable(props: ItemCategoryType) {
@@ -48,7 +47,7 @@ function ItemCategoryEditable(props: ItemCategoryType) {
         <Collapse in={isOpen} timeout="auto" unmountOnExit>
           <EditableList
             originalList={props.list}
-            setOriginalList={props.setList}
+            // setOriginalList={props.setList}
             setSelected={props.setCategory}
             collapsible
           />

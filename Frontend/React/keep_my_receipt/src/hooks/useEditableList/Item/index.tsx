@@ -13,8 +13,8 @@ interface ItemType {
   /** 각 리스트 아이템 */
   item: EditableItemType;
   setEditableList: React.Dispatch<React.SetStateAction<EditableItemType[]>>;
-  setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
-  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
+  // setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedItem: (value: string) => void;
   collapsible: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -43,7 +43,7 @@ export default function Item(props: ItemType) {
      * Original을 바꾸면 Editable도 따라 바뀜.
      * 그러므로 Original만 바꾸면 된다!
      */
-    props.setOriginalList((list) => list.filter((item) => item !== target));
+    // props.setOriginalList((list) => list.filter((item) => item !== target));
     // props.setEditableList((list) =>
     //   list.filter((item) => item.name !== target),
     // );

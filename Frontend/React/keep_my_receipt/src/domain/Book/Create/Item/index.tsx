@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Divider, List, Stack } from '@mui/material';
 
 // 컴포넌트
-// import ItemCategoryEditable from '../ItemCategoryEditable';
+import ItemCategoryEditable from '../ItemCategoryEditable';
 import ItemCategoryFixed from '../ItemCategoryFixed';
 // 훅
 import useToggle from '../../../../hooks/useToggle';
@@ -13,6 +13,7 @@ import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 import {
   mainCategories,
   largeCategories,
+  mediumCategories,
   // mediumCategories,
 } from '../../tagListSample';
 
@@ -45,7 +46,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     dispatch(updateItem(itemIndex, 'mediumCategory', ''));
   };
 
-  // const setMediumCategory = dispatchAdapter('mediumCategory');
+  const setMediumCategory = dispatchAdapter('mediumCategory');
 
   // 항목 이름 컴포넌트
   const EditableItemForName = useEditableItem(
@@ -67,6 +68,10 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     mainCategories,
     setMainCategory,
   );
+
+  useEffect(() => {
+    dispatch(updateItem(itemIndex, 'mainCategory', toggleValue));
+  }, []);
 
   useEffect(() => {
     console.log(item);
@@ -95,13 +100,12 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       />
       <Divider />
 
-      {/* <ItemCategoryEditable
+      <ItemCategoryEditable
         name="중분류"
-        list={currentMediumCategories}
-        setList={setCurrentMediumCategories}
-        category={selectedMediumCategory}
-        setCategory={setSelectedMediumCategory}
-      /> */}
+        list={mediumCategories[item.largeCategory]}
+        category={item.mediumCategory}
+        setCategory={setMediumCategory}
+      />
       <Divider />
 
       <List disablePadding>

@@ -7,7 +7,7 @@ import { EditableItemType } from '../types';
 interface ItemAdderType {
   editableList: EditableItemType[];
   setEditableList: React.Dispatch<React.SetStateAction<EditableItemType[]>>;
-  setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
+  // setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export default function ItemAdder(props: ItemAdderType) {

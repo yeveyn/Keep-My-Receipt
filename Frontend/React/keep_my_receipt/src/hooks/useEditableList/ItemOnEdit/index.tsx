@@ -7,7 +7,7 @@ import { EditableItemType } from '../types';
 interface ItemOnEditType {
   item: EditableItemType;
   setEditableList: React.Dispatch<React.SetStateAction<EditableItemType[]>>;
-  setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
+  // setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export default function ItemOnEdit(props: ItemOnEditType) {
@@ -24,19 +24,19 @@ export default function ItemOnEdit(props: ItemOnEditType) {
     // 새로 값을 추가한 경우, OriginalList에는 없어서 따로 처리해야 함.
     // 새로운 값의 name은 ''이므로, 현재 아이템이 공백이면 새로 추가한 값임.
     if (props.item.name === '') {
-      props.setOriginalList((list) => list.concat(changedName));
+      // props.setOriginalList((list) => list.concat(changedName));
       return;
     }
 
     // 원래 리스트에 있던 값 바꿔줘야 함
-    props.setOriginalList((list) =>
-      list.map((item) => {
-        if (item === given.name) {
-          return changedName;
-        }
-        return item;
-      }),
-    );
+    // props.setOriginalList((list) =>
+    //   list.map((item) => {
+    //     if (item === given.name) {
+    //       return changedName;
+    //     }
+    //     return item;
+    //   }),
+    // );
   };
 
   return (
