@@ -54,7 +54,13 @@ export default function RequestIndex() {
 
   return (
     <Container maxWidth="md">
-      <div style={matches ? { marginTop: 30 } : { marginTop: 0 }}>
+      <div
+        style={
+          matches
+            ? { marginTop: 100, marginBottom: 0, width: '100%' }
+            : { marginTop: 70, marginBottom: 70, width: '100%' }
+        }
+      >
         <Grid
           container
           direction="column"
