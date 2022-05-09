@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, useMediaQuery } from '@mui/material';
 
-export default function SubChartIndex() {
+export default function MainChartIndex() {
   const { params } = useParams();
   const matches = useMediaQuery('(min-width:500px)');
 

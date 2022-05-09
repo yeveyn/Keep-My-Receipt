@@ -33,7 +33,7 @@ public class NotificationService {
     private final PushService pushService;
 
     @Transactional(readOnly = false)
-    public void createOneNotification(NotiCode notiCode, String title, String body, Long clubId, List<CrewToken> crewTokens) {
+    public void createOneNotification(NotiCode notiCode, String title, String body, Club club, List<CrewToken> crewTokens) {
         if (crewTokens == null || crewTokens.size() == 0) {
             return;
         }
@@ -42,7 +42,7 @@ public class NotificationService {
                 .title(title)
                 .body(body)
                 .crew(crewTokens.get(0).getCrew())
-                .clubId(clubId)
+                .club(club)
                 .notiCode(notiCode)
                 .isRead(YNCode.N)
                 .build();
