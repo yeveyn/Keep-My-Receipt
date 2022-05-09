@@ -83,6 +83,9 @@ export default function SignUpForm() {
   };
 
   // 유효성 검사
+  let totalNum = 0;
+  let onSubmitCheck = false;
+  // const [onSubmitCheck, setOnSubmitCheck] = useState(false);
   const [helpEmailText, setEmailHelpText] = useState('');
   const [helpPasswordText, setPasswordHelpText] = useState('');
   const [helpPasswordCheckText, setPasswordCheckHelpText] = useState('');
@@ -94,6 +97,8 @@ export default function SignUpForm() {
       .then(function (response) {
         if (response.data.output == 0) {
           setEmailHelpText('중복된 이메일입니다');
+        } else {
+          totalNum += 1;
         }
       })
       .catch(function (error) {
@@ -106,6 +111,7 @@ export default function SignUpForm() {
     if (regEmail.test(email) === false) {
       setEmailHelpText('이메일 형식이 맞지 않습니다.');
     } else {
+      totalNum += 1;
       setEmailHelpText('');
     }
   };
@@ -119,6 +125,7 @@ export default function SignUpForm() {
         '비밀번호는 8자 이상, 특수문자, 영문자, 숫자를 1개 이상 포함해야 합니다.',
       );
     } else {
+      totalNum += 1;
       setPasswordHelpText('');
     }
   };
@@ -128,9 +135,14 @@ export default function SignUpForm() {
     if (password != checkPassword) {
       setPasswordCheckHelpText('비밀번호가 일치하지 않습니다.');
     } else {
+      totalNum += 1;
       setPasswordCheckHelpText('');
     }
   };
+
+  if (totalNum === 4) {
+    onSubmitCheck = true;
+  }
 
   getToken(messaging, {
     // FCM에서 웹 사용자 인증 정보 구성
@@ -238,7 +250,11 @@ export default function SignUpForm() {
           />
           <Stack>
             {!isLoading && (
-              <ColorButton variant="contained" type="submit">
+              <ColorButton
+                variant="contained"
+                type="submit"
+                disabled={onSubmitCheck}
+              >
                 확인
               </ColorButton>
             )}

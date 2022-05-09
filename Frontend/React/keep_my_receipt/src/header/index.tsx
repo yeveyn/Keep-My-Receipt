@@ -11,12 +11,14 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { yellow } from '@mui/material/colors';
 import { Stack } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const pages = [
   ['/login', '로그인'],
   [`/club/${1}/book`, '장부내역'],
-  ['/', '분석차트'],
+  ['/club', '분석차트'],
   ['/book', '거래등록'],
   [`/club/${1}/manage`, '모임관리'],
   ['/', '보고서'],
@@ -25,6 +27,18 @@ const alarms = ['알림', '알림2', '알림3'];
 const settings = ['프로필', '계정[탈퇴]', '로그아웃'];
 
 const ResponsiveAppBar = () => {
+  // 토큰이 있다면, session storage에서 꺼내 쓰기
+
+  const accessToken = sessionStorage.getItem('accessToken');
+  if (accessToken) {
+    axios.defaults.headers.common['Authorization'] = accessToken;
+    console.log(axios.defaults.headers.common['Authorization']);
+  }
+  const navigate = useNavigate();
+
+  const onClickButton = (page: any) => {
+    navigate(page[0]);
+  };
   // 설정 버튼
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
@@ -52,13 +66,20 @@ const ResponsiveAppBar = () => {
 
   return (
     <header>
-      <AppBar style={{ background: '#ffa500' }}>
+      <AppBar
+        sx={{
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          position: 'fixed',
+        }}
+        style={{ background: '#ffa500' }}
+      >
         <Toolbar
           sx={{
             direction: 'row',
             float: 'right',
-            border: 1,
-            display: 'flex',
           }}
         >
           <Typography
@@ -89,7 +110,10 @@ const ResponsiveAppBar = () => {
           >
             {pages.map((page) => (
               <Button
-                href={page[0]}
+                onClick={() => {
+                  onClickButton(page);
+                }}
+                // href={page[0]}
                 key={page[1]}
                 sx={{
                   my: 2,
