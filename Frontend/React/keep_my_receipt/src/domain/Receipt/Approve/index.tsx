@@ -113,10 +113,16 @@ export default function ApproveIndex() {
 
   return (
     <Container maxWidth="md">
-      <div style={matches ? { marginTop: 30 } : { marginTop: 0 }}>
+      <div
+        style={
+          matches
+            ? { marginTop: 100, marginBottom: 0, width: '100%' }
+            : { marginTop: 70, marginBottom: 70, width: '100%' }
+        }
+      >
         <Grid
           container
-          direction="column"
+          direction={matches ? 'row' : 'column'}
           justifyContent="center"
           alignItems="center"
           spacing={2}
@@ -153,8 +159,8 @@ export default function ApproveIndex() {
               />
             </Card>
             <br></br>
-            {renderingItems()}
           </Stack>
+          {renderingItems()}
         </Grid>
         <br></br>
         <Grid

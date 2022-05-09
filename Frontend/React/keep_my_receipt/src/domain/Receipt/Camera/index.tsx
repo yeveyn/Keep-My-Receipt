@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Container } from '@mui/material';
+import { Stack, Container, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CreateImage from './image';
 import CreateForm from './form';
@@ -11,6 +11,8 @@ interface formProps {
 
 export default function ReceiptCreate() {
   const navigate = useNavigate();
+  const matches = useMediaQuery('(min-width:500px)');
+
   const [check, setCheck] = useState(false);
   // form
   const [form, setForm] = useState<formProps>({
@@ -50,7 +52,15 @@ export default function ReceiptCreate() {
 
   return (
     <Container maxWidth="md">
-      <Stack direction="column" spacing={3}>
+      <Stack
+        direction="column"
+        spacing={3}
+        style={
+          matches
+            ? { marginTop: 50, marginBottom: 30, width: '100%' }
+            : { marginTop: 50, marginBottom: 100, width: '100%' }
+        }
+      >
         <br></br>
         {/* 본문 */}
         <Stack spacing={3}>
