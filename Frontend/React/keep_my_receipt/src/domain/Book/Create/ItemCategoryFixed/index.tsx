@@ -14,7 +14,7 @@ interface ItemCategoryType {
   name: string;
   list: string[];
   category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  setCategory: (value: string) => void;
 }
 
 function ItemCategory({ name, list, category, setCategory }: ItemCategoryType) {

@@ -9,10 +9,10 @@ import { toEditableArray } from './services';
 interface EditableListType {
   /** 원래 리스트 (상위 컴포넌트에서 만들어야 함) */
   originalList: string[];
-  /** 원래 리스트 바꾸는 함수 */
-  setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
+  // /** 원래 리스트 바꾸는 함수 */
+  // setOriginalList: React.Dispatch<React.SetStateAction<string[]>>;
   /** 현재 리스트에서 선택된 아이템 (상위 컴포넌트에서 만들어야 함) */
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected: (value: string) => void;
   /** 접이식 컴포넌트 연동 여부 (옵션) */
   collapsible?: boolean;
 }
@@ -41,7 +41,7 @@ export default function useEditableList() {
               <ItemOnEdit
                 item={item}
                 setEditableList={setEditableList}
-                setOriginalList={props.setOriginalList}
+                // setOriginalList={props.setOriginalList}
                 key={item.name + index}
               />
             ) : (
@@ -49,7 +49,7 @@ export default function useEditableList() {
               <Item
                 item={item}
                 setEditableList={setEditableList}
-                setOriginalList={props.setOriginalList}
+                // setOriginalList={props.setOriginalList}
                 setSelectedItem={props.setSelected}
                 collapsible={props.collapsible ? true : false}
                 setOpen={setOpen}
@@ -62,7 +62,7 @@ export default function useEditableList() {
           <ItemAdder
             editableList={editableList}
             setEditableList={setEditableList}
-            setOriginalList={props.setOriginalList}
+            // setOriginalList={props.setOriginalList}
           />
         </List>
       </>

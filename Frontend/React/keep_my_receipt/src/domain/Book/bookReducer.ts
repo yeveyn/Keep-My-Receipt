@@ -102,7 +102,7 @@ export default function bookReducer(
         items: state.items.map((item, index) =>
           // 키-값을 받아 갱신
           index === action.itemIndex
-            ? { ...item, [action.keyName]: [action.keyValue] }
+            ? { ...item, [action.keyName]: action.keyValue }
             : item,
         ),
       };
