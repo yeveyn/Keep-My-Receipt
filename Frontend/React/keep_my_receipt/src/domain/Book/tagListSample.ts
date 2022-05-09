@@ -36,3 +36,13 @@ export const mediumCategories = {
   부스수익: ['부스수익'],
   이자수익: ['이자수익'],
 } as StringArrayObjectType;
+
+export const tag1Categories = ['한식', '중식', '양식', '일식'];
+
+export const tag2Categories = {
+  '': [],
+  한식: ['국밥', '갈비'],
+  중식: ['짜장면', '탕수육', '팔보채'],
+  양식: ['치킨', '피자', '파스타'],
+  일식: ['돈까츠', '스시'],
+} as StringArrayObjectType;

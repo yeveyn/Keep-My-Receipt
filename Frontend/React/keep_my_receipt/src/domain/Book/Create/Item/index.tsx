@@ -14,7 +14,8 @@ import {
   mainCategories,
   largeCategories,
   mediumCategories,
-  // mediumCategories,
+  tag1Categories,
+  tag2Categories,
 } from '../../tagListSample';
 
 interface ItemType {
@@ -45,8 +46,6 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     // 대분류가 바뀔 때, 중분류 초기화
     dispatch(updateItem(itemIndex, 'mediumCategory', ''));
   };
-
-  const setMediumCategory = dispatchAdapter('mediumCategory');
 
   // 항목 이름 컴포넌트
   const EditableItemForName = useEditableItem(
@@ -104,7 +103,23 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
         name="중분류"
         list={mediumCategories[item.largeCategory]}
         category={item.mediumCategory}
-        setCategory={setMediumCategory}
+        setCategory={dispatchAdapter('mediumCategory')}
+      />
+      <Divider />
+
+      <ItemCategoryEditable
+        name="태그 1"
+        list={tag1Categories}
+        category={item.tag1}
+        setCategory={dispatchAdapter('tag1')}
+      />
+      <Divider />
+
+      <ItemCategoryEditable
+        name="태그 2"
+        list={tag2Categories[item.tag1]}
+        category={item.tag2}
+        setCategory={dispatchAdapter('tag2')}
       />
       <Divider />
 
