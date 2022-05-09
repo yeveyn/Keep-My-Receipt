@@ -11,7 +11,12 @@ import {
   DialogActions,
   DialogContent,
   TextField,
+  Stack,
 } from '@mui/material';
+import LargeTagChart from './LargeTagChart';
+import FlowChart from './FlowChart';
+import axios from 'axios';
+import sample1 from './sample1.json';
 
 export default function MainChartIndex() {
   const { params } = useParams();
@@ -25,6 +30,7 @@ export default function MainChartIndex() {
   const curEnd = year.concat('-').concat(month).concat('-').concat(day);
   const [startDate, setStartDate] = useState(curStart);
   const [endDate, setEndDate] = useState(curEnd);
+  const [sumValue, setSumValue] = useState(0);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -52,15 +58,35 @@ export default function MainChartIndex() {
     }
     setEndDate(e.target.value);
   }
+  const [list, setList] = useState([{ id: '0', value: '0', rate: '0' }]);
   function loadData() {
     console.log('load Data from DB');
+    setList(sample1);
+    let tmpSumValue = 0;
+    sample1.forEach((item) => {
+      tmpSumValue += parseInt(item.value);
+    });
+    setSumValue(tmpSumValue);
+    // const getClubList = async () => {
+    //   await axios
+    //     .get('https://k6d104.p.ssafy.io/api/spring/clubs/joined', {
+    //       params: {
+    //         page: page ? page : 0,
+    //         size: 5,
+    //         sort: 'id,DESC',
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // };
   }
-
-  // useEffect(() => {
-  //   fetch("http://k6d104.p.ssafy.io/api/spring/")
-  //     .then((res) => res.json())
-  //     .then((data) => setRequests(data));
-  // }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <Container maxWidth="md">
@@ -124,43 +150,52 @@ export default function MainChartIndex() {
             : { marginTop: 70, marginBottom: 100, width: '100%' }
         }
       >
-        <Card
-          variant="outlined"
-          style={{
-            padding: 15,
-            width: '100%',
-          }}
-        >
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            style={{ width: '100%' }}
+        <Stack spacing={2} style={{ width: '100%' }}>
+          <Card
+            variant="outlined"
+            style={{
+              padding: 15,
+              width: '100%',
+            }}
           >
-            <Grid xs={8.5} sm={4} md={4}>
-              <Typography
-                style={{
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  width: '100%',
-                }}
-              >
-                {startDate}　~　{endDate}
-              </Typography>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              alignItems="center"
+              style={{ width: '100%' }}
+            >
+              <Grid xs={8} sm={8} md={8} container justifyContent="start">
+                <Typography
+                  style={{
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    width: '100%',
+                  }}
+                >
+                  {startDate}　~　{endDate}
+                </Typography>
+              </Grid>
+              <Grid xs={4} sm={4} md={4} container justifyContent="end">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ fontWeight: 'bold' }}
+                  onClick={handleOpen}
+                >
+                  기간설정
+                </Button>
+              </Grid>
             </Grid>
-            <Grid xs={3} sm={2} md={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ fontWeight: 'bold' }}
-                onClick={handleOpen}
-              >
-                기간설정
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
+          <LargeTagChart
+            sumValue={sumValue}
+            items={list}
+            startDate={startDate}
+            endDate={endDate}
+          />
+          <FlowChart />
+        </Stack>
       </Grid>
     </Container>
   );
