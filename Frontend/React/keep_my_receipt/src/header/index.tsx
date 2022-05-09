@@ -13,7 +13,6 @@ import { yellow } from '@mui/material/colors';
 import { Stack } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 const pages = [
   ['/login', '로그인'],
