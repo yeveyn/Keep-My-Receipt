@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, List, ListItem, Stack } from '@mui/material';
+import { Divider, List, Stack } from '@mui/material';
 
 import useToggle from '../../../../hooks/useToggle';
+import useEditableItem from '../../../../hooks/useEditableItem';
 import ItemCategoryEditable from '../ItemCategoryEditable';
 import ItemCategoryFixed from '../ItemCategoryFixed';
-import ItemInfoOnEdit from '../ItemInfoOnEdit';
-import ItemInfoOnShow from '../ItemInfoOnShow';
-import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
-import { BookAction, BookItemType } from '../../bookReducer';
-
-export interface ItemInfoType {
-  name: string;
-  onEdit: boolean;
-  price: number;
-}
+import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 
 // string 배열로 구성된 객체 타입 일반화
 // 자세한 건 TypeScript의 인덱스 시그니처 참고
@@ -69,19 +61,24 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
   const [currentMediumCategories, setCurrentMediumCategories] = useState(['']);
 
   const [selectedMediumCategory, setSelectedMediumCategory] = useState('');
-  const [itemInfo, setItemInfo] = useState({
-    name: item.itemName,
-    onEdit: false,
-    price: item.itemValue,
-  });
 
-  useEffect(() => {
-    setItemInfo((info) => ({
-      ...info,
-      name: item.itemName,
-      price: item.itemValue,
-    }));
-  }, [item]);
+  // 거래 내역 각각의 항목 이름 컴포넌트
+  const EditableItemForName = useEditableItem(
+    '내용',
+    item.itemName,
+    (value: string | number) => {
+      dispatch(updateItem(itemIndex, 'itemName', value));
+    },
+  );
+
+  // 거래 내역 각각의 항목별 금액 컴포넌트
+  const EditableItemForMoney = useEditableItem(
+    '금액',
+    item.itemValue,
+    (value: string | number) => {
+      dispatch(updateItem(itemIndex, 'itemValue', value));
+    },
+  );
 
   // 토글 값이 바뀔 때 대분류와 중분류 초기화
   useEffect(() => {
@@ -136,20 +133,9 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <Divider />
 
       <List disablePadding>
-        {itemInfo.onEdit ? (
-          <ItemInfoOnEdit itemInfo={itemInfo} setItemInfo={setItemInfo} />
-        ) : (
-          <ItemInfoOnShow itemInfo={itemInfo} setItemInfo={setItemInfo} />
-        )}
+        <EditableItemForName />
         <Divider />
-
-        <ListItem>
-          <ListItemTextWithSubtext
-            text="금액"
-            subtext={itemInfo.price.toString()}
-            inset
-          />
-        </ListItem>
+        <EditableItemForMoney />
       </List>
     </>
   );
