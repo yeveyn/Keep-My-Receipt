@@ -19,7 +19,6 @@ export default function SearchList({ clubList }: { clubList: any }) {
 
   const onClick = async (info: any) => {
     // 모임 내 권한 조회를 통해 가입 여부 확인
-    // checkJoined: 200이면 가입회원 0이면 미가입
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${info.id}/crew/auth`)
       .then((res) => {
