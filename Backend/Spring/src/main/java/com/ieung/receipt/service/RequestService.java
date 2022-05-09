@@ -52,6 +52,8 @@ public class RequestService {
         AuthCode authCode = clubCrewRepository.findAuthCodeByClubIdAndCrewId(clubId, crewId);
         if (authCode == null) {
             throw new ApiMessageException("가입된 모임이 아닙니다.");
+        } else if (authCode == AuthCode.NONE || authCode == AuthCode.NORMAL) {
+            throw new AccessDeniedException("");
         }
 
         Page<Request> result;
@@ -72,6 +74,13 @@ public class RequestService {
     public Request getRequest(long requestId, Long crewId) {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new ApiMessageException("해당하는 청구 내역이 없습니다."));
+
+        AuthCode authCode = clubCrewRepository.findAuthCodeByClubIdAndCrewId(request.getClub().getId(), crewId);
+        if (authCode == null) {
+            throw new ApiMessageException("가입된 모임이 아닙니다.");
+        } else if (request.getCrewId() != crewId && (authCode == AuthCode.NONE || authCode == AuthCode.NORMAL)) {
+            throw new AccessDeniedException("");
+        }
 
         if (!clubCrewRepository.findExistByClubIdAndCrewId(request.getClub().getId(), crewId)) {
             throw new ApiMessageException("가입된 모임이 아닙니다.");
