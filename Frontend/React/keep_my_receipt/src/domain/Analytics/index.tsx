@@ -17,6 +17,7 @@ import LargeTagChart from './LargeTagChart';
 import FlowChart from './FlowChart';
 import axios from 'axios';
 import sample1 from './sample1.json';
+import sample3 from './sample3.json';
 
 export default function MainChartIndex() {
   const { params } = useParams();
@@ -30,7 +31,6 @@ export default function MainChartIndex() {
   const curEnd = year.concat('-').concat(month).concat('-').concat(day);
   const [startDate, setStartDate] = useState(curStart);
   const [endDate, setEndDate] = useState(curEnd);
-  const [sumValue, setSumValue] = useState(0);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -58,15 +58,27 @@ export default function MainChartIndex() {
     }
     setEndDate(e.target.value);
   }
-  const [list, setList] = useState([{ id: '0', value: '0', rate: '0' }]);
+  const [tagItems, setTagItems] = useState([
+    { id: '0', value: '0', rate: '0' },
+  ]);
+  const [sumTagValue, setSumTagValue] = useState(0);
+  const [flowItems, setFlowItems] = useState([{ date: '2022.5', value: '0' }]);
+  const [sumFlowValue, setSumFlowValue] = useState(0);
+
   function loadData() {
     console.log('load Data from DB');
-    setList(sample1);
-    let tmpSumValue = 0;
+    setTagItems(sample1);
+    setFlowItems(sample3);
+    let tmpSumTagValue = 0;
     sample1.forEach((item) => {
-      tmpSumValue += parseInt(item.value);
+      tmpSumTagValue += parseInt(item.value);
     });
-    setSumValue(tmpSumValue);
+    setSumTagValue(tmpSumTagValue);
+    let tmpSumFlowValue = 0;
+    sample3.forEach((item) => {
+      tmpSumFlowValue += parseInt(item.value);
+    });
+    setSumFlowValue(tmpSumFlowValue);
     // const getClubList = async () => {
     //   await axios
     //     .get('https://k6d104.p.ssafy.io/api/spring/clubs/joined', {
@@ -189,12 +201,17 @@ export default function MainChartIndex() {
             </Grid>
           </Card>
           <LargeTagChart
-            sumValue={sumValue}
-            items={list}
+            sumValue={sumTagValue}
+            items={tagItems}
             startDate={startDate}
             endDate={endDate}
           />
-          <FlowChart />
+          <FlowChart
+            sumValue={sumFlowValue}
+            items={flowItems}
+            startDate={startDate}
+            endDate={endDate}
+          />
         </Stack>
       </Grid>
     </Container>

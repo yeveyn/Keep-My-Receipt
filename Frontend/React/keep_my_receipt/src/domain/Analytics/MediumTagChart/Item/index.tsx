@@ -21,13 +21,6 @@ export default function ItemIndex({ item }: { item: ItemType }) {
           padding: 15,
           width: '100%',
         }}
-        sx={{
-          boxShadow: 1,
-          ':hover': {
-            boxShadow: 6,
-            backgroundColor: '#FFF5E1',
-          },
-        }}
       >
         <Grid
           container
