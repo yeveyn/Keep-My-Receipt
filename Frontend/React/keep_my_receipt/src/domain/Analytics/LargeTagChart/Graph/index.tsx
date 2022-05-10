@@ -42,7 +42,6 @@ export default function Graph({
     ],
   };
   const option = {
-    maintainAspectRatio: false,
     plugins: {
       datalabels: {
         formatter: (value: any, context: any) => {

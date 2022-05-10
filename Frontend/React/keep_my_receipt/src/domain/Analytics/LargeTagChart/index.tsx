@@ -36,7 +36,11 @@ export default function LargeTagChart({
             태그별 통계
           </Typography>
         </Grid>
-        <Grid container justifyContent="center" style={{ width: '100%' }}>
+        <Grid
+          container
+          justifyContent="center"
+          style={{ width: '100%', marginLeft: 13 }}
+        >
           <Graph sumValue={sumValue} items={items} />
         </Grid>
         <Grid

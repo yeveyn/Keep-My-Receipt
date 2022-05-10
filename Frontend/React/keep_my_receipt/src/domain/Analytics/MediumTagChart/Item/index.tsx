@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Card, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 interface ItemType {
   id: String;
@@ -8,22 +7,7 @@ interface ItemType {
   rate: String;
 }
 
-export default function ItemIndex({
-  item,
-  startDate,
-  endDate,
-}: {
-  item: ItemType;
-  startDate: String;
-  endDate: String;
-}) {
-  const navigate = useNavigate();
-  function goSubChart() {
-    // Todo : club id prop에서 빼오기... 날짜랑 클럽이름이랑 1차태그까지 파라미터로!
-    navigate('/club/1/analytics/subChart', {
-      state: { id: item.id, sumValue: item.value },
-    });
-  }
+export default function ItemIndex({ item }: { item: ItemType }) {
   return (
     <Grid
       container
@@ -44,7 +28,6 @@ export default function ItemIndex({
             backgroundColor: '#FFF5E1',
           },
         }}
-        onClick={goSubChart}
       >
         <Grid
           container
@@ -57,16 +40,11 @@ export default function ItemIndex({
             &nbsp;&nbsp;
             <Typography style={{ color: 'gray' }}>{item.rate}</Typography>
           </Grid>
-          <Grid xs={4} sm={4} md={4} container justifyContent="end">
+          <Grid xs={5} sm={5} md={5} container justifyContent="end">
             <Typography>
               {item.value
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                 .concat('원')}
-            </Typography>
-          </Grid>
-          <Grid xs={1} sm={1} md={1} container justifyContent="center">
-            <Typography style={{ fontWeight: 'bold', color: 'blue' }}>
-              &gt;
             </Typography>
           </Grid>
         </Grid>
