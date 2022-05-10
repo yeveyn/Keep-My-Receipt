@@ -30,6 +30,7 @@ const Transition = React.forwardRef(function Transition(
 export default function ItemDialog({ icon, content }: ItemDialogType) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // 아이콘 클릭 시 겹치는 메뉴 열리는 이벤트 차단
     e.stopPropagation();
     setOpen(true);
   };
@@ -40,9 +41,7 @@ export default function ItemDialog({ icon, content }: ItemDialogType) {
 
   return (
     <>
-      <IconButton disableRipple onClick={handleOpen}>
-        {icon}
-      </IconButton>
+      <IconButton onClick={handleOpen}>{icon}</IconButton>
       <Dialog
         open={open}
         onClose={handleClose}

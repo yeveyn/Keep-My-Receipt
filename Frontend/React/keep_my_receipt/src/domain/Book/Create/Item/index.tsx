@@ -90,15 +90,16 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       {/* 대분류 */}
       <ItemCategoryFixed
         name="대분류"
+        dialogContent={<p>설명</p>}
         list={largeCategories[toggleValue]}
         category={item.largeCategory}
         setCategory={setLargeCategory}
-        dialogContent={<p>설명</p>}
       />
       <Divider />
 
       <ItemCategoryEditable
         name="중분류"
+        dialogContent={<p>설명</p>}
         list={mediumCategories[item.largeCategory]}
         category={item.mediumCategory}
         setCategory={dispatchAdapter('mediumCategory')}
@@ -107,6 +108,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
 
       <ItemCategoryEditable
         name="태그 1"
+        dialogContent={<p>설명</p>}
         list={tag1Categories}
         category={item.tag1}
         setCategory={dispatchAdapter('tag1')}
@@ -115,6 +117,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
 
       <ItemCategoryEditable
         name="태그 2"
+        dialogContent={<p>설명</p>}
         list={tag2Categories[item.tag1]}
         category={item.tag2}
         setCategory={dispatchAdapter('tag2')}

@@ -36,8 +36,8 @@ function ItemCategory({
   return (
     <>
       <List disablePadding>
-        <ListItemButton onClick={handleExpand}>
-          {/* 아이콘 버튼 & 다이얼로그 */}
+        <ListItemButton onClick={handleExpand} disableRipple>
+          {/* 아이콘 버튼 with 다이얼로그 */}
           <ItemDialog icon={<Info />} content={dialogContent} />
 
           {/* 분류명 & 선택된 항목 */}
