@@ -41,7 +41,13 @@ export default function ManageJoin({ clubInfo }: { clubInfo: any }) {
       })
       .then((response) => {
         // console.log(response.data.data.list[0].name);
-        setRes(response.data.data);
+        const output = response.data.output;
+        if (output === 200) {
+          console.log(response.data.data);
+          setRes(response.data.data);
+        } else if (output === 0) {
+          console.log(response.data.msg);
+        }
       })
       .catch((e) => {
         console.log(e);
