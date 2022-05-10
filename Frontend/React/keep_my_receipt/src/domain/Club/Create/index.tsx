@@ -43,7 +43,7 @@ export default function GroupCreate() {
     const imgUrl = imgFile
       ? await axios
           .post(
-            'http://k6d104.p.ssafy.io:5555/fast/uploadImage',
+            'https://k6d104.p.ssafy.io/fast/uploadImage',
             { image: imgFile },
             {
               headers: {
