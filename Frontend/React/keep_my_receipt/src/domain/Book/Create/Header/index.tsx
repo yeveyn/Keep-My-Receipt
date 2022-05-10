@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Button, Stack, TextField } from '@mui/material';
 
 import { BookAction, updateBook } from '../../bookReducer';
+import toCurrency from '../../../../services/toCurrency';
 
 interface HeaderType {
   date: string;
@@ -41,7 +42,7 @@ function Header({ date, totalValue, length, dispatch }: HeaderType) {
         </Stack>
         <Stack direction="row" justifyContent="space-between">
           <p>총금액</p>
-          <p>{totalValue}</p>
+          <p>{toCurrency(totalValue)}</p>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
           <p>거래 개수</p>
