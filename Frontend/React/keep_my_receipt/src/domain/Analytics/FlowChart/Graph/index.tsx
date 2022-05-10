@@ -48,6 +48,11 @@ export default function Graph({ items }: { items: ItemType[] }) {
       datalabels: matches
         ? {
             display: true,
+            formatter: (value: any, context: any) => {
+              return value
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+            },
           }
         : { display: false },
     },
