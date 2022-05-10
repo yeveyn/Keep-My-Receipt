@@ -23,6 +23,7 @@ export default function BookCreate() {
         date={state.date}
         totalValue={state.totalValue}
         length={state.items.length}
+        dispatch={dispatch}
       />
 
       {/* 페이지네이션 버튼들 */}
