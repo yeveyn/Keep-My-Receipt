@@ -4,9 +4,9 @@ import ItemIndex from './Item';
 import { Grid, Typography, Stack, Paper } from '@mui/material';
 
 interface ItemType {
-  id: String;
-  value: String;
-  rate: String;
+  id: string;
+  value: string;
+  rate: string;
 }
 
 export default function LargeTagChart({
@@ -47,7 +47,12 @@ export default function LargeTagChart({
           style={{ width: '100%', marginTop: 20 }}
         >
           {items.map((item) => (
-            <ItemIndex item={item} startDate={startDate} endDate={endDate} />
+            <ItemIndex
+              item={item}
+              startDate={startDate}
+              endDate={endDate}
+              key={item.id}
+            />
           ))}
         </Grid>
         <Paper
