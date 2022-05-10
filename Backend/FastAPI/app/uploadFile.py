@@ -4,7 +4,7 @@ import secrets
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG_DIR = os.path.join(BASE_DIR, 'images/')
-SERVER_IMG_DIR = os.path.join('http://localhost:5555/', 'images/')
+SERVER_IMG_DIR = os.path.join('https://localhost/fast', 'images/')
 
 def uploadImg(image):
     currentTime = datetime.datetime.now().strftime("%Y%m%d&H%M%S")
