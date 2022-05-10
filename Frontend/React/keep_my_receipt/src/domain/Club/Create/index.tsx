@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IconButton, Stack, Container } from '@mui/material';
-import { ArrowBackIosNew, ContactlessOutlined } from '@mui/icons-material';
+import { ArrowBackIosNew } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreateImage from './image';
