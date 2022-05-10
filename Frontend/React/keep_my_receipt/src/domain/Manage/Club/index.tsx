@@ -37,6 +37,11 @@ export default function ManageClub({ clubInfo, getClubInfo }: ManageClubProps) {
       [name]: value,
     });
   };
+
+  const onImgChange = (file: any) => {
+    setImgFile(file);
+  };
+
   const onClick = async () => {
     if (formName === '') {
       setCheck(true);
@@ -44,33 +49,33 @@ export default function ManageClub({ clubInfo, getClubInfo }: ManageClubProps) {
       return;
     }
     // 이미지 파일 업로드하여 url 가져오기
-    // axios.defaults.withCredentials = false;
-    // const imgUrl = imgFile
-    //   ? await axios
-    //       .post(
-    //         'https://k6d104.p.ssafy.io/fast/uploadImage',
-    //         { image: imgFile },
-    //         {
-    //           headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //           },
-    //         },
-    //       )
-    //       .then((res) => {
-    //         console.log(res.data.file);
-    //         return res.data.file;
-    //       })
-    //       .catch((e) => {
-    //         console.log(e);
-    //         return;
-    //       })
-    //   : '';
+    axios.defaults.withCredentials = false;
+    const imgUrl = imgFile
+      ? await axios
+          .post(
+            'https://k6d104.p.ssafy.io/fast/uploadImage',
+            { image: imgFile },
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            },
+          )
+          .then((res) => {
+            console.log(res.data.file);
+            return res.data.file;
+          })
+          .catch((e) => {
+            console.log(e);
+            return;
+          })
+      : '';
     // 모임 정보 수정
     await axios
       .put(`https://k6d104.p.ssafy.io/api/spring/club/${id}`, {
         name: formName,
         description: formDes,
-        image: formImage,
+        image: imgUrl ? imgUrl : image,
       })
       .then((response) => {
         console.log(response);
@@ -78,6 +83,7 @@ export default function ManageClub({ clubInfo, getClubInfo }: ManageClubProps) {
       .catch((e) => {
         console.log(e);
       });
+    getClubInfo();
   };
   return (
     <Container maxWidth="md" sx={{ padding: 0 }}>
@@ -91,6 +97,7 @@ export default function ManageClub({ clubInfo, getClubInfo }: ManageClubProps) {
         check={check}
         onChange={onChange}
         onClick={onClick}
+        onImgChange={onImgChange}
       />
     </Container>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Stack, Grid, TextField, Container } from '@mui/material';
-
+import UpdateFormImage from './Image';
 interface ClubUpdateFormProps {
   clubInfo: any;
   formName: string;
@@ -9,6 +9,7 @@ interface ClubUpdateFormProps {
   check: boolean;
   onChange: any;
   onClick: any;
+  onImgChange: any;
 }
 
 export default function ClubUpdateForm({
@@ -19,10 +20,12 @@ export default function ClubUpdateForm({
   check,
   onChange,
   onClick,
+  onImgChange,
 }: ClubUpdateFormProps) {
   return (
     <Stack spacing={3}>
       {/* 이미지 */}
+      <UpdateFormImage onImgChange={onImgChange} formImage={formImage} />
       {/* 텍스트 */}
       <Stack justifyContent="center">
         <Container maxWidth="sm">
@@ -49,7 +52,7 @@ export default function ClubUpdateForm({
                 name="formDes"
                 value={formDes}
                 onChange={onChange}
-                inputProps={{ maxLength: 20 }}
+                inputProps={{ maxLength: 50 }}
                 maxRows={4}
               />
             </Grid>
