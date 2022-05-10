@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Chart, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 interface ItemType {
   id: string;
@@ -16,14 +17,19 @@ export default function Graph({
   items: ItemType[];
 }) {
   Chart.register(ArcElement);
+  Chart.register(ChartDataLabels);
   const labels: String[] = items.map((item) => item.id);
   const datas: Number[] = items.map((item) => parseInt(item.value));
   const data = {
-    labels,
+    Plugin: [ChartDataLabels],
+    labels: labels,
     datasets: [
       {
-        labels: labels,
+        label: '태그별 통계',
         data: datas,
+        datalabels: {
+          color: 'black',
+        },
         borderWidth: 2,
         hoverBorderWidth: 3,
         backgroundColor: [
@@ -35,9 +41,20 @@ export default function Graph({
       },
     ],
   };
+  const option = {
+    maintainAspectRatio: false,
+    plugins: {
+      datalabels: {
+        formatter: (value: any, context: any) => {
+          const idx = context.dataIndex;
+          return labels[idx];
+        },
+      },
+    },
+  };
   return (
     <div>
-      <Doughnut data={data} />
+      <Doughnut data={data} options={option} />
     </div>
   );
 }
