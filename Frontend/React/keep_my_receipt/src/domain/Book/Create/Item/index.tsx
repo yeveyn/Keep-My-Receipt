@@ -93,6 +93,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
         list={largeCategories[toggleValue]}
         category={item.largeCategory}
         setCategory={setLargeCategory}
+        dialogContent={<p>설명</p>}
       />
       <Divider />
 
