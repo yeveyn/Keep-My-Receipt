@@ -3,7 +3,7 @@ import { Collapse, List, ListItemButton } from '@mui/material';
 import { ExpandLess, ExpandMore, Info } from '@mui/icons-material';
 
 import useEditableList from '../../../../hooks/useEditableList';
-import ItemDialog from '../ItemDialog';
+import DialogWithIconButton from '../DialogWithIconButton';
 import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
 
 interface ItemCategoryType {
@@ -27,7 +27,7 @@ function ItemCategoryEditable(props: ItemCategoryType) {
       <List disablePadding>
         <ListItemButton onClick={handleExpand} disableRipple>
           {/* 아이콘 버튼 with 다이얼로그 */}
-          <ItemDialog icon={<Info />} content={props.dialogContent} />
+          <DialogWithIconButton icon={<Info />} content={props.dialogContent} />
 
           {/* 분류명 & 선택된 항목 */}
           <ListItemTextWithSubtext text={props.name} subtext={props.category} />

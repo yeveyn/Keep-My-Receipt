@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 
-interface ItemDialogType {
+interface DialogWithIconButtonType {
   icon: JSX.Element;
   content: JSX.Element;
 }
@@ -27,7 +27,10 @@ const Transition = React.forwardRef(function Transition(
   // <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ItemDialog({ icon, content }: ItemDialogType) {
+export default function DialogWithIconButton({
+  icon,
+  content,
+}: DialogWithIconButtonType) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     // 아이콘 클릭 시 겹치는 메뉴 열리는 이벤트 차단

@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore, Info } from '@mui/icons-material';
 
-import ItemDialog from '../ItemDialog';
+import DialogWithIconButton from '../DialogWithIconButton';
 import ListItemTextWithSubtext from '../ListItemTextWithSubtext';
 
 interface ItemCategoryType {
@@ -38,7 +38,7 @@ function ItemCategory({
       <List disablePadding>
         <ListItemButton onClick={handleExpand} disableRipple>
           {/* 아이콘 버튼 with 다이얼로그 */}
-          <ItemDialog icon={<Info />} content={dialogContent} />
+          <DialogWithIconButton icon={<Info />} content={dialogContent} />
 
           {/* 분류명 & 선택된 항목 */}
           <ListItemTextWithSubtext text={name} subtext={category} />
