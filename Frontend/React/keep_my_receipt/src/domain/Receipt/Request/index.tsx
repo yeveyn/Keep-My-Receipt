@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Grid,
@@ -8,7 +8,6 @@ import {
   Stack,
   useMediaQuery,
 } from '@mui/material';
-import sample from './sample.json';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,27 +16,12 @@ import axios from 'axios';
 // 승인요청 : 알림 보내기 && 요청테이블 create API
 export default function RequestIndex() {
   const navigate = useNavigate();
-  const clubId = useParams();
+  const { id } = useParams();
   const { state }: { state: any } = useLocation();
-  const [newDate, setDate] = useState(sample[0].date);
-  const [newMoney, setMoney] = useState(sample[0].money);
-  const imgUrl = sample[0].image;
+  const [newDate, setDate] = useState(state.date);
+  const [newMoney, setMoney] = useState(state.value);
+  const imgUrl = state.receiptUrl;
   const matches = useMediaQuery('(min-width:500px)');
-
-  // useEffect(loadingDataFromDB, []);
-  // function loadingDataFromDB() {
-  //   // 구현되면 useState() <- 값 비워두고, DB 결과를 setState() 해준다
-  //   fetch('https://k6d104.p.ssafy.io/api/spring/book/{groupid}/request', {
-  //     method: 'GET',
-  //   }).then((res) => {
-  //     if (res.ok) {
-  //     } else {
-  //       return res.json().then((data) => {
-  //         console.log(data);
-  //       });
-  //     }
-  //   });
-  // }
 
   function submitHandler(event: any) {
     event.preventDefault();
@@ -49,9 +33,15 @@ export default function RequestIndex() {
     console.log('submit', prop);
 
     // 영수증 db에 저장
-    // 알림 삭제
-
-    //navigate('/book/create', { state: prop });
+    axios
+      .post(`https://k6d104.p.ssafy.io/api/spring/club/${id}/request`)
+      .then((response) => {
+        console.log(response);
+        //navigate(`/club/${id}/receipt/receiptList`);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   return (
