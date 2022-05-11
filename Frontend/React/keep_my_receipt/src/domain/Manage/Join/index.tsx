@@ -50,7 +50,7 @@ export default function ManageJoin({ clubInfo }: { clubInfo: any }) {
         // console.log(response.data.data.list[0].name);
         const output = response.data.output;
         if (output === 200) {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           setRes(response.data.data);
         } else if (output === 0) {
           console.log(response.data.msg);
@@ -104,7 +104,7 @@ export default function ManageJoin({ clubInfo }: { clubInfo: any }) {
             </Stack>
           ))
         ) : (
-          <p>검색된 신청자가 없습니다.</p>
+          <p>신청자가 없습니다.</p>
         )}
 
         {/* Pagination */}

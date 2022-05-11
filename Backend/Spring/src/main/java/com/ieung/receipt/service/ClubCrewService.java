@@ -129,12 +129,16 @@ public class ClubCrewService {
 
     /**
      * 모임별 회원 리스트 조회
-     * @param clubId, crewId, pagealbe
+     * @param clubId, crewId, authCode, pagealbe
      */
-    public Page<ClubCrew> getClubCrews(long clubId, Long crewId, Pageable pageable) {
+    public Page<ClubCrew> getClubCrews(long clubId, Long crewId, AuthCode authCode, Pageable pageable) {
         // 해당 모임 회원인지 확인
         if (getAuth(clubId, crewId) != AuthCode.NONE) {
-            return clubCrewRepository.findAllByClubId(clubId, pageable);
+            if (authCode == AuthCode.ALL) {
+                return clubCrewRepository.findAllByClubId(clubId, pageable);
+            } else {
+                return clubCrewRepository.findByClubIdAndAuthCode(clubId, authCode, pageable);
+            }
         } else {
             throw new AccessDeniedException("");
         }
@@ -228,8 +232,10 @@ public class ClubCrewService {
         ClubCrew clubCrew = clubCrewRepository.findByClubIdAndCrewId(clubId, crewId)
                 .orElseThrow(() -> new ApiMessageException("가입된 모임이 아닙니다."));
 
-        if (clubCrew.getAuth() == AuthCode.LEADER || clubCrew.getAuth() == AuthCode.NONE) {
+        if (clubCrew.getAuth() == AuthCode.LEADER) {
             throw new ApiMessageException("탈퇴할 수 없는 회원입니다.");
+        } else if (clubCrew.getAuth() == AuthCode.NONE) {
+            throw new ApiMessageException("가입된 모임이 아닙니다.");
         } else {
             clubCrewRepository.delete(clubCrew);
         }

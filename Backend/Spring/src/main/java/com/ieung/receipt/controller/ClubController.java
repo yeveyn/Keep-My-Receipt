@@ -101,11 +101,7 @@ public class ClubController {
     public @ResponseBody SingleResult<ClubResDTO> getClub(@PathVariable @NotBlank long clubId) throws Exception {
         Club club = clubService.getClub(clubId);
 
-        ClubResDTO clubResDTO = ClubResDTO.builder()
-                .id(club.getId())
-                .name(club.getName())
-                .description(club.getDescription())
-                .build();
+        ClubResDTO clubResDTO = club.toClubResDTO();
 
         return responseService.getSingleResult(clubResDTO);
     }
@@ -145,4 +141,5 @@ public class ClubController {
 
         return responseService.getSuccessResult();
     }
+
 }
