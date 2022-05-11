@@ -2,7 +2,7 @@
 // : as const로 readonly로 만든 다음,
 // typeof로 타입을 추출해낸다.
 // 참고: https://stackoverflow.com/questions/51521808/how-do-i-create-a-type-from-a-string-array-in-typescript
-const mainCategories = [
+export const mainCategories = [
   '현금 및 현금성 자산',
   '유형자산',
   '선급금',
