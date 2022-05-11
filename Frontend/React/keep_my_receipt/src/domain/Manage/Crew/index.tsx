@@ -3,6 +3,7 @@ import { Stack, Button } from '@mui/material';
 import axios from 'axios';
 import Pagination from '../../../components/Pagination';
 import * as qs from 'qs';
+import CrewMenu from './Menu';
 
 interface listItemTypes {
   clubCrewId: number;
@@ -81,12 +82,12 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
         {/* <h3>테이블 컴포넌트</h3> */}
         {/* 리스트 */}
         {list.length ? (
-          list.map((item: any) => (
-            <Stack direction="row" key={item.clubCrewId}>
+          list.map((crew: any) => (
+            <Stack direction="row" key={crew.clubCrewId}>
               <span>
-                {item.name} / {item.email} / {item.auth}
+                {crew.name} / {crew.email} / {crew.auth}
               </span>
-              <Button onClick={() => onClick(item.auth)}>메뉴</Button>
+              <CrewMenu crewInfo={crew} getCrewList={getCrewList} />
             </Stack>
           ))
         ) : (
