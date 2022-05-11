@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import sample from './sample.json';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // Todolist : 웹 상에선 사진과 입력란 가로로 1:1
@@ -17,6 +17,8 @@ import axios from 'axios';
 // 승인요청 : 알림 보내기 && 요청테이블 create API
 export default function RequestIndex() {
   const navigate = useNavigate();
+  const clubId = useParams();
+  const { state }: { state: any } = useLocation();
   const [newDate, setDate] = useState(sample[0].date);
   const [newMoney, setMoney] = useState(sample[0].money);
   const imgUrl = sample[0].image;

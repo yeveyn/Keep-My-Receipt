@@ -44,7 +44,6 @@ export default function ReceiptCreate() {
       setCheck(false);
     }
     console.log(form);
-    console.log('모임 생성 API 요청');
 
     // OCR 연결
     //navigate('..');
