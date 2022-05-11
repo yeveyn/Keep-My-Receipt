@@ -56,7 +56,7 @@ export default function ItemIndex({
   return (
     <Card
       variant="outlined"
-      style={{ padding: 15, width: '100%' }}
+      style={{ padding: 5, width: '100%' }}
       onClick={connect}
       sx={{
         boxShadow: 1,

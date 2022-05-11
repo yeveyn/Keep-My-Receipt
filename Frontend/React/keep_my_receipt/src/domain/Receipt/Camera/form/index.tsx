@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Stack,
@@ -23,6 +23,12 @@ export default function CreateForm({
   onChange,
   onClick,
 }: CreateFormProps) {
+  // 등록 누르면 loading으로 바꾸고 버튼 클릭 못하게 막기
+  const [isLoading, setLoading] = useState(false);
+  function clickHandler() {
+    setLoading(true);
+    onClick();
+  }
   return (
     <Stack justifyContent="center">
       <Container maxWidth="sm">
@@ -45,14 +51,21 @@ export default function CreateForm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sx={{ marginTop: 1 }}>
-            <Button
-              onClick={onClick}
-              variant="contained"
-              fullWidth
-              sx={{ marginBottom: 3 }}
-            >
-              등록
-            </Button>
+            {!isLoading && (
+              <Button
+                onClick={clickHandler}
+                variant="contained"
+                fullWidth
+                sx={{ marginBottom: 3 }}
+              >
+                등록
+              </Button>
+            )}
+            {isLoading && (
+              <Button variant="contained" fullWidth sx={{ marginBottom: 3 }}>
+                이미지 분석 중...
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Container>
