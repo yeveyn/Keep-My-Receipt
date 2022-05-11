@@ -129,7 +129,7 @@ export default function ManageIndex() {
                 sx={{ fontSize: '1rem', fontWeight: 'bold' }}
               />
               <Tab
-                label="모임"
+                label="모임 정보"
                 // {...a11yProps(2)}
                 sx={{ fontSize: '1rem', fontWeight: 'bold' }}
               />

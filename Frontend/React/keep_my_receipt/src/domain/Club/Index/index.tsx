@@ -45,6 +45,7 @@ export default function ClubIndex() {
         // console.log(response);
         // console.log(response.data.data);
         setRes(response.data.data);
+        window.scrollTo(0, 0);
       })
       .catch((e) => {
         console.log(e);
