@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Grid, Container, Stack } from '@mui/material';
 import axios from 'axios';
 import IndexList from './List';
@@ -22,6 +22,8 @@ interface resopnseType {
   list: listItemTypes[];
 }
 export default function ClubIndex() {
+  const { id } = useParams();
+  console.log(id);
   // 모임 목록 조회
   const [res, setRes] = useState<resopnseType>({
     pageNumber: 0,
