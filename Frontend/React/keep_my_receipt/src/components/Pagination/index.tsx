@@ -39,11 +39,10 @@ export default function Pagination({
   };
 
   // Pagination
-  const pageList = () => {
+  const pagiResult = () => {
     const array = [];
     for (let i = 0; i < paginationSize; i++) {
       const num = i + paginationSize * pagiNum;
-      // if (i === )
       array.push(
         <IconButton
           key={num}
@@ -108,23 +107,31 @@ export default function Pagination({
       </Stack>
     );
   };
+  // 참고
+  const paginationInfo = () => {
+    return (
+      <Stack>
+        Pagination
+        <p>
+          페이지: {pageNumber}/{totalPages > 0 ? totalPages - 1 : 0} (0...n) __
+          리얼 현재 페이지: {pageNumber + 1}
+        </p>
+        <p>
+          현재 페이지 개체 수(사이즈) / 전체 개체 수: {numberOfElements}({size})
+          /{totalElements}
+        </p>
+        <p>
+          paginum/pagiTotal: {pagiNum}/
+          {totalPages > 0 ? Math.ceil(totalPages / paginationSize) - 1 : 0}{' '}
+          _______ pagiSize: {paginationSize}
+        </p>
+      </Stack>
+    );
+  };
   return (
     <Stack>
-      {totalPages === 1 ? null : pageList()}
-      Pagination
-      <p>
-        페이지: {pageNumber}/{totalPages > 0 ? totalPages - 1 : 0} (0...n) __
-        리얼 현재 페이지: {pageNumber + 1}
-      </p>
-      <p>
-        현재 페이지 개체 수(사이즈) / 전체 개체 수: {numberOfElements}({size}) /
-        {totalElements}
-      </p>
-      <p>
-        paginum/pagiTotal: {pagiNum}/
-        {totalPages > 0 ? Math.ceil(totalPages / paginationSize) - 1 : 0}{' '}
-        _______ pagiSize: {paginationSize}
-      </p>
+      {totalPages === 1 ? null : pagiResult()}
+      {/* {paginationInfo()} */}
     </Stack>
   );
 }
