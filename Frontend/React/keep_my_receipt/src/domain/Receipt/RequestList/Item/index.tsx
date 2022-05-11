@@ -1,18 +1,45 @@
 import { Card, Grid, CardContent, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 interface ItemType {
-  id: number;
+  requestId: number;
   name: string;
-  date: string;
-  money: string;
+  price: number;
+  state: string;
+  manageable: boolean;
 }
 
-export default function ItemIndex({ id, name, date, money }: ItemType) {
+export default function ItemIndex({
+  requestId,
+  name,
+  price,
+  state,
+  manageable,
+}: ItemType) {
   const navigate = useNavigate();
+  const clubId = useParams();
   function connect() {
-    const url = '';
-    navigate(url);
+    if (manageable === false) {
+      return;
+    } else if (state === '신청') {
+      axios
+        .get(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)
+        .then((response) => {
+          const data = response.data.data;
+          navigate(`/club/${clubId}/receipt/approve`, {
+            state: {
+              requestId: data.requestId,
+              date: data.payDate,
+              value: data.price,
+              receiptUrl: data.receiptUrl,
+            },
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }
   return (
     <Card
@@ -35,21 +62,9 @@ export default function ItemIndex({ id, name, date, money }: ItemType) {
         style={{ width: '100%' }}
       >
         <Grid
-          xs={4}
-          sm={4}
-          md={4}
-          container
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CardContent>
-            <Typography>{date}</Typography>
-          </CardContent>
-        </Grid>
-        <Grid
           xs={3}
-          sm={4}
-          md={4}
+          sm={3}
+          md={3}
           container
           justifyContent="center"
           alignItems="center"
@@ -59,19 +74,32 @@ export default function ItemIndex({ id, name, date, money }: ItemType) {
           </CardContent>
         </Grid>
         <Grid
-          xs={5}
-          sm={4}
-          md={4}
+          xs={6}
+          sm={6}
+          md={6}
           container
           justifyContent="center"
           alignItems="center"
         >
           <CardContent>
             <Typography>
-              {money
+              {price
+                .toString()
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                 .concat('원')}
             </Typography>
+          </CardContent>
+        </Grid>
+        <Grid
+          xs={3}
+          sm={3}
+          md={3}
+          container
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CardContent>
+            <Typography>{state}</Typography>
           </CardContent>
         </Grid>
       </Grid>
