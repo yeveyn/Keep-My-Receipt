@@ -12,8 +12,6 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // Todolist : 웹 상에선 사진과 입력란 가로로 1:1
-// 이 페이지 들어올 때 : db를 통해 sample.json 형식으로 데이터 읽어와서 변수에 할당해주기
-// 승인요청 : 알림 보내기 && 요청테이블 create API
 export default function RequestIndex() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -33,7 +31,8 @@ export default function RequestIndex() {
           data: newDate,
           price: newMoney,
           receiptUrl: imgUrl,
-        },)
+        },
+      })
       .then((response) => {
         console.log(response);
         //navigate(`/club/${id}/receipt/receiptList`);
