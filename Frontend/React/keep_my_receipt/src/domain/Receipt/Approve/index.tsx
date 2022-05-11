@@ -14,10 +14,9 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 // Todolist : 웹 상에선 사진과 입력란 가로로 1:1
-// 거절 테스트 필요
 export default function ApproveIndex() {
   const navigate = useNavigate();
-  const clubId = useParams();
+  const { id } = useParams();
   const { state }: { state: any } = useLocation();
   const [newDate, setDate] = useState(state.date);
   const [newMoney, setMoney] = useState(state.value);
@@ -81,7 +80,7 @@ export default function ApproveIndex() {
       items: newItems,
     };
     console.log('submit', prop);
-    navigate(`/club/${clubId}/book/create`, { state: prop });
+    navigate(`/club/${id}/book/create`, { state: prop });
   }
 
   function rejectHandler(event: any) {
@@ -92,7 +91,7 @@ export default function ApproveIndex() {
       )
       .then((response) => {
         console.log(`${state.requestId} request refusal: ${response}`);
-        navigate(`/club/${clubId}/receipt/requestList`);
+        navigate(`/club/${id}/receipt/requestList`);
       })
       .catch((e) => {
         console.log(e);

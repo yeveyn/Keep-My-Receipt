@@ -18,7 +18,7 @@ export default function ItemIndex({
   manageable,
 }: ItemType) {
   const navigate = useNavigate();
-  const clubId = useParams();
+  const { id } = useParams();
   function connect() {
     if (manageable === false) {
       return;
@@ -27,7 +27,7 @@ export default function ItemIndex({
         .get(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)
         .then((response) => {
           const data = response.data.data;
-          navigate(`/club/${clubId}/receipt/approve`, {
+          navigate(`/club/${id}/receipt/approve`, {
             state: {
               requestId: data.requestId,
               date: data.payDate,

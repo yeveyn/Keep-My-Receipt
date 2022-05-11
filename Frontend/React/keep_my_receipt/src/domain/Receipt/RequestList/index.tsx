@@ -29,7 +29,7 @@ interface resopnseType {
 }
 
 export default function RequestListIndex() {
-  const clubId = useParams();
+  const { id } = useParams();
   const matches = useMediaQuery('(min-width:500px)');
   const [res, setRes] = useState<resopnseType>({
     pageNumber: 0,
@@ -42,7 +42,7 @@ export default function RequestListIndex() {
   const requests = res.list || null;
   const getRequestList = async (page?: number) => {
     await axios
-      .get(`https://k6d104.p.ssafy.io/api/spring/club/${clubId}/requests`, {
+      .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/requests`, {
         params: {
           state: 'ALL',
           page: page ? page : 0,
@@ -60,7 +60,7 @@ export default function RequestListIndex() {
   const [manageable, setManageable] = useState(false);
   const checkManageable = async () => {
     await axios
-      .get(`https://k6d104.p.ssafy.io/api/spring/club/${clubId}/crew/auth`)
+      .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/crew/auth`)
       .then((response) => {
         if (response.data.data === '리더' || response.data.data === '관리자') {
           setManageable(true);
