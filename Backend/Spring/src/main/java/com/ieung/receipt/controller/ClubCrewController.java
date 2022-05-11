@@ -129,17 +129,29 @@ public class ClubCrewController {
     @Operation(summary = "모임별 회원 리스트 조회", description = "모임별 회원 리스트 조회")
     @GetMapping(value = "/{clubId}/crews", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody SingleResult<PagingListResDTO<ClubCrewResDTO>> getClubCrews(@PathVariable @NotBlank long clubId,
+                                                                                     @RequestParam(value="auth", defaultValue = "ALL") String auth,
                                                                                      @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) throws Exception {
-        Page<ClubCrew> page = clubCrewService.getClubCrews(clubId, getCurrentCrewId(), pageable);
+        try {
+            // String auth값 authCode로 변환
+            AuthCode authCode = AuthCode.valueOf(auth);
 
-        // 반환 DTO에 맞도록 가공
-        List<ClubCrewResDTO> clubCrews = IntStream.range(0, page.getContent().size())
-                .mapToObj(i -> page.getContent().get(i).toClubCrewResDTO())
-                .collect(Collectors.toList());
+            if (authCode == AuthCode.NONE) {
+                throw new ApiMessageException("지원하지 않는 권한입니다.");
+            }
 
-        PagingListResDTO pagingListResDTO = new PagingListResDTO(page, clubCrews);
+            Page<ClubCrew> page = clubCrewService.getClubCrews(clubId, getCurrentCrewId(), authCode, pageable);
 
-        return responseService.getSingleResult(pagingListResDTO);
+            // 반환 DTO에 맞도록 가공
+            List<ClubCrewResDTO> clubCrews = IntStream.range(0, page.getContent().size())
+                    .mapToObj(i -> page.getContent().get(i).toClubCrewResDTO())
+                    .collect(Collectors.toList());
+
+            PagingListResDTO pagingListResDTO = new PagingListResDTO(page, clubCrews);
+
+            return responseService.getSingleResult(pagingListResDTO);
+        } catch (IllegalArgumentException iae) {
+            throw new ApiMessageException("지원하지 않는 권한입니다.");
+        }
     }
 
     // 모임별 회원 관리자 권한 지정

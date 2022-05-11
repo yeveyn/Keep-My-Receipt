@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Stack, Container, useMediaQuery } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CreateImage from './image';
 import CreateForm from './form';
+import axios from 'axios';
 
 interface formProps {
   type: string;
@@ -11,6 +12,7 @@ interface formProps {
 
 export default function ReceiptCreate() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const matches = useMediaQuery('(min-width:500px)');
 
   const [check, setCheck] = useState(false);
@@ -22,7 +24,6 @@ export default function ReceiptCreate() {
   const { type, imgFile } = form;
   const onFormChange = (e: any) => {
     const { name, value } = e.target;
-    console.log(type, value);
     setForm({
       ...form,
       [name]: value,
@@ -43,11 +44,35 @@ export default function ReceiptCreate() {
     } else {
       setCheck(false);
     }
-    console.log(form);
-    console.log('모임 생성 API 요청');
-
-    // OCR 연결
-    //navigate('..');
+    axios.defaults.withCredentials = false;
+    const axiosUrl =
+      form.type === 'paper'
+        ? 'https://k6d104.p.ssafy.io/fast/ocr/receipt/photo'
+        : 'https://k6d104.p.ssafy.io/fast/ocr/receipt/img';
+    axios.defaults.withCredentials = false;
+    await axios
+      .post(
+        axiosUrl,
+        { receipt: imgFile },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      .then((res) => {
+        navigate(`/club/${id}/receipt/request`, {
+          state: {
+            date: res.data['거래날짜'],
+            value: res.data['금액'],
+            receiptUrl: res.data['이미지 url'],
+          },
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
   };
 
   return (
@@ -57,8 +82,8 @@ export default function ReceiptCreate() {
         spacing={3}
         style={
           matches
-            ? { marginTop: 50, marginBottom: 30, width: '100%' }
-            : { marginTop: 50, marginBottom: 100, width: '100%' }
+            ? { marginTop: 30, marginBottom: 30, width: '100%' }
+            : { marginTop: 10, marginBottom: 100, width: '100%' }
         }
       >
         <br></br>
