@@ -1,5 +1,6 @@
 import { Card, Grid, CardContent, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
+import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
 
 interface ItemType {
@@ -41,6 +42,17 @@ export default function ItemIndex({
         });
     }
   }
+  const deleteRequest = async () => {
+    axios
+      .delete(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)
+      .then((response) => {
+        console.log(response);
+        navigate(`/club/${id}/receipt/requestList`);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Card
       variant="outlined"
@@ -74,9 +86,9 @@ export default function ItemIndex({
           </CardContent>
         </Grid>
         <Grid
-          xs={6}
-          sm={6}
-          md={6}
+          xs={5}
+          sm={5}
+          md={5}
           container
           justifyContent="center"
           alignItems="center"
@@ -100,6 +112,18 @@ export default function ItemIndex({
         >
           <CardContent>
             <Typography>{state}</Typography>
+          </CardContent>
+        </Grid>
+        <Grid
+          xs={1}
+          sm={1}
+          md={1}
+          container
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CardContent>
+            <CancelIcon onClick={deleteRequest} />
           </CardContent>
         </Grid>
       </Grid>

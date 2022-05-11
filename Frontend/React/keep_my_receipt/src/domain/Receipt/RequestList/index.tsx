@@ -118,9 +118,9 @@ export default function RequestListIndex() {
               </CardContent>
             </Grid>
             <Grid
-              xs={6}
-              sm={6}
-              md={6}
+              xs={5}
+              sm={5}
+              md={5}
               container
               justifyContent="center"
               alignItems="center"
@@ -139,6 +139,18 @@ export default function RequestListIndex() {
             >
               <CardContent>
                 <Typography style={{ fontWeight: 'bold' }}>상태</Typography>
+              </CardContent>
+            </Grid>
+            <Grid
+              xs={1}
+              sm={1}
+              md={1}
+              container
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CardContent>
+                <Typography style={{ fontWeight: 'bold' }}></Typography>
               </CardContent>
             </Grid>
           </Grid>

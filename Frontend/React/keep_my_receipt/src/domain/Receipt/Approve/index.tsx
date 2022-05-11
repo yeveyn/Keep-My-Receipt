@@ -74,6 +74,7 @@ export default function ApproveIndex() {
       return;
     }
     const prop = {
+      requestId: state.requestId,
       imgUrl: imgUrl,
       date: newDate,
       money: newMoney,
