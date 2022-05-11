@@ -25,16 +25,15 @@ export default function RequestIndex() {
 
   function submitHandler(event: any) {
     event.preventDefault();
-    const prop = {
-      imgUrl: imgUrl,
-      date: newDate,
-      money: newMoney,
-    };
-    console.log('submit', prop);
+    // date 및 money 제약사항
 
-    // 영수증 db에 저장
     axios
-      .post(`https://k6d104.p.ssafy.io/api/spring/club/${id}/request`)
+      .post(`https://k6d104.p.ssafy.io/api/spring/club/${id}/request`, {
+        params: {
+          data: newDate,
+          price: newMoney,
+          receiptUrl: imgUrl,
+        },)
       .then((response) => {
         console.log(response);
         //navigate(`/club/${id}/receipt/receiptList`);
