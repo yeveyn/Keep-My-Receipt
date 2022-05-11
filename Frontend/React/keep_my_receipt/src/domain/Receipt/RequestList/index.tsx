@@ -39,7 +39,7 @@ export default function RequestListIndex() {
     totalElements: 0,
     list: [],
   });
-  const requests = res.list || null;
+  const [requests, setRequests] = useState(res.list);
   const getRequestList = async (page?: number) => {
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/requests`, {
@@ -52,6 +52,7 @@ export default function RequestListIndex() {
       })
       .then((response) => {
         setRes(response.data.data);
+        setRequests(response.data.data.list);
       })
       .catch((e) => {
         console.log(e);
@@ -83,7 +84,7 @@ export default function RequestListIndex() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        spacing={2}
+        spacing={0.8}
         style={
           matches
             ? { marginTop: 100, marginBottom: 30, width: '100%' }
@@ -93,7 +94,7 @@ export default function RequestListIndex() {
         <Card
           variant="outlined"
           style={{
-            padding: 15,
+            padding: 5,
             width: '100%',
             background: '#FFF5E1',
           }}
