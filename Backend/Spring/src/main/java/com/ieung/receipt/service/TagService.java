@@ -32,6 +32,10 @@ public class TagService {
                 .tagName(tagReqDTO.getTagName())
                 .tagLevel(tagReqDTO.getParentTag()==null?1:2)
                 .build();
+        int checkDuplicate = tagRepository.countTagByClubAndParentTagAndTagName(tag.getClub(), tag.getParentTag(), tag.getTagName());
+        if(checkDuplicate!=0){
+            throw new ApiMessageException("태그가 이미 존재합니다.");
+        }
         Tag resTag = tagRepository.save(tag);
         if(resTag == null){
             throw new ApiMessageException("태그 생성에 실패했습니다. 다시 시도해 주세요.");
@@ -43,7 +47,7 @@ public class TagService {
      * @param clubId
      */
     public List<TagResDTO> getFirstTag(Long clubId){
-        return tagRepository.findTagsByClubAndTagLevel(clubRepository.getById(clubId), 1);
+        return tagRepository.findByClubAndTagLevel(clubRepository.getById(clubId), 1);
     }
 
     /**
@@ -51,14 +55,35 @@ public class TagService {
      * @param clubId, parentTag
      */
     public List<TagResDTO> getSecondTag(Long clubId, String parentTag){
-        return tagRepository.findTagsByClubAndParentTag(clubRepository.getById(clubId), parentTag);
+        return tagRepository.findByClubAndParentTag(clubRepository.getById(clubId), parentTag);
+    }
+
+    /**
+     * 태그 수정
+     * @param tagReqDTO, tagId
+     */
+    @Transactional
+    public void updateTag(TagReqDTO tagReqDTO, Long tagId){
+        Tag originTag = tagRepository.getById(tagId);
+        Tag newTag = Tag.builder()
+                .club(clubRepository.getById(tagReqDTO.getClubId()))
+                .parentTag(tagReqDTO.getParentTag())
+                .tagName(tagReqDTO.getTagName())
+                .tagLevel(tagReqDTO.getParentTag()==null?1:2)
+                .build();
+        int checkDuplicate = tagRepository.countTagByClubAndParentTagAndTagName(newTag.getClub(), newTag.getParentTag(), newTag.getTagName());
+        if(checkDuplicate!=0){
+            throw new ApiMessageException("태그가 이미 존재합니다.");
+        }
+        originTag.updateTag(newTag);
+        tagRepository.save(originTag);
     }
 
     /**
      * 태그 삭제
-     * @param clubId, tagName
+     * @param tagId
      */
-    public void deleteTag(Long clubId, String tagName){
-        tagRepository.deleteTagByClubAndTagName(clubRepository.getById(clubId), tagName);
+    public void deleteTag(Long tagId){
+        tagRepository.deleteById(tagId);
     }
 }

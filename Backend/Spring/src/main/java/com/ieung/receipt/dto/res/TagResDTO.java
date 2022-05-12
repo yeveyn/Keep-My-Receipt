@@ -11,6 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 
 public class TagResDTO {
+    @Schema(description = "태그 고유번호", required = true)
+    private Long tagId;
+
     @Schema(description = "부모태그 이름")
     private String parent_tag;
 
