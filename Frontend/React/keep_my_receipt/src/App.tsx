@@ -32,8 +32,8 @@ function App() {
       <Navigation />
       <Routes>
         {/* 밑에 Route들 추가하시면 됩니다! */}
-        <Route path="/" element={<Landing />}>
-          <Route index element={<p>랜딩 페이지</p>} />
+        <Route path="/" element={<Outlet />}>
+          <Route index element={<Landing />} />
           <Route path="club" element={<Outlet />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />
