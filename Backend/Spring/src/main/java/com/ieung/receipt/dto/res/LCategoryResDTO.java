@@ -11,15 +11,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LCategoryResDTO {
-    @Schema(description = "대분류 고유번호")
-    private long lcId;
-
     @Schema(description = "대분류 유형")
     private String lcType;
 
     @Schema(description = "대분류 이름")
     private String lcName;
 
+    // Entity 형식을 Result 형식으로 변환
     public static LCategoryResDTO of(LCategory lCategory){
         return LCategoryResDTO.builder()
                 .lcName(lCategory.getLcName())

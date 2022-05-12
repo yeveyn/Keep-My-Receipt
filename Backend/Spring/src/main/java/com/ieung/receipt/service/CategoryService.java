@@ -1,5 +1,6 @@
 package com.ieung.receipt.service;
 
+import com.ieung.receipt.dto.req.LCategoryReqDTO;
 import com.ieung.receipt.dto.res.LCategoryResDTO;
 import com.ieung.receipt.entity.LCategory;
 import com.ieung.receipt.repository.LCategoryRepository;
@@ -18,8 +19,9 @@ public class CategoryService {
 
     /**
      * 대분류 조회
+     * @Param type
      */
-    public List<LCategoryResDTO> getLCategory(){
+    public List<LCategoryResDTO> getLCategoryByType(String type){
         List<LCategory> lCategoryList = lCategoryRepository.findAll();
         List<LCategoryResDTO> lCategoryResDTOList = new ArrayList<>();
         for(LCategory lCategory : lCategoryList){
@@ -30,6 +32,9 @@ public class CategoryService {
 
     /**
      * 대분류 생성
-     * @Param l
+     * @Param lCategoryReqDTO
      */
+    public void creatLCategory(LCategoryReqDTO lCategoryReqDTO){
+        lCategoryRepository.save(LCategoryReqDTO.toEntity(lCategoryReqDTO));
+    }
 }

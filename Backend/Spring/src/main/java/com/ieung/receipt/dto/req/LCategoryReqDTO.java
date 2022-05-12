@@ -23,6 +23,7 @@ public class LCategoryReqDTO {
     @Schema(description = "태그 이름", required = true)
     private String lcName;
 
+    // request 형식을 Entity로 변환
     public static LCategory toEntity(LCategoryReqDTO lCategoryReqDTO){
         return LCategory.builder()
                 .lcType(lCategoryReqDTO.getLcType())
