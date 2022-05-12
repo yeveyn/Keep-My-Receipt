@@ -56,8 +56,6 @@ export default function SignUpForm() {
   };
 
   // 유효성 검사
-  // let cansignup = true;
-  // const [canSignUp, setCanSignUp] = useState(true);
   const [helpEmailText, setEmailHelpText] = useState('');
   const [helpPasswordText, setPasswordHelpText] = useState('');
   const [helpPasswordCheckText, setPasswordCheckHelpText] = useState('');
