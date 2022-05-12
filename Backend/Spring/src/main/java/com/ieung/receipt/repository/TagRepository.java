@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
-    List<TagResDTO> findTagsByClubAndTagLevel(Club club, int tagLevel);
-    List<TagResDTO> findTagsByClubAndParentTag(Club club, String parentTag);
+    List<TagResDTO> findByClubAndTagLevel(Club club, int tagLevel);
+    List<TagResDTO> findByClubAndParentTag(Club club, String parentTag);
+    int countTagByClubAndParentTagAndTagName(Club club, String parentTag, String tagName);
     void deleteTagByClubAndTagName(Club club, String tagName);
 }

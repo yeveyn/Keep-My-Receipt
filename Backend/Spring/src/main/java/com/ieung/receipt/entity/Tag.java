@@ -42,11 +42,16 @@ public class Tag {
     @Column
     private int tagLevel;
 
-    public void updateTagName(String name) { this.tagName = name; }
+    public void updateTag(Tag uTag) {
+        this.parentTag = uTag.getParentTag();
+        this.tagName = uTag.getTagName();
+        this.tagLevel = uTag.getTagLevel();
+    }
 
     //Tag를 TagResDTO 객체로 변환
     public TagResDTO toTagResDTO(){
         return TagResDTO.builder()
+                .tagId(this.id)
                 .parent_tag(this.parentTag)
                 .tag_name(this.tagName)
                 .build();
