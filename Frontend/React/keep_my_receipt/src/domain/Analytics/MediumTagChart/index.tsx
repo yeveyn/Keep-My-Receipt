@@ -47,7 +47,7 @@ export default function SubChartIndex() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        spacing={0.2}
+        spacing={0.5}
         style={{ width: '100%', marginTop: 70 }}
       >
         <Stack spacing={2} style={{ width: '100%' }}>
@@ -57,11 +57,7 @@ export default function SubChartIndex() {
               style={{ marginTop: 20, marginLeft: 15 }}
             />
           </Grid>
-          <Grid
-            container
-            justifyContent="center"
-            style={{ width: '100%', marginLeft: 13 }}
-          >
+          <Grid container justifyContent="center" style={{ width: '100%' }}>
             <Graph items={items} />
           </Grid>
           <Grid
