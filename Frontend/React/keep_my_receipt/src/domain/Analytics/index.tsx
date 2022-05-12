@@ -81,22 +81,7 @@ export default function MainChartIndex() {
       tmpSumFlowValue += parseInt(item.value);
     });
     setSumFlowValue(tmpSumFlowValue);
-    // const getClubList = async () => {
-    //   await axios
-    //     .get('https://k6d104.p.ssafy.io/api/spring/clubs/joined', {
-    //       params: {
-    //         page: page ? page : 0,
-    //         size: 5,
-    //         sort: 'id,DESC',
-    //       },
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // };
+    // Todo: 백엔드 API 연결
   }
   useEffect(() => {
     loadData();
@@ -159,7 +144,7 @@ export default function MainChartIndex() {
           direction="column"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
+          spacing={0.5}
           style={
             matches
               ? { marginTop: 100, marginBottom: 30, width: '100%' }

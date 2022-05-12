@@ -61,7 +61,7 @@ export default function ListItem({
           alignItems="center"
           style={{ width: '100%' }}
         >
-          <Grid xs={4.5} sm={4.5} md={4.5}>
+          <Grid item xs={4.5} sm={4.5} md={4.5}>
             <TextField
               id={newId.toString()}
               label="내용"
@@ -75,7 +75,7 @@ export default function ListItem({
               onChange={(e: any) => setContent(e.target.value)}
             />
           </Grid>
-          <Grid xs={4.5} sm={4.5} md={4.5}>
+          <Grid item xs={4.5} sm={4.5} md={4.5}>
             <TextField
               id={newId.toString()}
               label="금액"
@@ -89,7 +89,7 @@ export default function ListItem({
               onChange={(e: any) => setMoney(e.target.value)}
             />
           </Grid>
-          <Grid xs={2} sm={2} md={2}>
+          <Grid item xs={2} sm={2} md={2}>
             <CancelIcon onClick={deleteItem} />
           </Grid>
         </Grid>
