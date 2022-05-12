@@ -14,7 +14,6 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from '../../../header';
 
-// Todolist : 웹 상에선 사진과 입력란 가로로 1:1
 export default function ApproveIndex() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -73,6 +72,26 @@ export default function ApproveIndex() {
           .concat('원')})과 일치하지 않습니다`,
       );
       return;
+    }
+    // date 및 money 제약사항
+    const dateSlice = newDate.split('-');
+    if (dateSlice.length !== 3) {
+      alert('날짜 형식이 올바르지 않습니다 : xxxx-xx-xx');
+      setDate('');
+      return;
+    }
+    if (
+      dateSlice[0].length != 4 ||
+      dateSlice[1].length != 2 ||
+      dateSlice[2].length != 2
+    ) {
+      alert('날짜 형식이 올바르지 않습니다 : xxxx-xx-xx');
+      setDate('');
+      return;
+    }
+    if (isNaN(Number(newMoney)) || newMoney.trim() === '') {
+      alert('금액에는 숫자만 기입할 수 있습니다');
+      setMoney('');
     }
     const prop = {
       requestId: state.requestId,
