@@ -11,10 +11,15 @@ import { useState } from 'react';
 export default function ListItem() {
   // ver 3. 모임 선택 후
   const { id } = useParams();
+
+  React.useEffect(() => {
+    console.log(id);
+    if (id) {
+      setISClub(true);
+    }
+  });
+  // console.log(id);
   const [isClub, setISClub] = useState(false);
-  if (id) {
-    setISClub(true);
-  }
 
   const navigate = useNavigate();
   //하단 후버 메뉴
@@ -162,8 +167,8 @@ export default function ListItem() {
         >
           <MenuItem
             onClick={() => {
-              // listMenuClick(`club/${id}/receipt/requestList`);
-              listMenuClick(`club/1/receipt/requestList`);
+              listMenuClick(`/club/${id}/receipt/requestList`);
+              // listMenuClick(`club/1/receipt/requestList`);
             }}
           >
             <Typography textAlign="center">영수증 내역</Typography>
@@ -171,8 +176,8 @@ export default function ListItem() {
 
           <MenuItem
             onClick={() => {
-              // listMenuClick(`club/${id}/book`);
-              listMenuClick(`club/1/book`);
+              listMenuClick(`/club/${id}/book`);
+              // listMenuClick(`club/1/book`);
             }}
           >
             <Typography textAlign="center">거래 내역</Typography>
@@ -209,8 +214,8 @@ export default function ListItem() {
         >
           <MenuItem
             onClick={() => {
-              // addMenuClick(`club/${id}/receipt/camera`);
-              addMenuClick(`club/1/receipt/camera`);
+              addMenuClick(`/club/${id}/receipt/camera`);
+              // addMenuClick(`club/1/receipt/camera`);
             }}
           >
             <Typography textAlign="center">영수증 등록</Typography>
@@ -218,8 +223,8 @@ export default function ListItem() {
 
           <MenuItem
             onClick={() => {
-              // addMenuClick(` club/${id}/book/createk`);
-              addMenuClick(` club/1/book/create`);
+              addMenuClick(`/club/${id}/book/create`);
+              // addMenuClick(` club/1/book/create`);
             }}
           >
             <Typography textAlign="center">거래 등록</Typography>
@@ -230,7 +235,7 @@ export default function ListItem() {
       {/* 0. 내모임 */}
       <Button
         onClick={() => {
-          onClickButton(`club/${id}/`);
+          onClickButton(`/club`);
         }}
         sx={{
           my: 2,

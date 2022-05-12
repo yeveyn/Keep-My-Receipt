@@ -29,7 +29,7 @@ import AssetReport from './domain/Report/Asset';
 function App() {
   return (
     <BrowserRouter>
-      <Navigation />
+      {/* <Navigation /> */}
       <Routes>
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<Outlet />}>

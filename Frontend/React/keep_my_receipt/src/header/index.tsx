@@ -8,21 +8,27 @@ import AlarmItem from './Icons/AlarmItem';
 import LogoItem from './LogoItem';
 import ResponsiveDrawer from './Drawer';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function NavBar() {
   // ver 1. 랜딩페이지 (로그인 안한 경우)
+  const { id } = useParams();
 
   // ver 2. 로그인 후 (모임선택 x)
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
 
-  if (accessToken) {
-    axios.defaults.headers.common['Authorization'] = accessToken;
-  }
   useEffect(() => {
-    setIsLogin(!isLogin);
-    console.log('되나??');
-  }, [accessToken]);
+    console.log(id);
+    console.log(accessToken);
+    console.log(isLogin);
+    if (accessToken) {
+      axios.defaults.headers.common['Authorization'] = accessToken;
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   return (
     <>
@@ -33,11 +39,9 @@ export default function NavBar() {
             left: 0,
             right: 0,
             width: '100%',
-            position: 'fixed',
-            marginTop: '80',
-            marginBottm: '80',
+            // position: 'fixed',
+            margin: '80',
           }}
-          // marginTop="60"
           style={{ background: '#ffa500' }}
         >
           <Toolbar
