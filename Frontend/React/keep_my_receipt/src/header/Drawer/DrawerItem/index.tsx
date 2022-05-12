@@ -59,6 +59,10 @@ export default function NestedList() {
   const manage = () => {
     navigate(`/club/${id}/manage`);
   };
+
+  const myClub = () => {
+    navigate(`/club`);
+  };
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -93,7 +97,6 @@ export default function NestedList() {
         </List>
       </Collapse>
       <Divider />
-
       <ListItemButton onClick={listHandleClick}>
         <ListItemText primary="내역" />
         {listOpen ? <ExpandLess /> : <ExpandMore />}
@@ -115,14 +118,17 @@ export default function NestedList() {
         </List>
       </Collapse>
       <Divider />
-
       <ListItemButton onClick={chart}>
         <ListItemText primary="분석" />
       </ListItemButton>
       <Divider />
-
       <ListItemButton onClick={manage}>
         <ListItemText primary="모임관리" />
+      </ListItemButton>
+      <Divider />
+
+      <ListItemButton onClick={myClub}>
+        <ListItemText primary="내 모임" />
       </ListItemButton>
       <Divider />
     </List>

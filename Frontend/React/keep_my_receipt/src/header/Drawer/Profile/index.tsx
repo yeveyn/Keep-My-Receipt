@@ -5,36 +5,45 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function Profile() {
-  let userName = '';
-  let clubName = '';
-  let clubImage = '';
+  const { id } = useParams();
+
+  const [userName, setUserName] = useState('');
+  const [clubImage, setClubImage] = useState('');
+  const [clubName, setClubName] = useState('');
+
   const onGetName = () => {
     axios
       .get(`/api/spring/crew/info`)
       .then(function (response) {
-        userName = response.data.data.name;
+        console.log(response);
+        setUserName(response.data.data.name);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  const { id } = useParams();
   const onGetClub = () => {
     axios
       .get(`/api/spring/club/${id}`)
       .then(function (response) {
-        clubName = response.data.data.name;
-        clubImage = response.data.data.image;
+        console.log(response);
+        setClubImage(response.data.data.image);
+        setClubName(response.data.data.name);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-  onGetName();
-  onGetClub();
+
+  useEffect(() => {
+    onGetName();
+    onGetClub();
+  });
+
   return (
     <>
       <List
@@ -49,7 +58,12 @@ export default function Profile() {
             <Avatar src={clubImage} />
           </ListItemAvatar>
           <ListItemText
-            primary={`${clubName}`}
+            // sx = {{
+            //     overflow :'hidden',
+            //     text-overflow : 'ellipsis',
+            // white-space: 'nowrap';
+            // }}
+            primary={clubName}
             secondary={`안녕하세요! ${userName}님`}
           />
         </ListItem>

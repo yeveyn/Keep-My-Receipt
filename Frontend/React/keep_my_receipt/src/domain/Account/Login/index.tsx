@@ -15,7 +15,7 @@ import Navigation from '../../../header';
 
 //FCM SDK 추가 및 초기화
 import firebase from 'firebase/compat/app';
-import { initializeApp } from 'firebase/app';
+
 // 메시지 전송
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
