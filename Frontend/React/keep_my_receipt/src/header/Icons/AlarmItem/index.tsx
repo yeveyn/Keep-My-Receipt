@@ -44,9 +44,29 @@ export default function AlarmItem() {
     setAnchorElUser2(null);
   };
   function connectNotification(alarm: AlarmType) {
-    console.log('clicked', alarm);
-    navigate('/');
+    updateNotification(alarm.notificationId);
+    const notiCode = alarm.notiCode;
+    if (notiCode === '가입') {
+      handleCloseUserMenu2();
+      navigate(`/club/${alarm.clubId}/manage`);
+    } else if (notiCode === '청구') {
+      navigateApprove(alarm.clubId, alarm.requestId);
+    } else {
+      getAlarms();
+    }
   }
+  const updateNotification = async (notificationId: number) => {
+    await axios
+      .put(
+        `https://k6d104.p.ssafy.io/api/spring/notification/${notificationId}`,
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const deleteNotification = async (notificationId: number) => {
     await axios
       .delete(
@@ -55,6 +75,29 @@ export default function AlarmItem() {
       .then((response) => {
         console.log(response);
         getAlarms();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const navigateApprove = async (clubId: number, requestId: number) => {
+    axios
+      .get(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)
+      .then((response) => {
+        const data = response.data.data;
+        if (data.state === '신청') {
+          handleCloseUserMenu2();
+          navigate(`/club/${clubId}/receipt/approve`, {
+            state: {
+              requestId: data.requestId,
+              date: data.payDate,
+              value: data.price,
+              receiptUrl: data.receiptUrl,
+            },
+          });
+        } else {
+          alert('이미 처리된 청구입니다');
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -142,12 +185,14 @@ export default function AlarmItem() {
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography
                 textAlign="center"
+                style={alarm.read === 'false' ? { fontWeight: 'bold' } : {}}
                 onClick={() => connectNotification(alarm)}
               >
                 {alarm.date.split('T')[0].substring(5, 10)}
               </Typography>
               <Typography
                 textAlign="center"
+                style={alarm.read === 'false' ? { fontWeight: 'bold' } : {}}
                 onClick={() => connectNotification(alarm)}
               >
                 {alarm.title}
