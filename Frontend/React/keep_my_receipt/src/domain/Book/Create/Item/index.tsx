@@ -101,7 +101,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
           <span>유형</span>
         </Stack>
         {/* 유형 선택 토글 버튼 */}
-        {/* <ToggleButtons /> */}
+        <ToggleButtons />
       </Stack>
       <Divider />
 

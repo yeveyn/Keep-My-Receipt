@@ -34,7 +34,6 @@ export default function ItemInfoOnEdit({
     <>
       <ListItem>
         <ListItemText
-          sx={{ marginLeft: 5 }}
           primary={
             <Stack direction="row" alignItems="center">
               {/* 분류명 */}
@@ -52,6 +51,7 @@ export default function ItemInfoOnEdit({
                   }
                 }}
                 autoFocus // 첫 렌더링 시 자동 포커싱
+                size="small"
               />
               <IconButton onClick={() => confirmEditItem()}>
                 <CheckCircleOutline />

@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 /**
  * 문자열을 입력해주면 해당 문자열 버튼으로 이루어진 토글 버튼들 반환
@@ -28,12 +33,16 @@ export default function useToggle(
   };
 
   function ToggleButtons() {
+    // 가로 길이 430px을 기준으로 너비 조절
+    const theme = useTheme();
+    const overBreakpoint = useMediaQuery(theme.breakpoints.up(430));
+
     return (
       <ToggleButtonGroup value={toggleValue} exclusive onChange={handleToggle}>
         {list.map((item, index) => (
           <ToggleButton
             value={item}
-            sx={{ paddingX: 3, paddingY: 1 }}
+            sx={{ paddingX: overBreakpoint ? 3 : 1, paddingY: 1 }}
             key={index}
           >
             {item}
