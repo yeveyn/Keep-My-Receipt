@@ -52,8 +52,8 @@ public class Tag {
     public TagResDTO toTagResDTO(){
         return TagResDTO.builder()
                 .tagId(this.id)
-                .parent_tag(this.parentTag)
-                .tag_name(this.tagName)
+                .parentTag(this.parentTag)
+                .tagName(this.tagName)
                 .build();
     }
 }

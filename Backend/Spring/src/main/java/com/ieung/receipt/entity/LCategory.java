@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -32,12 +30,4 @@ public class LCategory {
     // 대분류 이름
     @Column(nullable = false)
     private String lcName;
-
-    //Tag를 TagResDTO 객체로 변환
-    public LCategoryResDTO toLCategoryResDTO(){
-        return LCategoryResDTO.builder()
-                .lcType(this.lcType)
-                .lcName(this.lcName)
-                .build();
-    }
 }

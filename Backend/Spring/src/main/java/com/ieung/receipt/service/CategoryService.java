@@ -23,7 +23,7 @@ public class CategoryService {
         List<LCategory> lCategoryList = lCategoryRepository.findAll();
         List<LCategoryResDTO> lCategoryResDTOList = new ArrayList<>();
         for(LCategory lCategory : lCategoryList){
-            lCategoryResDTOList.add(lCategory.toLCategoryResDTO());
+            lCategoryResDTOList.add(LCategoryResDTO.of(lCategory));
         }
         return lCategoryResDTOList;
     }
