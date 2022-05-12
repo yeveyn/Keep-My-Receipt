@@ -14,25 +14,26 @@ interface DialogType {
 }
 
 export default function LogoutDialog({ open, setOpen }: DialogType) {
+  const accessToken = sessionStorage.getItem('accessToken');
+  const fcmToken = sessionStorage.getItem('fcmToken');
   const handleClose = () => {
     setOpen(false);
   };
   const navigate = useNavigate();
 
-  const LeaveApp = () => {
-    axios
-      .post('api/spring/club/1/crew')
-      .then(function (response) {
-        console.log(response);
-        console.log('로그아웃 클릭');
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    setOpen(false);
-    navigate('/');
+  const onLogout = () => {
+    if (accessToken) {
+      axios
+        .post('/api/spring/crew/logout', { fcmToken: fcmToken })
+        .then(function (response) {
+          sessionStorage.removeItem('accessToken');
+          navigate('/');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
-
   return (
     <Dialog
       open={open}
@@ -51,7 +52,7 @@ export default function LogoutDialog({ open, setOpen }: DialogType) {
           sx={{
             '&.MuiButton-text': { color: '#ff0000' },
           }}
-          onClick={LeaveApp}
+          onClick={onLogout}
         >
           확인
         </Button>
