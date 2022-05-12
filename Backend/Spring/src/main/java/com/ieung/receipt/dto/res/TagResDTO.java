@@ -15,8 +15,8 @@ public class TagResDTO {
     private Long tagId;
 
     @Schema(description = "부모태그 이름")
-    private String parent_tag;
+    private String parentTag;
 
     @Schema(description = "태그 이름", required = true)
-    private String tag_name;
+    private String tagName;
 }
