@@ -2,8 +2,8 @@ import React from 'react';
 import { IconButton, ListItem } from '@mui/material';
 import { Edit } from '@mui/icons-material';
 
-import ListItemTextWithSubtext from '../../../domain/Book/Create/ListItemTextWithSubtext';
-import toCurrency from '../../../services/toCurrency';
+import ListItemTextWithSubtext from '../../../../components/ListItemTextWithSubtext';
+import toCurrency from '../../../../services/toCurrency';
 
 interface ItemInfoOnShowType {
   titleName: string;

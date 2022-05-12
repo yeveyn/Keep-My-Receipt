@@ -3,13 +3,13 @@ import { Divider, List, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import DialogWithIconButton from '../DialogWithIconButton';
-import ItemCategoryEditable from '../ItemCategoryEditable';
-import ItemCategoryFixed from '../ItemCategoryFixed';
-import { MainCategoryDialog } from '../ItemDialogs';
+import EditableItem from '../../EditableItem';
+import DialogWithIconButton from '../../../../components/DialogWithIconButton';
+import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
+import ItemCategoryFixed from '../../EditableList/ItemCategoryFixed';
+import { MainCategoryDialog } from '../../tagDialogContents';
 // 훅
 import useToggle from '../../../../hooks/useToggle';
-import useEditableItem from '../../../../hooks/useEditableItem';
 // 리듀서
 import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 // 샘플 파일들
@@ -59,14 +59,14 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
   };
 
   // 항목 이름 컴포넌트
-  const EditableItemForName = useEditableItem(
+  const EditableItemForName = EditableItem(
     '내용',
     item.itemName,
     dispatchAdapter('itemName'),
   );
 
   // 항목 금액 컴포넌트
-  const EditableItemForMoney = useEditableItem(
+  const EditableItemForMoney = EditableItem(
     '금액',
     item.itemValue,
     dispatchAdapter('itemValue'),

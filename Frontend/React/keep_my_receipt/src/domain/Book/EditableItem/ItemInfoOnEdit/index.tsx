@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { CheckCircleOutline } from '@mui/icons-material';
-import useInput from '../../useInput';
+import useInput from '../../../../hooks/useInput';
 
 interface ItemInfoOnEditType {
   titleName: string;
