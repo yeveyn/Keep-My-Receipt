@@ -77,6 +77,7 @@ export default function ItemIndex({
           xs={3}
           sm={3}
           md={3}
+          item
           container
           justifyContent="center"
           alignItems="center"
@@ -89,6 +90,7 @@ export default function ItemIndex({
           xs={5}
           sm={5}
           md={5}
+          item
           container
           justifyContent="center"
           alignItems="center"
@@ -106,6 +108,7 @@ export default function ItemIndex({
           xs={3}
           sm={3}
           md={3}
+          item
           container
           justifyContent="center"
           alignItems="center"
@@ -118,6 +121,7 @@ export default function ItemIndex({
           xs={1}
           sm={1}
           md={1}
+          item
           container
           justifyContent="center"
           alignItems="center"

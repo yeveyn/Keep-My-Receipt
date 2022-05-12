@@ -14,7 +14,6 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navigation from '../../../header';
 
-// Todolist : 웹 상에선 사진과 입력란 가로로 1:1
 export default function ApproveIndex() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -74,6 +73,26 @@ export default function ApproveIndex() {
       );
       return;
     }
+    // date 및 money 제약사항
+    const dateSlice = newDate.split('-');
+    if (dateSlice.length !== 3) {
+      alert('날짜 형식이 올바르지 않습니다 : xxxx-xx-xx');
+      setDate('');
+      return;
+    }
+    if (
+      dateSlice[0].length != 4 ||
+      dateSlice[1].length != 2 ||
+      dateSlice[2].length != 2
+    ) {
+      alert('날짜 형식이 올바르지 않습니다 : xxxx-xx-xx');
+      setDate('');
+      return;
+    }
+    if (isNaN(newMoney)) {
+      alert('금액에는 숫자만 기입할 수 있습니다');
+      setMoney('');
+    }
     const prop = {
       requestId: state.requestId,
       imgUrl: imgUrl,
@@ -115,7 +134,6 @@ export default function ApproveIndex() {
           direction={matches ? 'row' : 'column'}
           justifyContent="center"
           alignItems="center"
-          spacing={2}
           style={{ width: '100%' }}
         >
           <Stack spacing={2} style={{ width: '100%' }}>
@@ -169,7 +187,7 @@ export default function ApproveIndex() {
           justifyContent="space-evenly"
           alignContent="center"
         >
-          <Grid xs={5.8} sm={4.8} md={3.8}>
+          <Grid item xs={5.8} sm={4.8} md={3.8}>
             <Button
               variant="contained"
               color="error"
@@ -179,7 +197,7 @@ export default function ApproveIndex() {
               거부
             </Button>
           </Grid>
-          <Grid xs={5.8} sm={4.8} md={3.8}>
+          <Grid item xs={5.8} sm={4.8} md={3.8}>
             <Button variant="contained" fullWidth onClick={approveHandler}>
               승인
             </Button>
