@@ -85,7 +85,6 @@ export default function RequestListIndex() {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        spacing={0.8}
         style={
           matches
             ? { marginTop: 100, marginBottom: 30, width: '100%' }
@@ -111,6 +110,7 @@ export default function RequestListIndex() {
               xs={3}
               sm={3}
               md={3}
+              item
               container
               justifyContent="center"
               alignItems="center"
@@ -123,6 +123,7 @@ export default function RequestListIndex() {
               xs={5}
               sm={5}
               md={5}
+              item
               container
               justifyContent="center"
               alignItems="center"
@@ -135,6 +136,7 @@ export default function RequestListIndex() {
               xs={3}
               sm={3}
               md={3}
+              item
               container
               justifyContent="center"
               alignItems="center"
@@ -147,6 +149,7 @@ export default function RequestListIndex() {
               xs={1}
               sm={1}
               md={1}
+              item
               container
               justifyContent="center"
               alignItems="center"

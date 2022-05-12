@@ -73,7 +73,6 @@ export default function RequestIndex() {
           direction="column"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
           style={{ width: '100%' }}
         >
           <Stack spacing={2} style={{ width: '100%' }}>

@@ -89,7 +89,7 @@ export default function ApproveIndex() {
       setDate('');
       return;
     }
-    if (isNaN(Number(newMoney)) || newMoney.trim() === '') {
+    if (isNaN(newMoney)) {
       alert('금액에는 숫자만 기입할 수 있습니다');
       setMoney('');
     }
@@ -134,7 +134,6 @@ export default function ApproveIndex() {
           direction={matches ? 'row' : 'column'}
           justifyContent="center"
           alignItems="center"
-          spacing={2}
           style={{ width: '100%' }}
         >
           <Stack spacing={2} style={{ width: '100%' }}>
@@ -188,7 +187,7 @@ export default function ApproveIndex() {
           justifyContent="space-evenly"
           alignContent="center"
         >
-          <Grid xs={5.8} sm={4.8} md={3.8}>
+          <Grid item xs={5.8} sm={4.8} md={3.8}>
             <Button
               variant="contained"
               color="error"
@@ -198,7 +197,7 @@ export default function ApproveIndex() {
               거부
             </Button>
           </Grid>
-          <Grid xs={5.8} sm={4.8} md={3.8}>
+          <Grid item xs={5.8} sm={4.8} md={3.8}>
             <Button variant="contained" fullWidth onClick={approveHandler}>
               승인
             </Button>
