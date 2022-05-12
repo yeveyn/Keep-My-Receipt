@@ -7,6 +7,8 @@ import ManageClub from './Club';
 import ManageCrew from './Crew';
 import ManageJoin from './Join';
 
+import Navigation from '../../header';
+
 interface ClubInfoType {
   id: number;
   name: string;
@@ -78,6 +80,7 @@ export default function ManageIndex() {
   }, []);
   return (
     <Container maxWidth="md">
+      <Navigation />
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
         {/* Header */}
         <Stack>

@@ -6,6 +6,7 @@ import PageButtons from './PageButtons';
 import Item from './Item';
 import bookReducer, { updateBook } from '../bookReducer';
 import bookSample from './sample.json';
+import Navigation from '../../../header';
 
 export default function BookCreate() {
   const [state, dispatch] = useReducer(bookReducer, bookSample);
@@ -33,6 +34,7 @@ export default function BookCreate() {
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       {/* 거래 정보 */}
       <Header
         date={state.date}

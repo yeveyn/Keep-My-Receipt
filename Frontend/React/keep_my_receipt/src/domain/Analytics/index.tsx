@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Navigation from '../../header';
+
 import {
   Container,
   useMediaQuery,
@@ -19,7 +19,7 @@ import FlowChart from './FlowChart';
 import axios from 'axios';
 import sample1 from './sample1.json';
 import sample3 from './sample3.json';
-// import { Navigation } from '@mui/icons-material';
+import Navigation from '../../header';
 
 export default function MainChartIndex() {
   const { params } = useParams();

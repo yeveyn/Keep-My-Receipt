@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
+import Navigation from '../../../header';
 
 // Todolist : 웹 상에선 사진과 입력란 가로로 1:1
 export default function RequestIndex() {
@@ -44,6 +45,7 @@ export default function RequestIndex() {
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       <div
         style={
           matches

@@ -13,8 +13,11 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import { useParams } from 'react-router-dom';
 
 export default function NestedList() {
+  const { id } = useParams();
+
   const [addOpen, setAddOpen] = React.useState(false);
   const [listOpen, setListOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -33,28 +36,28 @@ export default function NestedList() {
   };
 
   const receipt = () => {
-    navigate(`/club/${1}/receipt/camera`);
+    navigate(`/club/${id}/receipt/camera`);
     setMobileOpen(!mobileOpen);
     console.log('영수증 등록 클릭');
   };
 
   const bookCreate = () => {
-    navigate(`/club/${1}/book/create`);
+    navigate(`/club/${id}/book/create`);
   };
   const receiptList = () => {
-    navigate(`/club/${1}/receipt/requestList`);
+    navigate(`/club/${id}/receipt/requestList`);
   };
 
   const bookList = () => {
-    navigate(`club/${1}/book`);
+    navigate(`/club/${id}/book`);
   };
 
   const chart = () => {
-    navigate(`club/${1}/book`);
+    navigate(`/club/${id}/book`);
   };
 
   const manage = () => {
-    navigate(`club/${1}/manage`);
+    navigate(`/club/${id}/manage`);
   };
   return (
     <List

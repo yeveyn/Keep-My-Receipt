@@ -11,6 +11,7 @@ import {
   Container,
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
+import Navigation from '../../../header';
 
 export default function SignUpForm() {
   // 스타일
@@ -106,16 +107,6 @@ export default function SignUpForm() {
     }
   };
 
-  // const okSignUp = () => {
-  //   if (
-  //     helpEmailText == '' &&
-  //     helpPasswordText == '' &&
-  //     helpPasswordCheckText == ''
-  //   ) {
-  //     cansignup = false;
-  //   }
-  // };
-
   // 회원가입 후 페이지 이동
   const navigate = useNavigate();
   const submitHandler = (event: any) => {
@@ -143,6 +134,7 @@ export default function SignUpForm() {
 
   return (
     <Container maxWidth="sm">
+      <Navigation />
       <h1 className="h1">회원가입</h1>
       <form onSubmit={submitHandler}>
         <Stack spacing={1.5}>

@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import axios from 'axios';
 import SettingItem from './Icons/SettingItem';
 import NavMenuItem from './NavMenuList';
@@ -9,14 +9,20 @@ import LogoItem from './LogoItem';
 import ResponsiveDrawer from './Drawer';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
   // ver 1. 랜딩페이지 (로그인 안한 경우)
-  const { id } = useParams();
+  const { id } = useParams() || 0;
 
+  // 권한은 api로 알아오기
   // ver 2. 로그인 후 (모임선택 x)
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
+  const onClickButton = (url: string) => {
+    navigate(url);
+  };
 
   useEffect(() => {
     console.log(id);
@@ -54,8 +60,29 @@ export default function NavBar() {
             <ResponsiveDrawer />
             {/* 로고 */}
             <LogoItem />
+            {/* 0. 내모임 */}
+            {isLogin ? (
+              <Button
+                onClick={() => {
+                  onClickButton(`/club`);
+                }}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'white',
+                  display: 'block',
+                  float: 'right',
+                }}
+              >
+                {' '}
+                내 모임
+              </Button>
+            ) : (
+              ''
+            )}
+
             {/* 로그인 한 경우, 메뉴 */}
-            {isLogin ? <NavMenuItem /> : ''}
+            {isLogin && id ? <NavMenuItem /> : ''}
 
             {/* 로그인 한 경우, 알림, 설정 아이콘 */}
             {isLogin ? (

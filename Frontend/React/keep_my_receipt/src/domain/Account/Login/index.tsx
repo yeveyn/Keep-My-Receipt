@@ -11,6 +11,7 @@ import {
   Container,
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
+import Navigation from '../../../header';
 
 //FCM SDK 추가 및 초기화
 import firebase from 'firebase/compat/app';
@@ -145,6 +146,7 @@ export default function LoginForm() {
 
   return (
     <Container maxWidth="sm">
+      <Navigation />
       <h1 className="h1">로그인</h1>
       <form onSubmit={submitHandler}>
         <Stack spacing={1.5}>

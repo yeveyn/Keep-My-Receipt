@@ -4,6 +4,7 @@ import axios from 'axios';
 import IndexList from './List';
 import IndexHeader from './header';
 import Pagination from '../../../components/Pagination';
+import Navigation from '../../../header';
 
 interface listItemTypes {
   id: number;
@@ -56,6 +57,7 @@ export default function ClubIndex() {
   }, []);
   return (
     <Container maxWidth="md" sx={{ padding: 0 }}>
+      <Navigation />
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
         {/* Header */}
         <IndexHeader />

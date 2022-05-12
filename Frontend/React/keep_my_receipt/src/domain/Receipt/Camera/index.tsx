@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CreateImage from './image';
 import CreateForm from './form';
 import axios from 'axios';
+import Navigation from '../../../header';
 
 interface formProps {
   type: string;
@@ -77,6 +78,7 @@ export default function ReceiptCreate() {
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       <Stack
         direction="column"
         spacing={3}

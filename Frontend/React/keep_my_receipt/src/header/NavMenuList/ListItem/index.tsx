@@ -125,7 +125,7 @@ export default function ListItem() {
       {/* 3. 분석 */}
       <Button
         onClick={() => {
-          onClickButton(`club/${id}/analytics/mainChart`);
+          onClickButton(`/club/${id}/analytics/mainChart`);
         }}
         sx={{
           my: 2,
@@ -230,22 +230,6 @@ export default function ListItem() {
             <Typography textAlign="center">거래 등록</Typography>
           </MenuItem>
         </Menu>
-      </Button>
-
-      {/* 0. 내모임 */}
-      <Button
-        onClick={() => {
-          onClickButton(`/club`);
-        }}
-        sx={{
-          my: 2,
-          mr: 1,
-          color: 'white',
-          display: 'block',
-          float: 'right',
-        }}
-      >
-        내 모임
       </Button>
     </div>
   );

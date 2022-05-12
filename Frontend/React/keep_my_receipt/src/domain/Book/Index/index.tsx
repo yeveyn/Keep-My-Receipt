@@ -4,12 +4,14 @@ import IndexCalendar from './Calendar';
 import IndexHeader from './Header';
 import IndexList from './List';
 import useToggle from '../../../hooks/useToggle';
+import Navigation from '../../../header';
 
 export default function BookIndex() {
   const { toggleValue, ToggleButtons } = useToggle(['목록', '달력']);
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       {/* 월, 지출, 수입 */}
       <IndexHeader />
       {/* 토글 버튼들 */}
