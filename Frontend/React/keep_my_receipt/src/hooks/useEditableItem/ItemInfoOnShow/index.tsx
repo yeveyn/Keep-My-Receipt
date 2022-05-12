@@ -30,7 +30,6 @@ export default function ItemInfoOnShow({
           subtext={
             typeof itemValue === 'number' ? toCurrency(itemValue) : itemValue
           }
-          inset
         />
       </ListItem>
     </>

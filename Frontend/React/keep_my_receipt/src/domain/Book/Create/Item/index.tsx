@@ -78,6 +78,12 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
 
   return (
     <>
+      <List disablePadding>
+        <EditableItemForName />
+        <Divider />
+        <EditableItemForMoney />
+      </List>
+
       {/* 주요 분류 (자산, 지출, 수입, 예산) */}
       <Stack
         direction="row"
@@ -95,7 +101,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
           <span>유형</span>
         </Stack>
         {/* 유형 선택 토글 버튼 */}
-        <ToggleButtons />
+        {/* <ToggleButtons /> */}
       </Stack>
       <Divider />
 
@@ -135,12 +141,6 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
         setCategory={dispatchAdapter('tag2')}
       />
       <Divider />
-
-      <List disablePadding>
-        <EditableItemForName />
-        <Divider />
-        <EditableItemForMoney />
-      </List>
     </>
   );
 }
