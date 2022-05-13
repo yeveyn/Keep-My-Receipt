@@ -87,8 +87,8 @@ export default function RequestListIndex() {
         alignItems="center"
         style={
           matches
-            ? { marginTop: 100, marginBottom: 30, width: '100%' }
-            : { marginTop: 70, marginBottom: 100, width: '100%' }
+            ? { marginTop: 20, marginBottom: 30, width: '100%' }
+            : { marginTop: 0, marginBottom: 100, width: '100%' }
         }
       >
         <Card

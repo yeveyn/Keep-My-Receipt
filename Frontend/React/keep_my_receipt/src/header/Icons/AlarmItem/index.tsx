@@ -97,11 +97,15 @@ export default function AlarmItem() {
           });
         } else {
           alert('이미 처리된 청구입니다');
+          getAlarms();
         }
       })
       .catch((e) => {
         console.log(e);
       });
+  };
+  const navigateAlarms = () => {
+    navigate('/alert');
   };
 
   const [alarms, setAlarms] = React.useState([
@@ -134,7 +138,6 @@ export default function AlarmItem() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setRes(response.data.data);
         setAlarms(response.data.data.list);
       })
@@ -185,14 +188,24 @@ export default function AlarmItem() {
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography
                 textAlign="center"
-                style={alarm.read === 'false' ? { fontWeight: 'bold' } : {}}
+                style={
+                  alarm.read.toString() === 'false'
+                    ? { fontWeight: 'bold' }
+                    : {}
+                }
                 onClick={() => connectNotification(alarm)}
               >
-                {alarm.date.split('T')[0].substring(5, 10)}
+                {alarm.date.split('T')[0].substring(5)[0] === '0'
+                  ? alarm.date.split('T')[0].substring(6).replace('-', '/')
+                  : alarm.date.split('T')[0].substring(5).replace('-', '/')}
               </Typography>
               <Typography
                 textAlign="center"
-                style={alarm.read === 'false' ? { fontWeight: 'bold' } : {}}
+                style={
+                  alarm.read.toString() === 'false'
+                    ? { fontWeight: 'bold' }
+                    : {}
+                }
                 onClick={() => connectNotification(alarm)}
               >
                 {alarm.title}
@@ -203,6 +216,17 @@ export default function AlarmItem() {
             </Grid>
           </MenuItem>
         ))}
+        <Typography fontSize="0.8rem" textAlign="center">
+          ...
+        </Typography>
+        <Typography
+          fontSize="0.8rem"
+          color="primary"
+          textAlign="center"
+          onClick={navigateAlarms}
+        >
+          알림 목록 자세히 보기
+        </Typography>
         <hr></hr>
         {alarms.length < 1 ? (
           <Typography textAlign="center">
