@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ItemInfoOnEdit from './ItemInfoOnEdit';
 import ItemInfoOnShow from './ItemInfoOnShow';
 
-export default function useEditableItem(
+export default function EditableItem(
   titleName: string,
   itemValue: string | number,
   setItemValue: (value: string | number) => void,
