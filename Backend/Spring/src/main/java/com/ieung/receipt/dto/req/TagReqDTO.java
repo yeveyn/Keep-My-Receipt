@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
@@ -23,7 +24,7 @@ public class TagReqDTO {
     private String tagName;
 
     //동아리 고유번호
-    @NotBlank
+    @NotNull
     @Schema(description = "태그를 등록하고 사용하는 동아리의 고유번호", required = true)
     private Long clubId;
 }

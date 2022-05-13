@@ -7,6 +7,7 @@ import com.ieung.receipt.service.common.CommonResult;
 import com.ieung.receipt.service.common.ListResult;
 import com.ieung.receipt.service.common.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
+@Tag(name = "07. 태그")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
