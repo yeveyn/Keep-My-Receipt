@@ -83,6 +83,10 @@ public class CategoryService {
      */
     public void updateBSC(Long bscId, BudgetSCategoryReqDTO budgetSCategoryReqDTO){
         BudgetSCategory originBudgetSCategory = budgetSCategoryRepository.getById(bscId);
+        if(originBudgetSCategory.getLcName().equals("기타비용") && originBudgetSCategory.getBscName().equals("미분류 비용"))
+            throw new ApiMessageException("기타비용의 미분류 비용은 수정하실 수 없습니다.");
+        if(originBudgetSCategory.getLcName().equals("기타수입") && originBudgetSCategory.getBscName().equals("미분류 수입"))
+            throw new ApiMessageException("기타수입의 미분류 수입은 수정하실 수 없습니다.");
         BudgetSCategory newBudgetSCategory = BudgetSCategoryReqDTO.toEntity(budgetSCategoryReqDTO, clubRepository.getById(budgetSCategoryReqDTO.getClubId()));
         int checkDuplicate = budgetSCategoryRepository.countByClubAndLcNameAndBscName(newBudgetSCategory.getClub(), newBudgetSCategory.getLcName(), newBudgetSCategory.getBscName());
         if(checkDuplicate!=0)
@@ -96,7 +100,14 @@ public class CategoryService {
      * @param bscId
      */
     @Transactional
-    public void deleteBSC(Long bscId){ budgetSCategoryRepository.deleteById(bscId); }
+    public void deleteBSC(Long bscId){
+        BudgetSCategory budgetSCategory = budgetSCategoryRepository.getById(bscId);
+        if(budgetSCategory.getLcName().equals("기타비용") && budgetSCategory.getBscName().equals("미분류 비용"))
+            throw new ApiMessageException("기타비용의 미분류 비용은 삭제하실 수 없습니다.");
+        if(budgetSCategory.getLcName().equals("기타수입") && budgetSCategory.getBscName().equals("미분류 수입"))
+            throw new ApiMessageException("기타수입의 미분류 수입은 삭제하실 수 없습니다.");
+        budgetSCategoryRepository.deleteById(bscId);
+    }
 
     /**
      * 자산 소분류 생성
@@ -104,6 +115,9 @@ public class CategoryService {
      */
     @Transactional
     public void createAssetSCategory(AssetSCategoryReqDTO assetSCategoryReqDTO){
+        if(assetSCategoryReqDTO.getLcName().equals("현금 및 현금성자산") && !assetSCategoryReqDTO.getAscName().equals("현금")){
+            throw new ApiMessageException("현금 및 현금성자산의 소분류는 생성할 수 없습니다.");
+        }
         AssetSCategory newAssetSCategory = AssetSCategoryReqDTO.toEntity(assetSCategoryReqDTO, clubRepository.getById(assetSCategoryReqDTO.getClubId()));
         int checkDuplicate = assetSCategoryRepository.countByClubAndLcNameAndAscName(newAssetSCategory.getClub(), newAssetSCategory.getLcName(), newAssetSCategory.getAscName());
         if(checkDuplicate != 0){
@@ -129,6 +143,10 @@ public class CategoryService {
     @Transactional
     public void updateASC(Long ascId, AssetSCategoryReqDTO assetSCategoryReqDTO){
         AssetSCategory originAssetSCategory = assetSCategoryRepository.getById(ascId);
+        if(originAssetSCategory.getLcName().equals("현금 및 현금성자산") && originAssetSCategory.getAscName().equals("현금"))
+            throw new ApiMessageException("현금 및 현금성자산의 현금 소분류는 수정하실 수 없습니다.");
+        if(originAssetSCategory.getLcName().equals("기타자산") && originAssetSCategory.getAscName().equals("미분류자산"))
+            throw new ApiMessageException("기타자산의 미분류자산 소분류는 수정하실 수 없습니다.");
         AssetSCategory newAssetSCategory = AssetSCategoryReqDTO.toEntity(assetSCategoryReqDTO, clubRepository.getById(assetSCategoryReqDTO.getClubId()));
         int checkDuplicate = assetSCategoryRepository.countByClubAndLcNameAndAscName(newAssetSCategory.getClub(), newAssetSCategory.getLcName(), newAssetSCategory.getAscName());
         if(checkDuplicate!=0)
@@ -153,5 +171,12 @@ public class CategoryService {
      * @param ascId
      */
     @Transactional
-    public void deleteASC(Long ascId){ assetSCategoryRepository.deleteById(ascId); }
+    public void deleteASC(Long ascId){
+        AssetSCategory assetSCategory = assetSCategoryRepository.getById(ascId);
+        if(assetSCategory.getLcName().equals("현금 및 현금성 자산") && assetSCategory.getAscName().equals("현금"))
+            throw new ApiMessageException("현금 및 현금성 자산의 현금 소분류는 삭제하실 수 없습니다.");
+        if(assetSCategory.getLcName().equals("기타자산") && assetSCategory.getAscName().equals("미분류자산"))
+            throw new ApiMessageException("기타자산의 미분류자산 소분류는 삭제하실 수 없습니다.");
+        assetSCategoryRepository.deleteById(ascId);
+    }
 }
