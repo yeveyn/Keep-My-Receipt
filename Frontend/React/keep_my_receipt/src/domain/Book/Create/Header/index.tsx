@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, Stack, TextField, Typography } from '@mui/material';
+// import { Schedule, PointOfSale } from '@mui/icons-material';
 
 import { BookAction, updateBook } from '../../bookReducer';
 import toCurrency from '../../../../services/toCurrency';
@@ -26,8 +27,9 @@ function Header({ date, totalValue, length, dispatch }: HeaderType) {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          marginBottom={1}
         >
-          <p>날짜</p>
+          <Typography>날짜</Typography>
           <TextField
             type="date"
             defaultValue={date}
@@ -40,16 +42,16 @@ function Header({ date, totalValue, length, dispatch }: HeaderType) {
             // style={{ width: '100%' }}
           />
         </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <p>총금액</p>
-          <p>{toCurrency(totalValue)}</p>
+        <Stack direction="row" justifyContent="space-between" marginBottom={1}>
+          <Typography>총금액</Typography>
+          <Typography>{toCurrency(totalValue)}</Typography>
         </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <p>거래 개수</p>
-          <p>{length}</p>
+        <Stack direction="row" justifyContent="space-between" marginBottom={1}>
+          <Typography>거래 개수</Typography>
+          <Typography>{length}</Typography>
         </Stack>
-        <Button variant="contained" color="secondary">
-          영수증 확인하기
+        <Button variant="outlined" color="secondary" sx={{ marginTop: 1 }}>
+          영수증 확인
         </Button>
       </Stack>
     </>
