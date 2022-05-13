@@ -195,7 +195,9 @@ export default function AlarmItem() {
                 }
                 onClick={() => connectNotification(alarm)}
               >
-                {alarm.date.split('T')[0].substring(5, 10)}
+                {alarm.date.split('T')[0].substring(5)[0] === '0'
+                  ? alarm.date.split('T')[0].substring(6).replace('-', '/')
+                  : alarm.date.split('T')[0].substring(5).replace('-', '/')}
               </Typography>
               <Typography
                 textAlign="center"
