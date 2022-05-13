@@ -3,7 +3,7 @@ import { Divider, List, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import EditableItem from '../../EditableItem';
+import EditableItemContainer from '../../EditableItem/Index';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
 import ItemCategoryFixed from '../../EditableList/ItemCategoryFixed';
@@ -20,7 +20,6 @@ import {
   tag1Categories,
   tag2Categories,
 } from '../../tagListSample';
-import EditableItemContainer from '../../EditableItem/IndexV2';
 
 interface ItemType {
   item: BookItemType;
@@ -58,20 +57,6 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
     // 대분류가 바뀔 때, 중분류 초기화
     dispatch(updateItem(itemIndex, 'mediumCategory', ''));
   };
-
-  // 항목 이름 컴포넌트
-  const EditableItemForName = EditableItem(
-    '내용',
-    item.itemName,
-    dispatchAdapter('itemName'),
-  );
-
-  // 항목 금액 컴포넌트
-  const EditableItemForMoney = EditableItem(
-    '금액',
-    item.itemValue,
-    dispatchAdapter('itemValue'),
-  );
 
   useEffect(() => {
     console.log(item);
@@ -138,7 +123,12 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <Divider />
 
       <List disablePadding>
-        <EditableItemForName />
+        <EditableItemContainer
+          originalValue={item.itemName}
+          onEdit={dispatchAdapter('itemName')}
+          prefixElement={<>내용</>}
+          rootHighlight
+        />
         <Divider />
         <EditableItemContainer
           originalValue={item.itemValue}
@@ -147,7 +137,19 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
           isCurrency
           rootHighlight
         />
-        <EditableItemForMoney />
+        <EditableItemContainer
+          originalValue={1}
+          prefixElement={<>개수</>}
+          onEdit={(value) => {
+            null;
+          }}
+          onSelect={(value) => {
+            null;
+          }}
+          onErase={(value) => {
+            null;
+          }}
+        />
       </List>
     </>
   );

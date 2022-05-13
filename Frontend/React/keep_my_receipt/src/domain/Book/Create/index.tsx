@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 
+import Navigation from '../../../header';
 import Header from './Header';
 import PageButtons from './PageButtons';
 import Item from './Item';
-import EditableItemContainer from '../EditableItem/IndexV2';
 import bookReducer, { updateBook } from '../bookReducer';
 import bookSample from './sample.json';
-import Navigation from '../../../header';
 
 export default function BookCreate() {
   const [state, dispatch] = useReducer(bookReducer, bookSample);
@@ -62,24 +61,6 @@ export default function BookCreate() {
           dispatch={dispatch}
         />
       )}
-
-      <EditableItemContainer
-        prefixElement={<Typography>개수</Typography>}
-        originalValue={1}
-        onEdit={(value) => {
-          null;
-        }}
-        onSelect={(value) => {
-          null;
-        }}
-        onErase={(value) => {
-          null;
-        }}
-      />
-      <br />
-      <br />
-      <br />
-      <br />
     </Container>
   );
 }
