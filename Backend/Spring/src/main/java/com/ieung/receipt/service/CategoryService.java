@@ -26,10 +26,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
-    private LCategoryRepository lCategoryRepository;
-    private BudgetSCategoryRepository budgetSCategoryRepository;
-    private AssetSCategoryRepository assetSCategoryRepository;
-    private ClubRepository clubRepository;
+    private final LCategoryRepository lCategoryRepository;
+    private final BudgetSCategoryRepository budgetSCategoryRepository;
+    private final AssetSCategoryRepository assetSCategoryRepository;
+    private final ClubRepository clubRepository;
 
     /**
      * 대분류 조회
