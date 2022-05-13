@@ -5,6 +5,7 @@ import Pagination from '../../../components/Pagination';
 import * as qs from 'qs';
 import CrewMenu from './Menu';
 import CrewListItem from '../../../components/CrewListItem';
+import CrewCheckBoxFilter from './CheckBoxFilter';
 
 interface listItemTypes {
   clubCrewId: number;
@@ -23,7 +24,7 @@ interface resopnseType {
 }
 
 export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
-  const [checked, setChecked] = useState([false, false]);
+  const [filter, setFilter] = useState('ALL');
   const { id, name, description, image } = clubInfo;
   const [res, setRes] = useState<resopnseType>({
     pageNumber: 0,
@@ -34,6 +35,8 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
     list: [],
   });
   const { list } = res;
+
+  // axios
   const crewListAxios = axios.create({
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
@@ -63,37 +66,13 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
       });
   };
 
-  const onClick = (auth: string) => {
-    console.log('메뉴 펼치기');
-  };
-
   useEffect(() => {
     getCrewList();
   }, []);
   return (
     <Stack>
       {/* 필터(관리자/회원) */}
-      <FormControlLabel
-        label="관리자"
-        control={
-          <Checkbox
-            checked={checked[0]}
-            // onChange={handleChange}
-            // inputProps={{ 'aria-label': 'controlled' }}
-          />
-        }
-      />
-      <FormControlLabel
-        label="회원"
-        control={
-          <Checkbox
-            checked={checked[1]}
-            // onChange={handleChange}
-            // inputProps={{ 'aria-label': 'controlled' }}
-          />
-        }
-      />
-
+      <CrewCheckBoxFilter getCrewList={getCrewList} setFilter={setFilter} />
       {/* 내용 */}
       <Stack
         direction="column"
@@ -121,6 +100,7 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
           paginationSize={5}
           onClickPage={getCrewList}
           bgColor="#ffaa00"
+          filter={filter}
         />
       </Stack>
     </Stack>
