@@ -147,8 +147,8 @@ export default function MainChartIndex() {
           spacing={0.5}
           style={
             matches
-              ? { marginTop: 100, marginBottom: 30, width: '100%' }
-              : { marginTop: 70, marginBottom: 100, width: '100%' }
+              ? { marginTop: 20, marginBottom: 30, width: '100%' }
+              : { marginTop: 0, marginBottom: 100, width: '100%' }
           }
         >
           <Stack spacing={2} style={{ width: '100%' }}>

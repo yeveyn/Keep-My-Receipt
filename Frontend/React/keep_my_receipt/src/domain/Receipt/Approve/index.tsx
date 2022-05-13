@@ -125,8 +125,8 @@ export default function ApproveIndex() {
       <div
         style={
           matches
-            ? { marginTop: 100, marginBottom: 0, width: '100%' }
-            : { marginTop: 70, marginBottom: 70, width: '100%' }
+            ? { marginTop: 20, marginBottom: 0, width: '100%' }
+            : { marginTop: 0, marginBottom: 70, width: '100%' }
         }
       >
         <Grid
