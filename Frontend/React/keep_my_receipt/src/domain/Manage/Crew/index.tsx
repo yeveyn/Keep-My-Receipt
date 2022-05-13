@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Stack, Button } from '@mui/material';
+import { Stack, Button, Checkbox, FormControlLabel } from '@mui/material';
 import axios from 'axios';
 import Pagination from '../../../components/Pagination';
 import * as qs from 'qs';
@@ -23,6 +23,7 @@ interface resopnseType {
 }
 
 export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
+  const [checked, setChecked] = useState([false, false]);
   const { id, name, description, image } = clubInfo;
   const [res, setRes] = useState<resopnseType>({
     pageNumber: 0,
@@ -37,10 +38,11 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
   });
-  const getCrewList = async (page?: number) => {
+  const getCrewList = async (page?: number, auth?: string) => {
     await crewListAxios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/crews`, {
         params: {
+          auth: auth ? auth : 'ALL',
           page: page ? page : 0,
           size: 5,
           sort: ['auth', 'id'],
@@ -70,15 +72,35 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
   }, []);
   return (
     <Stack>
-      {/* Dialog */}
+      {/* 필터(관리자/회원) */}
+      <FormControlLabel
+        label="관리자"
+        control={
+          <Checkbox
+            checked={checked[0]}
+            // onChange={handleChange}
+            // inputProps={{ 'aria-label': 'controlled' }}
+          />
+        }
+      />
+      <FormControlLabel
+        label="회원"
+        control={
+          <Checkbox
+            checked={checked[1]}
+            // onChange={handleChange}
+            // inputProps={{ 'aria-label': 'controlled' }}
+          />
+        }
+      />
 
-      {/* Table */}
+      {/* 내용 */}
       <Stack
         direction="column"
         justifyContent="center"
         alignItems="center"
         spacing={2}
-        marginTop={2}
+        marginTop={1}
       >
         {/* 리스트 */}
         {list.length ? (
