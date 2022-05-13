@@ -3,7 +3,7 @@ import { Divider, List, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import EditableItemContainer from '../../EditableItem/Index';
+import EditableItemContainer from '../../EditableItem';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
 import ItemCategoryFixed from '../../EditableList/ItemCategoryFixed';
@@ -140,13 +140,13 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
         <EditableItemContainer
           originalValue={1}
           prefixElement={<>개수</>}
-          onEdit={(value) => {
+          onEdit={() => {
             null;
           }}
-          onSelect={(value) => {
+          onSelect={() => {
             null;
           }}
-          onErase={(value) => {
+          onErase={() => {
             null;
           }}
         />
