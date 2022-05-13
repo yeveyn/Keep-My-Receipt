@@ -18,9 +18,9 @@ type EditableItemContainerType = Parameters<typeof EditableItemContainer>[0];
 
 export default function EditableItemContainer(props: {
   originalValue: string | number;
-
+  onEdit: (value: string | number) => void;
   editOnMount?: boolean;
-  onEdit?: (value: string | number) => void;
+
   onErase?: (value: string | number) => void;
   onSelect?: (value: string | number) => void;
 
@@ -28,7 +28,11 @@ export default function EditableItemContainer(props: {
   rootHighlight?: boolean;
   isCurrency?: boolean;
 }) {
-  const editableItem = useEditableItem(props.originalValue, props.editOnMount);
+  const editableItem = useEditableItem(
+    props.originalValue,
+    props.onEdit,
+    props.editOnMount,
+  );
 
   return (
     <>
@@ -40,7 +44,7 @@ export default function EditableItemContainer(props: {
             <ListItemButton
               onClick={() => {
                 // 현재 클릭한 값으로 바꿈
-                props.onSelect && props.onSelect(editableItem.itemValue);
+                props.onSelect && props.onSelect(props.originalValue);
               }}
             >
               <EditableItemContent props={props} editableItem={editableItem} />
@@ -83,8 +87,8 @@ function EditableItemContent({
             >
               {/* 금액이면 금액 형식으로 출력 */}
               {props.isCurrency
-                ? toCurrency(editableItem.itemValue as number)
-                : editableItem.itemValue}
+                ? toCurrency(props.originalValue as number)
+                : props.originalValue}
             </Typography>
           }
         />
@@ -119,18 +123,17 @@ function EditableItemActions({
   return (
     <>
       {/* 아이템 수정 버튼 */}
-      {props.onEdit && !editableItem.isEditing && (
+      {!editableItem.isEditing && (
         <IconButton onClick={() => editableItem.onItemEdit(true)}>
           <Edit />
         </IconButton>
       )}
 
       {/* 아이템 수정 확인 버튼 */}
-      {props.onEdit && editableItem.isEditing && (
+      {editableItem.isEditing && (
         <IconButton
           onClick={() => {
             editableItem.onItemEditConfirm();
-            props.onEdit && props.onEdit(editableItem.itemValue);
           }}
         >
           <CheckCircle />
@@ -138,12 +141,8 @@ function EditableItemActions({
       )}
 
       {/* 아이템 수정 취소 버튼 */}
-      {props.onEdit && editableItem.isEditing && (
-        <IconButton
-          onClick={() => {
-            editableItem.onItemEdit(false);
-          }}
-        >
+      {editableItem.isEditing && (
+        <IconButton onClick={() => editableItem.onItemEdit(false)}>
           <Cancel />
         </IconButton>
       )}
@@ -152,7 +151,7 @@ function EditableItemActions({
       {props.onErase && !editableItem.isEditing && (
         <IconButton
           onClick={() => {
-            props.onErase && props.onErase(editableItem.itemValue);
+            props.onErase && props.onErase(props.originalValue);
           }}
         >
           <Delete />

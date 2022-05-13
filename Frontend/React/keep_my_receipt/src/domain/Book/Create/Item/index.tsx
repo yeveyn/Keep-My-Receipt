@@ -20,6 +20,7 @@ import {
   tag1Categories,
   tag2Categories,
 } from '../../tagListSample';
+import EditableItemContainer from '../../EditableItem/IndexV2';
 
 interface ItemType {
   item: BookItemType;
@@ -139,6 +140,13 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <List disablePadding>
         <EditableItemForName />
         <Divider />
+        <EditableItemContainer
+          originalValue={item.itemValue}
+          onEdit={dispatchAdapter('itemValue')}
+          prefixElement={<>금액</>}
+          isCurrency
+          rootHighlight
+        />
         <EditableItemForMoney />
       </List>
     </>

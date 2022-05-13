@@ -3,10 +3,10 @@ import { useState } from 'react';
 export type EditableItemType = ReturnType<typeof useEditableItem>;
 
 export default function useEditableItem(
-  originalValue: string | number,
+  itemValue: string | number,
+  setItemValue: (value: string | number) => void,
   editOnMount?: boolean,
 ) {
-  const [itemValue, setItemValue] = useState(originalValue);
   const [isEditing, setIsEditing] = useState(editOnMount ? true : false);
   const [changedValue, setChangedValue] = useState(itemValue);
 
@@ -31,7 +31,6 @@ export default function useEditableItem(
   };
 
   return {
-    itemValue,
     changedValue,
     isEditing,
     onItemChange,
