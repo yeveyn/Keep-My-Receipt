@@ -4,7 +4,10 @@ export type EditableItemType = ReturnType<typeof useEditableItem>;
 
 export default function useEditableItem(
   itemValue: string | number,
-  setItemValue: (value: string | number) => void,
+  changeItemValue: (
+    prevValue: string | number,
+    newValue: string | number,
+  ) => void,
   editOnMount?: boolean,
 ) {
   const [isEditing, setIsEditing] = useState(editOnMount ? true : false);
@@ -23,10 +26,16 @@ export default function useEditableItem(
   };
 
   const onItemEditConfirm = () => {
-    if (!changedValue) {
+    if (itemValue === changedValue) {
+      alert('이전 값과 수정한 값이 같습니다!');
       return;
     }
-    setItemValue(changedValue);
+
+    if (!changedValue) {
+      alert('0이나 빈 값은 입력할 수 없습니다!');
+      return;
+    }
+    changeItemValue(itemValue, changedValue);
     setIsEditing(false);
   };
 

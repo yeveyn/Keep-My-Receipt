@@ -18,7 +18,7 @@ type EditableItemContainerType = Parameters<typeof EditableItemContainer>[0];
 
 export default function EditableItemContainer(props: {
   originalValue: string | number;
-  onEdit: (value: string | number) => void;
+  onEdit: (prevValue: string | number, newValue: string | number) => void;
   editOnMount?: boolean;
 
   onErase?: (value: string | number) => void;
