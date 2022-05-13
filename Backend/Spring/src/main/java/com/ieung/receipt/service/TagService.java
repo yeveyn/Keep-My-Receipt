@@ -83,6 +83,7 @@ public class TagService {
      * 태그 삭제
      * @param tagId
      */
+    @Transactional
     public void deleteTag(Long tagId){
         tagRepository.deleteById(tagId);
     }
