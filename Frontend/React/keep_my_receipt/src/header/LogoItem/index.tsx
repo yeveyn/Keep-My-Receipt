@@ -14,7 +14,8 @@ export default function LogoItem() {
         display: { xs: 'none', md: 'flex' },
         fontWeight: 500,
         float: 'right',
-        color: 'inherit',
+        // color: 'inherit',
+        color: '#ffa500',
         fontSize: 40,
         textDecoration: 'none',
       }}

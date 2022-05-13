@@ -28,11 +28,10 @@ function Banner() {
           <ChiChu src="/images/randing/chichu.png" alt="" />
         </ChiChuAnimation>
         <ContentDiv>
-          <Title>Chi Chu</Title>
-          <Content>치츄가 찾아줄게요!</Content>
-          <Content>빅데이터 치아보험 추천 서비스</Content>
-          <CustomButton onClick={() => navigate('search')}>
-            치츄 시작하기
+          <Title>영수증을 부탁해!</Title>
+          <Content>모임 관리</Content>
+          <CustomButton onClick={() => navigate('/login')}>
+            모임관리 시작하기
           </CustomButton>
         </ContentDiv>
       </Container>

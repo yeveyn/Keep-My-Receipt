@@ -5,10 +5,32 @@ import {
   LandingContentColor,
   LandingSubContent,
 } from './styles';
-import { Box, Button, Container } from '@mui/material';
+import { Box, Button, Container, Fade } from '@mui/material';
 import comfort_svg from './image.svg';
-import { Fade } from 'react-awesome-reveal';
+// import { Fade } from 'react-awesome-reveal';
 
+const icon = (
+  <>
+    <LandingContent>
+      <LandingContentColor>안심하세요</LandingContentColor>
+    </LandingContent>
+    <LandingContent>
+      이름과 연락처 <br />
+      <LandingContentColor>함부로 묻지않아요</LandingContentColor>
+    </LandingContent>
+    {/* <LandingContent>최소한의 정보로 간편하게 추천해요</LandingContent> */}
+
+    <LandingContent>
+      <p>
+        <img src={comfort_svg} width="50%" />
+      </p>
+      <LandingSubContent>
+        복잡한 절차는 필요하지 않아요 <br />
+        최소한의 개인정보로 <b>간편하게</b> 확인할 수 있어요
+      </LandingSubContent>
+    </LandingContent>
+  </>
+);
 function LandingFirst() {
   return (
     <>
@@ -24,26 +46,11 @@ function LandingFirst() {
               textAlign: 'center',
             }}
           >
-            {/* <Fade cascade> */}
-            <LandingContent>
-              <LandingContentColor>안심하세요</LandingContentColor>
-            </LandingContent>
-            <LandingContent>
-              이름과 연락처 <br />
-              <LandingContentColor>함부로 묻지않아요</LandingContentColor>
-            </LandingContent>
-            {/* <LandingContent>최소한의 정보로 간편하게 추천해요</LandingContent> */}
-
-            <LandingContent>
-              <p>
-                <img src={comfort_svg} width="50%" />
-              </p>
-              <LandingSubContent>
-                복잡한 절차는 필요하지 않아요 <br />
-                최소한의 개인정보로 <b>간편하게</b> 확인할 수 있어요
-              </LandingSubContent>
-            </LandingContent>
-            {/* </Fade> */}
+            <Fade
+            // cascade
+            >
+              {icon}
+            </Fade>
           </Box>
         </Container>
       </LandingContainer>

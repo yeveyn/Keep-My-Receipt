@@ -43,7 +43,7 @@ export default function NavBar() {
               width: '100%',
               margin: '80',
             }}
-            style={{ background: '#ffa500' }}
+            style={{ background: '#ffffff' }}
           >
             <Toolbar
               sx={{
@@ -51,6 +51,11 @@ export default function NavBar() {
                 float: 'right',
               }}
             >
+              <Box
+                sx={{
+                  marginRight: '200px',
+                }}
+              ></Box>
               {/* 모바일용 세줄 메뉴 */}
               {isLogin && id ? <ResponsiveDrawer /> : ''}
 
@@ -65,7 +70,7 @@ export default function NavBar() {
                   sx={{
                     my: 2,
                     mr: 1,
-                    color: 'white',
+                    color: 'black',
                     display: 'block',
                     float: 'right',
                   }}
@@ -97,6 +102,11 @@ export default function NavBar() {
               ) : (
                 ''
               )}
+              <Box
+                sx={{
+                  marginLeft: '200px',
+                }}
+              ></Box>
             </Toolbar>
           </AppBar>
         </Box>

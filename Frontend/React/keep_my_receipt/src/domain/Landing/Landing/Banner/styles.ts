@@ -90,7 +90,7 @@ export const ContentDiv = styled.div`
 `;
 
 export const Title = styled.b`
-  font-size: 7rem;
+  font-size: 4rem;
   color: #fff;
   color: ${blue[100]};
   // text-shadow: -1px 0 ${blue[400]}, 0 1px ${blue[400]}, 1px 0 ${blue[400]},
