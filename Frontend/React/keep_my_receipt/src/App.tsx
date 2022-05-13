@@ -34,15 +34,15 @@ function App() {
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<Outlet />}>
           <Route index element={<Landing />} />
+          <Route path="alert" element={<Outlet />}>
+            <Route index element={<AlertIndex />} />
+            {/* 추가 */}
+          </Route>
           <Route path="club" element={<Outlet />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />
             <Route path="search" element={<ClubSearch />} />
             <Route path=":id" element={<Outlet />}>
-              <Route path="alert" element={<Outlet />}>
-                <Route index element={<AlertIndex />} />
-                {/* 추가 */}
-              </Route>
               <Route path="setting" element={<Outlet />}>
                 <Route index element={<SettingIndex />} />
                 {/* 추가 */}
