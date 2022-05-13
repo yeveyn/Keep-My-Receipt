@@ -84,8 +84,8 @@ export default function ReceiptCreate() {
         spacing={3}
         style={
           matches
-            ? { marginTop: 50, marginBottom: 30, width: '100%' }
-            : { marginTop: 40, marginBottom: 100, width: '100%' }
+            ? { marginTop: 0, marginBottom: 30, width: '100%' }
+            : { marginTop: 0, marginBottom: 100, width: '100%' }
         }
       >
         <br></br>
