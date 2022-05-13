@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Tabs, Tab, Box, Stack, Avatar } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Tabs,
+  Tab,
+  Box,
+  Stack,
+  Avatar,
+  styled,
+  Typography,
+} from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -21,6 +31,25 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+
+const ManageTabs = styled(Tabs)({
+  // borderBottom: '1px solid #ffaa00',
+  '& .MuiTabs-indicator': {
+    backgroundColor: '#ffaa00',
+  },
+});
+const ManageTab = styled(Tab)(({ theme }) => ({
+  fontWeight: theme.typography.fontWeightRegular,
+  '&:hover': {
+    color: '#ffaa00',
+    fontWeight: theme.typography.fontWeightBold,
+    opacity: 1,
+  },
+  '&.Mui-selected': {
+    color: '#ffaa00',
+    fontWeight: theme.typography.fontWeightBold,
+  },
+}));
 
 export default function ManageIndex() {
   const navigate = useNavigate();
@@ -105,8 +134,8 @@ export default function ManageIndex() {
       <Navigation />
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
         {/* Header */}
-        <Stack>
-          <h2>모임관리</h2>
+        <Stack marginTop="1rem" spacing="0.5rem">
+          <Typography variant="h4">모임관리</Typography>
           <Stack
             direction="row"
             spacing={2}
@@ -128,7 +157,7 @@ export default function ManageIndex() {
         </Stack>
 
         {/* Tab */}
-        <Stack direction="column" alignItems="center" sx={{ marginY: '1rem' }}>
+        <Stack direction="column" alignItems="center">
           <Box
             sx={{
               width: '100%',
@@ -137,28 +166,28 @@ export default function ManageIndex() {
               borderColor: 'divider',
             }}
           >
-            <Tabs
+            <ManageTabs
               value={value}
               onChange={handleChange}
               variant="fullWidth"
               centered
             >
-              <Tab
+              <ManageTab
                 label="회원"
                 {...a11yProps(0)}
                 sx={{ fontSize: '1rem', fontWeight: 'bold' }}
               />
-              <Tab
+              <ManageTab
                 label="가입 대기"
                 // {...a11yProps(1)}
                 sx={{ fontSize: '1rem', fontWeight: 'bold' }}
               />
-              <Tab
+              <ManageTab
                 label="모임 정보"
                 // {...a11yProps(2)}
                 sx={{ fontSize: '1rem', fontWeight: 'bold' }}
               />
-            </Tabs>
+            </ManageTabs>
           </Box>
           <TabPanel value={value} index={0}>
             <ManageCrew clubInfo={clubInfo} />
