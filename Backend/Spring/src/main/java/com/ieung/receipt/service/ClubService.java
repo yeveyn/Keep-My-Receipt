@@ -3,6 +3,8 @@ package com.ieung.receipt.service;
 import com.ieung.receipt.code.AuthCode;
 import com.ieung.receipt.code.StateCode;
 import com.ieung.receipt.code.YNCode;
+import com.ieung.receipt.dto.req.AssetSCategoryReqDTO;
+import com.ieung.receipt.dto.req.BudgetSCategoryReqDTO;
 import com.ieung.receipt.dto.req.ClubReqDTO;
 import com.ieung.receipt.entity.Crew;
 import com.ieung.receipt.entity.Club;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClubService {
     private final ClubRepository clubRepository;
     private final ClubCrewRepository clubCrewRepository;
+    private final CategoryService categoryService;
 
     /**
      * 모임 생성
@@ -57,6 +60,28 @@ public class ClubService {
         if (resClubCrew == null) {
             throw new ApiMessageException("모임 생성에 실패했습니다. 다시 시도해 주세요.");
         }
+
+        // 기본 소분류 등록
+        Long clubId = resClubCrew.getId();
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("전기예산").bscName("전기예산").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("활동지원금").bscName("활동지원금").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("회비").bscName("회비").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("복리후생비").bscName("회식").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("복리후생비").bscName("식비").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("복리후생비").bscName("MT").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("여가교통비").bscName("교통비").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("소모품비").bscName("사무용품").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("소모품비").bscName("생활용품").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("기타비용").bscName("미분류 비용").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("수입").bscName("상금수익").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("수입").bscName("부스수익").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("수입").bscName("이자수익").build());
+        categoryService.createBudgetSCategory(BudgetSCategoryReqDTO.builder().clubId(clubId).lcName("기타수입").bscName("미분류 수입").build());
+        categoryService.createAssetSCategory(AssetSCategoryReqDTO.builder().clubId(clubId).lcName("현금 및 현금성자산").ascName("현금").balance(0).build());
+        categoryService.createAssetSCategory(AssetSCategoryReqDTO.builder().clubId(clubId).lcName("유형자산").ascName("비품").balance(0).build());
+        categoryService.createAssetSCategory(AssetSCategoryReqDTO.builder().clubId(clubId).lcName("유형자산").ascName("차량").balance(0).build());
+        categoryService.createAssetSCategory(AssetSCategoryReqDTO.builder().clubId(clubId).lcName("선급금").ascName("회원권").balance(0).build());
+        categoryService.createAssetSCategory(AssetSCategoryReqDTO.builder().clubId(clubId).lcName("기타자산").ascName("미분류자산").balance(0).build());
     }
 
     /**
