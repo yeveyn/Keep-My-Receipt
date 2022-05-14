@@ -21,6 +21,7 @@ export default function EditableItemContainer(props: {
   onEdit: (prevValue: string | number, newValue: string | number) => void;
   editOnMount?: boolean;
 
+  onCancel?: () => void;
   onErase?: (value: string | number) => void;
   onSelect?: (value: string | number) => void;
 
@@ -36,7 +37,7 @@ export default function EditableItemContainer(props: {
 
   return (
     <>
-      <ListItem>
+      <ListItem disablePadding>
         <Grid flexGrow={1}>
           {/* 아이템 내용 */}
           {props.onSelect ? (
@@ -142,7 +143,12 @@ function EditableItemActions({
 
       {/* 아이템 수정 취소 버튼 */}
       {editableItem.isEditing && (
-        <IconButton onClick={() => editableItem.onItemEdit(false)}>
+        <IconButton
+          onClick={() => {
+            editableItem.onItemEdit(false);
+            props.onCancel && props.onCancel();
+          }}
+        >
           <Cancel />
         </IconButton>
       )}
