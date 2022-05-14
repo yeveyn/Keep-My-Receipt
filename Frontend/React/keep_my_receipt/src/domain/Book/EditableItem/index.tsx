@@ -12,8 +12,8 @@ import { Cancel, CheckCircle, Delete, Edit } from '@mui/icons-material';
 
 import useEditableItem from './hook';
 import toCurrency from '../../../services/toCurrency';
-import { EditableItemType } from './hook';
-type EditableItemContainerType = Parameters<typeof EditableItemContainer>[0];
+import { EditableItemControllerType } from './hook';
+type EditableItemViewType = Parameters<typeof EditableItemContainer>[0];
 
 export default function EditableItemContainer(props: {
   originalValue: string | number;
@@ -66,8 +66,8 @@ function EditableItemContent({
   props,
   editableItem,
 }: {
-  props: EditableItemContainerType;
-  editableItem: EditableItemType;
+  props: EditableItemViewType;
+  editableItem: EditableItemControllerType;
 }) {
   return (
     <Stack direction="row" alignItems="center">
@@ -115,8 +115,8 @@ function EditableItemActions({
   props,
   editableItem,
 }: {
-  props: EditableItemContainerType;
-  editableItem: EditableItemType;
+  props: EditableItemViewType;
+  editableItem: EditableItemControllerType;
 }) {
   return (
     <>

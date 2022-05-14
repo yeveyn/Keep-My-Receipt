@@ -3,9 +3,9 @@ import { Divider, List, ListItemIcon, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import EditableItem from '../../EditableItem';
-import EditableListNewCollapsed from '../../EditableListNewCollapsed';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
+import EditableItem from '../../EditableItem';
+import EditableListWrapped from '../../EditableListWrapped';
 import { MainCategoryDialog } from '../../tagDialogContents';
 // 훅
 import useToggle from '../../../../hooks/useToggle';
@@ -107,7 +107,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <Divider />
 
       {/* 대분류 */}
-      <EditableListNewCollapsed
+      <EditableListWrapped
         categoryName="대분류"
         dialogContent={<></>}
         originalList={largeCategories[toggleValue]}
@@ -117,7 +117,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       />
       <Divider />
 
-      <EditableListNewCollapsed
+      <EditableListWrapped
         categoryName="중분류"
         dialogContent={<p>설명</p>}
         originalList={mediumCategories[item.largeCategory]}
@@ -126,7 +126,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       />
       <Divider />
 
-      <EditableListNewCollapsed
+      <EditableListWrapped
         categoryName="태그 1"
         dialogContent={<p>설명</p>}
         originalList={tag1Categories}
@@ -135,7 +135,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       />
       <Divider />
 
-      <EditableListNewCollapsed
+      <EditableListWrapped
         categoryName="태그 2"
         dialogContent={<p>설명</p>}
         originalList={tag2Categories[item.tag1]}

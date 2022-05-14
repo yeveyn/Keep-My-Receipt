@@ -1,7 +1,7 @@
 import { IconButton, List } from '@mui/material';
 import { InfoOutlined } from '@mui/icons-material';
 
-import EditableItemContainer from '../EditableItem';
+import EditableItem from '../EditableItem';
 
 interface EditableListType {
   originalList: string[];
@@ -14,7 +14,7 @@ export default function EditableListFixed(props: EditableListType) {
       <List disablePadding>
         {/* 리스트 아이템들 출력 */}
         {props.originalList.map((item: string, index: number) => (
-          <EditableItemContainer
+          <EditableItem
             originalValue={item}
             prefixElement={
               <IconButton>

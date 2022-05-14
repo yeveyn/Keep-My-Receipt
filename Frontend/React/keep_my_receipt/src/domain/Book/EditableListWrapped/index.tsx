@@ -3,11 +3,11 @@ import { Collapse, List, ListItemButton } from '@mui/material';
 import { ExpandLess, ExpandMore, Info } from '@mui/icons-material';
 
 import DialogWithIconButton from '../../../components/DialogWithIconButton';
-import EditableItemContainer from '../EditableItem';
-import EditableListContainer from '../EditableListNew';
+import EditableItem from '../EditableItem';
+import EditableList from '../EditableList';
 import EditableListFixed from '../EditableListFixed';
 
-interface EditableListCollapsedType {
+interface EditableListWrappedType {
   categoryName: string;
   dialogContent: JSX.Element;
   originalList: string[];
@@ -16,7 +16,7 @@ interface EditableListCollapsedType {
   fixed?: boolean;
 }
 
-function EditableListCollapsed(props: EditableListCollapsedType) {
+function EditableListWrapped(props: EditableListWrappedType) {
   // 세부 목록 열림 / 닫힘 상태
   const [open, setOpen] = useState(false);
 
@@ -26,9 +26,7 @@ function EditableListCollapsed(props: EditableListCollapsedType) {
   };
 
   // fixed 여부에 따라 수정 가능 / 불가능 컴포넌트 선택
-  const EditableListInterface = !props.fixed
-    ? EditableListContainer
-    : EditableListFixed;
+  const EditableListInterface = !props.fixed ? EditableList : EditableListFixed;
 
   return (
     <>
@@ -38,7 +36,7 @@ function EditableListCollapsed(props: EditableListCollapsedType) {
           <DialogWithIconButton icon={<Info />} content={props.dialogContent} />
 
           {/* 분류명 & 선택된 항목 */}
-          <EditableItemContainer
+          <EditableItem
             prefixElement={
               <div style={{ marginRight: '2rem' }}>{props.categoryName}</div>
             }
@@ -65,4 +63,4 @@ function EditableListCollapsed(props: EditableListCollapsedType) {
   );
 }
 
-export default memo(EditableListCollapsed);
+export default memo(EditableListWrapped);

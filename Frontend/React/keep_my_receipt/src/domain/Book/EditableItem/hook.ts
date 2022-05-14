@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export type EditableItemType = ReturnType<typeof useEditableItem>;
+export type EditableItemControllerType = ReturnType<typeof useEditableItem>;
 
 export default function useEditableItem(
   itemValue: string | number,
