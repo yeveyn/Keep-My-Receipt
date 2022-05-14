@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
-import { Divider, List, Stack } from '@mui/material';
+import { Divider, List, ListItemIcon, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import EditableItemContainer from '../../EditableItem';
-import EditableListContainer from '../../EditableListNew';
-import EditableListFixed from '../../EditableListFixed';
+import EditableItem from '../../EditableItem';
+import EditableListNewCollapsed from '../../EditableListNewCollapsed';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
-import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
-import ItemCategoryFixed from '../../EditableList/ItemCategoryFixed';
 import { MainCategoryDialog } from '../../tagDialogContents';
 // 훅
 import useToggle from '../../../../hooks/useToggle';
@@ -66,13 +63,35 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
 
   return (
     <>
+      <List disablePadding>
+        <EditableItem
+          originalValue={item.itemName}
+          onEdit={dispatchAdapter('itemName')}
+          prefixElement={
+            <ListItemIcon sx={{ marginLeft: '2.5rem' }}>내용</ListItemIcon>
+          }
+          rootHighlight
+        />
+        <Divider />
+
+        <EditableItem
+          originalValue={item.itemValue}
+          onEdit={dispatchAdapter('itemValue')}
+          prefixElement={
+            <ListItemIcon sx={{ marginLeft: '2.5rem' }}>금액</ListItemIcon>
+          }
+          isCurrency
+          rootHighlight
+        />
+        <Divider />
+      </List>
+
       {/* 주요 분류 (자산, 지출, 수입, 예산) */}
       <Stack
         direction="row"
         justifyContent="space-between"
         alignItems="center"
         marginY={1}
-        marginLeft={2}
       >
         {/* 아이콘 버튼 & 다이얼로그 */}
         <Stack direction="row" alignItems="center">
@@ -88,83 +107,42 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <Divider />
 
       {/* 대분류 */}
-      <ItemCategoryFixed
-        name="대분류"
+      <EditableListNewCollapsed
+        categoryName="대분류"
         dialogContent={<></>}
-        list={largeCategories[toggleValue]}
-        category={item.largeCategory}
-        setCategory={setLargeCategory}
-      />
-      <Divider />
-
-      <EditableListFixed
         originalList={largeCategories[toggleValue]}
-        categoryName="largeCategory"
         onSelect={setLargeCategory}
-      />
-
-      <ItemCategoryEditable
-        name="중분류"
-        dialogContent={<p>설명</p>}
-        list={mediumCategories[item.largeCategory]}
-        category={item.mediumCategory}
-        setCategory={dispatchAdapter('mediumCategory')}
+        selected={item.largeCategory}
+        fixed
       />
       <Divider />
 
-      <EditableListContainer
+      <EditableListNewCollapsed
+        categoryName="중분류"
+        dialogContent={<p>설명</p>}
         originalList={mediumCategories[item.largeCategory]}
-        categoryName="mediumCategory"
         onSelect={dispatchAdapter('mediumCategory')}
-      />
-
-      <ItemCategoryEditable
-        name="태그 1"
-        dialogContent={<p>설명</p>}
-        list={tag1Categories}
-        category={item.tag1}
-        setCategory={dispatchAdapter('tag1')}
+        selected={item.mediumCategory}
       />
       <Divider />
 
-      <ItemCategoryEditable
-        name="태그 2"
+      <EditableListNewCollapsed
+        categoryName="태그 1"
         dialogContent={<p>설명</p>}
-        list={tag2Categories[item.tag1]}
-        category={item.tag2}
-        setCategory={dispatchAdapter('tag2')}
+        originalList={tag1Categories}
+        onSelect={dispatchAdapter('tag1')}
+        selected={item.tag1}
       />
       <Divider />
 
-      <List disablePadding>
-        <EditableItemContainer
-          originalValue={item.itemName}
-          onEdit={dispatchAdapter('itemName')}
-          prefixElement={<>내용</>}
-          rootHighlight
-        />
-        <Divider />
-        <EditableItemContainer
-          originalValue={item.itemValue}
-          onEdit={dispatchAdapter('itemValue')}
-          prefixElement={<>금액</>}
-          isCurrency
-          rootHighlight
-        />
-        <EditableItemContainer
-          originalValue={1}
-          prefixElement={<>개수</>}
-          onEdit={() => {
-            null;
-          }}
-          onSelect={() => {
-            null;
-          }}
-          onErase={() => {
-            null;
-          }}
-        />
-      </List>
+      <EditableListNewCollapsed
+        categoryName="태그 2"
+        dialogContent={<p>설명</p>}
+        originalList={tag2Categories[item.tag1]}
+        onSelect={dispatchAdapter('tag2')}
+        selected={item.tag2}
+      />
+      <Divider />
     </>
   );
 }
