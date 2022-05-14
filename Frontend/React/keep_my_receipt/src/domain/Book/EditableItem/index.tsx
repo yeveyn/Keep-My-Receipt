@@ -3,7 +3,6 @@ import {
   IconButton,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Stack,
   TextField,
@@ -73,9 +72,7 @@ function EditableItemContent({
   return (
     <Stack direction="row" alignItems="center">
       {/* 텍스트 앞쪽에 놓을 아이콘 or 글 */}
-      {props.prefixElement && (
-        <ListItemIcon>{props.prefixElement}</ListItemIcon>
-      )}
+      {props.prefixElement && props.prefixElement}
 
       {/* 수정 중이 아닌 경우엔 글씨 보임 */}
       {!editableItem.isEditing && (

@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import {
-  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { AddCircleOutline, InfoOutlined } from '@mui/icons-material';
+import { AddCircleOutline } from '@mui/icons-material';
 
 import EditableItemContainer from '../EditableItem';
 
 interface EditableListType {
   originalList: string[];
-  categoryName: string;
   onSelect?: (value: string | number) => void;
 }
 
@@ -30,11 +28,7 @@ export default function EditableListContainer(props: EditableListType) {
         {props.originalList.map((item: string, index: number) => (
           <EditableItemContainer
             originalValue={item}
-            prefixElement={
-              <IconButton>
-                <InfoOutlined />
-              </IconButton>
-            }
+            prefixElement={<div style={{ marginRight: '1.5rem' }}></div>}
             onEdit={(prevVal, newVal) => {
               console.log('수정 요청 API: ', prevVal, '->', newVal);
               console.log('목록 요청 API');
@@ -56,11 +50,9 @@ export default function EditableListContainer(props: EditableListType) {
             <ListItem disablePadding>
               <ListItemButton onClick={() => setIsAdding(true)}>
                 {/* 내용 앞 공백 */}
-                <ListItemIcon>
-                  <></>
-                </ListItemIcon>
+                <div style={{ marginRight: '1.5rem' }}></div>
                 {/* 내용 */}
-                <ListItemText sx={{ marginRight: 2 }}>추가</ListItemText>
+                <ListItemText>추가</ListItemText>
                 {/* 더하기 아이콘 */}
                 <ListItemIcon>
                   <AddCircleOutline />

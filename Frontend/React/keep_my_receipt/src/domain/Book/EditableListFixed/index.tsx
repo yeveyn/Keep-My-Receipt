@@ -5,7 +5,6 @@ import EditableItemContainer from '../EditableItem';
 
 interface EditableListType {
   originalList: string[];
-  categoryName: string;
   onSelect?: (value: string | number) => void;
 }
 
