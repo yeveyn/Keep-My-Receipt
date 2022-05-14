@@ -18,7 +18,7 @@ type EditableItemContainerType = Parameters<typeof EditableItemContainer>[0];
 
 export default function EditableItemContainer(props: {
   originalValue: string | number;
-  onEdit: (prevValue: string | number, newValue: string | number) => void;
+  onEdit?: (prevValue: string | number, newValue: string | number) => void;
   editOnMount?: boolean;
 
   onCancel?: () => void;
@@ -96,7 +96,7 @@ function EditableItemContent({
       )}
 
       {/* 수정 중이면 텍스트 필드 보임 */}
-      {editableItem.isEditing && (
+      {props.onEdit && editableItem.isEditing && (
         <TextField
           value={editableItem.changedValue}
           onChange={editableItem.onItemChange}
@@ -124,14 +124,14 @@ function EditableItemActions({
   return (
     <>
       {/* 아이템 수정 버튼 */}
-      {!editableItem.isEditing && (
+      {props.onEdit && !editableItem.isEditing && (
         <IconButton onClick={() => editableItem.onItemEdit(true)}>
           <Edit />
         </IconButton>
       )}
 
       {/* 아이템 수정 확인 버튼 */}
-      {editableItem.isEditing && (
+      {props.onEdit && editableItem.isEditing && (
         <IconButton
           onClick={() => {
             editableItem.onItemEditConfirm();
@@ -142,7 +142,7 @@ function EditableItemActions({
       )}
 
       {/* 아이템 수정 취소 버튼 */}
-      {editableItem.isEditing && (
+      {props.onEdit && editableItem.isEditing && (
         <IconButton
           onClick={() => {
             editableItem.onItemEdit(false);

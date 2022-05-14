@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import {
   IconButton,
   List,
@@ -10,12 +10,11 @@ import {
 import { AddCircleOutline, InfoOutlined } from '@mui/icons-material';
 
 import EditableItemContainer from '../EditableItem';
-import { BookAction, updateItem } from '../bookReducer';
 
 interface EditableListType {
   originalList: string[];
   categoryName: string;
-  dispatch: Dispatch<BookAction>;
+  onSelect?: (value: string | number) => void;
 }
 
 export default function EditableListContainer(props: EditableListType) {
@@ -44,9 +43,7 @@ export default function EditableListContainer(props: EditableListType) {
               console.log('삭제 요청 API: ', value);
               console.log('목록 요청 API');
             }}
-            onSelect={(value) => {
-              props.dispatch(updateItem(index, props.categoryName, value));
-            }}
+            onSelect={props.onSelect}
             key={index}
           />
         ))}

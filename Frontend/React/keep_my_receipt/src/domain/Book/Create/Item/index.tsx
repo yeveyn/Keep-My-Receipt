@@ -3,8 +3,9 @@ import { Divider, List, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
-import EditableListContainer from '../../EditableListNew';
 import EditableItemContainer from '../../EditableItem';
+import EditableListContainer from '../../EditableListNew';
+import EditableListFixed from '../../EditableListFixed';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
 import ItemCategoryFixed from '../../EditableList/ItemCategoryFixed';
@@ -52,7 +53,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
   );
 
   // 대분류 바꾸는 함수
-  const setLargeCategory = (value: string) => {
+  const setLargeCategory = (value: string | number) => {
     dispatch(updateItem(itemIndex, 'mainCategory', toggleValue));
     dispatch(updateItem(itemIndex, 'largeCategory', value));
     // 대분류가 바뀔 때, 중분류 초기화
@@ -96,6 +97,12 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       />
       <Divider />
 
+      <EditableListFixed
+        originalList={largeCategories[toggleValue]}
+        categoryName="largeCategory"
+        onSelect={setLargeCategory}
+      />
+
       <ItemCategoryEditable
         name="중분류"
         dialogContent={<p>설명</p>}
@@ -108,7 +115,7 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
       <EditableListContainer
         originalList={mediumCategories[item.largeCategory]}
         categoryName="mediumCategory"
-        dispatch={dispatch}
+        onSelect={dispatchAdapter('mediumCategory')}
       />
 
       <ItemCategoryEditable
