@@ -3,6 +3,7 @@ import { Divider, List, Stack } from '@mui/material';
 import { Info } from '@mui/icons-material';
 
 // 컴포넌트
+import EditableListContainer from '../../EditableListNew';
 import EditableItemContainer from '../../EditableItem';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import ItemCategoryEditable from '../../EditableList/ItemCategoryEditable';
@@ -103,6 +104,12 @@ export default function Item({ item, itemIndex, dispatch }: ItemType) {
         setCategory={dispatchAdapter('mediumCategory')}
       />
       <Divider />
+
+      <EditableListContainer
+        originalList={mediumCategories[item.largeCategory]}
+        categoryName="mediumCategory"
+        dispatch={dispatch}
+      />
 
       <ItemCategoryEditable
         name="태그 1"
