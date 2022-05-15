@@ -29,7 +29,7 @@ import static com.ieung.receipt.util.TokenUtil.getCurrentCrewId;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/spring")
+@RequestMapping(value = "/api/spring/club")
 public class ReportController {
     private final ReportService reportService;
     private final ResponseService responseService;
