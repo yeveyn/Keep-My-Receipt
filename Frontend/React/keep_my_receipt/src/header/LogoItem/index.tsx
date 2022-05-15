@@ -5,7 +5,7 @@ export default function LogoItem() {
     <Typography
       variant="h6"
       component="a"
-      href="/"
+      href="/club"
       fontFamily="GowunDodumRegular"
       sx={{
         mr: 2,
@@ -15,10 +15,7 @@ export default function LogoItem() {
         width: '20px',
         fontWeight: 300,
         float: 'right',
-        // color: 'inherit',
-        // color: '#ffa500',
         color: 'black',
-        // background: '#ffa500',
         fontSize: 20,
         textDecoration: 'none',
       }}

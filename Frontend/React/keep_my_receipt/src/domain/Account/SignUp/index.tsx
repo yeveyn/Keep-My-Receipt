@@ -52,6 +52,7 @@ export default function SignUpForm() {
   };
   const onCheckEmail = (e: any) => {
     setEmail(e.target.value);
+
     // 1. 이메일 중복 확인 ** 오류
     axios
       .get(`/api/spring/crew/checkEmail/${email}`)

@@ -84,7 +84,7 @@ function App() {
         <Route path="/login/index" element={<LoginIndex />} />
         <Route path="/setting/index" element={<SettingIndex />} />
       </Routes>
-      {/* <SimpleBottomNavigation /> */}
+      <SimpleBottomNavigation />
     </BrowserRouter>
   );
 }

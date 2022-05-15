@@ -21,14 +21,6 @@ export default function SimpleBottomNavigation() {
     navigate(url);
   };
 
-  useEffect(() => {
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
-
   // 현재 유저 권한 조회하기
   const onClick = async () => {
     await axios
@@ -65,6 +57,7 @@ export default function SimpleBottomNavigation() {
 
   return (
     <>
+      {/* {isLogin && id ? ( */}
       <footer>
         <Box
           sx={{

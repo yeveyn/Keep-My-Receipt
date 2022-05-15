@@ -33,87 +33,90 @@ export default function NavBar() {
 
   return (
     <>
-      <header>
-        <Box
-          height="68.5px"
-          // height="100.5px"
+      <Box height="68.5px">
+        <AppBar
+          elevation={0} //그림자없애기
+          sx={{
+            top: 0,
+            left: 0,
+            right: 0,
+            width: '100%',
+            margin: '80',
+          }}
+          style={{ background: '#ffffff' }}
         >
-          <AppBar
-            elevation={0}
+          <Toolbar
             sx={{
-              top: 0,
-              left: 0,
-              right: 0,
-              width: '100%',
-              margin: '80',
+              direction: 'row',
+              float: 'right',
             }}
-            style={{ background: '#ffffff' }}
           >
-            <Toolbar
+            {/* 모바일용 세줄 메뉴 */}
+            {isLogin && id ? <ResponsiveDrawer /> : ''}
+
+            {/* 로고 */}
+            <LogoItem />
+            {isLogin && id ? (
+              <Box
+                sx={{
+                  display: { xs: 'hidden', md: 'none' },
+                }}
+                style={{ width: '100px' }}
+              >
+                asdfaeasdfsasdfasdfef
+              </Box>
+            ) : (
+              ''
+            )}
+
+            {/* 0. 내모임 */}
+            {isLogin && !id ? (
+              <Button
+                onClick={() => {
+                  onClickButton(`/club`);
+                }}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'black',
+                  display: 'block',
+                  float: 'right',
+                }}
+              >
+                내 모임
+              </Button>
+            ) : (
+              ''
+            )}
+
+            {/* 로그인 한 경우, 메뉴 */}
+            {isLogin && id ? <NavMenuItem /> : ''}
+
+            {/* 로그인 한 경우, 알림, 설정 아이콘 */}
+            {isLogin ? (
+              <Stack
+                direction="row"
+                // alignItems="start"
+                sx={{
+                  direction: 'row',
+                  // marginLeft: 'auto',
+                  // marginRight: 0,
+                }}
+              >
+                <AlarmItem />
+                <SettingItem />
+              </Stack>
+            ) : (
+              ''
+            )}
+            <Box
               sx={{
-                direction: 'row',
-                float: 'right',
+                marginLeft: '200px',
               }}
-            >
-              <Box
-                sx={{
-                  marginRight: '200px',
-                }}
-              ></Box>
-              {/* 모바일용 세줄 메뉴 */}
-              {isLogin && id ? <ResponsiveDrawer /> : ''}
-
-              {/* 로고 */}
-              <LogoItem />
-              {/* 0. 내모임 */}
-              {isLogin && !id ? (
-                <Button
-                  onClick={() => {
-                    onClickButton(`/club`);
-                  }}
-                  sx={{
-                    my: 2,
-                    mr: 1,
-                    color: 'black',
-                    display: 'block',
-                    float: 'right',
-                  }}
-                >
-                  내 모임
-                </Button>
-              ) : (
-                ''
-              )}
-
-              {/* 로그인 한 경우, 메뉴 */}
-              {isLogin && id ? <NavMenuItem /> : ''}
-
-              {/* 로그인 한 경우, 알림, 설정 아이콘 */}
-              {isLogin ? (
-                <Stack
-                  direction="row"
-                  alignItems="start"
-                  sx={{
-                    direction: 'row',
-                    marginLeft: 'auto',
-                    marginRight: 0,
-                  }}
-                >
-                  <AlarmItem />
-                  <SettingItem />
-                </Stack>
-              ) : (
-                ''
-              )}
-              <Box
-                sx={{
-                  marginLeft: '200px',
-                }}
-              ></Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      </header>
+            ></Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
     </>
   );
 }
