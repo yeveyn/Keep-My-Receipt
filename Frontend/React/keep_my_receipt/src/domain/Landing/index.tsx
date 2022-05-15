@@ -2,42 +2,34 @@ import React, { useEffect, useState } from 'react';
 
 import Navigation from '../../header';
 import Banner from './Landing/Banner';
-import LandingFirst from './Landing/Landing-1';
-
-import LandingSecond from './Landing/Landing-2';
-
-import LandingThird from './Landing/Landing-3';
-
-import LandingFourth from './Landing/Landing-4';
-
+import GuideFirst from './Landing/Guide-1';
+import GuideSecond from './Landing/Guide-2';
+import GuideThird from './Landing/Guide-3';
+import GuideFourthFirst from './Landing/Guide-4-1';
+import GuideFourthSecond from './Landing/Guide-4-2';
 function Landing() {
-  const [isScroll, setIsScroll] = useState(false);
-
-  const onScrollEvent = () => {
-    if (window.pageYOffset > 0) {
-      setIsScroll(true);
-    }
-    if (window.pageYOffset === 0) {
-      setIsScroll(false);
-    }
-  };
+  //로그인한 상태라면 navbar 보여주기
+  const [isLogin, setIsLogin] = useState(false);
+  const accessToken = sessionStorage.getItem('accessToken');
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    window.addEventListener('mousewheel', onScrollEvent);
-    return () => {
-      // TODO: 메모리 누수 방지
-      window.removeEventListener('mousewheel', onScrollEvent);
-    };
+    if (accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
   }, []);
+
   return (
     <div>
-      <Navigation />
+      {isLogin ? <Navigation /> : ''}
       <Banner />
-      <LandingFirst />
-      <LandingSecond />
-      <LandingThird />
-      <LandingFourth />
+      <GuideFirst />
+      <GuideSecond />
+      <GuideThird />
+      <GuideFourthFirst />
+      <GuideFourthSecond />
     </div>
   );
 }

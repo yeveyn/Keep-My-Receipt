@@ -34,8 +34,12 @@ export default function NavBar() {
   return (
     <>
       <header>
-        <Box height="68.5px">
+        <Box
+          height="68.5px"
+          // height="100.5px"
+        >
           <AppBar
+            elevation={0}
             sx={{
               top: 0,
               left: 0,
@@ -75,7 +79,6 @@ export default function NavBar() {
                     float: 'right',
                   }}
                 >
-                  {' '}
                   내 모임
                 </Button>
               ) : (

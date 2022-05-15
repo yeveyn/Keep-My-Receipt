@@ -1,44 +1,30 @@
 import styled, { keyframes } from 'styled-components';
-import { blue } from '../../../../styles/Colors';
-import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import { yellow } from '@mui/material/colors';
 
-// export const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-export const Background = styled.img`
+export const MyBanner = styled.div`
   width: 100%;
-  height: 100vh;
-  // background-image: url('/images/randing/background.png');
-  // background-size: cover;
-  z-index: 0;
-  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px auto;
+  position: relative;
 `;
 
-export const ChiChu = styled.img`
-  // z-index: 2;
+export const Info = styled.div`
   position: absolute;
-  width: 75%;
-  right: -15%;
-  margin-top: 4.2rem;
-  // left: 2%
-  // filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px 1px 0 white);
+  width: 90%;
+  padding-left: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @media only screen and (max-width: 768px) {
+    font-size: 8vw;
+    padding-left: 0;
+  }
 `;
 
-const float = keyframes`
-    0% {
-      box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-      transform: translate(0,  0px);
-    }
-    50% {
-      box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
-      transform: translate(0, -20px);
-    }
-    100% {
-      box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
-      transform: translate(0, 0px);
-    }
+export const Video = styled.video`
+  width: 100%;
+  opacity: 0.8;
 `;
 
 const focus = keyframes`
@@ -50,107 +36,55 @@ const focus = keyframes`
     }
 `;
 
-const jello = keyframes`
-    0% {
-      transform:scale3d(1,1,1);
-      opacity:0
-    }
-    30% {
-      transform:scale3d(1.25,.75,1)
-    }
-    40% {
-      transform:scale3d(.75,1.25,1)
-    }
-    50% {
-      transform:scale3d(1.15,.85,1)
-    }
-    65% {
-      transform:scale3d(.95,1.05,1)
-    }
-    75% {
-      transform:scale3d(1.05,.95,1)
-    }
-    100% {
-      transform:scale3d(1,1,1)
-    }
-`;
-
-export const ChiChuAnimation = styled.div`
-  // z-index: 2;
-  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-  transform: translate(0px);
-  // position: absolute;
-  animation: ${float} 3s ease-in-out infinite;
-`;
-
-export const ContentDiv = styled.div`
-  position: absolute;
-  top: 30%;
-  left: 8%;
-`;
-
-export const Title = styled.b`
-  font-size: 4rem;
-  color: #fff;
-  color: ${blue[100]};
-  // text-shadow: -1px 0 ${blue[400]}, 0 1px ${blue[400]}, 1px 0 ${blue[400]},
-  //   0 -1px ${blue[400]};
-  font-family: FredokaOneRegular;
-  animation: ${focus} 0.4s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
-`;
-
-export const TitleSmall = styled(Title)`
-  font-size: 4rem;
-`;
-
-export const Content = styled.p`
-  font-size: 2.5rem;
-  color: #fff;
+export const Content1 = styled.p`
+  font-size: 3vw;
+  font-weight: bold;
+  color: #fff,
   font-family: NotoSansKRBold;
-  margin: 0;
+  margin: 0 0 0 0;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
-  animation-delay: 0.7s;
+  animation-delay: 0.8s;
+
+    @media only screen and (max-width: 768px) {
+    font-size: 6vw;
+  }
 `;
 
-export const ChichuColor = styled.span`
-  color: ${blue[100]};
+export const Content2 = styled.p`
+  font-size: 3vw;
+  font-weight: bold;
+  color: black,
   font-family: NotoSansKRBold;
-  text-shadow: -1px 0 ${blue[400]}, 0 1px ${blue[400]}, 1px 0 ${blue[400]},
-    0 -1px ${blue[400]};
+  margin: 0 0 0 0;
+  animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
+  animation-delay: 1.4s;
+    @media only screen and (max-width: 768px) {
+    font-size: 6vw;
+  }
 `;
 
-export const CustomBannerButtonRoot = styled('button')`
-  animation: ${jello} 0.9s both;
-  animation-delay: 1.5s;
+export const Content3 = styled.p`
+  font-size: 3vw;
+  font-weight: bold;
+  color: black,
+  font-family: NotoSansKRBold;
+  margin: 0 0 0 0;
+  animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
+  animation-delay: 2.0s;
+`;
+
+export const BannerButton = styled('button')`
   margin: 20px 10px;
-  position: absolute;
   font-family: NotoSansKRBold;
   font-weight: bold;
-  font-size: 1.5rem;
-  background-color: ${blue[500]};
+  font-size: 2rem;
+  background-color: ${yellow[700]};
   padding: 13px 25px;
-  border-radius: 100px;
+  border-radius: 30px;
   color: white;
-  transition: all 150ms ease;
-  cursor: pointer;
   border: none;
+  width: 2vm;
+    @media only screen and (max-width: 768px) {
+    font-size: 4vw;
 
-  &:hover {
-    background-color: ${blue[600]};
-  }
-
-  &.${buttonUnstyledClasses.active} {
-    background-color: ${blue[700]};
-  }
-
-  &.${buttonUnstyledClasses.focusVisible} {
-    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1),
-      0 0 0 5px rgba(0, 127, 255, 0.5);
-    outline: none;
-  }
-
-  &.${buttonUnstyledClasses.disabled} {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 `;
