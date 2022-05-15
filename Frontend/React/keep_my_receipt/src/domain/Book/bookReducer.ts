@@ -27,7 +27,7 @@ export type BookItemKeys =
   | 'tagId'
   | 'memo';
 
-type BookState = {
+export type BookState = {
   transactionId?: number;
   clubId: number;
   date: string;

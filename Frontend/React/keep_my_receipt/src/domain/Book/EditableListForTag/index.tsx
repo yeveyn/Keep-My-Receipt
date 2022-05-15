@@ -10,7 +10,7 @@ import { AddCircleOutline } from '@mui/icons-material';
 
 import EditableItemForTag from '../EditableItemForTag';
 import { TagType } from '../types';
-import { apiCreateTag, apiDeleteTag, apiUpdateTag } from '../api';
+import { apiCreateTag, apiDeleteTag, apiUpdateTag } from '../api/tagApi';
 
 interface EditableListForTagType {
   originalList: TagType[];

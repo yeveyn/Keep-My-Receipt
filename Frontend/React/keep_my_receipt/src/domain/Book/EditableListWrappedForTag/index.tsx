@@ -5,7 +5,7 @@ import { ExpandLess, ExpandMore, Info } from '@mui/icons-material';
 import DialogWithIconButton from '../../../components/DialogWithIconButton';
 import EditableItem from '../EditableItem';
 import EditableListForTag from '../EditableListForTag';
-import { apiGetLargeTags, apiGetSmallTags } from '../api';
+import { apiGetLargeTags, apiGetSmallTags } from '../api/tagApi';
 import { TagType } from '../types';
 
 interface EditableListWrappedForTagType {

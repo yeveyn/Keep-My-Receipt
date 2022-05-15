@@ -10,6 +10,7 @@ const setToken = () => {
   return config;
 };
 
+// 태그
 export const apiGetLargeTags = async (clubId: string) => {
   return await axios({
     method: 'get',
@@ -78,26 +79,3 @@ export const apiDeleteTag = async (tagId: number) => {
     throw e;
   });
 };
-
-// export const apiCommentList = async (reviewId, page) => {
-//   return await axios({
-//     method: 'get',
-//     url: `${BASE_URL}/reviews/${reviewId}/comments/`,
-//     params: {
-//       page,
-//     },
-//   }).catch((e) => {
-//     throw e;
-//   });
-// };
-
-// export const apiCreateComment = async (reviewId, data) => {
-//   return await axios({
-//     method: 'post',
-//     url: `${BASE_URL}/reviews/${reviewId}/comments/create/`,
-//     data: data,
-//     headers: setToken(),
-//   }).catch((e) => {
-//     throw e;
-//   });
-// };
