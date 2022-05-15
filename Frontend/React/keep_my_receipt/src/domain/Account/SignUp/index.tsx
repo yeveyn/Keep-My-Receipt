@@ -1,5 +1,5 @@
 import './index.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -9,6 +9,8 @@ import {
   Stack,
   TextField,
   Container,
+  Box,
+  Grid,
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
 import Navigation from '../../../header';
@@ -31,162 +33,256 @@ export default function SignUpForm() {
     navigate('/login');
   };
 
-  // input value 가져오기
-  const [nickName, setNickName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkPassword, setCheckPassword] = useState('');
-
   // 대기중 버튼
   const [isLoading, setIsLoading] = useState(false);
 
+  //이름, 이메일, 비밀번호, 비밀번호 확인
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+
+  //오류메시지 상태저장
+  const [nameMessage, setNameMessage] = useState<string>('');
+  const [emailMessage, setEmailMessage] = useState<string>('');
+  const [passwordMessage, setPasswordMessage] = useState<string>('');
+  const [passwordConfirmMessage, setPasswordConfirmMessage] =
+    useState<string>('');
+
   // 유효성 검사
-  const [helpEmailText, setEmailHelpText] = useState('');
-  const [helpPasswordText, setPasswordHelpText] = useState('');
-  const [helpPasswordCheckText, setPasswordCheckHelpText] = useState('');
+  const [isName, setIsName] = useState<boolean>(false);
+  const [isEmail, setIsEmail] = useState<boolean>(false);
+  const [isPassword, setIsPassword] = useState<boolean>(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
 
-  // 제출
+  // 📍이름
+  const onChangeName = useCallback((e: any) => {
+    setName(e.target.value);
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+      setIsName(false);
+    } else {
+      setNameMessage('올바른 이름 형식입니다');
+      setIsName(true);
+    }
+  }, []);
 
-  const onNickName = (e: any) => {
-    setNickName(e.target.value);
-  };
-  const onCheckEmail = (e: any) => {
-    setEmail(e.target.value);
+  // 📍이메일
+  const onChangeEmail = useCallback((e: any) => {
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value;
+    setEmail(emailCurrent);
 
-    // 1. 이메일 중복 확인 ** 오류
+    if (!emailRegex.test(emailCurrent)) {
+      setEmailMessage('이메일 형식이 올바르지 않습니다');
+      setIsEmail(false);
+    } else {
+      setEmailMessage('올바른 이메일 형식입니다');
+      setIsEmail(true);
+    }
+  }, []);
+
+  //이메일 중복확인
+  const onClick = useCallback((e: any) => {
     axios
       .get(`/api/spring/crew/checkEmail/${email}`)
       .then(function (response) {
         console.log(response.data);
+        console.log(email);
+        console.log('머나오낭');
         if (response.data.data == true) {
-          setEmailHelpText('중복된 이메일입니다');
+          setEmailMessage('중복된 이메일입니다');
+          setIsEmail(false);
         } else {
-          setEmailHelpText('');
+          setEmailMessage('올바른 이메일 형식입니다');
+          setIsEmail(true);
         }
       })
       .catch(function (error) {
         console.log(error);
       });
+  }, []);
 
-    // 2. 이메일 형식
-    const regEmail =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    if (regEmail.test(email) === false) {
-      setEmailHelpText('이메일 형식이 맞지 않습니다.');
-    } else {
-      setEmailHelpText('');
-    }
-  };
+  // 📍비밀번호
+  const onChangePassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordRegex =
+        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+      const passwordCurrent = e.target.value;
+      setPassword(passwordCurrent);
 
-  const onCheckPasswordRight = (e: any) => {
-    setPassword(e.target.value);
-    // 3. 비밀번호 8자이상 + (영문 + 숫자 + 특수문자 1개 이상)
-    const regExp =
-      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-    if (regExp.test(password) === false) {
-      setPasswordHelpText(
-        '비밀번호는 8자 이상, 특수문자, 영문자, 숫자를 1개 이상 포함해야 합니다.',
-      );
-    } else {
-      setPasswordHelpText('');
-    }
-  };
+      if (!passwordRegex.test(passwordCurrent)) {
+        setPasswordMessage(
+          '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요',
+        );
+        setIsPassword(false);
+      } else {
+        setPasswordMessage('안전한 비밀번호입니다');
+        setIsPassword(true);
+      }
+    },
+    [],
+  );
 
-  const onCheckPasswordEqual = (e: any) => {
-    setCheckPassword(e.target.value);
-    // 4. 비밀번호와 비밀번호 확인 일치
-    if (password != checkPassword) {
-      setPasswordCheckHelpText('비밀번호가 일치하지 않습니다.');
-    } else {
-      setPasswordCheckHelpText('');
-    }
-  };
+  // 📍비밀번호 확인
+  const onChangePasswordConfirm = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const passwordConfirmCurrent = e.target.value;
+      setPasswordConfirm(passwordConfirmCurrent);
+
+      if (password === passwordConfirmCurrent) {
+        setPasswordConfirmMessage('비밀번호가 일치합니다');
+        setIsPasswordConfirm(true);
+      } else {
+        setPasswordConfirmMessage('비밀번호가 일치하지 않습니다');
+        setIsPasswordConfirm(false);
+      }
+    },
+    [password],
+  );
 
   // 회원가입 후 페이지 이동
   const navigate = useNavigate();
-  const submitHandler = (event: any) => {
-    event.preventDefault();
 
-    axios
-      .post('/api/spring/crew/signup', {
-        email: email,
-        password: password,
-        name: nickName,
-      })
-      .then(function (response) {
-        setIsLoading(false);
-        const errorMessage = response.data.msg;
-        if (response.data.output == 0) {
-          alert(errorMessage);
-        } else {
-          navigate('/login');
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        await axios
+          .post('/api/spring/crew/signup', {
+            email: email,
+            password: password,
+            name: name,
+          })
+          .then((res) => {
+            setIsLoading(false);
+            console.log('response:', res);
+            if (res.data.output != 0) {
+              navigate('/login');
+            }
+          });
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [email, name, password],
+  );
 
   return (
     <Container maxWidth="sm">
       <Navigation />
       <h1 className="h1">회원가입</h1>
-      <form onSubmit={submitHandler}>
-        <Stack spacing={1.5}>
-          <TextField
-            onBlur={onNickName}
-            type="text"
-            required
-            fullWidth
-            label="이름"
-            variant="outlined"
-            size="small"
-          />
-          <TextField
-            onBlur={onCheckEmail}
-            placeholder="이메일을 입력해주세요"
-            required
-            fullWidth
-            label="이메일"
-            type="email"
-            helperText={helpEmailText}
-            variant="outlined"
-            size="small"
-          />
+      <form onSubmit={onSubmit}>
+        <TextField
+          onChange={onChangeName}
+          helperText={nameMessage}
+          type="text"
+          required
+          fullWidth
+          label="이름"
+          variant="outlined"
+          size="small"
+          sx={{
+            marginBottom: '10px',
+          }}
+        />
 
-          <TextField
-            onBlur={onCheckPasswordRight}
-            required
-            fullWidth
-            label="비밀번호"
-            type="password"
-            variant="outlined"
-            helperText={helpPasswordText}
-            size="small"
-          />
-          <TextField
-            onBlur={onCheckPasswordEqual}
-            type="password"
-            fullWidth
-            label="비밀번호 확인"
-            helperText={helpPasswordCheckText}
-            variant="outlined"
-            size="small"
-            required
-          />
-          <Stack>
+        <Grid
+          container
+          spacing={1}
+          sx={{
+            marginBottom: '10px',
+          }}
+        >
+          <Grid item xs={8} sm={10}>
+            <TextField
+              onChange={onChangeEmail}
+              placeholder="이메일을 입력해주세요"
+              required
+              fullWidth
+              label="이메일"
+              type="email"
+              helperText={emailMessage}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Button
+              fullWidth
+              onClick={onClick}
+              sx={{
+                border: '2px solid #ffa500',
+                backgroundColor: '#ffa500',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: '#ffa500',
+                  color: 'white',
+                },
+              }}
+            >
+              중복확인
+            </Button>
+          </Grid>
+        </Grid>
+
+        <TextField
+          onChange={onChangePassword}
+          required
+          fullWidth
+          label="비밀번호"
+          type="password"
+          variant="outlined"
+          helperText={passwordMessage}
+          size="small"
+          sx={{
+            marginBottom: '10px',
+          }}
+        />
+
+        <TextField
+          onChange={onChangePasswordConfirm}
+          type="password"
+          fullWidth
+          label="비밀번호 확인"
+          helperText={passwordConfirmMessage}
+          variant="outlined"
+          size="small"
+          required
+          sx={{
+            marginBottom: '10px',
+          }}
+        />
+
+        {/* 이름, 이메일, 패스워드, 패스워드 확인이 다 맞다면 주황버튼으로 */}
+        <div>
+          <section>
             {!isLoading && (
-              <ColorButton variant="contained" type="submit">
+              <Button
+                fullWidth
+                type="submit"
+                disabled={
+                  !(isName && isEmail && isPassword && isPasswordConfirm)
+                }
+                sx={{
+                  backgroundColor: '#ffa500',
+                  color: 'white',
+                }}
+              >
                 확인
-              </ColorButton>
+              </Button>
             )}
             {isLoading && <Button variant="contained">로딩중...</Button>}
-            <Button type="button" onClick={switchAuthModeHandler}>
-              <h5>계정이 있으신가요? 로그인 하러가기</h5>
-            </Button>
-          </Stack>
-        </Stack>
+          </section>
+        </div>
       </form>
+
+      <Box sx={{ textAlign: 'center' }}>
+        <Button type="button" onClick={switchAuthModeHandler}>
+          <h5>계정이 있으신가요? 로그인 하러가기</h5>
+        </Button>
+      </Box>
     </Container>
   );
 }
