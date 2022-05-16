@@ -13,12 +13,48 @@ const setToken = () => {
 };
 
 // 거래내역
+export const apiCreateTransaction = async (
+  data: BookState,
+  requestId?: number,
+) => {
+  return await axios({
+    method: 'post',
+    url: `${BASE_URL}/club/${data.clubId}/transaction`,
+    data: {
+      ...(requestId && { requestId: requestId }),
+      date: data.date,
+      totalPrice: data.totalPrice,
+      list: data.items.map((item) => ({
+        name: item.name,
+        price: item.price,
+        type: item.type,
+        categoryId: item.categoryId,
+        ...(item.tagId && { tagId: item.tagId }),
+        ...(item.memo && { memo: item.memo }),
+      })),
+    },
+    headers: setToken(),
+  }).catch((e) => {
+    throw e;
+  });
+};
+
+// export const apiUpdateTransaction = async (clubId: string) => {
+//   return await axios({
+//     method: 'get',
+//     url: `${BASE_URL}/tag/${clubId}`,
+//     headers: setToken(),
+//   }).catch((e) => {
+//     throw e;
+//   });
+// };
+
 export const apiGetAllTransaction = async (
   clubId: string,
-  searchKeyword: string,
-  start: string,
-  end: string,
-  page: number,
+  searchKeyword?: string,
+  start?: string,
+  end?: string,
+  page?: number,
 ) => {
   return await axios({
     method: 'get',
@@ -39,42 +75,6 @@ export const apiGetTransaction = async (transactionId: number) => {
   return await axios({
     method: 'get',
     url: `${BASE_URL}/club/transaction/${transactionId}`,
-    headers: setToken(),
-  }).catch((e) => {
-    throw e;
-  });
-};
-
-export const apiCreateTransaction = async (
-  data: BookState,
-  requestId: number,
-) => {
-  return await axios({
-    method: 'post',
-    url: `${BASE_URL}/club/${data.clubId}/transaction`,
-    data: {
-      requestId: requestId,
-      date: data.date,
-      totalPrice: data.totalPrice,
-      list: data.items.map((item) => ({
-        name: item.name,
-        price: item.price,
-        type: item.type,
-        tagId: item.tagId,
-        categoryId: item.categoryId,
-        memo: item.memo,
-      })),
-    },
-    headers: setToken(),
-  }).catch((e) => {
-    throw e;
-  });
-};
-
-export const apiUpdateTransaction = async (clubId: string) => {
-  return await axios({
-    method: 'get',
-    url: `${BASE_URL}/tag/${clubId}`,
     headers: setToken(),
   }).catch((e) => {
     throw e;

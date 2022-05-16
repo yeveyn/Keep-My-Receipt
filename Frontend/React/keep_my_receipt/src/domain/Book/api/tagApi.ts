@@ -11,26 +11,6 @@ const setToken = () => {
 };
 
 // 태그
-export const apiGetLargeTags = async (clubId: string) => {
-  return await axios({
-    method: 'get',
-    url: `${BASE_URL}/tag/${clubId}`,
-    headers: setToken(),
-  }).catch((e) => {
-    throw e;
-  });
-};
-
-export const apiGetSmallTags = async (clubId: string, largeTagName: string) => {
-  return await axios({
-    method: 'get',
-    url: `${BASE_URL}/tag/${clubId}/${largeTagName}`,
-    headers: setToken(),
-  }).catch((e) => {
-    throw e;
-  });
-};
-
 export const apiCreateTag = async (
   clubId: string,
   tagName: string,
@@ -64,6 +44,26 @@ export const apiUpdateTag = async (
       tagName,
       parentTag,
     },
+    headers: setToken(),
+  }).catch((e) => {
+    throw e;
+  });
+};
+
+export const apiGetLargeTags = async (clubId: string) => {
+  return await axios({
+    method: 'get',
+    url: `${BASE_URL}/tag/${clubId}`,
+    headers: setToken(),
+  }).catch((e) => {
+    throw e;
+  });
+};
+
+export const apiGetSmallTags = async (clubId: string, largeTagName: string) => {
+  return await axios({
+    method: 'get',
+    url: `${BASE_URL}/tag/${clubId}/${largeTagName}`,
     headers: setToken(),
   }).catch((e) => {
     throw e;

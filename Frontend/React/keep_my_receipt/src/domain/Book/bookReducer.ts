@@ -1,11 +1,13 @@
 /** 상태 */
 
 /* 상태 타입 선언 */
+export type TypeNameKeys = '자산' | '지출' | '수입' | '예산' | '';
+
 export type BookItemType = {
   id?: number;
   name: string;
   price: number;
-  type: string;
+  type: TypeNameKeys;
   largeCategory: string;
   smallCategory: string;
   categoryId: number;
