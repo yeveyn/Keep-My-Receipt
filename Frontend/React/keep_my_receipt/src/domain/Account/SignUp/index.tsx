@@ -51,6 +51,7 @@ export default function SignUpForm() {
   // 유효성 검사
   const [isName, setIsName] = useState<boolean>(false);
   const [isEmail, setIsEmail] = useState<boolean>(false);
+  const [isOverlap, setOverlap] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState<boolean>(false);
 
@@ -84,18 +85,20 @@ export default function SignUpForm() {
 
   //이메일 중복확인
   const onClick = useCallback((e: any) => {
+    console.log(email);
     axios
-      .get(`/api/spring/crew/checkEmail/${email}`)
+      .get(`/api/spring/crew/checkEmail/?email=${email}`)
       .then(function (response) {
         console.log(response.data);
-        console.log(email);
-        console.log('머나오낭');
         if (response.data.data == true) {
           setEmailMessage('중복된 이메일입니다');
           setIsEmail(false);
+          setOverlap(false);
+          alert('중복된 이메일입니다!');
         } else {
           setEmailMessage('올바른 이메일 형식입니다');
           setIsEmail(true);
+          setOverlap(true);
         }
       })
       .catch(function (error) {
@@ -154,6 +157,8 @@ export default function SignUpForm() {
           .then((res) => {
             setIsLoading(false);
             console.log('response:', res);
+            alert(res.data.msg);
+
             if (res.data.output != 0) {
               navigate('/login');
             }
@@ -250,7 +255,7 @@ export default function SignUpForm() {
           }}
         />
 
-        {/* 이름, 이메일, 패스워드, 패스워드 확인이 다 맞다면 주황버튼으로 */}
+        {/* 이름, 이메일, 패스워드, 패스워드 확인이 다 맞다면 색있는 버튼으로 */}
         <div>
           <section>
             {!isLoading && (
@@ -258,7 +263,13 @@ export default function SignUpForm() {
                 fullWidth
                 type="submit"
                 disabled={
-                  !(isName && isEmail && isPassword && isPasswordConfirm)
+                  !(
+                    isName &&
+                    isEmail &&
+                    isOverlap &&
+                    isPassword &&
+                    isPasswordConfirm
+                  )
                 }
                 sx={{
                   backgroundColor: '#ffa500',

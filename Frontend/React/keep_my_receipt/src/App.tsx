@@ -37,15 +37,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Outlet />}>
+          <Route index element={<LoginIndex />} />
+        </Route>
+        <Route path="signup" element={<Outlet />}>
+          <Route index element={<SignUpIndex />} />
+        </Route>
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<RootPage />}>
           <Route index element={<Landing />} />
-          <Route path="login" element={<Outlet />}>
-            <Route index element={<LoginIndex />} />
-          </Route>
-          <Route path="signup" element={<Outlet />}>
-            <Route index element={<SignUpIndex />} />
-          </Route>
 
           <Route path="alert" element={<Outlet />}>
             <Route index element={<AlertIndex />} />
