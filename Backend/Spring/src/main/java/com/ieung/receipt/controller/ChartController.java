@@ -30,15 +30,17 @@ public class ChartController {
      */
 
     @Operation(summary = "1차 차트", description = "1차 차트 데이터")
-    @GetMapping(value = "/chart/{clubId}/{yearMonth}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult getFirstChart(@PathVariable @NotBlank Long clubId, @PathVariable @NotBlank YearMonth yearMonth){
+    @GetMapping(value = "/chart/{clubId}/{year}/{month}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody CommonResult getFirstChart(@PathVariable @NotBlank Long clubId, @PathVariable @NotBlank int year, @PathVariable @NotBlank int month){
+        YearMonth yearMonth = YearMonth.of(year, month);
         List<ChartResDTO> chartResDTOList = chartService.getParentChartData(clubId, yearMonth);
         return responseService.getListResult(chartResDTOList);
     }
 
     @Operation(summary = "2차 차트", description = "2차 차트 데이터")
-    @GetMapping(value = "/chart/{clubId}/{yearMonth}/{parentTag}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult getSecondChart(@PathVariable @NotBlank Long clubId, @PathVariable @NotBlank YearMonth yearMonth, @PathVariable @NotBlank String parentTag){
+    @GetMapping(value = "/chart/{clubId}/{year}/{month}/{parentTag}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody CommonResult getSecondChart(@PathVariable @NotBlank Long clubId, @PathVariable @NotBlank int year, @PathVariable @NotBlank int month, @PathVariable @NotBlank String parentTag){
+        YearMonth yearMonth = YearMonth.of(year, month);
         List<ChartResDTO> chartResDTOList = chartService.getChildChartData(clubId, yearMonth, parentTag);
         return responseService.getListResult(chartResDTOList);
     }
