@@ -345,7 +345,9 @@ public class TransactionService {
             transaction.updatePrice(transactionReqDTO.getTotalPrice());
             transaction.updatePayDate(transactionReqDTO.getDate());
         } else {
-            if (transaction.getPayDate() != transactionReqDTO.getDate()) {
+            if (transaction.getRequest().getId() != transactionReqDTO.getRequestId()) {
+                throw new ApiMessageException("청구 번호는 변경할 수 없습니다.");
+            } else if (transaction.getPayDate() != transactionReqDTO.getDate()) {
                 throw new ApiMessageException("영수증 날짜와 동일해야합니다.");
             } else if (transaction.getPrice() != transactionReqDTO.getTotalPrice()) {
                 throw new ApiMessageException("영수증 금액와 동일해야합니다.");
