@@ -86,7 +86,6 @@ function App() {
         <Route path="/login/index" element={<LoginIndex />} />
         <Route path="/setting/index" element={<SettingIndex />} />
       </Routes>
-      <SimpleBottomNavigation />
     </BrowserRouter>
   );
 }
@@ -101,6 +100,7 @@ function RootPage() {
     <>
       <Navigation />
       <Outlet />
+      <SimpleBottomNavigation />
     </>
   );
 }

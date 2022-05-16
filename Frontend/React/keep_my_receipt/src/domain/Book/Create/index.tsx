@@ -2,7 +2,6 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 
-import Navigation from '../../../header';
 import Header from './Header';
 import PageButtons from './PageButtons';
 import Item from './Item';
@@ -37,7 +36,6 @@ export default function BookCreate() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       {/* 거래 정보 */}
       <Header
         date={state.date}

@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Navigation from '../../../header';
 
 export default function RequestIndex() {
   const navigate = useNavigate();
@@ -60,7 +59,6 @@ export default function RequestIndex() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <div
         style={
           matches

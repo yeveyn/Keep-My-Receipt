@@ -23,7 +23,6 @@ import {
 import toCurrency from '../../../services/toCurrency';
 import { AssetReportType, mainCategories } from './type';
 import sample from './sample.json';
-import Navigation from '../../../header';
 
 export default function AssetReport() {
   const sampleList: AssetReportType = sample;
@@ -48,7 +47,6 @@ export default function AssetReport() {
 
   return (
     <>
-      <Navigation />
       {/* 기간 설정 부분 */}
       <Card
         variant="outlined"
