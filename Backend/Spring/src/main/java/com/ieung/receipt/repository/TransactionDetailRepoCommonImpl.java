@@ -61,10 +61,11 @@ public class TransactionDetailRepoCommonImpl implements TransactionDetailRepoCom
     }
 
     @Override
-    public List<TransactionDetail> findByPayDate(YearMonth yearMonth) {
+    public List<TransactionDetail> findByPayDate(Long clubId, YearMonth yearMonth) {
         List<TransactionDetail> result = queryFactory
                 .selectFrom(QTransactionDetail.transactionDetail)
-                .where(QTransactionDetail.transactionDetail.payDate.between(
+                .where(QTransactionDetail.transactionDetail.transaction.club.id.eq(clubId),
+                        QTransactionDetail.transactionDetail.payDate.between(
                         yearMonth.atDay(1),
                         yearMonth.atEndOfMonth()))
                 .fetch();
