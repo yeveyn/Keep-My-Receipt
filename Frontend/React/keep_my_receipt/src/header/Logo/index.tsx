@@ -15,7 +15,7 @@ export default function Logo() {
           onClickButton('/');
         }}
       >
-        <img width="200vm" src="/images/randing/logo8.png"></img>
+        <img width="200vm" src="/images/randing/logo.png"></img>
       </Button>
     </>
   );
