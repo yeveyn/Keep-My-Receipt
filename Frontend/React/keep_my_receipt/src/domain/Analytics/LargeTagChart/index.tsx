@@ -12,13 +12,9 @@ interface ItemType {
 export default function LargeTagChart({
   sumValue,
   items,
-  startDate,
-  endDate,
 }: {
   sumValue: number;
   items: ItemType[];
-  startDate: String;
-  endDate: String;
 }) {
   return (
     <Grid
@@ -47,12 +43,7 @@ export default function LargeTagChart({
           style={{ width: '100%', marginTop: 20 }}
         >
           {items.map((item) => (
-            <ItemIndex
-              item={item}
-              startDate={startDate}
-              endDate={endDate}
-              key={item.id}
-            />
+            <ItemIndex item={item} key={item.id} />
           ))}
         </Grid>
         <Paper

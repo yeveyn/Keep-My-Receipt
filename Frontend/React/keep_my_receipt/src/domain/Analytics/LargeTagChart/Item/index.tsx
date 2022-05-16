@@ -8,15 +8,7 @@ interface ItemType {
   rate: String;
 }
 
-export default function ItemIndex({
-  item,
-  startDate,
-  endDate,
-}: {
-  item: ItemType;
-  startDate: String;
-  endDate: String;
-}) {
+export default function ItemIndex({ item }: { item: ItemType }) {
   const navigate = useNavigate();
   function goSubChart() {
     // Todo : club id prop에서 빼오기... 날짜랑 클럽이름이랑 1차태그까지 파라미터로!
