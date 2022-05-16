@@ -11,7 +11,8 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  TextField,
+  Select,
+  MenuItem,
   Stack,
 } from '@mui/material';
 import LargeTagChart from './LargeTagChart';
@@ -22,18 +23,16 @@ import sample3 from './sample3.json';
 import Navigation from '../../header';
 
 export default function MainChartIndex() {
-  const { params } = useParams();
+  const { id } = useParams();
   const matches = useMediaQuery('(min-width:500px)');
 
   const date = new Date();
   const year = String(date.getFullYear());
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-  const curStart = year.concat('-').concat(month).concat('-').concat('01');
-  const curEnd = year.concat('-').concat(month).concat('-').concat(day);
-  const [startDate, setStartDate] = useState(curStart);
-  const [endDate, setEndDate] = useState(curEnd);
-
+  const [curYear, setYear] = useState(year);
+  const [curMonth, setMonth] = useState(month);
+  const yearList = ['2022', '2021', '2020', '2019', '2018'];
+  const [monthList, setMonthList] = useState(getMonthList);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -42,24 +41,60 @@ export default function MainChartIndex() {
     loadData();
     setOpen(false);
   };
-  function changeStartDate(e: any) {
-    const newStartDate = e.target.value;
-    if (newStartDate >= endDate) {
-      alert('시작일은 종료일보다 빨라야 합니다');
-      e.target.value = startDate;
+  function getMonthList() {
+    return [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+    ].filter((item) => parseInt(item) <= parseInt(month));
+  }
+  function changeYear(e: any) {
+    const newYear = e.target.value;
+    if (newYear > year) {
+      alert(`${curYear}년 이후의 날짜로 설정할 수 없습니다.`);
+      e.target.value = newYear;
       return;
     }
-    setStartDate(e.target.value);
-  }
-  function changeEndDate(e: any) {
-    const newEndDate = e.target.value;
-    if (startDate >= newEndDate) {
-      alert('종료일은 시작일보다 늦어야 합니다');
-      e.target.value = endDate;
-      return;
+    setYear(e.target.value);
+    if (newYear === year) {
+      setMonthList(
+        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].filter(
+          (item) => parseInt(item) <= parseInt(month),
+        ),
+      );
+    } else {
+      setMonthList([
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+      ]);
     }
-    setEndDate(e.target.value);
+    if (newYear === year && curMonth > month) {
+      setMonth(month);
+    }
   }
+  function changeMonth(e: any) {
+    setMonth(e.target.value);
+  }
+
   const [tagItems, setTagItems] = useState([
     { id: '0', value: '0', rate: '0' },
   ]);
@@ -68,7 +103,7 @@ export default function MainChartIndex() {
   const [sumFlowValue, setSumFlowValue] = useState(0);
 
   function loadData() {
-    console.log('load Data from DB');
+    console.log('Analytics : load Data from DB');
     setTagItems(sample1);
     setFlowItems(sample3);
     let tmpSumTagValue = 0;
@@ -103,33 +138,33 @@ export default function MainChartIndex() {
               direction="row"
               justifyContent="space-between"
               alignItems="center"
-              style={{ marginTop: 10 }}
+              spacing={3}
             >
               <Grid item xs={5.8} sm={5.8} md={5.8}>
-                <TextField
-                  id="startDate"
-                  label="시작일"
-                  type="date"
-                  defaultValue={startDate}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={changeStartDate}
-                  style={{ width: '100%' }}
-                />
+                <Select
+                  id="year"
+                  value={curYear}
+                  onChange={changeYear}
+                  autoWidth
+                  label="Year"
+                >
+                  {yearList.map((item) => (
+                    <MenuItem value={item}>{item}년</MenuItem>
+                  ))}
+                </Select>
               </Grid>
               <Grid item xs={5.8} sm={5.8} md={5.8}>
-                <TextField
-                  id="endDate"
-                  label="종료일"
-                  type="date"
-                  defaultValue={endDate}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={changeEndDate}
-                  style={{ width: '100%' }}
-                />
+                <Select
+                  id="month"
+                  value={curMonth[0] === '0' ? curMonth[1] : curMonth}
+                  onChange={changeMonth}
+                  autoWidth
+                  label="Month"
+                >
+                  {monthList.map((item) => (
+                    <MenuItem value={item}>{item}월</MenuItem>
+                  ))}
+                </Select>
               </Grid>
             </Grid>
           </DialogContent>
@@ -181,7 +216,9 @@ export default function MainChartIndex() {
                       width: '100%',
                     }}
                   >
-                    {startDate}　~　{endDate}
+                    {curYear}년&nbsp;
+                    {curMonth[0] === '0' ? curMonth[1] : curMonth}
+                    월&nbsp;지출&nbsp;분석
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4} md={4} container justifyContent="end">
@@ -196,18 +233,8 @@ export default function MainChartIndex() {
                 </Grid>
               </Grid>
             </Card>
-            <LargeTagChart
-              sumValue={sumTagValue}
-              items={tagItems}
-              startDate={startDate}
-              endDate={endDate}
-            />
-            <FlowChart
-              sumValue={sumFlowValue}
-              items={flowItems}
-              startDate={startDate}
-              endDate={endDate}
-            />
+            <LargeTagChart sumValue={sumTagValue} items={tagItems} />
+            <FlowChart sumValue={sumFlowValue} items={flowItems} />
           </Stack>
         </Grid>
       </Container>
