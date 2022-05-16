@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { IconButton, Stack, Container } from '@mui/material';
-import { ArrowBackIosNew } from '@mui/icons-material';
+import { IconButton, Stack, Container, Grid } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreateImage from './image';
@@ -78,47 +78,41 @@ export default function GroupCreate() {
     navigate('..');
   };
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        padding: 0,
-      }}
-    >
-      {/* <Stack direction="column" spacing={3}> */}
-      {/* 상단 */}
-      {/* <Stack
+    <Container maxWidth="md" sx={{ paddingY: 0, paddingX: '1rem' }}>
+      <Grid container direction="column" sx={{ marginBottom: 1 }}>
+        {/* 상단 */}
+        <Stack
           direction="row"
           justifyContent="center"
           alignItems="center"
           sx={{ position: 'relative' }}
-        > */}
-      <IconButton
-        onClick={() => {
-          navigate(-1);
-        }}
-        color="inherit"
-        sx={{ position: 'absolute', left: 0 }}
-      >
-        <ArrowBackIosNew sx={{ fontSize: '2rem' }} />
-      </IconButton>
-      <h2>모임 만들기</h2>
-      {/* </Stack> */}
+        >
+          <IconButton
+            onClick={() => {
+              navigate(-1);
+            }}
+            color="inherit"
+            sx={{ position: 'absolute', left: 0 }}
+          >
+            <ArrowBack sx={{ fontSize: '2rem' }} />
+          </IconButton>
+          <h2>모임 만들기</h2>
+        </Stack>
 
-      {/* 본문 */}
-      {/* <Stack spacing={3}> */}
-      {/* 이미지 */}
-      <CreateImage onImgChange={onImgChange} />
+        {/* 본문 */}
+        {/* <Stack spacing={3}> */}
+        {/* 이미지 */}
+        <CreateImage onImgChange={onImgChange} />
 
-      {/* Form */}
-      <CreateForm
-        name={name}
-        intro={intro}
-        check={check}
-        onChange={onFormChange}
-        onClick={onClick}
-      />
-      {/* </Stack> */}
-      {/* </Stack> */}
+        {/* Form */}
+        <CreateForm
+          name={name}
+          intro={intro}
+          check={check}
+          onChange={onFormChange}
+          onClick={onClick}
+        />
+      </Grid>
     </Container>
   );
 }

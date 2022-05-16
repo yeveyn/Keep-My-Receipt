@@ -5,6 +5,7 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
