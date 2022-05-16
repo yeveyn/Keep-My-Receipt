@@ -50,15 +50,14 @@ function App() {
           <Route path="alert" element={<Outlet />}>
             <Route index element={<AlertIndex />} />
           </Route>
+          <Route path="setting" element={<Outlet />}>
+            <Route index element={<SettingIndex />} />
+          </Route>
           <Route path="club" element={<Outlet />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />
             <Route path="search" element={<ClubSearch />} />
             <Route path=":id" element={<Outlet />}>
-              <Route path="setting" element={<Outlet />}>
-                <Route index element={<SettingIndex />} />
-                {/* 추가 */}
-              </Route>
               <Route path="book" element={<Outlet />}>
                 <Route index element={<BookIndex />} />
                 <Route path="create" element={<BookCreate />} />

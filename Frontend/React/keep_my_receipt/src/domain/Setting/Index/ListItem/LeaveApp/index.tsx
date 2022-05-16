@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LeaveAppDialog from '../../Dialog/LeaveAppDialog';
+import { Content } from '../../../../Landing/Landing/Banner/styles';
 
 export default function LeaveApp() {
   const [open, setOpen] = useState(false);
@@ -17,8 +18,8 @@ export default function LeaveApp() {
         <Stack className="board" onClick={onClick}>
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
-              <ErrorOutlineIcon className="icon" />
-              <div className="text">회원 탈퇴</div>
+              <ErrorOutlineIcon fontSize="large" className="icon" />
+              <Content>회원 탈퇴</Content>
             </Stack>
             <div className="toggle">
               <ArrowForwardIosIcon color="disabled" />

@@ -112,7 +112,6 @@ export default function ListItem() {
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
           sessionStorage.removeItem('accessToken');
-          location.reload();
           navigate('/');
         })
         .catch(function (error) {
@@ -143,7 +142,7 @@ export default function ListItem() {
           {/* 설정 */}
           <Button
             onClick={() => {
-              onClickButton(`/club/${id}/setting`);
+              onClickButton(`/setting`);
             }}
             sx={{
               my: 2,

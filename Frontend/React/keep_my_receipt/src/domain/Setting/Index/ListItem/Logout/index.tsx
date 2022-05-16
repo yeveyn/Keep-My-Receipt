@@ -3,6 +3,7 @@ import { useState } from 'react';
 import NoMeetingRoomIcon from '@mui/icons-material/NoMeetingRoom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LogoutDialog from '../../Dialog/LogoutDialog';
+import { Content } from '../../../../Landing/Landing/Banner/styles';
 
 export default function Logout() {
   const [open, setOpen] = useState(false);
@@ -17,8 +18,8 @@ export default function Logout() {
         <Stack className="board" onClick={onClick}>
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
-              <NoMeetingRoomIcon className="icon" />
-              <div className="text">로그아웃</div>
+              <NoMeetingRoomIcon fontSize="large" className="icon" />
+              <Content>로그아웃</Content>
             </Stack>
             <div className="toggle">
               <ArrowForwardIosIcon color="disabled" />

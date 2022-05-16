@@ -36,6 +36,18 @@ const focus = keyframes`
     }
 `;
 
+export const Content = styled.p`
+  padding-top: 14px;
+  font-size: 1.3vw;
+  font-family: NanumGothicBold;
+  letter-spacing: 0px;
+  margin: 0 0 0 0;
+  @media only screen and (max-width: 768px) {
+    font-size: 5vw;
+    padding-top: 9px;
+  }
+`;
+
 export const Content1 = styled.p`
   font-size: 3vw;
   font-family: NanumGothicBold;

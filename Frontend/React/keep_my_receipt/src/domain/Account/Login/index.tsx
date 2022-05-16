@@ -138,7 +138,6 @@ export default function LoginForm() {
           console.log(response.data);
         } else {
           onLoginSuccess(response.data);
-          location.reload();
           navigate('/club');
         }
       })

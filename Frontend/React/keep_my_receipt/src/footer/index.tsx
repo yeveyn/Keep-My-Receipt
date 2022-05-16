@@ -45,7 +45,10 @@ export default function SimpleBottomNavigation() {
   };
   useEffect(() => {
     onClick();
+    console.log(userAuthNum);
+    console.log(id);
   }, []);
+
   const Box = styled('div')(({ theme }) => ({
     padding: theme.spacing(1),
     [theme.breakpoints.up(420)]: {
@@ -57,90 +60,95 @@ export default function SimpleBottomNavigation() {
 
   return (
     <>
-      {/* {isLogin && id ? ( */}
       <footer>
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: 0,
-          }}
-        >
-          <BottomNavigation
-            sx={{
-              width: '100%',
-            }}
-            showLabels
-          >
-            {/* 영수증 등록 */}
-            <BottomNavigationAction
+        {id ? (
+          <>
+            <Box
               sx={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
                 padding: 0,
-                '@media (max-width: 768px)': {
-                  minWidth: 'auto',
-                  padding: '6px 0',
-                },
               }}
-              onClick={() => {
-                onClickButton(`/club/${id}/receipt/camera`);
-              }}
-              label={'영수증등록'}
-              icon={<PlaylistAddIcon />}
-            ></BottomNavigationAction>
-            {/* 거래 등록 */}
-            {userAuthNum <= 1 ? (
-              <BottomNavigationAction
+            >
+              <BottomNavigation
                 sx={{
-                  padding: 0,
-                  '@media (max-width: 768px)': {
-                    minWidth: 'auto',
-                    padding: '6px 0',
-                  },
+                  width: '100%',
                 }}
-                onClick={() => {
-                  onClickButton(`/club/${id}/book/create`);
-                }}
-                label={'거래등록'}
-                icon={<PeopleAltIcon />}
-              ></BottomNavigationAction>
-            ) : (
-              ''
-            )}
+                showLabels
+              >
+                {/* 영수증 등록 */}
+                <BottomNavigationAction
+                  sx={{
+                    padding: 0,
+                    '@media (max-width: 768px)': {
+                      minWidth: 'auto',
+                      padding: '6px 0',
+                    },
+                  }}
+                  onClick={() => {
+                    onClickButton(`/club/${id}/receipt/camera`);
+                  }}
+                  label={'영수증등록'}
+                  icon={<PlaylistAddIcon />}
+                ></BottomNavigationAction>
+                {/* 거래 등록 */}
+                {userAuthNum <= 2 ? (
+                  <BottomNavigationAction
+                    sx={{
+                      padding: 0,
+                      '@media (max-width: 768px)': {
+                        minWidth: 'auto',
+                        padding: '6px 0',
+                      },
+                    }}
+                    onClick={() => {
+                      onClickButton(`/club/${id}/book/create`);
+                    }}
+                    label={'거래등록'}
+                    icon={<PeopleAltIcon />}
+                  ></BottomNavigationAction>
+                ) : (
+                  ''
+                )}
 
-            {/* 영수증 내역 */}
-            <BottomNavigationAction
-              sx={{
-                padding: 0,
-                '@media (max-width: 768px)': {
-                  minWidth: 'auto',
-                  padding: '6px 0',
-                },
-              }}
-              onClick={() => {
-                onClickButton(`/club/${id}/receipt/requestList`);
-              }}
-              label={'영수증내역'}
-              icon={<PaidIcon />}
-            ></BottomNavigationAction>
-            {/* 분석차트 */}
-            <BottomNavigationAction
-              sx={{
-                padding: 0,
-                '@media (max-width: 768px)': {
-                  minWidth: 'auto',
-                  padding: '6px 0',
-                },
-              }}
-              onClick={() => {
-                onClickButton(`/club/${id}/analytics/mainChart`);
-              }}
-              label={'분석차트'}
-              icon={<InsertChartIcon />}
-            ></BottomNavigationAction>
-          </BottomNavigation>
-        </Box>
+                {/* 영수증 내역 */}
+                <BottomNavigationAction
+                  sx={{
+                    padding: 0,
+                    '@media (max-width: 768px)': {
+                      minWidth: 'auto',
+                      padding: '6px 0',
+                    },
+                  }}
+                  onClick={() => {
+                    onClickButton(`/club/${id}/receipt/requestList`);
+                  }}
+                  label={'영수증내역'}
+                  icon={<PaidIcon />}
+                ></BottomNavigationAction>
+                {/* 분석차트 */}
+                <BottomNavigationAction
+                  sx={{
+                    padding: 0,
+                    '@media (max-width: 768px)': {
+                      minWidth: 'auto',
+                      padding: '6px 0',
+                    },
+                  }}
+                  onClick={() => {
+                    onClickButton(`/club/${id}/analytics/mainChart`);
+                  }}
+                  label={'분석차트'}
+                  icon={<InsertChartIcon />}
+                ></BottomNavigationAction>
+              </BottomNavigation>
+            </Box>
+          </>
+        ) : (
+          ''
+        )}
       </footer>
     </>
   );
