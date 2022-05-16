@@ -11,7 +11,6 @@ import {
 import ItemIndex from './Item';
 import axios from 'axios';
 import Pagination from '../../../components/Pagination';
-import Navigation from '../../../header';
 interface ItemType {
   requestId: number;
   crewName: string;
@@ -79,7 +78,6 @@ export default function RequestListIndex() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <Grid
         container
         direction="column"

@@ -57,7 +57,6 @@ export default function ClubIndex() {
   }, []);
   return (
     <Container maxWidth="md" sx={{ padding: 0 }}>
-      <Navigation />
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
         {/* Header */}
         <IndexHeader />

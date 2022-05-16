@@ -12,7 +12,6 @@ import ListItem from './Item';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Navigation from '../../../header';
 
 export default function ApproveIndex() {
   const navigate = useNavigate();
@@ -121,7 +120,6 @@ export default function ApproveIndex() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <div
         style={
           matches
