@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useParams,
+} from 'react-router-dom';
 import './App.css';
 import Navigation from './header';
 import SimpleBottomNavigation from './footer';
@@ -24,7 +30,7 @@ import MainChartIndex from './domain/Analytics';
 import SubChartIndex from './domain/Analytics/MediumTagChart';
 import BudgetReport from './domain/Report/Budget';
 import AssetReport from './domain/Report/Asset';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
@@ -90,6 +96,7 @@ function App() {
 
 function RootPage() {
   const accessToken = sessionStorage.getItem('accessToken');
+
   useEffect(() => {
     // header accessToken 설정
     axios.defaults.headers.common['Authorization'] = `${accessToken}`;

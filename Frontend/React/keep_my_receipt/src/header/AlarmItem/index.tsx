@@ -5,9 +5,8 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { yellow } from '@mui/material/colors';
 import axios from 'axios';
-import Pagination from '../../../components/Pagination';
+import Pagination from '../../components/Pagination';
 import { Grid } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
@@ -152,12 +151,8 @@ export default function AlarmItem() {
 
   return (
     <Box>
-      <IconButton onClick={handleOpenUserMenu2} sx={{ p: 0, marginLeft: 10 }}>
-        <NotificationsIcon
-        // sx={{
-        //   color: yellow[50],
-        // }}
-        />
+      <IconButton onClick={handleOpenUserMenu2} sx={{ p: 0 }}>
+        <NotificationsIcon></NotificationsIcon>
       </IconButton>
 
       <Menu

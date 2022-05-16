@@ -20,7 +20,6 @@ import FlowChart from './FlowChart';
 import axios from 'axios';
 import sample1 from './sample1.json';
 import sample3 from './sample3.json';
-import Navigation from '../../header';
 
 export default function MainChartIndex() {
   const { id } = useParams();
@@ -124,7 +123,6 @@ export default function MainChartIndex() {
 
   return (
     <>
-      <Navigation />
       <Container maxWidth="md">
         <Dialog
           open={open}
