@@ -47,7 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         webView.webViewClient = WebViewClient() // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
         webView.webChromeClient = WebChromeClient() // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
         webview.addJavascriptInterface(WebAppInterface(this), "Android")
-        webView.loadUrl("http://k6d104.p.ssafy.io/")
+        webView.loadUrl("https://k6d104.p.ssafy.io/")
     }
 
 //    private fun setBottomNav() {
@@ -100,7 +100,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         alarmed = intent.extras.toString()
         if (alarmed != null) {
             //Todo url 파라미터 설정
-            webView.loadUrl("http://k6d104.p.ssafy.io/")
+            webView.loadUrl("https://k6d104.p.ssafy.io/")
         }
     }
 }

@@ -115,7 +115,18 @@ export default function MainChartIndex() {
       tmpSumFlowValue += parseInt(item.value);
     });
     setSumFlowValue(tmpSumFlowValue);
-    // Todo: 백엔드 API 연결
+    axios
+      .get(
+        `https://k6d104.p.ssafy.io/api/spring/chart/${id}/${year}/${
+          month[0] === '0' ? month[1] : month
+        }`,
+      )
+      .then((response) => {
+        console.log('analytics API test', response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
   useEffect(() => {
     loadData();
