@@ -24,13 +24,15 @@ import MainChartIndex from './domain/Analytics';
 import SubChartIndex from './domain/Analytics/MediumTagChart';
 import BudgetReport from './domain/Report/Budget';
 import AssetReport from './domain/Report/Asset';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* 밑에 Route들 추가하시면 됩니다! */}
-        <Route path="/" element={<Outlet />}>
+        <Route path="/" element={<RootPage />}>
           <Route index element={<Landing />} />
           <Route path="alert" element={<Outlet />}>
             <Route index element={<AlertIndex />} />
@@ -86,6 +88,20 @@ function App() {
       </Routes>
       <SimpleBottomNavigation />
     </BrowserRouter>
+  );
+}
+
+function RootPage() {
+  const accessToken = sessionStorage.getItem('accessToken');
+  useEffect(() => {
+    // header accessToken 설정
+    axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+  }, []);
+  return (
+    <>
+      <Navigation />
+      <Outlet />
+    </>
   );
 }
 

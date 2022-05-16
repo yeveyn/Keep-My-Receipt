@@ -23,7 +23,6 @@ function Landing() {
 
   return (
     <div>
-      {isLogin ? <Navigation /> : ''}
       <Banner />
       <GuideFirst />
       <GuideSecond />

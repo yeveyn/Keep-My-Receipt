@@ -132,7 +132,6 @@ export default function ManageIndex() {
   }, []);
   return (
     <Container maxWidth="md">
-      <Navigation />
       <Grid container direction="column" sx={{ marginBottom: 3 }}>
         {/* Header */}
         <Stack marginTop="1rem" spacing="0.5rem">
