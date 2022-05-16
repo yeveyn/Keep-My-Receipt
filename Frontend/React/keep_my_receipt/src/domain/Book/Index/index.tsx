@@ -69,7 +69,7 @@ export default function BookIndex() {
           }-${targetEnd.getDate()}`,
           page: page ? page : 0,
           size: 5,
-          sort: 'id,DESC',
+          sort: 'pay_date,DESC',
         },
       })
       .then((res) => {
