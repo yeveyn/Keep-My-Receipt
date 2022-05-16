@@ -3,9 +3,7 @@ package com.ieung.receipt.service;
 import com.ieung.receipt.dto.res.ChartResDTO;
 import com.ieung.receipt.dto.res.TagResDTO;
 import com.ieung.receipt.entity.TransactionDetail;
-import com.ieung.receipt.repository.ClubRepository;
-import com.ieung.receipt.repository.TagRepository;
-import com.ieung.receipt.repository.TransactionDetailRepoCommon;
+import com.ieung.receipt.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,9 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ChartService {
-    private final TransactionDetailRepoCommon transactionDetailRepoCommon;
-    private final TagService tagService;
-    private final ClubRepository clubRepository;
+    private final TransactionDetailRepository transactionDetailRepository;
 
     /**
      * 부모태그 차트
@@ -28,7 +24,7 @@ public class ChartService {
      */
     public List<ChartResDTO> getParentChartData(Long clubId, YearMonth yearMonth){
         List<ChartResDTO> chartResDTOList = new ArrayList<ChartResDTO>();
-        List<TransactionDetail> transactionDetailList = transactionDetailRepoCommon.findByPayDate(clubId, yearMonth);
+        List<TransactionDetail> transactionDetailList = transactionDetailRepository.findByPayDate(clubId, yearMonth);
 
         int totalCost = 0;
 
@@ -59,7 +55,7 @@ public class ChartService {
      */
     public List<ChartResDTO> getChildChartData(Long clubId, YearMonth yearMonth, String parentTag){
         List<ChartResDTO> chartResDTOList = new ArrayList<ChartResDTO>();
-        List<TransactionDetail> transactionDetailList = transactionDetailRepoCommon.findByPayDate(clubId, yearMonth);
+        List<TransactionDetail> transactionDetailList = transactionDetailRepository.findByPayDate(clubId, yearMonth);
 
         int totalCost = 0;
 
