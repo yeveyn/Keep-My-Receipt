@@ -9,9 +9,9 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Content1 } from '../../styles';
 import IconButton from '@mui/material/IconButton';
-import SettingsIcon from '@mui/icons-material/Settings';
-import AlarmItem from '../../AlarmItem';
 
+import AlarmItem from '../../AlarmItem';
+import SettingItem from '../../SettingItem';
 export default function ListItem() {
   const [isLogin, setIsLogin] = useState(false);
   const myAccessToken = sessionStorage.getItem('accessToken');
@@ -152,9 +152,7 @@ export default function ListItem() {
               float: 'right',
             }}
           >
-            <IconButton sx={{ p: 0, marginLeft: 2 }}>
-              <SettingsIcon />
-            </IconButton>
+            <SettingItem />
           </Button>
 
           {id ? (

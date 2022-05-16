@@ -10,7 +10,7 @@ export default function Logo() {
   return (
     <>
       <Button
-        sx={{ marginLeft: '20vm' }}
+        sx={{ marginLeft: '10vm' }}
         onClick={() => {
           onClickButton('/');
         }}

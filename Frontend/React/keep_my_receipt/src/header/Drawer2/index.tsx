@@ -31,6 +31,11 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Button, Grid } from '@mui/material';
+import AlarmItem from '../AlarmItem';
+import { Content2 } from '../styles';
+import SettingItem from '../SettingItem';
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -153,8 +158,12 @@ export default function PersistentDrawerRight() {
     navigate(`/club`);
   };
 
-  const mySetting = () => {
-    navigate(`/setting`);
+  const myMain = () => {
+    navigate(`/`);
+  };
+
+  const onClickLogin = () => {
+    navigate('/login');
   };
 
   const theme = useTheme();
@@ -204,27 +213,73 @@ export default function PersistentDrawerRight() {
         sx={{ backgroundColor: 'white' }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            <Logo />
-          </Typography>
-
           {isLogin ? (
             <>
-              <IconButton
-                color="primary"
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerOpen}
-                sx={{ ...(open && { display: 'none' }) }}
-              >
-                <MenuIcon />
-              </IconButton>
+              <Grid container>
+                <Grid item xs={8}>
+                  <IconButton
+                    color="primary"
+                    aria-label="open drawer"
+                    edge="end"
+                    onClick={handleDrawerOpen}
+                    sx={{
+                      ...(open && { display: 'none' }),
+                      my: 2,
+                      // float: 'left',
+                      // flexGrow: 1,
+                    }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={1.6}>
+                  <Button
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                    }}
+                  >
+                    <AlarmItem />
+                  </Button>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                    }}
+                  >
+                    <SettingItem />
+                  </Button>
+                </Grid>
+              </Grid>
             </>
           ) : (
-            ''
+            <>
+              <Typography
+                variant="h6"
+                noWrap
+                sx={{ flexGrow: 1 }}
+                component="div"
+              >
+                <Logo />
+              </Typography>
+
+              <Button
+                onClick={onClickLogin}
+                sx={{
+                  my: 2,
+                  color: 'black',
+                  float: 'right',
+                }}
+              >
+                <Content2>로그인</Content2>
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>
+
       <Main open={open}>
         <DrawerHeader />
       </Main>
@@ -237,7 +292,7 @@ export default function PersistentDrawerRight() {
           },
         }}
         variant="persistent"
-        anchor="right"
+        anchor="left"
         open={open}
       >
         <DrawerHeader>
@@ -342,8 +397,8 @@ export default function PersistentDrawerRight() {
             <ListItemText primary="내 모임" />
           </ListItemButton>
 
-          <ListItemButton onClick={mySetting}>
-            <ListItemText primary="설정" />
+          <ListItemButton onClick={myMain}>
+            <ListItemText primary="메인화면" />
           </ListItemButton>
           {/* <Divider /> */}
         </List>
