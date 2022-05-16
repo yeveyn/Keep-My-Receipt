@@ -10,13 +10,9 @@ interface ItemType {
 export default function FlowChart({
   sumValue,
   items,
-  startDate,
-  endDate,
 }: {
   sumValue: number;
   items: ItemType[];
-  startDate: string;
-  endDate: string;
 }) {
   return (
     <Grid
