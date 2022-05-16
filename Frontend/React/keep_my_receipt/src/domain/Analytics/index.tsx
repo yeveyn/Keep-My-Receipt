@@ -123,121 +123,111 @@ export default function MainChartIndex() {
   }, []);
 
   return (
-    <>
-      <Navigation />
-      <Container maxWidth="md">
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogContent>
+    <Container maxWidth="md">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item xs={5.8} sm={5.8} md={5.8}>
+              <Select
+                id="year"
+                value={curYear}
+                onChange={changeYear}
+                autoWidth
+                label="Year"
+              >
+                {yearList.map((item) => (
+                  <MenuItem value={item}>{item}년</MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={5.8} sm={5.8} md={5.8}>
+              <Select
+                id="month"
+                value={curMonth[0] === '0' ? curMonth[1] : curMonth}
+                onChange={changeMonth}
+                autoWidth
+                label="Month"
+              >
+                {monthList.map((item) => (
+                  <MenuItem value={item}>{item}월</MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={0.5}
+        style={
+          matches
+            ? { marginTop: 20, marginBottom: 30, width: '100%' }
+            : { marginTop: 0, marginBottom: 100, width: '100%' }
+        }
+      >
+        <Stack spacing={2} style={{ width: '100%' }}>
+          <Card
+            variant="outlined"
+            style={{
+              padding: 15,
+              width: '100%',
+            }}
+          >
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
+              justifyContent="space-evenly"
               alignItems="center"
-              spacing={3}
+              style={{ width: '100%' }}
             >
-              <Grid item xs={5.8} sm={5.8} md={5.8}>
-                <Select
-                  id="year"
-                  value={curYear}
-                  onChange={changeYear}
-                  autoWidth
-                  label="Year"
+              <Grid item xs={8} sm={8} md={8} container justifyContent="start">
+                <Typography
+                  style={{
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    width: '100%',
+                  }}
                 >
-                  {yearList.map((item) => (
-                    <MenuItem value={item}>{item}년</MenuItem>
-                  ))}
-                </Select>
+                  {curYear}년&nbsp;
+                  {curMonth[0] === '0' ? curMonth[1] : curMonth}
+                  월&nbsp;지출&nbsp;분석
+                </Typography>
               </Grid>
-              <Grid item xs={5.8} sm={5.8} md={5.8}>
-                <Select
-                  id="month"
-                  value={curMonth[0] === '0' ? curMonth[1] : curMonth}
-                  onChange={changeMonth}
-                  autoWidth
-                  label="Month"
+              <Grid item xs={4} sm={4} md={4} container justifyContent="end">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ fontWeight: 'bold' }}
+                  onClick={handleOpen}
                 >
-                  {monthList.map((item) => (
-                    <MenuItem value={item}>{item}월</MenuItem>
-                  ))}
-                </Select>
+                  기간설정
+                </Button>
               </Grid>
             </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              확인
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          spacing={0.5}
-          style={
-            matches
-              ? { marginTop: 20, marginBottom: 30, width: '100%' }
-              : { marginTop: 0, marginBottom: 100, width: '100%' }
-          }
-        >
-          <Stack spacing={2} style={{ width: '100%' }}>
-            <Card
-              variant="outlined"
-              style={{
-                padding: 15,
-                width: '100%',
-              }}
-            >
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-evenly"
-                alignItems="center"
-                style={{ width: '100%' }}
-              >
-                <Grid
-                  item
-                  xs={8}
-                  sm={8}
-                  md={8}
-                  container
-                  justifyContent="start"
-                >
-                  <Typography
-                    style={{
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                      width: '100%',
-                    }}
-                  >
-                    {curYear}년&nbsp;
-                    {curMonth[0] === '0' ? curMonth[1] : curMonth}
-                    월&nbsp;지출&nbsp;분석
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} container justifyContent="end">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ fontWeight: 'bold' }}
-                    onClick={handleOpen}
-                  >
-                    기간설정
-                  </Button>
-                </Grid>
-              </Grid>
-            </Card>
-            <LargeTagChart sumValue={sumTagValue} items={tagItems} />
-            <FlowChart sumValue={sumFlowValue} items={flowItems} />
-          </Stack>
-        </Grid>
-      </Container>
-    </>
+          </Card>
+          <LargeTagChart sumValue={sumTagValue} items={tagItems} />
+          <FlowChart sumValue={sumFlowValue} items={flowItems} />
+        </Stack>
+      </Grid>
+    </Container>
   );
 }

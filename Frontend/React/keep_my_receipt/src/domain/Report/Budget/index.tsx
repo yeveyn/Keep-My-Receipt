@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Button, Card, Grid, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  Grid,
+  Typography,
+  Dialog,
+  DialogContent,
+  Select,
+  MenuItem,
+  DialogActions,
+  Container,
+} from '@mui/material';
 import sample from './sample.json';
 import ReportIndex from './form/index';
 
@@ -43,12 +54,10 @@ export default function BudgetReport() {
   const date = new Date();
   const year = String(date.getFullYear());
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-  const curStart = year.concat('-').concat(month).concat('-').concat('01');
-  const curEnd = year.concat('-').concat(month).concat('-').concat(day);
-  const [startDate, setStartDate] = useState(curStart);
-  const [endDate, setEndDate] = useState(curEnd);
-
+  const [curYear, setYear] = useState(year);
+  const [curMonth, setMonth] = useState(month);
+  const yearList = ['2022', '2021', '2020', '2019', '2018'];
+  const [monthList, setMonthList] = useState(getMonthList);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -57,6 +66,59 @@ export default function BudgetReport() {
     loadData();
     setOpen(false);
   };
+  function getMonthList() {
+    return [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+    ].filter((item) => parseInt(item) <= parseInt(month));
+  }
+  function changeYear(e: any) {
+    const newYear = e.target.value;
+    if (newYear > year) {
+      alert(`${curYear}년 이후의 날짜로 설정할 수 없습니다.`);
+      e.target.value = newYear;
+      return;
+    }
+    setYear(e.target.value);
+    if (newYear === year) {
+      setMonthList(
+        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].filter(
+          (item) => parseInt(item) <= parseInt(month),
+        ),
+      );
+    } else {
+      setMonthList([
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+      ]);
+    }
+    if (newYear === year && curMonth > month) {
+      setMonth(month);
+    }
+  }
+  function changeMonth(e: any) {
+    setMonth(e.target.value);
+  }
   function loadData() {
     // Todo API connect
     sample.forEach((mainCat) => {
@@ -118,13 +180,62 @@ export default function BudgetReport() {
   }, []);
 
   return (
-    <>
+    <Container maxWidth="md">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item xs={5.8} sm={5.8} md={5.8}>
+              <Select
+                id="year"
+                value={curYear}
+                onChange={changeYear}
+                autoWidth
+                label="Year"
+              >
+                {yearList.map((item) => (
+                  <MenuItem value={item}>{item}년</MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={5.8} sm={5.8} md={5.8}>
+              <Select
+                id="month"
+                value={curMonth[0] === '0' ? curMonth[1] : curMonth}
+                onChange={changeMonth}
+                autoWidth
+                label="Month"
+              >
+                {monthList.map((item) => (
+                  <MenuItem value={item}>{item}월</MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* 기간 설정 부분 */}
       <Card
         variant="outlined"
         style={{
-          padding: 15,
           width: '100%',
+          paddingTop: 15,
+          paddingBottom: 15,
         }}
       >
         <Grid
@@ -142,7 +253,9 @@ export default function BudgetReport() {
                 width: '100%',
               }}
             >
-              {startDate}　~　{endDate}
+              {curYear}년&nbsp;
+              {curMonth[0] === '0' ? curMonth[1] : curMonth}
+              월&nbsp;예산운영표
             </Typography>
           </Grid>
           <Grid xs={4} sm={4} md={4} item justifyContent="end">
@@ -181,6 +294,6 @@ export default function BudgetReport() {
         catList={['차기예산']}
         sumValue={sumBudget + sumExpense + sumRevenue}
       />
-    </>
+    </Container>
   );
 }
