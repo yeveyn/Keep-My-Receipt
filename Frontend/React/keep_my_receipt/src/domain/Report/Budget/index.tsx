@@ -14,7 +14,8 @@ import {
 import sample from './sample.json';
 import ReportIndex from './form/index';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import Navigation from '../../../header';
 
 interface ReportType {
   lcName: string;
@@ -54,6 +55,7 @@ export default function BudgetReport() {
   const [sumRevenue, setSumRevenue] = useState(0);
 
   const { id } = useParams();
+  const navigate = useNavigate();
   const date = new Date();
   const year = String(date.getFullYear());
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -62,6 +64,9 @@ export default function BudgetReport() {
   const yearList = ['2022', '2021', '2020', '2019', '2018'];
   const [monthList, setMonthList] = useState(getMonthList);
   const [open, setOpen] = useState(false);
+  const moveAssetReport = () => {
+    navigate(`/club/${id}/report/asset`);
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -199,6 +204,7 @@ export default function BudgetReport() {
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -248,12 +254,46 @@ export default function BudgetReport() {
         </DialogActions>
       </Dialog>
       {/* 기간 설정 부분 */}
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Grid item xs={6} sm={6} md={6} style={{ width: '50%' }}>
+          <Card
+            variant="outlined"
+            style={{
+              width: '100%',
+              paddingTop: 15,
+              paddingBottom: 15,
+            }}
+            onClick={moveAssetReport}
+          >
+            <Typography textAlign="center">자산현황표</Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={6} sm={6} md={6} style={{ width: '50%' }}>
+          <Card
+            variant="outlined"
+            style={{
+              width: '100%',
+              paddingTop: 15,
+              paddingBottom: 15,
+              backgroundColor: 'lightGreen',
+            }}
+          >
+            <Typography textAlign="center">예산운영표</Typography>
+          </Card>
+        </Grid>
+      </Grid>
       <Card
         variant="outlined"
         style={{
           width: '100%',
           paddingTop: 15,
           paddingBottom: 15,
+          marginTop: 15,
         }}
       >
         <Grid
