@@ -12,6 +12,8 @@ import bookReducer, {
 } from '../bookReducer';
 import { apiCreateTransaction } from '../api/bookApi';
 import { CreateParamType } from '../types';
+import { GreenBox } from '../../../styles/box';
+import { PageTitleTypography } from '../../../styles/typography';
 
 export default function BookCreate() {
   const { id: clubId } = useParams();
@@ -56,7 +58,9 @@ export default function BookCreate() {
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', marginBottom: 8 }}>
-      <h1 style={{ textAlign: 'center' }}>거래등록</h1>
+      <GreenBox marginX={-2} marginBottom={1}>
+        <PageTitleTypography>거래등록</PageTitleTypography>
+      </GreenBox>
 
       {/* 거래 정보 */}
       <Header

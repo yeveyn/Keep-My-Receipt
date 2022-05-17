@@ -1,14 +1,15 @@
 import { memo } from 'react';
-import { IconButton, Pagination, Stack } from '@mui/material';
+import { Box, IconButton, Pagination, Stack } from '@mui/material';
 import { AddCircle, RemoveCircle } from '@mui/icons-material/';
 
 import { BookAction, createItem, deleteItem } from '../../bookReducer';
+import { CustomPaginationItem } from './style';
 
 interface PageButtonType {
   count: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  dispatch: React.Dispatch<BookAction>;
+  dispatch?: React.Dispatch<BookAction>;
   editable: boolean;
 }
 
@@ -24,12 +25,18 @@ function PageButtons({
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        backgroundColor: '#e8e4e4',
+        marginX: -2,
+        paddingX: 2,
+      }}
+    >
       <Stack
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        marginY={2}
+        marginY={0.5}
       >
         {/* 페이지네이션 */}
         <Pagination
@@ -39,7 +46,7 @@ function PageButtons({
           page={page}
           onChange={handleChange}
           variant="outlined"
-          color="secondary"
+          renderItem={(item) => <CustomPaginationItem {...item} />}
         />
 
         {editable ? (
@@ -48,7 +55,7 @@ function PageButtons({
             <IconButton
               onClick={() => {
                 // 현재 페이지 뒤에 추가
-                dispatch(createItem(page));
+                dispatch && dispatch(createItem(page));
                 setPage((page) => page + 1);
               }}
             >
@@ -59,7 +66,7 @@ function PageButtons({
             <IconButton
               onClick={() => {
                 // 현재 페이지 삭제
-                dispatch(deleteItem(page - 1));
+                dispatch && dispatch(deleteItem(page - 1));
                 // 페이지 2개 이상일 때만 1 줄임
                 if (page >= 2) {
                   setPage((page) => page - 1);
@@ -71,7 +78,7 @@ function PageButtons({
           </Stack>
         ) : null}
       </Stack>
-    </>
+    </Box>
   );
 }
 

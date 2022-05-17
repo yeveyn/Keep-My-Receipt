@@ -1,17 +1,21 @@
 import React, { memo } from 'react';
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 // import { Schedule, PointOfSale } from '@mui/icons-material';
 
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import { BookAction, updateBook } from '../../bookReducer';
 import toCurrency from '../../../../services/toCurrency';
+import {
+  ContentTypography,
+  TitleTypography,
+} from '../../../../styles/typography';
 
 interface HeaderType {
   date: string;
   totalValue: number;
   length: number;
   imageUrl?: string;
-  dispatch: React.Dispatch<BookAction>;
+  dispatch?: React.Dispatch<BookAction>;
   editable: boolean;
 }
 
@@ -19,7 +23,7 @@ function Header(props: HeaderType) {
   const changeDate = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    props.dispatch(updateBook('date', event.target.value));
+    props.dispatch && props.dispatch(updateBook('date', event.target.value));
   };
 
   return (
@@ -32,7 +36,7 @@ function Header(props: HeaderType) {
           alignItems="center"
           marginBottom={1}
         >
-          <Typography>날짜</Typography>
+          <TitleTypography>날짜</TitleTypography>
           {props.editable ? (
             // 날짜 수정 가능
             <TextField
@@ -43,20 +47,20 @@ function Header(props: HeaderType) {
             />
           ) : (
             // 영수증 승인에서 넘어온거면 날짜 수정 불가
-            <Typography>{props.date}</Typography>
+            <ContentTypography>{props.date}</ContentTypography>
           )}
         </Stack>
 
         {/* 총금액 */}
         <Stack direction="row" justifyContent="space-between" marginBottom={1}>
-          <Typography>총금액</Typography>
-          <Typography>{toCurrency(props.totalValue)}</Typography>
+          <TitleTypography>총금액</TitleTypography>
+          <ContentTypography>{toCurrency(props.totalValue)}</ContentTypography>
         </Stack>
 
         {/* 거래 개수 */}
         <Stack direction="row" justifyContent="space-between" marginBottom={1}>
-          <Typography>거래 개수</Typography>
-          <Typography>{props.length}</Typography>
+          <TitleTypography>거래 개수</TitleTypography>
+          <ContentTypography>{props.length}개</ContentTypography>
         </Stack>
 
         {/* 영수증 사진 확인 */}
@@ -66,7 +70,7 @@ function Header(props: HeaderType) {
               <Button
                 variant="outlined"
                 color="secondary"
-                sx={{ marginTop: 1 }}
+                sx={{ marginBottom: 1 }}
                 fullWidth
               >
                 영수증 확인
@@ -75,7 +79,7 @@ function Header(props: HeaderType) {
             content={<img src={props.imageUrl} />}
           />
         ) : (
-          <Button disabled variant="outlined" sx={{ marginTop: 1 }}>
+          <Button disabled variant="outlined" sx={{ marginBottom: 1 }}>
             영수증 없음
           </Button>
         )}
