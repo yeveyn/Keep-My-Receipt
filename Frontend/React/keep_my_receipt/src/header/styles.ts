@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const LogoImage = styled.image`
-  width: 200vm;
+  // width: 200vm;
+  // height: 100vm;
 `;
 export const LogoButton = styled.button`
   marginleft: 20vm;
@@ -17,12 +18,23 @@ export const NavBarContainer = styled.div`
   }
 `;
 export const Content1 = styled.p`
-  font-size: 1.2vw;
+  font-size: 1rem;
   font-family: NanumGothicBold;
   letter-spacing: -2px;
   margin: 0 0 0 0;
   color: #494949;
   @media only screen and (max-width: 768px) {
     font-size: 6vw;
+  }
+`;
+
+export const Content2 = styled.p`
+  font-size: 1.2vw;
+  font-family: NanumGothicBold;
+  letter-spacing: -2px;
+  margin: 0 0 0 0;
+  color: #494949;
+  @media only screen and (max-width: 768px) {
+    font-size: 4vw;
   }
 `;

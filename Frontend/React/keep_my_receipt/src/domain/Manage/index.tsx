@@ -131,11 +131,11 @@ export default function ManageIndex() {
     getClubInfo();
   }, []);
   return (
-    <Container maxWidth="md">
-      <Grid container direction="column" sx={{ marginBottom: 3 }}>
+    <Container maxWidth="md" sx={{ paddingY: 0, paddingX: '1rem' }}>
+      <Grid container direction="column" sx={{ marginBottom: 1 }}>
         {/* Header */}
         <Stack marginTop="1rem" spacing="0.5rem">
-          <Typography variant="h4">모임관리</Typography>
+          <h2>모임 관리</h2>
           <Stack
             direction="row"
             spacing={2}

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditUserInfoDialog from '../../Dialog/EditUserInfoDialog';
+import { Content } from '../../../../Landing/Landing/Banner/styles';
+
 export default function EditUserInfo() {
   const [open, setOpen] = useState(false);
   const onClick = () => {
@@ -15,8 +17,8 @@ export default function EditUserInfo() {
         <Stack className="board" onClick={onClick}>
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
-              <AccountCircleIcon className="icon" />
-              <div className="text">내 정보 수정 </div>
+              <AccountCircleIcon fontSize="large" className="icon" />
+              <Content>내 정보 수정 </Content>
             </Stack>
             <div className="toggle">
               <ArrowForwardIosIcon color="disabled" />

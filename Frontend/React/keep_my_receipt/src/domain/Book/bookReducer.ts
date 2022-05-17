@@ -1,11 +1,16 @@
 /** 상태 */
 
+import { ParamType } from './types';
+import { TransactionType } from './api/bookApi';
+
 /* 상태 타입 선언 */
+export type TypeNameKeys = '자산' | '지출' | '수입' | '예산' | '';
+
 export type BookItemType = {
   id?: number;
   name: string;
   price: number;
-  type: string;
+  type: TypeNameKeys;
   largeCategory: string;
   smallCategory: string;
   categoryId: number;
@@ -27,11 +32,12 @@ export type BookItemKeys =
   | 'tagId'
   | 'memo';
 
-type BookState = {
+export type BookState = {
   transactionId?: number;
   clubId: number;
   date: string;
   totalPrice: number;
+  imageUrl?: string;
   items: BookItemType[];
 };
 
@@ -50,10 +56,49 @@ export const blankBookItem: BookItemType = {
 
 export const blankBook: BookState = {
   clubId: 0,
-  date: new Date().toString(),
+  date: new Date().toISOString().split('T')[0], // YYYY-MM-DD 형식
   totalPrice: 0,
   items: [blankBookItem],
 };
+
+export const initBookState = (param: ParamType, clubId: number): BookState => {
+  if (param) {
+    return {
+      clubId: clubId,
+      date: param.date,
+      totalPrice: param.money,
+      imageUrl: param.imgUrl,
+      items: param.items.map((item) => ({
+        ...blankBookItem,
+        name: item.content,
+        price: Number(item.money),
+        // 각 아이템마다의 id가 뭐지?
+      })),
+    };
+  } else {
+    return {
+      ...blankBook,
+      clubId: clubId,
+    };
+  }
+};
+
+export const toTransactionType = (
+  bookState: BookState,
+  requestId?: number,
+): TransactionType => ({
+  ...(requestId && { requestId: requestId }),
+  totalPrice: bookState.totalPrice,
+  date: bookState.date,
+  list: bookState.items.map((item) => ({
+    name: item.name,
+    price: item.price,
+    type: item.type,
+    categoryId: item.categoryId,
+    ...(item.tagId && { tagId: item.tagId }),
+    ...(item.memo && { memo: item.memo }),
+  })),
+});
 
 /** 액션 */
 

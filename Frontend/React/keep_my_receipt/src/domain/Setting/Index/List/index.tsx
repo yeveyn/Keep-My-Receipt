@@ -8,10 +8,8 @@ import Notice from '../ListItem/Notice';
 import { useParams } from 'react-router-dom';
 
 export default function SettingList() {
-  const { id } = useParams();
-
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ marginTop: '70px' }}>
       <Notice />
       <AlarmToggle />
       <EditUserInfo />

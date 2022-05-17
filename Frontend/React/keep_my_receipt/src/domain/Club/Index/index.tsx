@@ -57,8 +57,8 @@ export default function ClubIndex() {
     getClubList(0);
   }, []);
   return (
-    <Container maxWidth="md" sx={{ padding: 0 }}>
-      <Grid container direction="column" sx={{ marginBottom: 3 }}>
+    <Container maxWidth="md" sx={{ paddingY: 0, paddingX: '1rem' }}>
+      <Grid container direction="column" sx={{ marginBottom: 1 }}>
         {/* Header */}
         <IndexHeader />
         {/* 리스트 */}
@@ -69,12 +69,7 @@ export default function ClubIndex() {
             </Stack>
           ) : (
             <>
-              <Stack
-                direction="column"
-                spacing={2}
-                alignItems="center"
-                sx={{ marginTop: '1rem' }}
-              >
+              <Stack direction="column" alignItems="center">
                 {list.length ? (
                   <IndexList clubList={list} getClubList={getClubList} />
                 ) : (

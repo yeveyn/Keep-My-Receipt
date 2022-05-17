@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useParams,
+} from 'react-router-dom';
 import './App.css';
 import Navigation from './header';
 import SimpleBottomNavigation from './footer';
@@ -24,35 +30,34 @@ import MainChartIndex from './domain/Analytics';
 import SubChartIndex from './domain/Analytics/MediumTagChart';
 import BudgetReport from './domain/Report/Budget';
 import AssetReport from './domain/Report/Asset';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Outlet />}>
+          <Route index element={<LoginIndex />} />
+        </Route>
+        <Route path="signup" element={<Outlet />}>
+          <Route index element={<SignUpIndex />} />
+        </Route>
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<RootPage />}>
           <Route index element={<Landing />} />
-          <Route path="login" element={<Outlet />}>
-            <Route index element={<LoginIndex />} />
-          </Route>
-          <Route path="signup" element={<Outlet />}>
-            <Route index element={<SignUpIndex />} />
-          </Route>
 
           <Route path="alert" element={<Outlet />}>
             <Route index element={<AlertIndex />} />
+          </Route>
+          <Route path="setting" element={<Outlet />}>
+            <Route index element={<SettingIndex />} />
           </Route>
           <Route path="club" element={<Outlet />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />
             <Route path="search" element={<ClubSearch />} />
             <Route path=":id" element={<Outlet />}>
-              <Route path="setting" element={<Outlet />}>
-                <Route index element={<SettingIndex />} />
-                {/* 추가 */}
-              </Route>
               <Route path="book" element={<Outlet />}>
                 <Route index element={<BookIndex />} />
                 <Route path="create" element={<BookCreate />} />
@@ -90,6 +95,7 @@ function App() {
 
 function RootPage() {
   const accessToken = sessionStorage.getItem('accessToken');
+
   useEffect(() => {
     // header accessToken 설정
     axios.defaults.headers.common['Authorization'] = `${accessToken}`;

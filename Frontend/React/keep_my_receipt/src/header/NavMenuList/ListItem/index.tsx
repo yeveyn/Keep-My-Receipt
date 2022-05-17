@@ -7,22 +7,20 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Content1 } from '../../styles';
+import IconButton from '@mui/material/IconButton';
 
+import AlarmItem from '../../AlarmItem';
+import SettingItem from '../../SettingItem';
+import { Box } from '@mui/material';
 export default function ListItem() {
   const [isLogin, setIsLogin] = useState(false);
   const myAccessToken = sessionStorage.getItem('accessToken');
 
-  useEffect(() => {
-    if (myAccessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
-
   const { id } = useParams();
   const navigate = useNavigate();
   let userAuth = '';
+
   const [userAuthNum, setUserAuthNum] = useState(3);
   const [addMenu, setAddMenu] = React.useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -59,38 +57,40 @@ export default function ListItem() {
   };
 
   const fcmToken = sessionStorage.getItem('fcmToken');
-
   const onClickButton = (url: string) => {
     navigate(url);
   };
 
-  // 권한별로 navbar 메뉴 다르게 보여주기
+  //렌더링 될 때마다, 로그인 상태인지? 모임에서 어떤 권한 가지고 있는지? 확인하기
+  useEffect(() => {
+    if (myAccessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
 
-  // 현재 유저 권한 조회하기
-  const onClick = async () => {
-    await axios
-      .get(`api/spring/club/${id}/crew/auth`)
-      .then((res) => {
-        if (res.data) {
-          const check = res.data;
-          userAuth = check.data;
-          if (userAuth === '리더') {
-            setUserAuthNum(1);
-          } else if (userAuth === '관리자') {
-            setUserAuthNum(2);
-          } else if (userAuth === '회원') {
-            setUserAuthNum(3);
+    if (id) {
+      axios
+        .get(`api/spring/club/${id}/crew/auth`)
+        .then((res) => {
+          if (res.data) {
+            const check = res.data;
+            userAuth = check.data;
+            if (userAuth === '리더') {
+              setUserAuthNum(1);
+            } else if (userAuth === '관리자') {
+              setUserAuthNum(2);
+            } else if (userAuth === '회원') {
+              setUserAuthNum(3);
+            }
           }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        return;
-      });
-  };
-
-  React.useEffect(() => {
-    onClick();
+        })
+        .catch((e) => {
+          console.log(e);
+          return;
+        });
+    }
+    // 현재 유저 권한 조회하기
   }, []);
 
   // 메뉴 > 로그인 로그아웃
@@ -100,6 +100,7 @@ export default function ListItem() {
     axios.defaults.headers.common['Authorization'] = accessToken;
     mystring = '로그아웃';
   }
+
   //로그아웃 클릭 시
   const onLogout = () => {
     if (accessToken) {
@@ -107,6 +108,7 @@ export default function ListItem() {
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
           sessionStorage.removeItem('accessToken');
+          axios.defaults.headers.common['Authorization'] = '';
           navigate('/');
         })
         .catch(function (error) {
@@ -120,7 +122,7 @@ export default function ListItem() {
   };
 
   return (
-    <div>
+    <>
       {/* 5. 로그인 로그아웃 */}
       <Button
         onClick={onLogout}
@@ -132,142 +134,191 @@ export default function ListItem() {
           float: 'right',
         }}
       >
-        {mystring}
+        <Content1> {mystring}</Content1>
       </Button>
+      {isLogin ? (
+        <>
+          {id ? (
+            <>
+              {/* 3. 분석 */}
+              <Button
+                onClick={() => {
+                  onClickButton(`/club/${id}/analytics/mainChart`);
+                }}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'black',
+                  display: 'black',
+                  float: 'right',
+                }}
+              >
+                <Content1>분석</Content1>
+              </Button>
+              {userAuthNum == 1 ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      onClickButton(`/club/${id}/manage`);
+                    }}
+                    sx={{
+                      my: 2,
+                      mr: 1,
+                      color: 'black',
+                      display: 'block',
+                      float: 'right',
+                    }}
+                  >
+                    <Content1>모임관리</Content1>
+                  </Button>
+                </>
+              ) : (
+                ''
+              )}
 
-      {/* 4. 모임관리 */}
-      {userAuthNum == 1 ? (
-        <Button
-          onClick={() => {
-            onClickButton(`/club/${id}/manage`);
-          }}
-          sx={{
-            my: 2,
-            mr: 1,
-            color: 'black',
-            display: 'block',
-            float: 'right',
-          }}
-        >
-          모임관리
-        </Button>
+              {/* 2. 내역 */}
+              <Button
+                onClick={handleOpenListMenu}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'black',
+                  display: 'block',
+                  float: 'right',
+                }}
+              >
+                <Content1>내역</Content1>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={listMenu}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(listMenu)}
+                  onClose={handleCloseListMenu}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      listMenuClick(`/club/${id}/receipt/requestList`);
+                    }}
+                  >
+                    <Typography textAlign="center">영수증 내역</Typography>
+                  </MenuItem>
+
+                  {userAuthNum <= 2 ? (
+                    <MenuItem
+                      onClick={() => {
+                        listMenuClick(`/club/${id}/book`);
+                      }}
+                    >
+                      <Typography textAlign="center">거래 내역</Typography>
+                    </MenuItem>
+                  ) : (
+                    ''
+                  )}
+                </Menu>
+              </Button>
+              {/* 1. 등록 */}
+              <Button
+                onClick={handleOpenUserMenu}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'black',
+                  display: 'block',
+                  float: 'right',
+                }}
+              >
+                <Content1>등록</Content1>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={addMenu}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(addMenu)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      addMenuClick(`/club/${id}/receipt/camera`);
+                    }}
+                  >
+                    <Typography textAlign="center">영수증 등록</Typography>
+                  </MenuItem>
+
+                  {userAuthNum <= 2 ? (
+                    <MenuItem
+                      onClick={() => {
+                        addMenuClick(`/club/${id}/book/create`);
+                      }}
+                    >
+                      <Typography textAlign="center">거래 등록</Typography>
+                    </MenuItem>
+                  ) : (
+                    ''
+                  )}
+                </Menu>
+              </Button>
+            </>
+          ) : (
+            ''
+          )}{' '}
+          <Button
+            onClick={() => {
+              onClickButton(`/club`);
+            }}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'black',
+              float: 'right',
+            }}
+          >
+            <Content1>내 모임</Content1>
+          </Button>
+          {/* 로그인만 한 경우, 내 모임 알림 설정 */}
+          <Box
+            sx={{
+              my: 2,
+              float: 'right',
+              paddingTop: '8px',
+              ml: 4,
+            }}
+          >
+            <AlarmItem />
+          </Box>
+          {/* 설정 */}
+          <Box
+            onClick={() => {
+              onClickButton(`/setting`);
+            }}
+            sx={{
+              paddingTop: '8px',
+              my: 2,
+              ml: 2,
+              float: 'right',
+            }}
+          >
+            <SettingItem />
+          </Box>
+        </>
       ) : (
         ''
       )}
-
-      {/* 3. 분석 */}
-      <Button
-        onClick={() => {
-          onClickButton(`/club/${id}/analytics/mainChart`);
-        }}
-        sx={{
-          my: 2,
-          mr: 1,
-          color: 'black',
-          display: 'black',
-          float: 'right',
-        }}
-      >
-        분석
-      </Button>
-
-      {/* 2. 내역 */}
-      <Button
-        onClick={handleOpenListMenu}
-        sx={{
-          my: 2,
-          mr: 1,
-          color: 'black',
-          display: 'block',
-          float: 'right',
-        }}
-      >
-        내역
-        <Menu
-          sx={{ mt: '45px' }}
-          id="menu-appbar"
-          anchorEl={listMenu}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(listMenu)}
-          onClose={handleCloseListMenu}
-        >
-          <MenuItem
-            onClick={() => {
-              listMenuClick(`/club/${id}/receipt/requestList`);
-            }}
-          >
-            <Typography textAlign="center">영수증 내역</Typography>
-          </MenuItem>
-
-          {userAuthNum <= 2 ? (
-            <MenuItem
-              onClick={() => {
-                listMenuClick(`/club/${id}/book`);
-              }}
-            >
-              <Typography textAlign="center">거래 내역</Typography>
-            </MenuItem>
-          ) : (
-            ''
-          )}
-        </Menu>
-      </Button>
-
-      {/* 1. 등록 */}
-      <Button
-        onClick={handleOpenUserMenu}
-        sx={{
-          my: 2,
-          mr: 1,
-          color: 'black',
-          display: 'block',
-          float: 'right',
-        }}
-      >
-        등록
-        <Menu
-          sx={{ mt: '45px' }}
-          id="menu-appbar"
-          anchorEl={addMenu}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(addMenu)}
-          onClose={handleCloseUserMenu}
-        >
-          <MenuItem
-            onClick={() => {
-              addMenuClick(`/club/${id}/receipt/camera`);
-            }}
-          >
-            <Typography textAlign="center">영수증 등록</Typography>
-          </MenuItem>
-
-          {userAuthNum <= 2 ? (
-            <MenuItem
-              onClick={() => {
-                addMenuClick(`/club/${id}/book/create`);
-              }}
-            >
-              <Typography textAlign="center">거래 등록</Typography>
-            </MenuItem>
-          ) : (
-            ''
-          )}
-        </Menu>
-      </Button>
-    </div>
+    </>
   );
 }

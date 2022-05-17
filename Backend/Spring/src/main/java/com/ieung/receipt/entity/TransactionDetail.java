@@ -66,14 +66,14 @@ public class TransactionDetail {
 
     public void updateTags(Tag tag) {
         if (tag == null) {
+            smallTag = null;
             largeTag = null;
-            smallTag = null;
         } else if (tag.getTagLevel() == 1) {
-            largeTag = tag.getTagName();
-            smallTag = null;
+                smallTag = null;
+                largeTag = tag.getTagName();
         } else {
-            largeTag = tag.getParentTag();
             smallTag = tag.getTagName();
+            largeTag = tag.getParentTag();
         }
     }
 

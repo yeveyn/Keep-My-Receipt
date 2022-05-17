@@ -75,8 +75,8 @@ export default function GroupSearch() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ padding: 0 }}>
-      <Grid container direction="column" sx={{ marginBottom: 3 }}>
+    <Container maxWidth="md" sx={{ paddingY: 0, paddingX: '1rem' }}>
+      <Grid container direction="column" sx={{ marginBottom: 1 }}>
         {/* 상단 */}
         <Stack
           direction="row"
@@ -117,7 +117,6 @@ export default function GroupSearch() {
               sx={{ marginTop: '1rem' }}
             >
               {/* 상단 */}
-              {keyWord ? null : '전체 모임 목록'}
               {/* 리스트 */}
               {list.length ? (
                 <SearchList clubList={list} />
