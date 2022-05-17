@@ -340,7 +340,13 @@ export default function BudgetReport() {
       />
       <ReportIndex
         title="합계"
-        itemList={[]}
+        itemList={[
+          {
+            lcName: '차기예산',
+            list: [],
+            total: sumBudget + sumExpense + sumRevenue,
+          },
+        ]}
         catList={['차기예산']}
         sumValue={sumBudget + sumExpense + sumRevenue}
       />
