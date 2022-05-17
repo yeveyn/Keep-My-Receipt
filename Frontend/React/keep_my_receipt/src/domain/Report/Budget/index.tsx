@@ -14,7 +14,6 @@ import {
 import ReportIndex from './form/index';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navigation from '../../../header';
 
 interface ReportType {
   lcName: string;
@@ -201,7 +200,6 @@ export default function BudgetReport() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <Dialog
         open={open}
         onClose={handleClose}
