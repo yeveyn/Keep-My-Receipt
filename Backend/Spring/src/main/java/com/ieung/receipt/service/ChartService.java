@@ -32,7 +32,6 @@ public class ChartService {
             if(transactionDetail.getPrice()>0) continue;
             ChartResDTO chartResDTO = ChartResDTO.builder()
                     .tagName(transactionDetail.getLargeTag()!=null?transactionDetail.getLargeTag():"기타")
-                    .percentage(0)
                     .cost(transactionDetail.getPrice()*-1)
                     .build();
             int idx = chartResDTOList.indexOf(chartResDTO);
@@ -43,7 +42,7 @@ public class ChartService {
         }
 
         for(int i=0; i<chartResDTOList.size(); i++){
-            chartResDTOList.get(i).setPercentage(chartResDTOList.get(i).getCost()/totalCost * 100);
+            chartResDTOList.get(i).setPercentage(chartResDTOList.get(i).getCost() * 100 /totalCost);
             chartResDTOList.get(i).setTotalCost(totalCost);
         }
 
@@ -65,7 +64,6 @@ public class ChartService {
             if(!transactionDetail.getLargeTag().equals(parentTag)) continue;
             ChartResDTO chartResDTO = ChartResDTO.builder()
                     .tagName(transactionDetail.getSmallTag()!=null?transactionDetail.getSmallTag():"기타")
-                    .percentage(0)
                     .cost(transactionDetail.getPrice()*-1)
                     .build();
             int idx = chartResDTOList.indexOf(chartResDTO);
@@ -76,7 +74,7 @@ public class ChartService {
         }
 
         for(int i=0; i<chartResDTOList.size(); i++){
-            chartResDTOList.get(i).setPercentage(chartResDTOList.get(i).getCost()/totalCost * 100);
+            chartResDTOList.get(i).setPercentage(chartResDTOList.get(i).getCost() * 100 /totalCost);
             chartResDTOList.get(i).setTotalCost(totalCost);
         }
 
