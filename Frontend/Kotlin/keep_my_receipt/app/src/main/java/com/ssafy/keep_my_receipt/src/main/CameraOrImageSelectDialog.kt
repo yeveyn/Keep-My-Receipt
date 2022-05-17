@@ -7,10 +7,14 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.ssafy.keep_my_receipt.R
 
 class CameraOrImageSelectDialog(private val listener: OnClickSelectListener) : DialogFragment() {
+    private lateinit var llSelectCamera: Button
+    private lateinit var llSelectImage : Button
 
     interface OnClickSelectListener {
         fun onClickCamera()
@@ -22,6 +26,8 @@ class CameraOrImageSelectDialog(private val listener: OnClickSelectListener) : D
         container: ViewGroup?,
         savedInstanceState: Bundle? ): View? {
         val view = inflater.inflate(R.layout.dialog_camera_image_select, container, false)
+        llSelectCamera = view.findViewById(R.id.llSelectCamera)
+        llSelectImage = view.findViewById(R.id.llSelectImage)
         return view
     }
 

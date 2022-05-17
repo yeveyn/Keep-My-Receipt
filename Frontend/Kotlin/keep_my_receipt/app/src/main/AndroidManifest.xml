@@ -58,7 +58,7 @@
         </service>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="com.ssafy.keep_my_receipt.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
