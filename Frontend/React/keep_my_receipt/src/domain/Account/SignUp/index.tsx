@@ -84,10 +84,11 @@ export default function SignUpForm() {
   }, []);
 
   //이메일 중복확인
-  const onClick = useCallback((e: any) => {
+
+  const onClick = () => {
     console.log(email);
     axios
-      .get(`/api/spring/crew/checkEmail/?email=${email}`)
+      .get(`/api/spring/crew/checkEmail/` + email)
       .then(function (response) {
         console.log(response.data);
         if (response.data.data == true) {
@@ -99,12 +100,13 @@ export default function SignUpForm() {
           setEmailMessage('올바른 이메일 형식입니다');
           setIsEmail(true);
           setOverlap(true);
+          alert('사용할 수 있는 이메일입니다');
         }
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  };
 
   // 📍비밀번호
   const onChangePassword = useCallback((e: any) => {
@@ -157,9 +159,9 @@ export default function SignUpForm() {
           .then((res) => {
             setIsLoading(false);
             console.log('response:', res);
-            alert(res.data.msg);
 
             if (res.data.output != 0) {
+              alert('회원가입에 성공했습니다!');
               navigate('/login');
             }
           });

@@ -51,6 +51,7 @@ export const Content = styled.p`
 export const Content1 = styled.p`
   font-size: 3vw;
   font-family: NanumGothicBold;
+  font-weight: bold;
   letter-spacing: -5px;
   margin: 0 0 0 0;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
@@ -63,6 +64,7 @@ export const Content1 = styled.p`
 
 export const Content2 = styled.p`
   font-size: 3vw;
+  font-weight: bold;
   font-family: NanumGothicBold;
   letter-spacing: -5px;
   margin: 0 0 0 0;
