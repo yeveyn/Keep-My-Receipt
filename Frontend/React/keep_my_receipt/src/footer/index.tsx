@@ -23,31 +23,30 @@ export default function SimpleBottomNavigation() {
   };
 
   // 현재 유저 권한 조회하기
-  const onClick = async () => {
-    await axios
-      .get(`api/spring/club/${id}/crew/auth`)
-      .then((res) => {
-        if (res.data) {
-          const check = res.data;
-          userAuth = check.data;
-          if (userAuth === '리더') {
-            setUserAuthNum(1);
-          } else if (userAuth === '관리자') {
-            setUserAuthNum(2);
-          } else if (userAuth === '회원') {
-            setUserAuthNum(3);
-          }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        return;
-      });
-  };
   useEffect(() => {
-    onClick();
+    if (id) {
+      axios
+        .get(`api/spring/club/${id}/crew/auth`)
+        .then((res) => {
+          if (res.data) {
+            const check = res.data;
+            userAuth = check.data;
+            console.log(check);
+            if (userAuth === '리더') {
+              setUserAuthNum(1);
+            } else if (userAuth === '관리자') {
+              setUserAuthNum(2);
+            } else if (userAuth === '회원') {
+              setUserAuthNum(3);
+            }
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
     console.log(userAuthNum);
-    console.log(id);
   }, []);
 
   const Box = styled('div')(({ theme }) => ({
