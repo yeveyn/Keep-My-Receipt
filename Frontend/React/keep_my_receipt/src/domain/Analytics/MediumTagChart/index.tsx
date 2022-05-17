@@ -13,7 +13,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Graph from './Graph';
 import ItemIndex from './Item';
 import sample2 from './sample2.json';
-import Navigation from '../../../header';
 
 interface ItemType {
   id: string;
@@ -41,7 +40,6 @@ export default function SubChartIndex() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <Grid
         container
         direction="column"

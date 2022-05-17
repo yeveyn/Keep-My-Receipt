@@ -11,11 +11,9 @@ import {
   DialogActions,
   Container,
 } from '@mui/material';
-import sample from './sample.json';
 import ReportIndex from './form/index';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navigation from '../../../header';
 
 interface ReportType {
   lcName: string;
@@ -117,74 +115,75 @@ export default function BudgetReport() {
     }
   }
   function changeMonth(e: any) {
-    setMonth(e.target.value);
+    let tmpMonth = e.target.value;
+    if (tmpMonth.length < 2) {
+      tmpMonth = '0'.concat(tmpMonth);
+    }
+    setMonth(tmpMonth);
   }
-  function loadData() {
+  const loadData = async () => {
     // Todo API connect
     const params = {
       date: curYear.concat('-').concat(curMonth),
     };
     console.log(axios.defaults.headers);
-    axios
+    await axios
       .get(
         `https://k6d104.p.ssafy.io/api/spring/${id}/report/budget?date=${curYear
           .concat('-')
           .concat(curMonth)}`,
       )
       .then((response) => {
-        console.log('asdfasdfsfasdfdasfasdfasfsafasdfasdfsdfsaf');
-        console.log(response);
+        console.log(response.data.data);
+        const lists = response.data.data;
+        lists.forEach((mainCat) => {
+          if (mainCat.type === '예산') {
+            const tmpList = [...mainCat.list];
+            let tmp = 0;
+            tmpList.forEach((lcName) => {
+              let tmp2 = 0;
+              lcName.list.forEach((rcName) => {
+                tmp += rcName.balance;
+                tmp2 += rcName.balance;
+              });
+              lcName['total'] = tmp2;
+            });
+            setSumBudget(tmp);
+            setBudgetList(tmpList);
+            console.log(tmpList);
+          } else if (mainCat.type === '지출') {
+            const tmpList = [...mainCat.list];
+            let tmp = 0;
+            tmpList.forEach((lcName) => {
+              let tmp2 = 0;
+              lcName.list.forEach((rcName) => {
+                tmp += rcName.balance;
+                tmp2 += rcName.balance;
+              });
+              lcName['total'] = tmp2;
+            });
+            setSumExpense(tmp);
+            setExpenseList(tmpList);
+          } else if (mainCat.type === '수입') {
+            const tmpList = [...mainCat.list];
+            let tmp = 0;
+            tmpList.forEach((lcName) => {
+              let tmp2 = 0;
+              lcName.list.forEach((rcName) => {
+                tmp += rcName.balance;
+                tmp2 += rcName.balance;
+              });
+              lcName['total'] = tmp2;
+            });
+            setSumRevenue(tmp);
+            setRevenueList(tmpList);
+          }
+        });
       })
       .catch((e) => {
-        console.log('asdfasdfsfasdfdasfasdfasfsafasdfasdfsdfsaf');
         console.log(e);
       });
-
-    // array 조정
-    sample.forEach((mainCat) => {
-      if (mainCat.type === '예산') {
-        const tmpList = [...mainCat.list];
-        let tmp = 0;
-        tmpList.forEach((lcName) => {
-          let tmp2 = 0;
-          lcName.list.forEach((rcName) => {
-            tmp += rcName.balance;
-            tmp2 += rcName.balance;
-          });
-          lcName['total'] = tmp2;
-        });
-        setSumBudget(tmp);
-        setBudgetList(tmpList);
-        console.log(tmpList);
-      } else if (mainCat.type === '지출') {
-        const tmpList = [...mainCat.list];
-        let tmp = 0;
-        tmpList.forEach((lcName) => {
-          let tmp2 = 0;
-          lcName.list.forEach((rcName) => {
-            tmp += rcName.balance;
-            tmp2 += rcName.balance;
-          });
-          lcName['total'] = tmp2;
-        });
-        setSumExpense(tmp);
-        setExpenseList(tmpList);
-      } else if (mainCat.type === '수입') {
-        const tmpList = [...mainCat.list];
-        let tmp = 0;
-        tmpList.forEach((lcName) => {
-          let tmp2 = 0;
-          lcName.list.forEach((rcName) => {
-            tmp += rcName.balance;
-            tmp2 += rcName.balance;
-          });
-          lcName['total'] = tmp2;
-        });
-        setSumRevenue(tmp);
-        setRevenueList(tmpList);
-      }
-    });
-  }
+  };
 
   const budgetMainCategories = ['전기예산', '활동지원금', '회비', '후원금'];
   const expenseMainCategories = [
@@ -201,7 +200,6 @@ export default function BudgetReport() {
 
   return (
     <Container maxWidth="md">
-      <Navigation />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -349,11 +347,11 @@ export default function BudgetReport() {
           {
             lcName: '차기예산',
             list: [],
-            total: sumBudget + sumExpense + sumRevenue,
+            total: sumBudget - sumExpense + sumRevenue,
           },
         ]}
         catList={['차기예산']}
-        sumValue={sumBudget + sumExpense + sumRevenue}
+        sumValue={sumBudget - sumExpense + sumRevenue}
       />
       <br></br>
       <br></br>
