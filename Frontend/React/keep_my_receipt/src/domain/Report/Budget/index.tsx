@@ -193,6 +193,9 @@ export default function BudgetReport() {
     '기타 비용',
   ];
   const revenueMainCategories = ['수입', '기타 수입'];
+  const clickDownload = () => {
+    console.log('다운로드 버튼 클릭!');
+  };
 
   useEffect(() => {
     loadData();
@@ -354,6 +357,12 @@ export default function BudgetReport() {
         sumValue={sumBudget - sumExpense + sumRevenue}
       />
       <br></br>
+      <br></br>
+      <Grid container justifyContent="center" alignItems="center">
+        <Button variant="contained" color="primary" onClick={clickDownload}>
+          다운로드
+        </Button>
+      </Grid>
       <br></br>
     </Container>
   );
