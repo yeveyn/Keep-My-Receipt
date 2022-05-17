@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import sample from './sample.json';
 import ReportIndex from './form/index';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 interface ReportType {
   lcName: string;
@@ -51,6 +53,7 @@ export default function BudgetReport() {
   const [sumExpense, setSumExpense] = useState(0);
   const [sumRevenue, setSumRevenue] = useState(0);
 
+  const { id } = useParams();
   const date = new Date();
   const year = String(date.getFullYear());
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -121,6 +124,21 @@ export default function BudgetReport() {
   }
   function loadData() {
     // Todo API connect
+    const params = {
+      date: curYear.concat('-').concat(curMonth),
+    };
+    axios
+      .get(`https://k6d104.p.ssafy.io/api/spring/${id}/report/budget`, {
+        params,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // array 조정
     sample.forEach((mainCat) => {
       if (mainCat.type === '예산') {
         const tmpList = [...mainCat.list];

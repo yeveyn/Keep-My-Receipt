@@ -124,6 +124,7 @@ export default function MainChartIndex() {
 
   return (
     <Container maxWidth="md">
+      <Navigation />
       <Dialog
         open={open}
         onClose={handleClose}
