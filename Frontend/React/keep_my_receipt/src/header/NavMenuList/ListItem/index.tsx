@@ -158,7 +158,7 @@ export default function ListItem() {
       {/* 3. 분석 */}
       <Button
         onClick={() => {
-          onClickButton(`/club/${id}/analytics/mainChart`);
+          onClickButton(`/club/${id}/report/budget`);
         }}
         sx={{
           my: 2,
