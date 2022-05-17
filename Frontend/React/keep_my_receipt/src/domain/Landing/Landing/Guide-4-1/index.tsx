@@ -43,9 +43,11 @@ export default function GuideSecond() {
                   marginBottom: '60px',
                 }}
               >
-                <Point>포인트 글자</Point>
-                <Title>영수증 등록</Title>
-                <Description>보고서에는 어쩌구 저쩌구</Description>
+                <Point>#대분류 #소분류</Point>
+                <Title>거래 등록</Title>
+                <Description>
+                  인호님이 설명하는 거래 등록 어쩌구저쩌구
+                </Description>
                 <Description>
                   {' '}
                   어쩌구 저쩌구어쩌구 저쩌구어쩌구 저쩌구 어쩌구 저쩌구 어쩌구

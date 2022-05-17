@@ -44,7 +44,7 @@ export default function NavBar() {
             </>
           ) : (
             <>
-              <Grid item xs={5} sm={3} sx={{ pl: 3 }}>
+              <Grid item xs={5} sm={3} sx={{ p: 0 }}>
                 <Logo />
               </Grid>
               <Grid item xs={0} sm={9} sx={{ pr: 5 }}>

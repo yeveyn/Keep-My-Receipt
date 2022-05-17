@@ -39,8 +39,20 @@ export const Point = styled.div`
   font-family: NanumGothicRegular;
   font-weight: bold;
   font-size: 1.5vw;
-  letter-spacing: -5px;
+  letter-spacing: -2px;
   color: #ffa500;
+  margin: 8px;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 4vw;
+  }
+`;
+export const Point2 = styled.div`
+  font-family: NanumGothicRegular;
+  font-weight: bold;
+  font-size: 1.5vw;
+  letter-spacing: -2px;
+  color: #3d6ef4;
   margin: 8px;
 
   @media only screen and (max-width: 768px) {

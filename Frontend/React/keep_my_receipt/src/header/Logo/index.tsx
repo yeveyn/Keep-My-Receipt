@@ -10,12 +10,12 @@ export default function Logo() {
   return (
     <>
       <Button
-        sx={{ marginLeft: '10vm' }}
+        sx={{ marginLeft: '10vm', padding: '0' }}
         onClick={() => {
           onClickButton('/');
         }}
       >
-        <img width="200vm" src="/images/randing/logo.png"></img>
+        <img width="200vm" src="/images/randing/jwlogo.png"></img>
       </Button>
     </>
   );

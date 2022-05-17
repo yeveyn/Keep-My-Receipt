@@ -71,8 +71,8 @@ export default function GuideSecond() {
                   marginBottom: '60px',
                 }}
               >
-                <Point>포인트 글자</Point>
-                <Title>영수증 등록</Title>
+                <Point>#우우</Point>
+                <Title>태그로 보는 모임 지출</Title>
                 <Description>보고서에는 어쩌구 저쩌구</Description>
                 <Description>
                   {' '}

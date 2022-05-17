@@ -128,7 +128,7 @@ export default function ListItem({
           style={{ width: '100%' }}
         >
           {clubImg.substring(0, 4) === 'http' ? (
-            <img src={clubImg} style={{ width: '100%' }} />
+            <img src={clubImg} style={{ maxWidth: '10vw' }} />
           ) : (
             <Typography fontSize="0.7rem">No Image</Typography>
           )}
