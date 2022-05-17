@@ -29,27 +29,19 @@ interface ItemType {
 }
 
 export default function BudgetReport() {
-  const [budgetList, setBudgetList]: [ReportType[], Function] = useState([
+  const defaultData = [
     {
       lcName: 'test',
       list: [{ scName: 'test', balance: 0 }],
       total: 0,
     },
-  ]);
-  const [expenseList, setExpenseList]: [ReportType[], Function] = useState([
-    {
-      lcName: 'test',
-      list: [{ scName: 'test', balance: 0 }],
-      total: 0,
-    },
-  ]);
-  const [revenueList, setRevenueList]: [ReportType[], Function] = useState([
-    {
-      lcName: 'test',
-      list: [{ scName: 'test', balance: 0 }],
-      total: 0,
-    },
-  ]);
+  ];
+  const [budgetList, setBudgetList]: [ReportType[], Function] =
+    useState(defaultData);
+  const [expenseList, setExpenseList]: [ReportType[], Function] =
+    useState(defaultData);
+  const [revenueList, setRevenueList]: [ReportType[], Function] =
+    useState(defaultData);
   const [sumBudget, setSumBudget] = useState(0);
   const [sumExpense, setSumExpense] = useState(0);
   const [sumRevenue, setSumRevenue] = useState(0);
@@ -352,6 +344,8 @@ export default function BudgetReport() {
         catList={['차기예산']}
         sumValue={sumBudget + sumExpense + sumRevenue}
       />
+      <br></br>
+      <br></br>
     </Container>
   );
 }
