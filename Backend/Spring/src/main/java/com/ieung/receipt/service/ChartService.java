@@ -29,10 +29,11 @@ public class ChartService {
         int totalCost = 0;
 
         for(TransactionDetail transactionDetail : transactionDetailList){
+            if(transactionDetail.getPrice()>0) continue;
             ChartResDTO chartResDTO = ChartResDTO.builder()
-                    .tagName(transactionDetail.getLargeTag())
+                    .tagName(transactionDetail.getLargeTag()!=null?transactionDetail.getLargeTag():"기타")
                     .percentage(0)
-                    .cost(transactionDetail.getPrice())
+                    .cost(transactionDetail.getPrice()*-1)
                     .build();
             int idx = chartResDTOList.indexOf(chartResDTO);
             if(idx != -1){
@@ -60,11 +61,12 @@ public class ChartService {
         int totalCost = 0;
 
         for(TransactionDetail transactionDetail : transactionDetailList){
+            if(transactionDetail.getPrice()>0) continue;
             if(!transactionDetail.getLargeTag().equals(parentTag)) continue;
             ChartResDTO chartResDTO = ChartResDTO.builder()
-                    .tagName(transactionDetail.getSmallTag())
+                    .tagName(transactionDetail.getSmallTag()!=null?transactionDetail.getSmallTag():"기타")
                     .percentage(0)
-                    .cost(transactionDetail.getPrice())
+                    .cost(transactionDetail.getPrice()*-1)
                     .build();
             int idx = chartResDTOList.indexOf(chartResDTO);
             if(idx != -1){
