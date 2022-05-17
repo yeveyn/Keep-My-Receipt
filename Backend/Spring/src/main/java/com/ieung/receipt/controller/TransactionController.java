@@ -86,7 +86,7 @@ public class TransactionController {
     // 거래내역 검색
     @Operation(summary = "거래내역 검색", description = "거래내역 검색")
     @GetMapping(value = "/{clubId}/transactions", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<BookResDTO> createTransaction(@PathVariable @NotNull Long clubId,
+    public @ResponseBody SingleResult<BookResDTO> searchTransaction(@PathVariable @NotNull Long clubId,
                                                                                     @RequestParam(value = "query", defaultValue = "") String query,
                                                                                     @RequestParam(value = "start", defaultValue = "#{T(java.time.YearMonth).now().atDay(1)}") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start,
                                                                                     @RequestParam(value = "end", defaultValue = "#{T(java.time.LocalDate).now()}") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end,
