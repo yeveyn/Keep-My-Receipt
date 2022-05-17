@@ -124,14 +124,19 @@ export default function BudgetReport() {
     const params = {
       date: curYear.concat('-').concat(curMonth),
     };
+    console.log(axios.defaults.headers);
     axios
-      .get(`https://k6d104.p.ssafy.io/api/spring/${id}/report/budget`, {
-        params,
-      })
+      .get(
+        `https://k6d104.p.ssafy.io/api/spring/${id}/report/budget?date=${curYear
+          .concat('-')
+          .concat(curMonth)}`,
+      )
       .then((response) => {
+        console.log('asdfasdfsfasdfdasfasdfasfsafasdfasdfsdfsaf');
         console.log(response);
       })
       .catch((e) => {
+        console.log('asdfasdfsfasdfdasfasdfasfsafasdfasdfsdfsaf');
         console.log(e);
       });
 
