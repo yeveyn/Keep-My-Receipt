@@ -8,9 +8,8 @@ export default function BookList({ list }: { list: any }) {
   return (
     <>
       {list.map((item: any) => (
-        <Box marginY={1} paddingX="1rem">
+        <Box key={item.transactionDetailId} marginY={1} paddingX="1rem">
           <Stack
-            key={item.transactionDetailId}
             direction="row"
             justifyContent="space-between"
             alignItems="center"
