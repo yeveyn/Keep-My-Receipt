@@ -14,24 +14,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -107,7 +97,6 @@ public class ReportController {
             throw new ApiMessageException("해당하는 자료가 없습니다.");
         } else {
             Map<String, Map<String, List<SmallCategoryResDTO>>> map = new HashMap<>();
-            List<ReportResDTO> result = new ArrayList<>();
 
             for (Asset asset : list) {
                 String type = asset.getType();
@@ -204,7 +193,6 @@ public class ReportController {
             throw new ApiMessageException("해당하는 자료가 없습니다.");
         } else {
             Map<String, Map<String, List<SmallCategoryResDTO>>> map = new HashMap<>();
-            List<ReportResDTO> result = new ArrayList<>();
 
             for (Budget budget : list) {
                 String type = budget.getType();
