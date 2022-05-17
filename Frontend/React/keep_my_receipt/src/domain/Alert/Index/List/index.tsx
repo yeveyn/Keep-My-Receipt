@@ -48,6 +48,7 @@ export default function AlertList() {
     list: [],
   });
   const getAlarms = async (page?: number) => {
+    console.log(axios.defaults.headers);
     await axios
       .get('https://k6d104.p.ssafy.io/api/spring/notifications', {
         params: {
