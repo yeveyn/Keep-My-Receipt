@@ -1,4 +1,4 @@
-export type ParamType = {
+export type CreateParamType = {
   requestId: number;
   imgUrl: string;
   date: string;
