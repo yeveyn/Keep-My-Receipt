@@ -166,7 +166,7 @@ public class TransactionService {
      * @param clubId, crewId, query, start, end, pageable
      */
     public Page<TransactionDetail> getTransactions(Long clubId, Long crewId, String query, LocalDate start, LocalDate end, Pageable pageable) {
-        checkAuth(clubId, crewId);
+        //checkAuth(clubId, crewId);
 
         return transactionDetailRepository.findByContentOrTag(clubId, query, start, end, pageable);
     }
@@ -195,7 +195,7 @@ public class TransactionService {
         Transaction transaction = transactionRepository.findTransactionByIdWithTransactionDetails(transactionId)
                 .orElseThrow(() -> new ApiMessageException("해당하는 거래내역이 없습니다."));
 
-        checkAuth(transaction.getClub().getId(), crewId);
+        //checkAuth(transaction.getClub().getId(), crewId);
 
         return transaction;
     }
