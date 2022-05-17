@@ -4,7 +4,12 @@ import { Button, Container, Stack } from '@mui/material';
 
 import Header from '../Create/Header';
 import PageButtons from '../Create/PageButtons';
-import { apiGetTransaction, ReadResponseType } from '../api/bookApi';
+import {
+  apiDeleteTransaction,
+  apiGetTransaction,
+  ReadResponseType,
+  initialReadResponse,
+} from '../api/bookApi';
 import { DetailParamType } from '../types';
 import toCurrency from '../../../services/toCurrency';
 import {
@@ -14,25 +19,6 @@ import {
 } from '../../../styles/typography';
 import { GreenBox } from '../../../styles/box';
 import { OuterBox, InnerBox } from './style';
-
-const blankDetail: ReadResponseType = {
-  transactionId: 0,
-  date: '',
-  totalPrice: 0,
-  items: [
-    {
-      transactionDetailId: 0,
-      name: '',
-      price: 0,
-      memo: '',
-      type: '',
-      largeCategory: '',
-      smallCategory: '',
-      largeTag: '',
-      smallTag: '',
-    },
-  ],
-};
 
 const createDictItem = (key: string, value: string) => ({
   key,
@@ -57,12 +43,10 @@ export default function BookDetail() {
 
   // 임시로 추가
 
-  const [state, setState] = useState<ReadResponseType>(blankDetail);
+  const [state, setState] = useState<ReadResponseType>(initialReadResponse);
   const [page, setPage] = useState(1);
 
-  const readTransaction = async () => {
-    const transactionId = params ? params.transactionId : 21;
-
+  const readTransaction = async (transactionId: number) => {
     await apiGetTransaction(transactionId).then((res) => {
       // console.log('readTransaction', res.data.data);
 
@@ -81,7 +65,8 @@ export default function BookDetail() {
   };
 
   useEffect(() => {
-    readTransaction();
+    const transactionId = params ? params.transactionId : 21;
+    readTransaction(transactionId);
   }, []);
 
   return (
@@ -133,7 +118,15 @@ export default function BookDetail() {
             <Button onClick={undefined} variant="contained">
               수정
             </Button>
-            <Button onClick={undefined} variant="contained" color="warning">
+            <Button
+              onClick={async () => {
+                if (confirm('정말로 삭제하시겠습니까?')) {
+                  await apiDeleteTransaction(params.transactionId);
+                }
+              }}
+              variant="contained"
+              color="warning"
+            >
               삭제
             </Button>
           </Stack>

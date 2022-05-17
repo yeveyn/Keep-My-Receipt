@@ -122,6 +122,25 @@ export type ReadResponseType = {
   }[];
 };
 
+export const initialReadResponse: ReadResponseType = {
+  transactionId: 0,
+  date: '',
+  totalPrice: 0,
+  items: [
+    {
+      transactionDetailId: 0,
+      name: '',
+      price: 0,
+      memo: '',
+      type: '',
+      largeCategory: '',
+      smallCategory: '',
+      largeTag: '',
+      smallTag: '',
+    },
+  ],
+};
+
 export const apiGetTransaction = async (transactionId: number) => {
   return await axios({
     method: 'get',
