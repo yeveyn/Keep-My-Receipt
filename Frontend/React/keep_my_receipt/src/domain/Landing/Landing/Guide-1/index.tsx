@@ -24,22 +24,22 @@ export default function GuideFirst() {
         {/* 설명 */}
 
         <Grid item xs={12} sm={6}>
-          <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
-            <Box
-              style={
-                matches
-                  ? { marginBottom: '40px', paddingTop: '200px' }
-                  : { marginBottom: '40px', paddingTop: '40px' }
-              }
-            >
-              <Point2>#내역 #회비</Point2>
-              <Title>모임 지출 내역과</Title>
-              <Title>잔액을 한눈에</Title>
-              <Description>
-                회비를 어떻게 쓰는지 일자별로 확인해 보세요
-              </Description>
-            </Box>
-          </AnimationOnScroll>
+          {/* <AnimationOnScroll animateIn="animate__fadeIn animate__slower"> */}
+          <Box
+            style={
+              matches
+                ? { marginBottom: '40px', paddingTop: '200px' }
+                : { marginBottom: '40px', paddingTop: '40px' }
+            }
+          >
+            <Point2>#내역 #회비</Point2>
+            <Title>모임 지출 내역과</Title>
+            <Title>잔액을 한눈에</Title>
+            <Description>
+              회비를 어떻게 쓰는지 일자별로 확인해 보세요
+            </Description>
+          </Box>
+          {/* </AnimationOnScroll> */}
         </Grid>
 
         <Grid item xs={12} sm={6}>

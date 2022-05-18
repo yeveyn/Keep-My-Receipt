@@ -186,7 +186,7 @@ export default function LoginForm() {
               </ColorButton>
             )}
             {isLoading && <Button variant="contained">로딩중...</Button>}
-            <Button type="button" onClick={switchAuthModeHandler}>
+            <Button onClick={switchAuthModeHandler}>
               <h5>계정이 없으신가요? 회원가입 하러가기</h5>
             </Button>
           </Stack>

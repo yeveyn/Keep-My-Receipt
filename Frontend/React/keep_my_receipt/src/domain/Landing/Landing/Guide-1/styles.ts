@@ -31,6 +31,8 @@ export const Description = styled.div`
   font-size: 1.5vw;
   letter-spacing: -2px;
   color: gray;
+  animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
+  animation-delay: 1.1s;
   @media only screen and (max-width: 768px) {
     font-size: 4vw;
   }
@@ -54,6 +56,8 @@ export const Point2 = styled.div`
   letter-spacing: -2px;
   color: #3d6ef4;
   margin: 8px;
+  animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
+  animation-delay: 0.5s;
 
   @media only screen and (max-width: 768px) {
     font-size: 8vw;

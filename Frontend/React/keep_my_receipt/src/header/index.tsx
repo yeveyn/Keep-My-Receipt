@@ -3,9 +3,6 @@ import Logo from './Logo';
 import NavMenuItem from './NavMenuList';
 
 import ResponsiveDrawer from './Drawer2';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { NavBarContainer } from './styles';
 
 export default function NavBar() {

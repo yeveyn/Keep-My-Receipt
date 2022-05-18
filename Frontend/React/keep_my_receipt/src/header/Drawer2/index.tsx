@@ -178,25 +178,27 @@ export default function PersistentDrawerRight() {
   };
 
   useEffect(() => {
-    axios
-      .get(`api/spring/club/${id}/crew/auth`)
-      .then((res) => {
-        if (res.data) {
-          const check = res.data;
-          userAuth = check.data;
-          if (userAuth === '리더') {
-            setUserAuthNum(1);
-          } else if (userAuth === '관리자') {
-            setUserAuthNum(2);
-          } else if (userAuth === '회원') {
-            setUserAuthNum(3);
+    if (id) {
+      axios
+        .get(`api/spring/club/${id}/crew/auth`)
+        .then((res) => {
+          if (res.data) {
+            const check = res.data;
+            userAuth = check.data;
+            if (userAuth === '리더') {
+              setUserAuthNum(1);
+            } else if (userAuth === '관리자') {
+              setUserAuthNum(2);
+            } else if (userAuth === '회원') {
+              setUserAuthNum(3);
+            }
           }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        return;
-      });
+        })
+        .catch((e) => {
+          console.log(e);
+          return;
+        });
+    }
   }, [id]);
 
   return (
@@ -218,24 +220,24 @@ export default function PersistentDrawerRight() {
                   </Button>
                 </Grid>
                 <Grid item xs={1.6}>
-                  <Button
+                  <Box
                     sx={{
                       my: 2,
                       color: 'black',
                     }}
                   >
                     <AlarmItem />
-                  </Button>
+                  </Box>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button
+                  <Box
                     sx={{
                       my: 2,
                       color: 'black',
                     }}
                   >
                     <SettingItem />
-                  </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </>
