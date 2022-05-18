@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
+import CelebrationIcon from '@mui/icons-material/Celebration';
 export default function () {
   const navigate = useNavigate();
   let userAuth = '';
@@ -56,6 +56,22 @@ export default function () {
         }}
         showLabels
       >
+        {/* 내 모임 가기 */}
+        <BottomNavigationAction
+          sx={{
+            padding: 0,
+            '@media (max-width: 768px)': {
+              minWidth: 'auto',
+              padding: '6px 0',
+            },
+          }}
+          onClick={() => {
+            onClickButton(`/club`);
+          }}
+          label={'내 모임'}
+          icon={<CelebrationIcon />}
+        ></BottomNavigationAction>
+
         {/* 영수증 등록 */}
         <BottomNavigationAction
           sx={{
