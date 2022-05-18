@@ -70,9 +70,9 @@ export default function CreateImage({ onImgChange }: CreateImageProps) {
         <Box sx={{ position: 'absolute', right: 0, bottom: 0 }}>
           <label htmlFor="icon-btn-file">
             <Input
-              onChange={onChange}
-              accept="image/*"
-              id="icon-btn-file"
+              //onChange={onChange}
+              //accept="image/*"
+              //id="icon-btn-file"
               type="file"
             />
             <IconButton
