@@ -60,8 +60,7 @@ public class ChartService {
         int totalCost = 0;
 
         for(TransactionDetail transactionDetail : transactionDetailList){
-            if(transactionDetail.getPrice()>0) continue;
-            if(!transactionDetail.getLargeTag().equals(parentTag)) continue;
+            if(transactionDetail.getPrice()>0 || transactionDetail.getLargeTag()==null || !transactionDetail.getLargeTag().equals(parentTag)) continue;
             ChartResDTO chartResDTO = ChartResDTO.builder()
                     .tagName(transactionDetail.getSmallTag()!=null?transactionDetail.getSmallTag():"기타")
                     .cost(transactionDetail.getPrice()*-1)
