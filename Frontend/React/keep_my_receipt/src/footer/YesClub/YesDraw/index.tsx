@@ -296,14 +296,14 @@ export default function () {
             ''
           )}
         </>
-
+        <Divider />
         <ListItemButton
           sx={{ pl: 4 }}
           onClick={() => {
-            onClickButton(`/club`);
+            onClickButton(`/setting`);
           }}
         >
-          <ListItemText primary="내 모임" />
+          <ListItemText primary="설정" />
         </ListItemButton>
 
         <ListItemButton

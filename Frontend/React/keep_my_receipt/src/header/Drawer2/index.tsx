@@ -1,40 +1,23 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
-import List from '@mui/material/List';
+
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
 import Logo from '../Logo';
-import PaidIcon from '@mui/icons-material/Paid';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import ListSubheader from '@mui/material/ListSubheader';
+
 import { useEffect, useState } from 'react';
-import ListItemButton from '@mui/material/ListItemButton';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Grid } from '@mui/material';
+import { Avatar, Button, Grid, ListItemAvatar } from '@mui/material';
 import AlarmItem from '../AlarmItem';
-import { Content2 } from '../styles';
-import SettingItem from '../SettingItem';
+import { Content2, ClubName } from '../styles';
 
 const drawerWidth = 240;
 
@@ -101,7 +84,7 @@ export default function PersistentDrawerRight() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  let userAuth = '';
+  // let userAuth = '';
 
   const [userAuthNum, setUserAuthNum] = useState(3);
   const [addMenu, setAddMenu] = React.useState<null | HTMLElement>(null);
@@ -122,21 +105,34 @@ export default function PersistentDrawerRight() {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [crown, setCrown] = useState('');
+  const [clubImage, setClubImage] = useState('');
+  const [clubName, setClubName] = useState('');
 
   useEffect(() => {
     if (id) {
+      // 동아리 이름, 이미지 받기
+      axios
+        .get(`/api/spring/club/${id}`)
+        .then(function (response) {
+          setClubImage(response.data.data.image);
+          setClubName(response.data.data.name);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      // 현재 유저 동아리 권한에 따른 왕관 색깔
       axios
         .get(`api/spring/club/${id}/crew/auth`)
         .then((res) => {
           if (res.data) {
-            const check = res.data;
-            userAuth = check.data;
-            if (userAuth === '리더') {
-              setUserAuthNum(1);
-            } else if (userAuth === '관리자') {
-              setUserAuthNum(2);
-            } else if (userAuth === '회원') {
-              setUserAuthNum(3);
+            if (res.data.data === '리더') {
+              setCrown('/images/randing/gold.png');
+            } else if (res.data.data === '관리자') {
+              setCrown('/images/randing/silver.png');
+            } else if (res.data.data === '회원') {
+              setCrown('/images/randing/bronze.png');
             }
           }
         })
@@ -159,15 +155,45 @@ export default function PersistentDrawerRight() {
         <Toolbar>
           {isLogin ? (
             <>
-              <Grid container>
-                <Grid item xs={9}>
-                  <Button onClick={onClick} sx={{ pt: '20px' }}>
-                    <img src="/images/randing/jw3.png" width="50px"></img>
+              <Grid
+                container
+                // justifyContent="spaceBetween"
+                paddingLeft={3}
+                paddingRight={3}
+                paddingTop={1}
+              >
+                {/* <Box> */}
+                <Grid item xs={2} textAlign="left">
+                  <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
+                    {crown ? (
+                      <Avatar src={clubImage} />
+                    ) : (
+                      <>
+                        <Avatar src="/images/adginnr/jw3.png" />
+                      </>
+                    )}
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item xs={2}>
+                  <ClubName>{clubName}</ClubName>
+                </Grid>
+                <Grid item xs={7} textAlign="left">
+                  <Button onClick={onClick} sx={{ pt: '35px' }}>
+                    {crown ? (
+                      <img width="20px" src={crown}></img>
+                    ) : (
+                      <>
+                        <img src="/images/randing/jw3.png" width="50px"></img>
+                      </>
+                    )}
                   </Button>
                 </Grid>
-                <Grid item xs={1}>
+                {/* </Box> */}
+                {/* <Box> */}
+                <Grid item>
                   <Box
                     sx={{
+                      // pl: '60px',
                       my: 2,
                       color: 'black',
                       pt: '15px',
@@ -176,17 +202,7 @@ export default function PersistentDrawerRight() {
                     <AlarmItem />
                   </Box>
                 </Grid>
-                <Grid item xs={2}>
-                  <Box
-                    sx={{
-                      my: 2,
-                      color: 'black',
-                      pt: '15px',
-                    }}
-                  >
-                    <SettingItem />
-                  </Box>
-                </Grid>
+                {/* </Box> */}
               </Grid>
             </>
           ) : (

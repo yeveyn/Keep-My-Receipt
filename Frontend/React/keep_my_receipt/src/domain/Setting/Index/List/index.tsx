@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 export default function SettingList() {
   return (
-    <Container maxWidth="md" sx={{ marginTop: '70px' }}>
+    <Container maxWidth="md" sx={{ marginTop: '0px' }}>
       <Notice />
       <AlarmToggle />
       <EditUserInfo />

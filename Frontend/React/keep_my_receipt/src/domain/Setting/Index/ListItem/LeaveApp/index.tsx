@@ -16,9 +16,13 @@ export default function LeaveApp() {
       <LeaveAppDialog open={open} setOpen={setOpen} />
       <Stack alignItems="center">
         <Stack className="board" onClick={onClick}>
-          <Stack direction="row" justifyContent="space-between">
-            <Stack direction="row">
-              <ErrorOutlineIcon fontSize="large" className="icon" />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Stack direction="row" alignItems="center">
+              <ErrorOutlineIcon className="icon" />
               <Content>회원 탈퇴</Content>
             </Stack>
             <div className="toggle">

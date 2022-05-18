@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Stack } from '@mui/material';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import { Content } from '../../../../Landing/Landing/Banner/styles';
@@ -39,9 +39,13 @@ export default function AlarmToggle() {
   return (
     <Stack alignItems="center">
       <Stack className="board">
-        <Stack direction="row" justifyContent="space-between">
-          <Stack direction="row">
-            <NotificationsActiveIcon fontSize="large" className="icon" />
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Stack direction="row" alignItems="center">
+            <NotificationsNoneOutlinedIcon className="icon" />
             <Content>알림 설정</Content>
           </Stack>
           <div className="alarm">

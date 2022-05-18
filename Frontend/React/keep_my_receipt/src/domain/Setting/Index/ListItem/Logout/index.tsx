@@ -16,9 +16,13 @@ export default function Logout() {
       <LogoutDialog open={open} setOpen={setOpen} />
       <Stack alignItems="center">
         <Stack className="board" onClick={onClick}>
-          <Stack direction="row" justifyContent="space-between">
-            <Stack direction="row">
-              <NoMeetingRoomIcon fontSize="large" className="icon" />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Stack direction="row" alignItems="center">
+              <NoMeetingRoomIcon className="icon" />
               <Content>로그아웃</Content>
             </Stack>
             <div className="toggle">

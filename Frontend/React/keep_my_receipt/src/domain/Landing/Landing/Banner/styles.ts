@@ -38,12 +38,12 @@ const focus = keyframes`
 
 export const Content = styled.p`
   padding-top: 14px;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
   font-family: NanumGothicBold;
   letter-spacing: 0px;
   margin: 0 0 0 0;
   @media only screen and (max-width: 768px) {
-    font-size: 5vw;
+    font-size: 4.5vw;
     padding-top: 9px;
   }
 `;

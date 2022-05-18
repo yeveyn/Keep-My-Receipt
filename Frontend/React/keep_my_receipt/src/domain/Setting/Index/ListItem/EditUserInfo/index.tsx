@@ -15,9 +15,13 @@ export default function EditUserInfo() {
       <EditUserInfoDialog open={open} setOpen={setOpen} />
       <Stack alignItems="center">
         <Stack className="board" onClick={onClick}>
-          <Stack direction="row" justifyContent="space-between">
-            <Stack direction="row">
-              <AccountCircleIcon fontSize="large" className="icon" />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Stack direction="row" alignItems="center">
+              <AccountCircleIcon className="icon" />
               <Content>내 정보 수정 </Content>
             </Stack>
             <div className="toggle">
