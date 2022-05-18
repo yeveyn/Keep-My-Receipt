@@ -13,6 +13,11 @@ import com.ssafy.keep_my_receipt.config.ApplicationClass
 import com.ssafy.keep_my_receipt.config.BaseActivity
 import com.ssafy.keep_my_receipt.databinding.ActivityMainBinding
 
+import android.content.Intent
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.startActivityForResult as startActivityForResult
+
+
 class CustomWebChromeClient(private val activity: AppCompatActivity) : WebChromeClient() {
 
     var filePathCallbackLollipop: ValueCallback<Array<Uri>>? = null
@@ -22,7 +27,7 @@ class CustomWebChromeClient(private val activity: AppCompatActivity) : WebChrome
     override fun onShowFileChooser(
         webView: WebView?,
         filePathCallback: ValueCallback<Array<Uri>>?,
-        fileChooserParams: WebChromeClient.FileChooserParams
+        fileChooserParams: FileChooserParams
     ): Boolean {
         // Callback 초기화 (중요!)
         if (filePathCallbackLollipop != null) {
@@ -31,9 +36,14 @@ class CustomWebChromeClient(private val activity: AppCompatActivity) : WebChrome
         }
         filePathCallbackLollipop = filePathCallback
         val isCapture = fileChooserParams.isCaptureEnabled
-        if (activity is IImageHandler) {
-            activity.takePicture(filePathCallbackLollipop)
-        }
+//        if (activity is IImageHandler) {
+//            activity.takePicture(filePathCallbackLollipop)
+//        }
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+
+        startActivityForResult(activity, intent, 25, null)
         filePathCallbackLollipop = null
 
         return true
