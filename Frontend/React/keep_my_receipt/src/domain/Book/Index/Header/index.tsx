@@ -42,7 +42,7 @@ export default function IndexHeader({
           >
             <ArrowLeft sx={{ color: '#000000', fontSize: '2rem' }} />
           </IconButton>
-          <Typography variant="h5">{target.getMonth() + 1} 월 </Typography>
+          <Typography variant="h5">{target.getMonth() + 1}월 </Typography>
           <IconButton
             onClick={() => {
               setHistoryList([]);
@@ -60,7 +60,7 @@ export default function IndexHeader({
         <Stack marginY={1}>
           <Stack direction="row" spacing="1rem">
             <Typography sx={{ fontSize: '1.2rem' }}>지출</Typography>
-            <Typography sx={{ fontSize: '1.2rem' }}>
+            <Typography sx={{ fontSize: '1.2rem' }} color="#aa2626">
               <b>{toCurrency(expenditure)}</b>
             </Typography>
           </Stack>

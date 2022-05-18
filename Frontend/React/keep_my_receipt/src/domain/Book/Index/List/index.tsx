@@ -60,10 +60,16 @@ export default function BookList({
             }}
           >
             <Stack spacing={0.5} paddingTop={0.5}>
-              <Typography variant="body2">{item.date}</Typography>
-              <Typography>{item.name}</Typography>
+              <Typography variant="body2" color="#757575">
+                {item.date}
+              </Typography>
+              <Typography>
+                <b>{item.name}</b>
+              </Typography>
             </Stack>
-            <Typography>{toCurrency(item.price)}</Typography>
+            <Typography color={item.price > 0 ? '#4caf50' : '#aa2626'}>
+              <b>{toCurrency(item.price)}</b>
+            </Typography>
           </Stack>
           <Divider />
         </Box>
