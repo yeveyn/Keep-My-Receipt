@@ -3,10 +3,6 @@ package com.ssafy.keep_my_receipt.src.main
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.keep_my_receipt.R
@@ -25,7 +21,9 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment.getExternalStorageDirectory
+import android.webkit.*
 import android.webkit.WebChromeClient.FileChooserParams
+import android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 import androidx.core.net.toUri
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import java.io.*
@@ -43,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val CAPTURE_CAMERA_RESULT = 3089
     //private var filePathCallbackLollipop: ValueCallback<Array<Uri>>? = null
     private var filePathCallbackLollipop: ValueCallback<Array<Uri>>? = null
+    private var isStart: Boolean = false
 
     override fun onStart() {
         super.onStart()
@@ -90,7 +89,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
         }
         webview.addJavascriptInterface(WebAppInterface(this), "Android")
-        webView.loadUrl("https://k6d104.p.ssafy.io/")
+        Log.e("EEEEEEEEEEEEEE", isStart.toString())
+        if (!isStart) {
+            Log.e("EEEEEEEEEEEEEE", "태초마을 갑니다.....")
+            webView.loadUrl("https://k6d104.p.ssafy.io/")
+            isStart = true
+        }
     }
 
     private fun setFCM() {
@@ -109,12 +113,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         alarmed = intent.extras.toString()
         if (alarmed != null) {
             //Todo url 파라미터 설정
-            webView.loadUrl("https://k6d104.p.ssafy.io/")
+            //webView.loadUrl("https://k6d104.p.ssafy.io/")
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
 //        when(requestCode){
 //            CAPTURE_CAMERA_RESULT -> {
 //                onCaptureImageResult(intent)
@@ -140,7 +143,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 if (intent != null) {
                     filePathCallbackLollipop?.onReceiveValue(
-                        WebChromeClient.FileChooserParams.parseResult(Activity.RESULT_OK, intent)
+                        WebChromeClient.FileChooserParams.parseResult(resultCode, intent)
                     )
                     filePathCallbackLollipop = null
                 }
@@ -152,6 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             filePathCallbackLollipop?.onReceiveValue(null)
             filePathCallbackLollipop = null
         }
+        super.onActivityResult(requestCode, resultCode, intent)
     }
 
 //    @SuppressLint("Range")
