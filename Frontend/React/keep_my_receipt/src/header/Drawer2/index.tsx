@@ -35,6 +35,7 @@ import { Button, Grid } from '@mui/material';
 import AlarmItem from '../AlarmItem';
 import { Content2 } from '../styles';
 import SettingItem from '../SettingItem';
+import Profile from './Profile';
 
 const drawerWidth = 240;
 
@@ -130,39 +131,48 @@ export default function PersistentDrawerRight() {
   };
 
   const receipt = () => {
+    setOpen(false);
     navigate(`/club/${id}/receipt/camera`);
     setMobileOpen(!mobileOpen);
     console.log('영수증 등록 클릭');
   };
 
   const bookCreate = () => {
+    setOpen(false);
     navigate(`/club/${id}/book/create`);
   };
   const receiptList = () => {
+    setOpen(false);
     navigate(`/club/${id}/receipt/requestList`);
   };
 
   const bookList = () => {
+    setOpen(false);
     navigate(`/club/${id}/book`);
   };
 
   const chart = () => {
+    setOpen(false);
     navigate(`/club/${id}/book`);
   };
 
   const manage = () => {
+    setOpen(false);
     navigate(`/club/${id}/manage`);
   };
 
   const myClub = () => {
+    setOpen(false);
     navigate(`/club`);
   };
 
   const myMain = () => {
+    setOpen(false);
     navigate(`/`);
   };
 
   const onClickLogin = () => {
+    setOpen(false);
     navigate('/login');
   };
 
@@ -177,31 +187,29 @@ export default function PersistentDrawerRight() {
     setOpen(false);
   };
 
-  const onClick = async () => {
-    await axios
-      .get(`api/spring/club/${id}/crew/auth`)
-      .then((res) => {
-        if (res.data) {
-          const check = res.data;
-          userAuth = check.data;
-          if (userAuth === '리더') {
-            setUserAuthNum(1);
-          } else if (userAuth === '관리자') {
-            setUserAuthNum(2);
-          } else if (userAuth === '회원') {
-            setUserAuthNum(3);
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`api/spring/club/${id}/crew/auth`)
+        .then((res) => {
+          if (res.data) {
+            const check = res.data;
+            userAuth = check.data;
+            if (userAuth === '리더') {
+              setUserAuthNum(1);
+            } else if (userAuth === '관리자') {
+              setUserAuthNum(2);
+            } else if (userAuth === '회원') {
+              setUserAuthNum(3);
+            }
           }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        return;
-      });
-  };
-
-  React.useEffect(() => {
-    onClick();
-  }, []);
+        })
+        .catch((e) => {
+          console.log(e);
+          return;
+        });
+    }
+  }, [id]);
 
   return (
     <Box sx={{ display: 'flex', height: '78px' }}>
@@ -224,21 +232,6 @@ export default function PersistentDrawerRight() {
                     {' '}
                     <img src="/images/randing/jw3.png" width="50px"></img>
                   </Button>
-
-                  {/* <IconButton
-                    color="primary"
-                    aria-label="open drawer"
-                    edge="end"
-
-                    sx={{
-                      ...(open && { display: 'none' }),
-                      my: 2,
-                      // float: 'left',
-                      // flexGrow: 1,
-                    }}
-                  >
-                    <MenuIcon />
-                  </IconButton> */}
                 </Grid>
                 <Grid item xs={1.6}>
                   <Button
@@ -313,6 +306,7 @@ export default function PersistentDrawerRight() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <Profile />
         <List
           sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
           component="nav"
@@ -388,7 +382,6 @@ export default function PersistentDrawerRight() {
               </ListItemButton>
               {userAuthNum <= 2 ? (
                 <>
-                  {' '}
                   <ListItemButton onClick={manage}>
                     <ListItemText primary="모임관리" />
                   </ListItemButton>
