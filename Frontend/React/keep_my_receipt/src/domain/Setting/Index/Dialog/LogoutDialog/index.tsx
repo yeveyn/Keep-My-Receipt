@@ -27,6 +27,7 @@ export default function LogoutDialog({ open, setOpen }: DialogType) {
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
           sessionStorage.removeItem('accessToken');
+          axios.defaults.headers.common['Authorization'] = '';
           navigate('/');
         })
         .catch(function (error) {
