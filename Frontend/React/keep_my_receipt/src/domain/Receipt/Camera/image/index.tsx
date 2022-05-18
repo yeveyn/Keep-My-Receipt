@@ -71,8 +71,8 @@ export default function CreateImage({ onImgChange }: CreateImageProps) {
           <label htmlFor="icon-btn-file">
             <Input
               //onChange={onChange}
-              //accept="image/*"
-              //id="icon-btn-file"
+              accept="image/*"
+              id="icon-btn-file"
               type="file"
             />
             <IconButton
