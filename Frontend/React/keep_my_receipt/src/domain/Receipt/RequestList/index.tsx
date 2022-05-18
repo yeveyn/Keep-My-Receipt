@@ -89,7 +89,6 @@ export default function RequestListIndex() {
             : { marginTop: 0, marginBottom: 100, width: '100%' }
         }
       >
-        <input title="test" type="file" accept="image/*" />
         <Card
           variant="outlined"
           style={{
