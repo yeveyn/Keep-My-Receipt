@@ -163,31 +163,40 @@ export default function PersistentDrawerRight() {
                 paddingTop={1}
               >
                 {/* <Box> */}
+
                 <Grid item xs={2} textAlign="left">
-                  <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
-                    {crown ? (
-                      <Avatar src={clubImage} />
-                    ) : (
-                      <>
-                        <Avatar src="/images/adginnr/jw3.png" />
-                      </>
-                    )}
-                  </ListItemAvatar>
+                  {id ? (
+                    <>
+                      {clubImage ? (
+                        <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
+                          <Avatar src={clubImage} />
+                        </ListItemAvatar>
+                      ) : (
+                        <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
+                          <Avatar src="/images/adginnr/jw3.png" />
+                        </ListItemAvatar>
+                      )}
+                    </>
+                  ) : (
+                    <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
+                      <Avatar src="/images/randing/jw3.png" />
+                    </ListItemAvatar>
+                  )}
                 </Grid>
                 <Grid item xs={2}>
                   <ClubName>{clubName}</ClubName>
                 </Grid>
-                <Grid item xs={7} textAlign="left">
-                  <Button onClick={onClick} sx={{ pt: '35px' }}>
-                    {crown ? (
+
+                {crown ? (
+                  <Grid item xs={7} textAlign="left">
+                    <Button onClick={onClick} sx={{ pt: '35px' }}>
                       <img width="20px" src={crown}></img>
-                    ) : (
-                      <>
-                        <img src="/images/randing/jw3.png" width="50px"></img>
-                      </>
-                    )}
-                  </Button>
-                </Grid>
+                    </Button>
+                  </Grid>
+                ) : (
+                  <Grid item xs={7} textAlign="left"></Grid>
+                )}
+
                 {/* </Box> */}
                 {/* <Box> */}
                 <Grid item>

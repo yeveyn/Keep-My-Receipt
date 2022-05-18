@@ -130,37 +130,25 @@ export default function () {
             icon={<MenuIcon />}
           ></BottomNavigationAction>
 
-          {/* 내 모임 가기 */}
-          {/* <BottomNavigationAction
-            sx={{
-              padding: 0,
-              '@media (max-width: 768px)': {
-                minWidth: 'auto',
-                padding: '6px 0',
-              },
-            }}
-            onClick={() => {
-              onClickButton(`/club`);
-            }}
-            label={'내 모임'}
-            icon={<CelebrationIcon />}
-          ></BottomNavigationAction> */}
+          {userAuthNum <= 2 ? (
+            <BottomNavigationAction
+              sx={{
+                padding: 0,
+                '@media (max-width: 768px)': {
+                  minWidth: 'auto',
+                  padding: '6px 0',
+                },
+              }}
+              onClick={() => {
+                onClickButton(`/club/${id}/book`);
+              }}
+              label={'거래 내역'}
+              icon={<PlaylistAddIcon />}
+            ></BottomNavigationAction>
+          ) : (
+            <></>
+          )}
 
-          {/* 영수증 등록 */}
-          <BottomNavigationAction
-            sx={{
-              padding: 0,
-              '@media (max-width: 768px)': {
-                minWidth: 'auto',
-                padding: '6px 0',
-              },
-            }}
-            onClick={() => {
-              onClickButton(`/club/${id}/receipt/camera`);
-            }}
-            label={'영수증등록'}
-            icon={<PlaylistAddIcon />}
-          ></BottomNavigationAction>
           {/* 거래 등록 */}
           {userAuthNum <= 2 ? (
             <BottomNavigationAction
@@ -178,7 +166,20 @@ export default function () {
               icon={<PeopleAltIcon />}
             ></BottomNavigationAction>
           ) : (
-            ''
+            <BottomNavigationAction
+              sx={{
+                padding: 0,
+                '@media (max-width: 768px)': {
+                  minWidth: 'auto',
+                  padding: '6px 0',
+                },
+              }}
+              onClick={() => {
+                onClickButton(`/club/${id}/book`);
+              }}
+              label={'거래내역'}
+              icon={<PeopleAltIcon />}
+            ></BottomNavigationAction>
           )}
 
           {/* 영수증 내역 */}
