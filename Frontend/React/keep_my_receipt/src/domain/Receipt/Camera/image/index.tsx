@@ -94,7 +94,6 @@ export default function CreateImage({ onImgChange }: CreateImageProps) {
             </IconButton>
           </label>
         </Box>
-        <input title="테스트" accept="image/*" type="file" />
       </Box>
     </Stack>
   );
