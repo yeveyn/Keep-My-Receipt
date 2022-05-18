@@ -28,7 +28,7 @@ export default function LogoutDialog({ open, setOpen }: DialogType) {
         .then(function (response) {
           sessionStorage.removeItem('accessToken');
           axios.defaults.headers.common['Authorization'] = '';
-          navigate('/');
+          navigate('/', { replace: true });
         })
         .catch(function (error) {
           console.log(error);

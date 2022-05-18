@@ -139,7 +139,7 @@ export default function LoginForm() {
           alert(response.data.msg);
         } else {
           onLoginSuccess(response.data);
-          navigate('/club');
+          navigate('/club', { replace: true });
         }
       })
       .catch(function (error) {

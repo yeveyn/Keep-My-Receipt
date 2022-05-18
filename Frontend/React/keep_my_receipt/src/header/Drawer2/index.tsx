@@ -35,7 +35,6 @@ import { Button, Grid } from '@mui/material';
 import AlarmItem from '../AlarmItem';
 import { Content2 } from '../styles';
 import SettingItem from '../SettingItem';
-import Profile from './Profile';
 
 const drawerWidth = 240;
 
@@ -130,53 +129,40 @@ export default function PersistentDrawerRight() {
     setListOpen(!listOpen);
   };
 
-  const report = () => {
-    setOpen(false);
-    navigate(`/club/${id}/report/asset`);
-  };
   const receipt = () => {
-    setOpen(false);
     navigate(`/club/${id}/receipt/camera`);
     setMobileOpen(!mobileOpen);
     console.log('영수증 등록 클릭');
   };
 
   const bookCreate = () => {
-    setOpen(false);
     navigate(`/club/${id}/book/create`);
   };
   const receiptList = () => {
-    setOpen(false);
     navigate(`/club/${id}/receipt/requestList`);
   };
 
   const bookList = () => {
-    setOpen(false);
     navigate(`/club/${id}/book`);
   };
 
   const chart = () => {
-    setOpen(false);
-    navigate(`/club/${id}/analytics/mainChart`);
+    navigate(`/club/${id}/book`);
   };
 
   const manage = () => {
-    setOpen(false);
     navigate(`/club/${id}/manage`);
   };
 
   const myClub = () => {
-    setOpen(false);
     navigate(`/club`);
   };
 
   const myMain = () => {
-    setOpen(false);
     navigate(`/`);
   };
 
   const onClickLogin = () => {
-    setOpen(false);
     navigate('/login');
   };
 
@@ -192,27 +178,25 @@ export default function PersistentDrawerRight() {
   };
 
   useEffect(() => {
-    if (id) {
-      axios
-        .get(`api/spring/club/${id}/crew/auth`)
-        .then((res) => {
-          if (res.data) {
-            const check = res.data;
-            userAuth = check.data;
-            if (userAuth === '리더') {
-              setUserAuthNum(1);
-            } else if (userAuth === '관리자') {
-              setUserAuthNum(2);
-            } else if (userAuth === '회원') {
-              setUserAuthNum(3);
-            }
+    axios
+      .get(`api/spring/club/${id}/crew/auth`)
+      .then((res) => {
+        if (res.data) {
+          const check = res.data;
+          userAuth = check.data;
+          if (userAuth === '리더') {
+            setUserAuthNum(1);
+          } else if (userAuth === '관리자') {
+            setUserAuthNum(2);
+          } else if (userAuth === '회원') {
+            setUserAuthNum(3);
           }
-        })
-        .catch((e) => {
-          console.log(e);
-          return;
-        });
-    }
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
   }, [id]);
 
   return (
@@ -310,7 +294,6 @@ export default function PersistentDrawerRight() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Profile isLogin={isLogin} />
         <List
           sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
           component="nav"
@@ -381,27 +364,9 @@ export default function PersistentDrawerRight() {
                   )}
                 </List>
               </Collapse>
-              <ListItemButton onClick={listHandleClick}>
+              <ListItemButton onClick={chart}>
                 <ListItemText primary="분석" />
-                {listOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-              <Collapse in={listOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={chart} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="차트" />
-                  </ListItemButton>{' '}
-                  <ListItemButton onClick={report} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <PeopleAltIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="보고서" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-
               {userAuthNum <= 2 ? (
                 <>
                   <ListItemButton onClick={manage}>
