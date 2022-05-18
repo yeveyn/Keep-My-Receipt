@@ -3,8 +3,9 @@ import Graph from './Graph';
 import { Grid, Typography, Stack, Paper } from '@mui/material';
 
 interface ItemType {
-  date: string;
-  value: string;
+  year: number;
+  month: number;
+  totalCost: number;
 }
 
 export default function FlowChart({

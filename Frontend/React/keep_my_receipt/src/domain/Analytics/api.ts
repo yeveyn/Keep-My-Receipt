@@ -58,3 +58,19 @@ export const apiLoadSecondChartData = async (
       throw e;
     });
 };
+
+export const apiLoadFlowChartData = async (
+  clubId: string,
+  year: string,
+  month: string,
+) => {
+  return await axios
+    .get(`${BASE_URL}/chart/line/${clubId}/${year}/${month}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((e) => {
+      console.log(e);
+      throw e;
+    });
+};
