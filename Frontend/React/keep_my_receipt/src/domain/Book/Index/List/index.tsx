@@ -1,10 +1,31 @@
-import { Box, Divider, Stack, Typography, Container } from '@mui/material';
-import { useEffect } from 'react';
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  Container,
+  Button,
+} from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toCurrency from '../../../../services/toCurrency';
 import ListItem from '../ListItem';
 
-export default function BookList({ list }: { list: any }) {
+interface BookListProps {
+  result: any;
+  historyList: any;
+  getHistory: any;
+  checkAdd: boolean;
+}
+
+export default function BookList({
+  result,
+  historyList,
+  getHistory,
+  checkAdd,
+}: BookListProps) {
+  const { pageNumber, totalPages } = result;
+
   const navigate = useNavigate();
   const onClick = (item: any) => {
     navigate(`./detail`, {
@@ -13,12 +34,15 @@ export default function BookList({ list }: { list: any }) {
         transactionDetailId: item.transactionDetailId,
       },
     });
-    console.log('transactionId: ' + item.transactionId);
-    console.log('transactionDetailId: ' + item.transactionDetailId);
   };
+  const onClickToAdd = async (page?: number) => {
+    // console.log(page);
+    getHistory(page);
+  };
+
   return (
     <>
-      {list.map((item: any) => (
+      {historyList.map((item: any) => (
         <Box
           key={item.transactionDetailId}
           marginY={1}
@@ -44,6 +68,29 @@ export default function BookList({ list }: { list: any }) {
           <Divider />
         </Box>
       ))}
+      {checkAdd && historyList.length > 0 ? (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          sx={{ paddingX: '1rem', marginTop: '1rem' }}
+        >
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => onClickToAdd(pageNumber + 1)}
+            sx={{
+              color: 'black',
+              boxShadow: 1,
+              backgroundColor: '#eeeeee',
+              '&:hover': {
+                backgroundColor: '#bdbdbd',
+              },
+            }}
+          >
+            더보기
+          </Button>
+        </Stack>
+      ) : null}
     </>
   );
 }
