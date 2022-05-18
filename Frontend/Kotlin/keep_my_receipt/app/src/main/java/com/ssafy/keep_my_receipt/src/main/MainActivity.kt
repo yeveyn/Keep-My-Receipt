@@ -86,7 +86,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     startActivityForResult(intent, 0)
                     return true
                 }
-                return false
+                return true
             }
         }
         webview.addJavascriptInterface(WebAppInterface(this), "Android")
