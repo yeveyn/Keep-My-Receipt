@@ -8,11 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Content1 } from '../../styles';
-import IconButton from '@mui/material/IconButton';
-
 import AlarmItem from '../../AlarmItem';
 import SettingItem from '../../SettingItem';
 import { Box } from '@mui/material';
+
 export default function ListItem() {
   const [isLogin, setIsLogin] = useState(false);
   const myAccessToken = sessionStorage.getItem('accessToken');
@@ -91,19 +90,18 @@ export default function ListItem() {
         });
     }
     // 현재 유저 권한 조회하기
-  }, []);
+  }, [myAccessToken, id]);
 
   // 메뉴 > 로그인 로그아웃
   let mystring = '로그인';
-  const accessToken = sessionStorage.getItem('accessToken');
-  if (accessToken) {
-    axios.defaults.headers.common['Authorization'] = accessToken;
+  if (myAccessToken) {
+    axios.defaults.headers.common['Authorization'] = myAccessToken;
     mystring = '로그아웃';
   }
 
   //로그아웃 클릭 시
   const onLogout = () => {
-    if (accessToken) {
+    if (myAccessToken) {
       axios
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
@@ -136,8 +134,48 @@ export default function ListItem() {
       >
         <Content1> {mystring}</Content1>
       </Button>
+
       {isLogin ? (
         <>
+          <Button
+            onClick={() => {
+              onClickButton(`/club`);
+            }}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'black',
+              float: 'right',
+            }}
+          >
+            <Content1>내 모임</Content1>
+          </Button>
+          {/* 로그인만 한 경우, 내 모임 알림 설정 */}
+          <Box
+            sx={{
+              my: 2,
+              float: 'right',
+              paddingTop: '8px',
+              ml: 4,
+            }}
+          >
+            <AlarmItem />
+          </Box>
+          {/* 설정 */}
+          <Box
+            onClick={() => {
+              onClickButton(`/setting`);
+            }}
+            sx={{
+              paddingTop: '8px',
+              my: 2,
+              ml: 2,
+              float: 'right',
+            }}
+          >
+            <SettingItem />
+          </Box>
           {id ? (
             <>
               {/* 3. 분석 */}
@@ -276,45 +314,6 @@ export default function ListItem() {
           ) : (
             ''
           )}{' '}
-          <Button
-            onClick={() => {
-              onClickButton(`/club`);
-            }}
-            sx={{
-              my: 2,
-              mr: 1,
-              color: 'black',
-              display: 'black',
-              float: 'right',
-            }}
-          >
-            <Content1>내 모임</Content1>
-          </Button>
-          {/* 로그인만 한 경우, 내 모임 알림 설정 */}
-          <Box
-            sx={{
-              my: 2,
-              float: 'right',
-              paddingTop: '8px',
-              ml: 4,
-            }}
-          >
-            <AlarmItem />
-          </Box>
-          {/* 설정 */}
-          <Box
-            onClick={() => {
-              onClickButton(`/setting`);
-            }}
-            sx={{
-              paddingTop: '8px',
-              my: 2,
-              ml: 2,
-              float: 'right',
-            }}
-          >
-            <SettingItem />
-          </Box>
         </>
       ) : (
         ''

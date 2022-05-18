@@ -47,7 +47,7 @@ export default function SimpleBottomNavigation() {
     }
 
     console.log(userAuthNum);
-  }, []);
+  }, [id]);
 
   const Box = styled('div')(({ theme }) => ({
     padding: theme.spacing(1),

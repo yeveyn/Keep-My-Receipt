@@ -13,7 +13,7 @@ export default function AlarmToggle() {
     // fcm token 가져오기
     const token = sessionStorage.getItem('fcmToken');
     //
-    if (onAlarm != true) {
+    if (onAlarm == false) {
       axios
         .put('/api/spring/crew/token/push/allow', { fcmToken: token })
         .then((res) => {

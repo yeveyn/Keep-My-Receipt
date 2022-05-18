@@ -38,16 +38,16 @@ function App() {
         <Route path="signup" element={<Outlet />}>
           <Route index element={<SignUpIndex />} />
         </Route>
+        <Route path="alert" element={<Outlet />}>
+          <Route index element={<AlertIndex />} />
+        </Route>
+        <Route path="setting" element={<Outlet />}>
+          <Route index element={<SettingIndex />} />
+        </Route>
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<RootPage />}>
           <Route index element={<Landing />} />
 
-          <Route path="alert" element={<Outlet />}>
-            <Route index element={<AlertIndex />} />
-          </Route>
-          <Route path="setting" element={<Outlet />}>
-            <Route index element={<SettingIndex />} />
-          </Route>
           <Route path="club" element={<Outlet />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />

@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import DrawerItem from './DrawerItem';
-import Profile from './Profile';
+import Profile from '../Drawer2/Profile';
 
 const drawerWidth = 240;
 
