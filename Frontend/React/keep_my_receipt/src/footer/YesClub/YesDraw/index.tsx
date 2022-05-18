@@ -211,118 +211,80 @@ export default function () {
         }
       >
         <>
-          <ListItemButton onClick={addHandleClick}>
-            <ListItemText primary="등록" />
-            {addOpen ? <ExpandLess /> : <ExpandMore />}
+          <ListItemButton
+            onClick={() => {
+              onClickButton(`/club/${id}/receipt/camera`);
+            }}
+            sx={{ pl: 4 }}
+          >
+            <ListItemText primary="영수증 등록" />
           </ListItemButton>
-          <Collapse in={addOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
+
+          {userAuthNum <= 2 ? (
+            <>
+              {' '}
               <ListItemButton
                 onClick={() => {
-                  onClickButton(`/club/${id}/receipt/camera`);
+                  onClickButton(`/club/${id}/book/create`);
                 }}
                 sx={{ pl: 4 }}
               >
-                <ListItemIcon>
-                  <PlaylistAddIcon />
-                </ListItemIcon>
-                <ListItemText primary="영수증 등록" />
+                <ListItemText primary="거래 등록" />
               </ListItemButton>
+            </>
+          ) : (
+            ''
+          )}
 
-              {userAuthNum <= 2 ? (
-                <>
-                  {' '}
-                  <ListItemButton
-                    onClick={() => {
-                      onClickButton(`/club/${id}/book/create`);
-                    }}
-                    sx={{ pl: 4 }}
-                  >
-                    <ListItemIcon>
-                      <PaidIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="거래 등록" />
-                  </ListItemButton>
-                </>
-              ) : (
-                ''
-              )}
-            </List>
-          </Collapse>
-          {/* <Divider /> */}
-          <ListItemButton onClick={listHandleClick}>
-            <ListItemText primary="내역" />
-            {listOpen ? <ExpandLess /> : <ExpandMore />}
+          <Divider />
+          <ListItemButton
+            onClick={() => {
+              onClickButton(`/club/${id}/receipt/requestList`);
+            }}
+            sx={{ pl: 4 }}
+          >
+            <ListItemText primary="영수증 내역" />
           </ListItemButton>
-          <Collapse in={listOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  onClickButton(`/club/${id}/receipt/requestList`);
-                }}
-                sx={{ pl: 4 }}
-              >
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="영수증 내역" />
-              </ListItemButton>
 
-              {userAuthNum <= 2 ? (
-                <>
-                  {' '}
-                  <ListItemButton
-                    onClick={() => {
-                      onClickButton(`/club/${id}/book`);
-                    }}
-                    sx={{ pl: 4 }}
-                  >
-                    <ListItemIcon>
-                      <PeopleAltIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="거래 내역" />
-                  </ListItemButton>
-                </>
-              ) : (
-                ''
-              )}
-            </List>
-          </Collapse>
-
-          <ListItemButton onClick={listHandleClick}>
-            <ListItemText primary="분석" />
-            {listOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={listOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  onClickButton(`/club/${id}/analytics/mainChart`);
-                }}
-                sx={{ pl: 4 }}
-              >
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="차트" />
-              </ListItemButton>
-
-              <ListItemButton
-                onClick={() => {
-                  onClickButton(`/club/${id}/report/asset`);
-                }}
-                sx={{ pl: 4 }}
-              >
-                <ListItemIcon>
-                  <PeopleAltIcon />
-                </ListItemIcon>
-                <ListItemText primary="보고서" />
-              </ListItemButton>
-            </List>
-          </Collapse>
           {userAuthNum <= 2 ? (
             <>
               <ListItemButton
+                sx={{ pl: 4 }}
+                onClick={() => {
+                  onClickButton(`/club/${id}/book`);
+                }}
+              >
+                <ListItemText primary="거래 내역" />
+              </ListItemButton>
+            </>
+          ) : (
+            ''
+          )}
+
+          <Divider />
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() => {
+              onClickButton(`/club/${id}/analytics/mainChart`);
+            }}
+          >
+            <ListItemText primary="차트" />
+          </ListItemButton>
+
+          <ListItemButton
+            onClick={() => {
+              onClickButton(`/club/${id}/report/asset`);
+            }}
+            sx={{ pl: 4 }}
+          >
+            <ListItemText primary="보고서" />
+          </ListItemButton>
+
+          <Divider />
+          {userAuthNum <= 2 ? (
+            <>
+              <ListItemButton
+                sx={{ pl: 4 }}
                 onClick={() => {
                   onClickButton(`/club/${id}/manage`);
                 }}
@@ -336,6 +298,7 @@ export default function () {
         </>
 
         <ListItemButton
+          sx={{ pl: 4 }}
           onClick={() => {
             onClickButton(`/club`);
           }}
@@ -344,6 +307,7 @@ export default function () {
         </ListItemButton>
 
         <ListItemButton
+          sx={{ pl: 4 }}
           onClick={() => {
             onClickButton(`/`);
           }}
