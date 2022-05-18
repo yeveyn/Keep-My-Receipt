@@ -27,16 +27,18 @@ export default function Profile() {
   };
 
   const onGetClub = () => {
-    axios
-      .get(`/api/spring/club/${id}`)
-      .then(function (response) {
-        console.log(response);
-        setClubImage(response.data.data.image);
-        setClubName(response.data.data.name);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (id) {
+      axios
+        .get(`/api/spring/club/${id}`)
+        .then(function (response) {
+          console.log(response);
+          setClubImage(response.data.data.image);
+          setClubName(response.data.data.name);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {

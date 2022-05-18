@@ -17,6 +17,7 @@ import firebase from 'firebase/compat/app';
 
 // 메시지 전송
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import BackBar from '../../BackHeader';
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
 export default function LoginForm() {
@@ -148,6 +149,7 @@ export default function LoginForm() {
 
   return (
     <Container maxWidth="sm">
+      <BackBar content={''} />
       <h1 className="h1">로그인</h1>
       <form onSubmit={submitHandler}>
         <Stack spacing={1.5}>

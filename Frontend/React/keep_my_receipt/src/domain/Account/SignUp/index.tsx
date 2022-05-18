@@ -13,6 +13,7 @@ import {
   Grid,
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
+import BackBar from '../../BackHeader';
 
 export default function SignUpForm() {
   // 스타일
@@ -174,6 +175,7 @@ export default function SignUpForm() {
 
   return (
     <Container maxWidth="sm">
+      <BackBar content={''} />
       <h1 className="h1">회원가입</h1>
       <form onSubmit={onSubmit}>
         <TextField
