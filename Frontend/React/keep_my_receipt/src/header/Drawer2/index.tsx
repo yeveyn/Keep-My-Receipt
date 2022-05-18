@@ -35,7 +35,6 @@ import { Button, Grid } from '@mui/material';
 import AlarmItem from '../AlarmItem';
 import { Content2 } from '../styles';
 import SettingItem from '../SettingItem';
-import Profile from './Profile';
 
 const drawerWidth = 240;
 
@@ -130,53 +129,40 @@ export default function PersistentDrawerRight() {
     setListOpen(!listOpen);
   };
 
-  const report = () => {
-    setOpen(false);
-    navigate(`/club/${id}/report/asset`);
-  };
   const receipt = () => {
-    setOpen(false);
     navigate(`/club/${id}/receipt/camera`);
     setMobileOpen(!mobileOpen);
     console.log('영수증 등록 클릭');
   };
 
   const bookCreate = () => {
-    setOpen(false);
     navigate(`/club/${id}/book/create`);
   };
   const receiptList = () => {
-    setOpen(false);
     navigate(`/club/${id}/receipt/requestList`);
   };
 
   const bookList = () => {
-    setOpen(false);
     navigate(`/club/${id}/book`);
   };
 
   const chart = () => {
-    setOpen(false);
-    navigate(`/club/${id}/analytics/mainChart`);
+    navigate(`/club/${id}/book`);
   };
 
   const manage = () => {
-    setOpen(false);
     navigate(`/club/${id}/manage`);
   };
 
   const myClub = () => {
-    setOpen(false);
     navigate(`/club`);
   };
 
   const myMain = () => {
-    setOpen(false);
     navigate(`/`);
   };
 
   const onClickLogin = () => {
-    setOpen(false);
     navigate('/login');
   };
 
@@ -192,27 +178,25 @@ export default function PersistentDrawerRight() {
   };
 
   useEffect(() => {
-    if (id) {
-      axios
-        .get(`api/spring/club/${id}/crew/auth`)
-        .then((res) => {
-          if (res.data) {
-            const check = res.data;
-            userAuth = check.data;
-            if (userAuth === '리더') {
-              setUserAuthNum(1);
-            } else if (userAuth === '관리자') {
-              setUserAuthNum(2);
-            } else if (userAuth === '회원') {
-              setUserAuthNum(3);
-            }
+    axios
+      .get(`api/spring/club/${id}/crew/auth`)
+      .then((res) => {
+        if (res.data) {
+          const check = res.data;
+          userAuth = check.data;
+          if (userAuth === '리더') {
+            setUserAuthNum(1);
+          } else if (userAuth === '관리자') {
+            setUserAuthNum(2);
+          } else if (userAuth === '회원') {
+            setUserAuthNum(3);
           }
-        })
-        .catch((e) => {
-          console.log(e);
-          return;
-        });
-    }
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
   }, [id]);
 
   return (
@@ -229,11 +213,7 @@ export default function PersistentDrawerRight() {
             <>
               <Grid container>
                 <Grid item xs={8}>
-                  <Button
-                    sx={{ ...(open && { display: 'none' }), pt: '20px' }}
-                    onClick={handleDrawerOpen}
-                  >
-                    {' '}
+                  <Button sx={{ pt: '20px' }}>
                     <img src="/images/randing/jw3.png" width="50px"></img>
                   </Button>
                 </Grid>
@@ -284,149 +264,6 @@ export default function PersistentDrawerRight() {
           )}
         </Toolbar>
       </AppBar>
-
-      <Main open={open}>
-        <DrawerHeader />
-      </Main>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <Profile isLogin={isLogin} />
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader
-              component="div"
-              id="nested-list-subheader"
-            ></ListSubheader>
-          }
-        >
-          {id ? (
-            <>
-              <ListItemButton onClick={addHandleClick}>
-                <ListItemText primary="등록" />
-                {addOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={addOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={receipt} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <PlaylistAddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="영수증 등록" />
-                  </ListItemButton>
-
-                  {userAuthNum <= 2 ? (
-                    <>
-                      {' '}
-                      <ListItemButton onClick={bookCreate} sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <PaidIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="거래 등록" />
-                      </ListItemButton>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </List>
-              </Collapse>
-              {/* <Divider /> */}
-              <ListItemButton onClick={listHandleClick}>
-                <ListItemText primary="내역" />
-                {listOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={listOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={receiptList} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="영수증 내역" />
-                  </ListItemButton>
-
-                  {userAuthNum <= 2 ? (
-                    <>
-                      {' '}
-                      <ListItemButton onClick={bookList} sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <PeopleAltIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="거래 내역" />
-                      </ListItemButton>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </List>
-              </Collapse>
-              <ListItemButton onClick={listHandleClick}>
-                <ListItemText primary="분석" />
-                {listOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={listOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={chart} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="차트" />
-                  </ListItemButton>{' '}
-                  <ListItemButton onClick={report} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <PeopleAltIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="보고서" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-
-              {userAuthNum <= 2 ? (
-                <>
-                  <ListItemButton onClick={manage}>
-                    <ListItemText primary="모임관리" />
-                  </ListItemButton>
-                </>
-              ) : (
-                ''
-              )}
-            </>
-          ) : (
-            ''
-          )}
-
-          <ListItemButton onClick={myClub}>
-            <ListItemText primary="내 모임" />
-          </ListItemButton>
-
-          <ListItemButton onClick={myMain}>
-            <ListItemText primary="메인화면" />
-          </ListItemButton>
-          {/* <Divider /> */}
-        </List>
-        {/* <Divider /> */}
-      </Drawer>
     </Box>
   );
 }

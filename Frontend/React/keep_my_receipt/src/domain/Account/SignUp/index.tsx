@@ -163,7 +163,7 @@ export default function SignUpForm() {
 
             if (res.data.output != 0) {
               alert('회원가입에 성공했습니다!');
-              navigate('/login');
+              navigate('/login', { replace: true });
             }
           });
       } catch (err) {

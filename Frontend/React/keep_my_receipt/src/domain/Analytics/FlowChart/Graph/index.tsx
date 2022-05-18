@@ -11,8 +11,9 @@ import { Line } from 'react-chartjs-2';
 import { useMediaQuery } from '@mui/material';
 
 interface ItemType {
-  date: string;
-  value: string;
+  year: number;
+  month: number;
+  totalCost: number;
 }
 
 export default function Graph({ items }: { items: ItemType[] }) {
@@ -22,8 +23,10 @@ export default function Graph({ items }: { items: ItemType[] }) {
   Chart.register(PointElement);
   Chart.register(LinearScale);
   const matches = useMediaQuery('(min-width:500px)');
-  const labels: String[] = items.map((item) => item.date);
-  const datas: Number[] = items.map((item) => parseInt(item.value));
+  const labels: String[] = items.map((item) =>
+    item.year.toString().concat('.').concat(item.month.toString()),
+  );
+  const datas: Number[] = items.map((item) => item.totalCost);
   const data = {
     labels: labels,
     datasets: [

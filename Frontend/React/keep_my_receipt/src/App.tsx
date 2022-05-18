@@ -54,7 +54,6 @@ function App() {
         {/* 밑에 Route들 추가하시면 됩니다! */}
         <Route path="/" element={<RootPage />}>
           <Route index element={<Landing />} />
-
           <Route path="club" element={<CheckLoginPage />}>
             <Route index element={<ClubIndex />} />
             <Route path="create" element={<ClubCreate />} />
@@ -103,7 +102,10 @@ function RootPage() {
   useEffect(() => {
     // header accessToken 설정
     axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+    if (!accessToken) {
+    }
   }, []);
+
   return (
     <>
       <Navigation />
