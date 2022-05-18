@@ -213,11 +213,7 @@ export default function PersistentDrawerRight() {
             <>
               <Grid container>
                 <Grid item xs={8}>
-                  <Button
-                    sx={{ ...(open && { display: 'none' }), pt: '20px' }}
-                    onClick={handleDrawerOpen}
-                  >
-                    {' '}
+                  <Button sx={{ pt: '20px' }}>
                     <img src="/images/randing/jw3.png" width="50px"></img>
                   </Button>
                 </Grid>
@@ -268,130 +264,6 @@ export default function PersistentDrawerRight() {
           )}
         </Toolbar>
       </AppBar>
-
-      <Main open={open}>
-        <DrawerHeader />
-      </Main>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader
-              component="div"
-              id="nested-list-subheader"
-            ></ListSubheader>
-          }
-        >
-          {id ? (
-            <>
-              <ListItemButton onClick={addHandleClick}>
-                <ListItemText primary="등록" />
-                {addOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={addOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={receipt} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <PlaylistAddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="영수증 등록" />
-                  </ListItemButton>
-
-                  {userAuthNum <= 2 ? (
-                    <>
-                      {' '}
-                      <ListItemButton onClick={bookCreate} sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <PaidIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="거래 등록" />
-                      </ListItemButton>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </List>
-              </Collapse>
-              {/* <Divider /> */}
-              <ListItemButton onClick={listHandleClick}>
-                <ListItemText primary="내역" />
-                {listOpen ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={listOpen} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton onClick={receiptList} sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="영수증 내역" />
-                  </ListItemButton>
-
-                  {userAuthNum <= 2 ? (
-                    <>
-                      {' '}
-                      <ListItemButton onClick={bookList} sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                          <PeopleAltIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="거래 내역" />
-                      </ListItemButton>
-                    </>
-                  ) : (
-                    ''
-                  )}
-                </List>
-              </Collapse>
-              <ListItemButton onClick={chart}>
-                <ListItemText primary="분석" />
-              </ListItemButton>
-              {userAuthNum <= 2 ? (
-                <>
-                  <ListItemButton onClick={manage}>
-                    <ListItemText primary="모임관리" />
-                  </ListItemButton>
-                </>
-              ) : (
-                ''
-              )}
-            </>
-          ) : (
-            ''
-          )}
-
-          <ListItemButton onClick={myClub}>
-            <ListItemText primary="내 모임" />
-          </ListItemButton>
-
-          <ListItemButton onClick={myMain}>
-            <ListItemText primary="메인화면" />
-          </ListItemButton>
-          {/* <Divider /> */}
-        </List>
-        {/* <Divider /> */}
-      </Drawer>
     </Box>
   );
 }
