@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Button, Container } from '@mui/material';
+import { Box, Button, Container, Divider } from '@mui/material';
 
 import Header from './Header';
 import PageButtons from './PageButtons';
@@ -14,6 +14,8 @@ import { apiCreateTransaction } from '../api/bookApi';
 import { CreateParamType } from '../types';
 import { GreenBox } from '../../../styles/box';
 import { PageTitleTypography } from '../../../styles/typography';
+import DeleteButton from './DeleteButton';
+import AddButton from './AddButton';
 
 export default function BookCreate() {
   const { id: clubId } = useParams();
@@ -73,13 +75,13 @@ export default function BookCreate() {
       />
 
       {/* 페이지네이션 버튼들 */}
-      <PageButtons
+      {/* <PageButtons
         count={state.items.length}
         page={page}
         setPage={setPage}
         dispatch={dispatch}
         editable={!params}
-      />
+      /> */}
 
       {/* 각각의 항목 정보들 */}
       {/* 현재 참조하는 아이템이 있을 때만 조건부 렌더링 */}
@@ -92,8 +94,22 @@ export default function BookCreate() {
           dispatch={dispatch}
         />
       )}
+      <Divider />
 
-      <Button onClick={createTransaction}>등록!</Button>
+      <Box justifySelf="end">
+        <DeleteButton page={page} setPage={setPage} dispatch={dispatch} />
+        <AddButton page={page} setPage={setPage} dispatch={dispatch} />
+      </Box>
+
+      <Button
+        onClick={() => {
+          if (confirm('등록하시겠습니까?')) {
+            createTransaction();
+          }
+        }}
+      >
+        등록!
+      </Button>
     </Container>
   );
 }
