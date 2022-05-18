@@ -3,8 +3,9 @@ import Graph from './Graph';
 import { Grid, Typography, Stack, Paper } from '@mui/material';
 
 interface ItemType {
-  date: string;
-  value: string;
+  year: number;
+  month: number;
+  totalCost: number;
 }
 
 export default function FlowChart({
@@ -60,9 +61,6 @@ export default function FlowChart({
                   .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
                   .concat('원')}
               </Typography>
-            </Grid>
-            <Grid xs={1} sm={1} md={1} container justifyContent="end">
-              &nbsp;
             </Grid>
           </Grid>
         </Paper>

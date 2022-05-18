@@ -22,6 +22,7 @@ import sample1 from './sample1.json';
 import sample3 from './sample3.json';
 import {
   apiLoadFirstChartData,
+  apiLoadFlowChartData,
   FirstChartResponseType,
   toTagItemType,
 } from './api';
@@ -98,7 +99,9 @@ export default function MainChartIndex() {
     { id: '0', value: '0', rate: '0' },
   ]);
   const [sumTagValue, setSumTagValue] = useState(0);
-  const [flowItems, setFlowItems] = useState([{ date: '2022.5', value: '0' }]);
+  const [flowItems, setFlowItems] = useState([
+    { year: 2022, month: 5, totalCost: 0 },
+  ]);
   const [sumFlowValue, setSumFlowValue] = useState(0);
 
   /** 태그 데이터를 샘플로부터 가져옴 */
@@ -130,16 +133,16 @@ export default function MainChartIndex() {
   };
 
   /** 플로우 차트 데이터를 샘플로부터 가져옴 */
-  const loadFlowDataFromSample = () => {
-    // 플로우 차트용 데이터 세팅
-    setFlowItems(sample3);
-
-    // 지출 총합 구하기
-    let tmpSumFlowValue = 0;
-    sample3.forEach((item) => {
-      tmpSumFlowValue += parseInt(item.value);
+  const loadFlowDataFromSample = async () => {
+    await apiLoadFlowChartData(id, curYear, curMonth).then((response) => {
+      const flowChartData = response.data.data;
+      let tmpSumFlowValue = 0;
+      flowChartData.forEach((item) => {
+        tmpSumFlowValue += parseInt(item.totalCost);
+      });
+      setSumFlowValue(tmpSumFlowValue);
+      setFlowItems(flowChartData);
     });
-    setSumFlowValue(tmpSumFlowValue);
   };
 
   const [open, setOpen] = useState(false);
