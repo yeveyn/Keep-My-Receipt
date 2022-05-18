@@ -36,14 +36,14 @@ class CustomWebChromeClient(private val activity: AppCompatActivity) : WebChrome
         }
         filePathCallbackLollipop = filePathCallback
         val isCapture = fileChooserParams.isCaptureEnabled
-//        if (activity is IImageHandler) {
-//            activity.takePicture(filePathCallbackLollipop)
-//        }
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
-
-        startActivityForResult(activity, intent, 25, null)
+        if (activity is IImageHandler) {
+            activity.takePicture(filePathCallbackLollipop)
+        }
+//        val intent = Intent(Intent.ACTION_GET_CONTENT)
+//        intent.addCategory(Intent.CATEGORY_OPENABLE)
+//        intent.type = "image/*"
+//
+//        startActivityForResult(activity, intent, 25, null)
         filePathCallbackLollipop = null
 
         return true
