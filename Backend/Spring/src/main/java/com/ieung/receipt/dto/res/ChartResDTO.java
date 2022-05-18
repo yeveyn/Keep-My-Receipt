@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChartResDTO implements Comparable<ChartResDTO>{
+public class ChartResDTO{
     @Schema(description = "태그 이름")
     private String tagName;
 
@@ -22,9 +22,7 @@ public class ChartResDTO implements Comparable<ChartResDTO>{
     @Schema(description = "총 금액")
     private int totalCost;
 
-
-    @Override
-    public int compareTo(ChartResDTO o) {
-        return this.tagName.compareTo(o.tagName);
+    public boolean equals(Object o){
+        return this.tagName.equals(((ChartResDTO)o).getTagName());
     }
 }
