@@ -193,8 +193,29 @@ export default function BudgetReport() {
     '기타 비용',
   ];
   const revenueMainCategories = ['수입', '기타 수입'];
-  const clickDownload = () => {
+  const clickDownload = async () => {
     console.log('다운로드 버튼 클릭!');
+    await axios
+      .get(`https://k6d104.p.ssafy.io/api/spring/${id}/report/budget/excel`, {
+        responseType: 'blob',
+      })
+      .then((result) => {
+        console.log(result);
+        console.log(result.headers['content-type']);
+        const url = window.URL.createObjectURL(
+          new Blob([result.data], {
+            type: result.headers['content-type'],
+          }),
+        );
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'example.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   useEffect(() => {
