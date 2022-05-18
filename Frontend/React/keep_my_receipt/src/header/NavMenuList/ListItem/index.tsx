@@ -91,7 +91,7 @@ export default function ListItem() {
         });
     }
     // 현재 유저 권한 조회하기
-  }, []);
+  }, [myAccessToken, id]);
 
   // 메뉴 > 로그인 로그아웃
   let mystring = '로그인';

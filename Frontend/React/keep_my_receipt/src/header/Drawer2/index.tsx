@@ -217,11 +217,19 @@ export default function PersistentDrawerRight() {
             <>
               <Grid container>
                 <Grid item xs={8}>
-                  <IconButton
+                  <Button
+                    sx={{ ...(open && { display: 'none' }), pt: '20px' }}
+                    onClick={handleDrawerOpen}
+                  >
+                    {' '}
+                    <img src="/images/randing/jw3.png" width="50px"></img>
+                  </Button>
+
+                  {/* <IconButton
                     color="primary"
                     aria-label="open drawer"
                     edge="end"
-                    onClick={handleDrawerOpen}
+
                     sx={{
                       ...(open && { display: 'none' }),
                       my: 2,
@@ -230,7 +238,7 @@ export default function PersistentDrawerRight() {
                     }}
                   >
                     <MenuIcon />
-                  </IconButton>
+                  </IconButton> */}
                 </Grid>
                 <Grid item xs={1.6}>
                   <Button

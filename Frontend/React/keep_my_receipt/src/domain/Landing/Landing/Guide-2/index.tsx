@@ -7,8 +7,14 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import { Title, Description } from '../Guide-1/styles';
+import {
+  Title,
+  Description,
+  Point,
+  Point2,
+  CardTitle,
+  CardDescription,
+} from './styles';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 
 import 'animate.css/animate.min.css';
@@ -19,7 +25,8 @@ export default function GuideSecond() {
       style={{
         paddingTop: '1vw',
         paddingBottom: '1vw',
-        background: '#f6f4ee',
+        // background: '#f6f4ee',
+        background: '#fff',
         objectFit: 'cover',
       }}
     >
@@ -46,12 +53,10 @@ export default function GuideSecond() {
                 }}
               >
                 <Title>영수증 등록</Title>
-                <Description>보고서에는 어쩌구 저쩌구</Description>
-                <Description> 어쩌구 저쩌구</Description>
+                <Description></Description>
               </Box>
             </AnimationOnScroll>
           </Grid>
-
           {/* 카드1 */}
           <Grid item xs={12} sm={4}>
             <AnimationOnScroll animateIn="animate__fadeIn">
@@ -59,77 +64,92 @@ export default function GuideSecond() {
                 sx={{
                   marginLeft: ' 2vw',
                   marginRight: '2vw',
+                  padding: '2vm',
                 }}
               >
                 <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  height="200"
-                  image="/images/randing/meeting.png"
-                />
-                <CardContent sx={{ height: '200px' }}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
+                  sx={{
+                    paddingTop: '20px',
+                    paddingLeft: '10px',
+                  }}
+                >
+                  <img src="/images/randing/download.png"></img>
+                </CardMedia>
+                <CardContent
+                  sx={{
+                    padding: '10px',
+                    height: '10rem ',
+                  }}
+                >
+                  <CardTitle>영수증 업로드</CardTitle>
+                  <CardDescription>
+                    언제 어디서든, 원할 때 간편하게 영수증 사진을 찍어
+                    관리자에게 보낼 수 있어요.
+                  </CardDescription>
                 </CardContent>
               </Card>
             </AnimationOnScroll>
-          </Grid>
+          </Grid>{' '}
           <Grid item xs={12} sm={4}>
             <AnimationOnScroll animateIn="animate__fadeIn">
               <Card
                 sx={{
                   marginLeft: ' 2vw',
                   marginRight: '2vw',
+                  padding: '2vm',
                 }}
               >
                 <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  height="200"
-                  image="/images/randing/meeting.png"
-                />
-                <CardContent sx={{ height: '200px' }}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
+                  sx={{
+                    paddingTop: '20px',
+                    paddingLeft: '10px',
+                  }}
+                >
+                  <img src="/images/randing/search.png"></img>
+                </CardMedia>
+                <CardContent
+                  sx={{
+                    padding: '10px',
+                    height: '10rem ',
+                  }}
+                >
+                  <CardTitle>AI 인식</CardTitle>
+                  <CardDescription>
+                    AI가 영수증 사진을 분석해 총 금액과 날짜를 자동으로 인식
+                    해줘요.
+                  </CardDescription>
                 </CardContent>
               </Card>
             </AnimationOnScroll>
-          </Grid>
+          </Grid>{' '}
           <Grid item xs={12} sm={4}>
             <AnimationOnScroll animateIn="animate__fadeIn">
               <Card
                 sx={{
                   marginLeft: ' 2vw',
                   marginRight: '2vw',
+                  padding: '2vm',
                 }}
               >
                 <CardMedia
-                  component="img"
-                  alt="green iguana"
-                  height="200"
-                  image="/images/randing/meeting.png"
-                />
-                <CardContent sx={{ height: '200px' }}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
+                  sx={{
+                    paddingTop: '20px',
+                    paddingLeft: '10px',
+                  }}
+                >
+                  <img src="/images/randing/speaker.png"></img>
+                </CardMedia>
+                <CardContent
+                  sx={{
+                    padding: '10px',
+                    height: '10rem ',
+                  }}
+                >
+                  <CardTitle>요청과 알림</CardTitle>
+                  <CardDescription>
+                    영수증을 제출하면 관리자에게 알림을 보내드려요. 요청이
+                    들어올 때마다 바로 확인하세요.
+                  </CardDescription>
                 </CardContent>
               </Card>
             </AnimationOnScroll>
