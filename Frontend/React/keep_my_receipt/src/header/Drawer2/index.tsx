@@ -113,69 +113,15 @@ export default function PersistentDrawerRight() {
     }
   };
 
-  const [addOpen, setAddOpen] = React.useState(false);
-  const [listOpen, setListOpen] = React.useState(false);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const addHandleClick = () => {
-    setAddOpen(!addOpen);
-  };
-
-  const listHandleClick = () => {
-    setListOpen(!listOpen);
-  };
-
-  const receipt = () => {
-    navigate(`/club/${id}/receipt/camera`);
-    setMobileOpen(!mobileOpen);
-    console.log('영수증 등록 클릭');
-  };
-
-  const bookCreate = () => {
-    navigate(`/club/${id}/book/create`);
-  };
-  const receiptList = () => {
-    navigate(`/club/${id}/receipt/requestList`);
-  };
-
-  const bookList = () => {
-    navigate(`/club/${id}/book`);
-  };
-
-  const chart = () => {
-    navigate(`/club/${id}/book`);
-  };
-
-  const manage = () => {
-    navigate(`/club/${id}/manage`);
-  };
-
-  const myClub = () => {
-    navigate(`/club`);
-  };
-
-  const myMain = () => {
-    navigate(`/`);
+  const onClick = () => {
+    navigate('/club');
   };
 
   const onClickLogin = () => {
     navigate('/login');
   };
 
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     if (id) {
@@ -214,16 +160,17 @@ export default function PersistentDrawerRight() {
           {isLogin ? (
             <>
               <Grid container>
-                <Grid item xs={8}>
-                  <Button sx={{ pt: '20px' }}>
+                <Grid item xs={9}>
+                  <Button onClick={onClick} sx={{ pt: '20px' }}>
                     <img src="/images/randing/jw3.png" width="50px"></img>
                   </Button>
                 </Grid>
-                <Grid item xs={1.6}>
+                <Grid item xs={1}>
                   <Box
                     sx={{
                       my: 2,
                       color: 'black',
+                      pt: '15px',
                     }}
                   >
                     <AlarmItem />
@@ -234,6 +181,7 @@ export default function PersistentDrawerRight() {
                     sx={{
                       my: 2,
                       color: 'black',
+                      pt: '15px',
                     }}
                   >
                     <SettingItem />

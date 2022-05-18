@@ -131,7 +131,7 @@ export default function () {
           ></BottomNavigationAction>
 
           {/* 내 모임 가기 */}
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             sx={{
               padding: 0,
               '@media (max-width: 768px)': {
@@ -144,7 +144,7 @@ export default function () {
             }}
             label={'내 모임'}
             icon={<CelebrationIcon />}
-          ></BottomNavigationAction>
+          ></BottomNavigationAction> */}
 
           {/* 영수증 등록 */}
           <BottomNavigationAction
