@@ -100,6 +100,7 @@ public class ChartService {
                 totalCost += transactionDetail.getPrice()*-1;
             }
             chartGraphResDTOList.add(0, ChartGraphResDTO.builder().year(year).month(month).totalCost(totalCost).build());
+            month--;
         }
         return chartGraphResDTOList;
     }
