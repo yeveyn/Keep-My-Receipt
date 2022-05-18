@@ -61,9 +61,6 @@ export default function FlowChart({
                   .concat('원')}
               </Typography>
             </Grid>
-            <Grid xs={1} sm={1} md={1} container justifyContent="end">
-              &nbsp;
-            </Grid>
           </Grid>
         </Paper>
       </Stack>
