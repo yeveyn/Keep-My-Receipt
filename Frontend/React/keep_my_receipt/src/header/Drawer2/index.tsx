@@ -130,6 +130,10 @@ export default function PersistentDrawerRight() {
     setListOpen(!listOpen);
   };
 
+  const report = () => {
+    setOpen(false);
+    navigate(`/club/${id}/report/asset`);
+  };
   const receipt = () => {
     setOpen(false);
     navigate(`/club/${id}/receipt/camera`);
@@ -153,7 +157,7 @@ export default function PersistentDrawerRight() {
 
   const chart = () => {
     setOpen(false);
-    navigate(`/club/${id}/book`);
+    navigate(`/club/${id}/analytics/mainChart`);
   };
 
   const manage = () => {
@@ -306,7 +310,7 @@ export default function PersistentDrawerRight() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Profile />
+        <Profile isLogin={isLogin} />
         <List
           sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
           component="nav"
@@ -377,9 +381,27 @@ export default function PersistentDrawerRight() {
                   )}
                 </List>
               </Collapse>
-              <ListItemButton onClick={chart}>
+              <ListItemButton onClick={listHandleClick}>
                 <ListItemText primary="분석" />
+                {listOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
+              <Collapse in={listOpen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton onClick={chart} sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText primary="차트" />
+                  </ListItemButton>{' '}
+                  <ListItemButton onClick={report} sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PeopleAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="보고서" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+
               {userAuthNum <= 2 ? (
                 <>
                   <ListItemButton onClick={manage}>

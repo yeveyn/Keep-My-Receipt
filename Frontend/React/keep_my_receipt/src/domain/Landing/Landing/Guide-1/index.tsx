@@ -1,14 +1,16 @@
 import { Title, Description, Point, Point2 } from './styles';
-import { Box, Button, Container, Grid, Slide } from '@mui/material';
+import { Box, Button, Container, Grid, useMediaQuery } from '@mui/material';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import 'animate.css/animate.min.css';
 export default function GuideFirst() {
+  const matches = useMediaQuery('(min-width:500px)');
   return (
     <Container
-      sx={{
-        width: '100%',
-        marginY: '20%',
-      }}
+      style={
+        matches
+          ? { width: '100%', marginTop: '100px' }
+          : { width: '100%', marginTop: '0px' }
+      }
       fixed
       maxWidth="lg"
     >
@@ -24,10 +26,11 @@ export default function GuideFirst() {
         <Grid item xs={12} sm={6}>
           <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
             <Box
-              sx={{
-                marginBottom: '40px',
-                paddingTop: '200px',
-              }}
+              style={
+                matches
+                  ? { marginBottom: '40px', paddingTop: '200px' }
+                  : { marginBottom: '40px', paddingTop: '40px' }
+              }
             >
               <Point2>#내역 #회비</Point2>
               <Title>모임 지출 내역과</Title>

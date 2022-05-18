@@ -19,7 +19,7 @@ function Landing() {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [accessToken]);
 
   return (
     <div>
