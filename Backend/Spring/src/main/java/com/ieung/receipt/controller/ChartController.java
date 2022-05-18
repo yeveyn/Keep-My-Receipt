@@ -1,5 +1,6 @@
 package com.ieung.receipt.controller;
 
+import com.ieung.receipt.dto.res.ChartGraphResDTO;
 import com.ieung.receipt.dto.res.ChartResDTO;
 import com.ieung.receipt.service.ChartService;
 import com.ieung.receipt.service.common.CommonResult;
@@ -43,5 +44,12 @@ public class ChartController {
         YearMonth yearMonth = YearMonth.of(year, month);
         List<ChartResDTO> chartResDTOList = chartService.getChildChartData(clubId, yearMonth, parentTag);
         return responseService.getListResult(chartResDTOList);
+    }
+
+    @Operation(summary = "꺾은선 그래프", description = "꺾은선 그래프에 사용될 월별 거래 금액")
+    @GetMapping(value = "/chart/line/{clubId}/{year}/{month}")
+    public @ResponseBody CommonResult getLineChart(@PathVariable @NotBlank Long clubId, @PathVariable @NotBlank int year, @PathVariable @NotBlank int month){
+        List<ChartGraphResDTO> chartGraphResDTOList = chartService.getChartGraph(clubId, year, month);
+        return responseService.getListResult(chartGraphResDTOList);
     }
 }

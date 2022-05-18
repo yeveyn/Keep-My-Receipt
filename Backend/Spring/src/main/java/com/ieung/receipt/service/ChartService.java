@@ -1,5 +1,6 @@
 package com.ieung.receipt.service;
 
+import com.ieung.receipt.dto.res.ChartGraphResDTO;
 import com.ieung.receipt.dto.res.ChartResDTO;
 import com.ieung.receipt.dto.res.TagResDTO;
 import com.ieung.receipt.entity.TransactionDetail;
@@ -78,5 +79,28 @@ public class ChartService {
         }
 
         return chartResDTOList;
+    }
+
+    /**
+     * 1년간 거래 총액 추이
+     * @param clubId, year, month
+     */
+    public List<ChartGraphResDTO> getChartGraph(Long clubId, int year, int month){
+        List<ChartGraphResDTO> chartGraphResDTOList = new ArrayList<ChartGraphResDTO>();
+        for(int i=0; i<12; i++){
+            int totalCost = 0;
+            if(month==0){
+                month=12;
+                year-=1;
+            }
+            YearMonth yearMonth = YearMonth.of(year, month);
+            List<TransactionDetail> transactionDetailList = transactionDetailRepository.findByPayDate(clubId, yearMonth);
+            for(TransactionDetail transactionDetail : transactionDetailList){
+                if(transactionDetail.getPrice()>0) continue;
+                totalCost += transactionDetail.getPrice()*-1;
+            }
+            chartGraphResDTOList.add(0, ChartGraphResDTO.builder().year(year).month(month).totalCost(totalCost).build());
+        }
+        return chartGraphResDTOList;
     }
 }
