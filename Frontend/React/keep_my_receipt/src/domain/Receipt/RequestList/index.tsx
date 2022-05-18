@@ -78,6 +78,7 @@ export default function RequestListIndex() {
 
   return (
     <Container maxWidth="md">
+      <input type="file" accept="image/*;capture=camera" title="test" />
       <Grid
         container
         direction="column"
