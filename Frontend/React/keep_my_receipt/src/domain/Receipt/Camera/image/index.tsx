@@ -72,6 +72,7 @@ export default function CreateImage({ onImgChange }: CreateImageProps) {
             <Input
               onChange={onChange}
               accept="image/*"
+              capture
               id="icon-btn-file"
               type="file"
             />

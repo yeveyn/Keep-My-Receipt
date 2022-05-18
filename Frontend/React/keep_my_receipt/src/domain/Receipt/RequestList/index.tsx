@@ -78,7 +78,6 @@ export default function RequestListIndex() {
 
   return (
     <Container maxWidth="md">
-      <input type="file" accept="image/*;capture=camera" title="test" />
       <Grid
         container
         direction="column"
@@ -90,7 +89,6 @@ export default function RequestListIndex() {
             : { marginTop: 0, marginBottom: 100, width: '100%' }
         }
       >
-        <input title="test" type="file" accept="image/*" />
         <Card
           variant="outlined"
           style={{
