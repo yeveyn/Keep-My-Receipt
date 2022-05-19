@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
 import { ArrowBackIos } from '@mui/icons-material';
 import toCurrency from '../../../../services/toCurrency';
-import { apiDeleteTransaction } from '../../api/bookApi';
+import { apiDeleteTransaction } from '../../api/bookReadApi';
 
 interface DetailHeaderProps {
   state: any;

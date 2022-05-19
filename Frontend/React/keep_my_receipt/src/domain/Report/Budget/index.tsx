@@ -179,6 +179,11 @@ export default function BudgetReport() {
         lists.forEach((mainCat) => {
           if (mainCat.type === '예산') {
             const tmpList = [...mainCat.list];
+            console.log('tmpList');
+            tmpList.sort(function (a, b) {
+              return a.lcName < b.lcName ? -1 : a.lcName > b.lcName ? 1 : 0;
+            });
+            console.log(tmpList);
             let tmp = 0;
             tmpList.forEach((lcName) => {
               let tmp2 = 0;
