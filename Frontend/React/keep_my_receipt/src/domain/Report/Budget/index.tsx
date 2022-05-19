@@ -121,6 +121,27 @@ export default function BudgetReport() {
     }
     setMonth(tmpMonth);
   }
+  function clearData() {
+    setBudgetList(defaultData);
+    setSumBudget(0);
+    setExpenseList(defaultData);
+    setSumExpense(0);
+    setRevenueList(defaultData);
+    setSumRevenue(0);
+  }
+  const checkEmpty = (previousList: ReportType[]) => {
+    console.log('checkEmpty', previousList);
+    if (previousList === null) {
+      clearData();
+      return false;
+    }
+    const tmpList = [...previousList];
+    if (tmpList[0].lcName === 'test') {
+      clearData();
+      return false;
+    }
+    return true;
+  };
   const loadData = async () => {
     // Todo API connect
     await axios
@@ -131,6 +152,9 @@ export default function BudgetReport() {
       )
       .then((response) => {
         const lists = response.data.data;
+        if (!checkEmpty(lists)) {
+          return;
+        }
         lists.forEach((mainCat) => {
           if (mainCat.type === '예산') {
             const tmpList = [...mainCat.list];
