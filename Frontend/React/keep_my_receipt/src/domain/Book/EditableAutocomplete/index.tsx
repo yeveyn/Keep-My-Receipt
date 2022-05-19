@@ -1,15 +1,31 @@
-import { useEffect, useState } from 'react';
-import { Stack, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Grid, IconButton, Typography, Stack, TextField } from '@mui/material';
+import {
+  Backdrop,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Fade,
+} from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import { Cancel, Edit, InfoOutlined } from '@mui/icons-material';
-import { apiReadAllCategory } from '../api/categoryApi';
+import { TransitionProps } from '@mui/material/transitions';
+import { DeleteOutline, EditOutlined, InfoOutlined } from '@mui/icons-material';
+
+import {
+  apiCreateCategory,
+  apiUpdateCategory,
+  apiReadAllCategory,
+  apiDeleteCategory,
+} from '../api/categoryApi';
 import { TypeNameKeys } from '../bookReducer';
 import { ASType, BSType } from '../types';
 
-type OptionType = {
-  inputValue?: string;
-  name: string;
-};
+type OptionType = BSType &
+  ASType & {
+    inputValue?: string;
+    name: string;
+  };
 
 type EditableAutocompleteType = {
   label: string;
@@ -21,13 +37,28 @@ type EditableAutocompleteType = {
   requestCreateValue: (value: string | number) => void;
 };
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: JSX.Element;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Fade ref={ref} {...props} />;
+  // <Slide direction="up" ref={ref} {...props} />;
+});
+
 const filter = createFilterOptions<OptionType>();
 
-const toFilterOption = (objectArray: (BSType & ASType)[]) =>
-  objectArray.map((obj) => ({
-    ...obj,
-    name: obj.ascName ? obj.ascName : obj.bscName,
-  }));
+const toFilterOption = (objectArray: OptionType[]) =>
+  objectArray
+    .map((obj) => ({
+      ...obj,
+      name: obj.ascName ? obj.ascName : obj.bscName,
+    }))
+    .concat({ name: '', ascId: 0, ascName: '', bscId: 0, bscName: '' });
+
+const getCategoryId = (option: OptionType) =>
+  option.ascId ? option.ascId : option.bscId;
 
 export default function EditableAutocomplete(props: EditableAutocompleteType) {
   const [options, setOptions] = useState([]);
@@ -45,6 +76,67 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
     }
   };
 
+  const createCategory = async (smallCategory: string) => {
+    await apiCreateCategory(
+      Number(props.clubId),
+      props.typeName,
+      props.largeCatName,
+      smallCategory,
+    ).then(() => getAllCategory());
+  };
+
+  const updateCategory = async (smallCatName: string, smallCatId: number) => {
+    await apiUpdateCategory(
+      Number(props.clubId),
+      props.typeName,
+      props.largeCatName,
+      smallCatName,
+      smallCatId,
+    ).then(() => getAllCategory());
+  };
+
+  const deleteCategory = async (smallCatId: number) => {
+    await apiDeleteCategory(props.typeName, smallCatId).then(() =>
+      getAllCategory(),
+    );
+  };
+
+  const [nameOnEdit, setNameOnEdit] = React.useState('');
+  const [idOnEdit, setIdOnEdit] = useState(0);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNameOnEdit(event.target.value);
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>,
+    tagName: string,
+    tagId: number,
+  ) => {
+    // 아이콘 클릭 시 겹치는 메뉴 열리는 이벤트 차단
+    e.stopPropagation();
+    setOpen(true);
+    setNameOnEdit(tagName);
+    setIdOnEdit(tagId);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setNameOnEdit('');
+    setIdOnEdit(0);
+  };
+
+  const handleUpdate = () => {
+    if (!nameOnEdit) {
+      alert('빈 값은 입력할 수 없습니다');
+      return;
+    }
+    updateCategory(nameOnEdit, idOnEdit);
+    handleClose();
+  };
+
   useEffect(() => {
     getAllCategory();
   }, [props.largeCatName]);
@@ -54,11 +146,37 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
       <Autocomplete
         /** 1. 옵션 리스트 렌더링 */
         options={options}
-        renderOption={(props, option) => (
+        renderOption={(props, option: OptionType) => (
           <li {...props}>
-            {option.name}
-            <Edit />
-            <Cancel />
+            {option.name ? (
+              <Grid container justifyContent="space-between">
+                <Grid item>
+                  <Typography>{option.name}</Typography>
+                </Grid>
+                <Grid item>
+                  <Stack direction="row" spacing={1}>
+                    <IconButton
+                      onClick={(e) => {
+                        handleOpen(e, option.name, getCategoryId(option));
+                      }}
+                    >
+                      <EditOutlined />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        deleteCategory(getCategoryId(option));
+                      }}
+                    >
+                      <DeleteOutline />
+                    </IconButton>
+                  </Stack>
+                </Grid>
+              </Grid>
+            ) : option.inputValue ? (
+              <Typography>{option.inputValue} 추가</Typography>
+            ) : (
+              <Typography>추가하려면 새로 입력!</Typography>
+            )}
           </li>
         )}
         /** 2. 옵션 검색 결과 */
@@ -74,6 +192,10 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
             filtered.push({
               inputValue,
               name: `Add "${inputValue}"`,
+              bscName: '',
+              bscId: 0,
+              ascName: '',
+              ascId: 0,
             });
           }
 
@@ -87,16 +209,11 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
             spacing={1}
             marginBottom={1}
           >
-            <TextField
-              {...params}
-              required
-              label={props.label}
-              variant="standard"
-            />
+            <TextField {...params} label={props.label} variant="standard" />
             <InfoOutlined />
           </Stack>
         )}
-        getOptionLabel={(option) => {
+        getOptionLabel={(option: OptionType) => {
           // Value selected with enter, right from the input
           if (typeof option === 'string') {
             return option;
@@ -109,14 +226,17 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
           return option.name;
         }}
         /** 4. 값 바뀌면서 트리거 발동 */
-        value={props.value ? { name: props.value } : null}
+        value={{ name: props.value }}
+        isOptionEqualToValue={(option: OptionType, value) =>
+          option.name === value.name
+        }
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
             props.setValue(newValue);
           } else if (newValue && newValue.inputValue) {
             // Create a new value from the user input
+            createCategory(newValue.inputValue);
             props.setValue(newValue.inputValue);
-            props.requestCreateValue(newValue.inputValue);
           } else if (newValue && newValue.name) {
             props.setValue(newValue.name);
           } else {
@@ -124,10 +244,39 @@ export default function EditableAutocomplete(props: EditableAutocompleteType) {
           }
         }}
         // autoHighlight
+        // disableCloseOnSelect
         selectOnFocus
+        clearOnEscape
         clearOnBlur
         handleHomeEndKeys
       />
+
+      {/* 수정 다이얼로그 */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        keepMounted
+        TransitionComponent={Transition}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        // BackdropProps={{ timeout: 500 }}
+        // fullWidth
+        // maxWidth="xs"
+      >
+        <DialogContent dividers>
+          <TextField
+            label="소분류 이름 변경"
+            value={nameOnEdit}
+            onChange={handleChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleUpdate}>확인</Button>
+          <Button onClick={handleClose} color="secondary">
+            취소
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

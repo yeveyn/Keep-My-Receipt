@@ -51,6 +51,7 @@ def tesseractOCR(receipt, type):
     dealDate = ""
 
     for text in text_list:
+        if len(totalPrice)>0 and len(dealDate)>0 : break
         replaceText = text.replace(" ","")
         if replaceText.find("받을금액")!=-1:
             replaceText = replaceText[replaceText.find("받을금액")+4:]
@@ -69,17 +70,13 @@ def tesseractOCR(receipt, type):
             dealDateList = text.split(" ")
             dealDateList = list(filter(("").__ne__, dealDateList))
             dateFlag = False
-            timeFlag = False
             for dealDateItem in dealDateList:
                 if dealDateItem[0] >= '0' and dealDateItem[0] <= '9' :
                     if dateFlag == False :
-                        dateFlag = True
-                        dealDateItem = dealDateItem.replace(".", "/")
-                        dealDateItem = dealDateItem.replace("-", "/")
-                        dealDate += dealDateItem + " "
-                    elif timeFlag == False :
-                        timeFlag = True
+                        dealDateItem = dealDateItem.replace(".", "-")
+                        dealDateItem = dealDateItem.replace("/", "-")
                         dealDate += dealDateItem
+                        break
 
 
     format_data = "%y/%m/%d %H:%M:%S"

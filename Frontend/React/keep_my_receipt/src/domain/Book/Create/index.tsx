@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Container, Divider } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 
 import Header from './Header';
 import Item from './Item';
@@ -9,7 +9,10 @@ import bookReducer, {
   initBookState,
   toTransactionType,
 } from '../bookReducer';
-import { apiCreateTransaction } from '../api/bookApi';
+import {
+  apiCreateTransaction,
+  apiValidateCreateTransaction,
+} from '../api/bookApi';
 import { CreateParamType } from '../types';
 import DeleteButton from './DeleteButton';
 import AddButton from './AddButton';
@@ -40,9 +43,13 @@ export default function BookCreate() {
   const createTransaction = async () => {
     const requestId = params && params.requestId;
     const payload = toTransactionType(state, requestId);
-    await apiCreateTransaction(Number(clubId), payload).then((res) => {
-      res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
-    });
+    if (apiValidateCreateTransaction(payload)) {
+      if (confirm('등록하시겠습니까?')) {
+        await apiCreateTransaction(Number(clubId), payload).then((res) => {
+          res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -105,17 +112,10 @@ export default function BookCreate() {
       <Box justifySelf="end">
         항목
         <AddButton page={page} setPage={setPage} dispatch={dispatch} />
-        {/* <DeleteButton page={page} setPage={setPage} dispatch={dispatch} /> */}
+        <DeleteButton page={page} setPage={setPage} dispatch={dispatch} />
       </Box>
 
-      <Button
-        onClick={() => {
-          if (confirm('등록하시겠습니까?')) {
-            createTransaction();
-          }
-        }}
-        variant="contained"
-      >
+      <Button onClick={createTransaction} variant="contained">
         등록!
       </Button>
     </Container>

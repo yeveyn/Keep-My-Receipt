@@ -15,6 +15,11 @@ import ReportIndex from './form/index';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+interface ListType {
+  type: string;
+  list: ReportType[];
+}
+
 interface ReportType {
   lcName: string;
   list: ItemType[];
@@ -129,17 +134,33 @@ export default function BudgetReport() {
     setRevenueList(defaultData);
     setSumRevenue(0);
   }
-  const checkEmpty = (previousList: ReportType[]) => {
+  const checkEmpty = (previousList: ListType[]) => {
     console.log('checkEmpty', previousList);
     if (previousList === null) {
       clearData();
       return false;
     }
     const tmpList = [...previousList];
-    if (tmpList[0].lcName === 'test') {
-      clearData();
-      return false;
-    }
+    const checkList = [];
+    tmpList.forEach((list) => {
+      checkList.push(list.type);
+    });
+    checkList.forEach((type) => {
+      if (!(type in ['지출', '예산', '수입'])) {
+        if (type === '지출') {
+          setExpenseList(defaultData);
+          setSumExpense(0);
+        }
+        if (type === '예산') {
+          setBudgetList(defaultData);
+          setSumBudget(0);
+        }
+        if (type == '수입') {
+          setRevenueList(defaultData);
+          setSumRevenue(0);
+        }
+      }
+    });
     return true;
   };
   const loadData = async () => {
