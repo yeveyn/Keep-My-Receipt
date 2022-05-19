@@ -268,15 +268,17 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
       /> */}
 
       {/* 1차 태그 */}
-      <EditableAutocompleteTag
-        label="태그"
-        clubId={clubId}
-        value={item.largeTag}
-        setValue={setLargeTag}
-        requestCreateValue={(value) => {
-          console.log('태그 추가 API 요청', value);
-        }}
-      />
+      {(item.type === '지출' || item.type === '자산') && (
+        <EditableAutocompleteTag
+          label="태그"
+          clubId={clubId}
+          value={item.largeTag}
+          setValue={setLargeTag}
+          requestCreateValue={(value) => {
+            console.log('태그 추가 API 요청', value);
+          }}
+        />
+      )}
 
       {/* <EditableListWrappedForTag
         clubId={clubId}
