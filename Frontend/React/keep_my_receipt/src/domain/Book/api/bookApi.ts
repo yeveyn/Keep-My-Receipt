@@ -28,28 +28,36 @@ export type TransactionType = {
   }[];
 };
 
+/** 요청 전 데이터 검사 */
+export const apiValidateCreateTransaction = (
+  data: TransactionType,
+): boolean => {
+  // 몇 번째 아이템인지 나타냄
+  let index = 1;
+  for (const item of data.list) {
+    if (item.name === '') {
+      alert(`${index}번째 세부 항목명을 입력해주세요`);
+      return false;
+    } else if (item.price === 0) {
+      alert(`${index}번째 세부 항목의 금액은 0보다 커야 합니다`);
+      return false;
+    } else if (item.largeCategory === '') {
+      alert(`${index}번째 세부 항목의 대분류를 선택해주세요`);
+      return false;
+    } else if (item.smallCategory === '') {
+      alert(`${index}번째 세부 항목의 소분류를 선택해주세요`);
+      return false;
+    }
+    index += 1;
+  }
+  return true;
+};
+
 // 거래내역
 export const apiCreateTransaction = async (
   clubId: number,
   data: TransactionType,
 ) => {
-  // 데이터 검사
-  data.list.forEach((item, index) => {
-    if (item.name === '') {
-      alert(`${index + 1} 번째 세부 항목명을 입력해주세요`);
-      return null;
-    } else if (item.price === 0) {
-      alert(`${index + 1} 번째 세부 항목의 금액을 입력해주세요`);
-      return null;
-    } else if (item.largeCategory === '') {
-      alert(`${index + 1} 번째 세부 항목의 대분류를 선택해주세요`);
-      return null;
-    } else if (item.smallCategory === '') {
-      alert(`${index + 1} 번째 세부 항목의 소분류를 선택해주세요`);
-      return null;
-    }
-  });
-
   return await axios({
     method: 'post',
     url: `${BASE_URL}/club/${clubId}/transaction`,
@@ -59,8 +67,6 @@ export const apiCreateTransaction = async (
     .then((res) => {
       if (res.data.output == 200) {
         console.log(res.data.msg);
-      } else {
-        alert(res.data.msg);
       }
       return res;
     })
