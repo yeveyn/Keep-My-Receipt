@@ -123,10 +123,6 @@ export default function BudgetReport() {
   }
   const loadData = async () => {
     // Todo API connect
-    const params = {
-      date: curYear.concat('-').concat(curMonth),
-    };
-    console.log(axios.defaults.headers);
     await axios
       .get(
         `https://k6d104.p.ssafy.io/api/spring/${id}/report/budget?date=${curYear
@@ -134,7 +130,6 @@ export default function BudgetReport() {
           .concat(curMonth)}`,
       )
       .then((response) => {
-        console.log(response.data.data);
         const lists = response.data.data;
         lists.forEach((mainCat) => {
           if (mainCat.type === '예산') {
@@ -150,7 +145,7 @@ export default function BudgetReport() {
             });
             setSumBudget(tmp);
             setBudgetList(tmpList);
-            console.log(tmpList);
+            console.log(budgetList);
           } else if (mainCat.type === '지출') {
             const tmpList = [...mainCat.list];
             let tmp = 0;
