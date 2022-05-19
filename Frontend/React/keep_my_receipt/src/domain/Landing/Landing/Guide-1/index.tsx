@@ -8,8 +8,8 @@ export default function GuideFirst() {
     <Container
       style={
         matches
-          ? { width: '100%', marginTop: '100px' }
-          : { width: '100%', marginTop: '0px' }
+          ? { width: '100%', marginTop: '100px', marginBottom: '100px' }
+          : { width: '100%', marginTop: '0px', marginBottom: '100px' }
       }
       fixed
       maxWidth="lg"

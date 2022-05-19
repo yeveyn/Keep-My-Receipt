@@ -16,7 +16,7 @@ export const Title = styled.div`
   font-size: 3.5vw;
   letter-spacing: -5px;
   color: black;
-  margin: 8px;
+  margin-top: 13px;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
   animation-delay: 0.8s;
   @media only screen and (max-width: 768px) {

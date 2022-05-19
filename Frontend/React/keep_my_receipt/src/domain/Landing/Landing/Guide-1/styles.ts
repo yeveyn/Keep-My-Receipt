@@ -16,9 +16,9 @@ export const Title = styled.div`
   font-size: 3.5vw;
   letter-spacing: -5px;
   color: black;
-  margin: 8px;
+  margin-left: 8px;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
-  animation-delay: 0.8s;
+  animation-delay: 3.5s;
   @media only screen and (max-width: 768px) {
     font-size: 8vw;
   }
@@ -32,7 +32,7 @@ export const Description = styled.div`
   letter-spacing: -2px;
   color: gray;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
-  animation-delay: 1.1s;
+  animation-delay: 4s;
   @media only screen and (max-width: 768px) {
     font-size: 4vw;
   }
@@ -55,11 +55,11 @@ export const Point2 = styled.div`
   font-size: 1.5vw;
   letter-spacing: -2px;
   color: #3d6ef4;
-  margin: 8px;
+  margin-left: 8px;
   animation: ${focus} 0.3s cubic-bezier(0.55, 0.85, 0.68, 0.53) both;
-  animation-delay: 0.5s;
+  animation-delay: 3s;
 
   @media only screen and (max-width: 768px) {
-    font-size: 8vw;
+    font-size: 6vw;
   }
 `;

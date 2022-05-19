@@ -25,8 +25,8 @@ export default function GuideSecond() {
       style={{
         paddingTop: '1vw',
         paddingBottom: '1vw',
-        // background: '#f6f4ee',
-        background: '#fff',
+        background: '#f6f4ee',
+        // background: '#fff',
         objectFit: 'cover',
       }}
     >
@@ -49,7 +49,7 @@ export default function GuideSecond() {
             <AnimationOnScroll animateIn="animate__fadeIn">
               <Box
                 sx={{
-                  marginBottom: '60px',
+                  marginBottom: '20px',
                 }}
               >
                 <Title>영수증 등록</Title>
@@ -134,7 +134,7 @@ export default function GuideSecond() {
                 <CardMedia
                   sx={{
                     paddingTop: '20px',
-                    paddingLeft: '10px',
+                    paddingLeft: '20px',
                   }}
                 >
                   <img src="/images/randing/speaker.png"></img>
