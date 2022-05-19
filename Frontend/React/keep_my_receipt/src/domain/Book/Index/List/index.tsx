@@ -59,7 +59,7 @@ export default function BookList({
               '&:hover': { backgroundColor: '#f5f5f5', cursor: 'pointer' },
             }}
           >
-            <Stack spacing={0.5} paddingTop={0.5}>
+            <Stack spacing={0.5} paddingTop={0.5} sx={{ width: '10rem' }}>
               <Typography variant="body2" color="#757575">
                 {item.date}
               </Typography>
