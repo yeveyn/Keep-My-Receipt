@@ -33,7 +33,7 @@ export default function BookCreate() {
   // 아이템에 변화가 생길 때마다 재생성
   const sumTotalValue = useCallback(() => {
     const newTotalValue = state.items.reduce((prev, cur) => {
-      return prev + parseInt(cur.price.toString());
+      return prev + (cur.price ? cur.price : 0);
     }, 0);
     if (newTotalValue !== state.totalPrice) {
       dispatch(updateBook('totalPrice', newTotalValue));
@@ -60,9 +60,7 @@ export default function BookCreate() {
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', marginBottom: 8 }}>
-      <GreenBox marginX={-2} marginBottom={1}>
-        <PageTitleTypography>거래등록</PageTitleTypography>
-      </GreenBox>
+      <h2>거래등록</h2>
 
       {/* 거래 정보 */}
       <Header
@@ -84,8 +82,19 @@ export default function BookCreate() {
       /> */}
 
       {/* 각각의 항목 정보들 */}
+      {state.items.map((item, index) => (
+        <>
+          <Item
+            clubId={clubId}
+            item={item}
+            itemIndex={index}
+            dispatch={dispatch}
+            key={index}
+          />
+        </>
+      ))}
       {/* 현재 참조하는 아이템이 있을 때만 조건부 렌더링 */}
-      {clubId && state.items[page - 1] && (
+      {/* {clubId && state.items[page - 1] && (
         // 페이지네이션에 따라 한 개씩만 보여줘야 함
         <Item
           clubId={clubId}
@@ -93,12 +102,12 @@ export default function BookCreate() {
           itemIndex={page - 1}
           dispatch={dispatch}
         />
-      )}
-      <Divider />
+      )} */}
 
       <Box justifySelf="end">
-        <DeleteButton page={page} setPage={setPage} dispatch={dispatch} />
+        항목
         <AddButton page={page} setPage={setPage} dispatch={dispatch} />
+        {/* <DeleteButton page={page} setPage={setPage} dispatch={dispatch} /> */}
       </Box>
 
       <Button
@@ -107,6 +116,7 @@ export default function BookCreate() {
             createTransaction();
           }
         }}
+        variant="contained"
       >
         등록!
       </Button>
