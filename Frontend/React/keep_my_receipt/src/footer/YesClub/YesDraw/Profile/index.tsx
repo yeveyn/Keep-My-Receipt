@@ -6,15 +6,18 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
 
 export default function Profile(props: any) {
   const { id } = useParams();
   const [userName, setUserName] = useState('');
   const [clubImage, setClubImage] = useState('');
   const [clubName, setClubName] = useState('');
+  const [isLogin, setIsLogin] = useState(false);
+  const accessToken = sessionStorage.getItem('accessToken');
 
   const onGetName = () => {
-    if (props.isLogin) {
+    if (isLogin) {
       axios
         .get(`/api/spring/crew/info`)
         .then(function (response) {
@@ -41,8 +44,14 @@ export default function Profile(props: any) {
   };
 
   useEffect(() => {
+    if (accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
     onGetName();
     onGetClub();
+    console.log(userName);
   });
 
   return (
@@ -60,7 +69,11 @@ export default function Profile(props: any) {
           </ListItemAvatar>
           <ListItemText
             primary={clubName}
-            secondary={`안녕하세요! ${userName}님`}
+            secondary={
+              <Typography
+                sx={{ fontSize: '15px', wordBreak: 'keep-all' }}
+              >{`안녕하세요! ${userName}님`}</Typography>
+            }
           />
         </ListItem>
       </List>
