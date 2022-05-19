@@ -63,7 +63,7 @@ class WebAppInterface(private val mContext: Context) {
         val pendingIntent = PendingIntent.getActivity(mContext, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT)
 
         val builder = NotificationCompat.Builder(mContext, "MY_channel")
-            .setSmallIcon(R.drawable.ic_menu_send)
+            .setSmallIcon(com.ssafy.keep_my_receipt.R.drawable.keep_my_receipt_launcher_round)
             .setContentTitle("영수증을 부탁해")
             .setContentText("example.xlsx 다운로드 완료")
             .setContentIntent(pendingIntent)
