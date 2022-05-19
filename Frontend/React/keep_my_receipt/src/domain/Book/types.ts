@@ -1,5 +1,5 @@
 // 영수증 승인에서 거래 등록에 넘기는 데이터 타입
-export type CreateParamType = {
+export type ReceiptStateType = {
   requestId: number;
   imgUrl: string;
   date: string;
