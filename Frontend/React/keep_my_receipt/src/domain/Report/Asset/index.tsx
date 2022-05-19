@@ -10,6 +10,7 @@ import {
   MenuItem,
   DialogActions,
   Container,
+  useMediaQuery,
 } from '@mui/material';
 import ReportIndex from './form/index';
 import axios from 'axios';
@@ -193,11 +194,19 @@ export default function AssetReport() {
             type: result.headers['content-type'],
           }),
         );
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'example.xlsx';
-        link.click();
-        window.URL.revokeObjectURL(url);
+        if (window['Android']) {
+          const reader = new FileReader();
+          reader.readAsDataURL(result.data);
+          reader.onloadend = function () {
+            window['Android']['getBase64FromBlobData'](reader.result);
+          };
+        } else {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'example.xlsx';
+          link.click();
+          window.URL.revokeObjectURL(url);
+        }
       })
       .catch((e) => {
         console.log(e);
