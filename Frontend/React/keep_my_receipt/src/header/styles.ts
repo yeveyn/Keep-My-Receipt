@@ -46,7 +46,7 @@ export const ClubName = styled.p`
   margin: 0 0 0 0;
   color: #494949;
   @media only screen and (max-width: 768px) {
-    font-size: 6vw;
-    padding-top: 25px;
+    font-size: 5vw;
+    padding-top: 30px;
   }
 `;

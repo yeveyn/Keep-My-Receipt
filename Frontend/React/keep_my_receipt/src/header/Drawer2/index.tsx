@@ -167,13 +167,10 @@ export default function PersistentDrawerRight() {
                           {clubImage ? (
                             <ListItemAvatar
                               onClick={onClick}
-                              sx={{ pt: '30px' }}
+                              sx={{ pl: '20px', pt: '30px' }}
                             >
                               <img
                                 width="30rem"
-                                // src="/images/randing/home1.png"
-                                // src="/images/randing/homeLogo.png"
-                                // src="/images/randing/home.png"
                                 src="/images/randing/home3.png"
                               ></img>
                             </ListItemAvatar>
@@ -208,7 +205,6 @@ export default function PersistentDrawerRight() {
                   >
                     {id && isLogin ? (
                       <>
-                        {' '}
                         <AlarmItem />
                       </>
                     ) : (

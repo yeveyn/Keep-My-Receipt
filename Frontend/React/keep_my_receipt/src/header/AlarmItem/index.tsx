@@ -151,7 +151,7 @@ export default function AlarmItem() {
 
   return (
     <Box>
-      <IconButton onClick={handleOpenUserMenu2} sx={{ p: 0 }}>
+      <IconButton onClick={handleOpenUserMenu2} sx={{ p: 0, pl: 2 }}>
         <NotificationsIcon></NotificationsIcon>
       </IconButton>
 
