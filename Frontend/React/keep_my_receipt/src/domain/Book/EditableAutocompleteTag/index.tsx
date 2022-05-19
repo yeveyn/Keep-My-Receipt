@@ -210,7 +210,7 @@ export default function EditableAutocompleteTag(
           return option.name;
         }}
         /** 4. 값 바뀌면서 트리거 발동 */
-        value={{ name: props.value }}
+        value={{ name: props.value ? props.value : '' }}
         isOptionEqualToValue={(option, value) => option.name === value.name}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
