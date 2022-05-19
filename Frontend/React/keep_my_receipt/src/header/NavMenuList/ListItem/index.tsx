@@ -121,6 +121,144 @@ export default function ListItem() {
 
   return (
     <>
+      {id ? (
+        <>
+          {/* 3. 분석 */}
+          <Button
+            onClick={() => {
+              onClickButton(`/club/${id}/analytics/mainChart`);
+            }}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'black',
+              float: 'right',
+            }}
+          >
+            <Content1>분석</Content1>
+          </Button>
+          {userAuthNum == 1 ? (
+            <>
+              <Button
+                onClick={() => {
+                  onClickButton(`/club/${id}/manage`);
+                }}
+                sx={{
+                  my: 2,
+                  mr: 1,
+                  color: 'black',
+                  display: 'block',
+                  float: 'right',
+                }}
+              >
+                <Content1>모임관리</Content1>
+              </Button>
+            </>
+          ) : (
+            ''
+          )}
+
+          {/* 2. 내역 */}
+          <Button
+            onClick={handleOpenListMenu}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'block',
+              float: 'right',
+            }}
+          >
+            <Content1>내역</Content1>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={listMenu}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(listMenu)}
+              onClose={handleCloseListMenu}
+            >
+              <MenuItem
+                onClick={() => {
+                  listMenuClick(`/club/${id}/receipt/requestList`);
+                }}
+              >
+                <Typography textAlign="center">영수증 내역</Typography>
+              </MenuItem>
+
+              {userAuthNum <= 2 ? (
+                <MenuItem
+                  onClick={() => {
+                    listMenuClick(`/club/${id}/book`);
+                  }}
+                >
+                  <Typography textAlign="center">거래 내역</Typography>
+                </MenuItem>
+              ) : (
+                ''
+              )}
+            </Menu>
+          </Button>
+          {/* 1. 등록 */}
+          <Button
+            onClick={handleOpenUserMenu}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'block',
+              float: 'right',
+            }}
+          >
+            <Content1>등록</Content1>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={addMenu}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(addMenu)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem
+                onClick={() => {
+                  addMenuClick(`/club/${id}/receipt/camera`);
+                }}
+              >
+                <Typography textAlign="center">영수증 등록</Typography>
+              </MenuItem>
+
+              {userAuthNum <= 2 ? (
+                <MenuItem
+                  onClick={() => {
+                    addMenuClick(`/club/${id}/book/create`);
+                  }}
+                >
+                  <Typography textAlign="center">거래 등록</Typography>
+                </MenuItem>
+              ) : (
+                ''
+              )}
+            </Menu>
+          </Button>
+        </>
+      ) : (
+        ''
+      )}
       {/* 5. 로그인 로그아웃 */}
       <Button
         onClick={onLogout}
@@ -176,144 +314,6 @@ export default function ListItem() {
           >
             <SettingItem />
           </Box>
-          {id ? (
-            <>
-              {/* 3. 분석 */}
-              <Button
-                onClick={() => {
-                  onClickButton(`/club/${id}/analytics/mainChart`);
-                }}
-                sx={{
-                  my: 2,
-                  mr: 1,
-                  color: 'black',
-                  display: 'black',
-                  float: 'right',
-                }}
-              >
-                <Content1>분석</Content1>
-              </Button>
-              {userAuthNum == 1 ? (
-                <>
-                  <Button
-                    onClick={() => {
-                      onClickButton(`/club/${id}/manage`);
-                    }}
-                    sx={{
-                      my: 2,
-                      mr: 1,
-                      color: 'black',
-                      display: 'block',
-                      float: 'right',
-                    }}
-                  >
-                    <Content1>모임관리</Content1>
-                  </Button>
-                </>
-              ) : (
-                ''
-              )}
-
-              {/* 2. 내역 */}
-              <Button
-                onClick={handleOpenListMenu}
-                sx={{
-                  my: 2,
-                  mr: 1,
-                  color: 'black',
-                  display: 'block',
-                  float: 'right',
-                }}
-              >
-                <Content1>내역</Content1>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={listMenu}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(listMenu)}
-                  onClose={handleCloseListMenu}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      listMenuClick(`/club/${id}/receipt/requestList`);
-                    }}
-                  >
-                    <Typography textAlign="center">영수증 내역</Typography>
-                  </MenuItem>
-
-                  {userAuthNum <= 2 ? (
-                    <MenuItem
-                      onClick={() => {
-                        listMenuClick(`/club/${id}/book`);
-                      }}
-                    >
-                      <Typography textAlign="center">거래 내역</Typography>
-                    </MenuItem>
-                  ) : (
-                    ''
-                  )}
-                </Menu>
-              </Button>
-              {/* 1. 등록 */}
-              <Button
-                onClick={handleOpenUserMenu}
-                sx={{
-                  my: 2,
-                  mr: 1,
-                  color: 'black',
-                  display: 'block',
-                  float: 'right',
-                }}
-              >
-                <Content1>등록</Content1>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={addMenu}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(addMenu)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      addMenuClick(`/club/${id}/receipt/camera`);
-                    }}
-                  >
-                    <Typography textAlign="center">영수증 등록</Typography>
-                  </MenuItem>
-
-                  {userAuthNum <= 2 ? (
-                    <MenuItem
-                      onClick={() => {
-                        addMenuClick(`/club/${id}/book/create`);
-                      }}
-                    >
-                      <Typography textAlign="center">거래 등록</Typography>
-                    </MenuItem>
-                  ) : (
-                    ''
-                  )}
-                </Menu>
-              </Button>
-            </>
-          ) : (
-            ''
-          )}{' '}
         </>
       ) : (
         ''

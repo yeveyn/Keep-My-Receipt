@@ -34,10 +34,9 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       });
   };
 
-  useEffect(() => {
-    onGetName();
-    console.log(userName);
-  });
+  // useEffect(() => {
+  //   onGetName();
+  // });
 
   //확인 버튼
   const changeName = (e: any) => {
@@ -56,7 +55,6 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       .catch(function (error) {
         console.log(error);
       });
-    console.log(userName);
     setOpen(false);
   };
 

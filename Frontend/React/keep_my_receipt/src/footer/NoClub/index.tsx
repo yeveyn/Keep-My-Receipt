@@ -67,7 +67,7 @@ export default function NoClub() {
           onClick={() => {
             onClickButton(`/club/search`);
           }}
-          label={'전체 모임'}
+          label={'모임 검색'}
           icon={<SearchIcon />}
         ></BottomNavigationAction>
       </BottomNavigation>

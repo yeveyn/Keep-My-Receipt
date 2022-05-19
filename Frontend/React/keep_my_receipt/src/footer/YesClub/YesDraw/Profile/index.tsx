@@ -16,7 +16,13 @@ export default function Profile(props: any) {
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
 
-  const onGetName = () => {
+  useEffect(() => {
+    if (accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+
     if (isLogin) {
       axios
         .get(`/api/spring/crew/info`)
@@ -27,9 +33,6 @@ export default function Profile(props: any) {
           console.log(error);
         });
     }
-  };
-
-  const onGetClub = () => {
     if (id) {
       axios
         .get(`/api/spring/club/${id}`)
@@ -41,18 +44,7 @@ export default function Profile(props: any) {
           console.log(error);
         });
     }
-  };
-
-  useEffect(() => {
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-    onGetName();
-    onGetClub();
-    console.log(userName);
-  });
+  }, [accessToken, id, isLogin]);
 
   return (
     <>
