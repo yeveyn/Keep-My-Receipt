@@ -190,6 +190,7 @@ export default function AlarmItem() {
               sx={{
                 paddingX: 2,
                 paddingY: 0.2,
+                // backgroundColor: '#fcf0d4',
                 ':hover': {
                   backgroundColor: '#FFF5E1',
                 },
@@ -198,7 +199,6 @@ export default function AlarmItem() {
             >
               <Grid
                 sx={{
-                  // backgroundColor: '#fcf0d4',
                   borderRadius: '16px',
                   padding: '5px',
                 }}
@@ -219,7 +219,6 @@ export default function AlarmItem() {
 
                 {/* 취소버튼 */}
                 <Grid item xs={1}>
-                  {' '}
                   <ClearOutlinedIcon
                     fontSize="small"
                     color="disabled"
