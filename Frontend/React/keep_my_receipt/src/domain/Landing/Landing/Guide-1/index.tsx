@@ -2,6 +2,7 @@ import { Title, Description, Point, Point2 } from './styles';
 import { Box, Button, Container, Grid, useMediaQuery } from '@mui/material';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import 'animate.css/animate.min.css';
+import { Video } from '../Banner/styles';
 export default function GuideFirst() {
   const matches = useMediaQuery('(min-width:500px)');
   return (
@@ -46,7 +47,7 @@ export default function GuideFirst() {
           <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
             <Box textAlign="center" width={'100%'}>
               <img
-                src="/images/randing/iphone.png"
+                src="/images/randing/main.png"
                 width="70%"
                 height="10%"
               ></img>
