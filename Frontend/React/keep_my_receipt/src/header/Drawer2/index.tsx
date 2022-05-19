@@ -96,6 +96,21 @@ export default function PersistentDrawerRight() {
     }
   };
 
+  const fcmToken = sessionStorage.getItem('fcmToken');
+  const onLogout = () => {
+    if (myAccessToken) {
+      axios
+        .post('/api/spring/crew/logout', { fcmToken: fcmToken })
+        .then(function (response) {
+          sessionStorage.removeItem('accessToken');
+          axios.defaults.headers.common['Authorization'] = '';
+          navigate('/');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
   const onClick = () => {
     navigate('/club');
   };
@@ -163,12 +178,8 @@ export default function PersistentDrawerRight() {
                 paddingTop={1}
               >
                 {/* 사진, 동아리명, 왕관*/}
-                <Grid item xs={11} textAlign="left">
-                  <Stack
-                    direction="row"
-                    // alignItems="center"
-                    // justifyContent="center"
-                  >
+                <Grid item xs={10} textAlign="left">
+                  <Stack direction="row">
                     <Stack>
                       {id ? (
                         <>
@@ -177,7 +188,7 @@ export default function PersistentDrawerRight() {
                               onClick={onClick}
                               sx={{ pt: '24px' }}
                             >
-                              <Avatar src={clubImage} />
+                              <Avatar src="/images/randing/home.png" />
                             </ListItemAvatar>
                           ) : (
                             <ListItemAvatar
@@ -196,24 +207,11 @@ export default function PersistentDrawerRight() {
                     </Stack>
 
                     <Stack>{id ? <ClubName>{clubName}</ClubName> : ''}</Stack>
-
-                    {id ? (
-                      <Stack>
-                        <Button
-                          onClick={onClick}
-                          sx={{ pt: '30px', mr: '6rem' }}
-                        >
-                          <img width="25rem" src={crown}></img>
-                        </Button>
-                      </Stack>
-                    ) : (
-                      ''
-                    )}
                   </Stack>
                 </Grid>
 
                 {/* 알림 버튼 */}
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   <Box
                     sx={{
                       my: 2,
@@ -221,7 +219,16 @@ export default function PersistentDrawerRight() {
                       pt: '15px',
                     }}
                   >
-                    <AlarmItem />
+                    {id && isLogin ? (
+                      <>
+                        {' '}
+                        <AlarmItem />
+                      </>
+                    ) : (
+                      <Typography onClick={onLogout} fontSize="0.8rem">
+                        로그아웃
+                      </Typography>
+                    )}
                   </Box>
                 </Grid>
               </Grid>

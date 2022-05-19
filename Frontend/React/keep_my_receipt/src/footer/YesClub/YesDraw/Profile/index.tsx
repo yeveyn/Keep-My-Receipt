@@ -13,6 +13,7 @@ export default function Profile(props: any) {
   const [userName, setUserName] = useState('');
   const [clubImage, setClubImage] = useState('');
   const [clubName, setClubName] = useState('');
+  const [userAuth, setUserAuth] = useState('');
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
 
@@ -28,6 +29,7 @@ export default function Profile(props: any) {
         .get(`/api/spring/crew/info`)
         .then(function (response) {
           setUserName(response.data.data.name);
+          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -42,6 +44,18 @@ export default function Profile(props: any) {
         })
         .catch(function (error) {
           console.log(error);
+        });
+
+      axios
+        .get(`api/spring/club/${id}/crew/auth`)
+        .then((res) => {
+          if (res.data) {
+            setUserAuth(res.data.data);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          return;
         });
     }
   }, [accessToken, id, isLogin]);
@@ -63,8 +77,9 @@ export default function Profile(props: any) {
             primary={clubName}
             secondary={
               <Typography
-                sx={{ fontSize: '15px', wordBreak: 'keep-all' }}
-              >{`안녕하세요! ${userName}님`}</Typography>
+                sx={{ fontSize: '13px', wordBreak: 'keep-all' }}
+              >{`안녕하세요!
+              ${userAuth} ${userName}님`}</Typography>
             }
           />
         </ListItem>

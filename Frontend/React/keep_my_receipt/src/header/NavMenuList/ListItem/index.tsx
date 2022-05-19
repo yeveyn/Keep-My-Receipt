@@ -136,7 +136,21 @@ export default function ListItem() {
               float: 'right',
             }}
           >
-            <Content1>분석</Content1>
+            <Content1>차트</Content1>
+          </Button>
+          <Button
+            onClick={() => {
+              onClickButton(`/club/${id}/report/asset`);
+            }}
+            sx={{
+              my: 2,
+              mr: 1,
+              color: 'black',
+              display: 'black',
+              float: 'right',
+            }}
+          >
+            <Content1>보고서</Content1>
           </Button>
           {userAuthNum == 1 ? (
             <>
