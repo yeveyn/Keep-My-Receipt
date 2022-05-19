@@ -7,9 +7,9 @@ import PageButtons from '../Create/PageButtons';
 import {
   apiDeleteTransaction,
   apiGetTransaction,
-  ReadResponseType,
+  ReadTransactionResType,
   initialReadResponse,
-} from '../api/bookApi';
+} from '../api/bookReadApi';
 import { DetailParamType } from '../types';
 import toCurrency from '../../../services/toCurrency';
 import {
@@ -42,7 +42,8 @@ export default function BookDetail() {
 
   // 임시로 추가
 
-  const [state, setState] = useState<ReadResponseType>(initialReadResponse);
+  const [state, setState] =
+    useState<ReadTransactionResType>(initialReadResponse);
   const [page, setPage] = useState(1);
 
   const readTransaction = async (transactionId: number) => {
@@ -50,7 +51,7 @@ export default function BookDetail() {
       // console.log('readTransaction', res.data.data);
 
       // 아이템 설정
-      const data: ReadResponseType = res.data.data;
+      const data: ReadTransactionResType = res.data.data;
       setState(data);
 
       // 페이지 설정
@@ -120,7 +121,7 @@ export default function BookDetail() {
           <Stack direction="row" justifyContent="space-around" marginTop={1}>
             <Button
               onClick={async () => {
-                null;
+                navigate('../create', { state: state });
               }}
               variant="contained"
             >

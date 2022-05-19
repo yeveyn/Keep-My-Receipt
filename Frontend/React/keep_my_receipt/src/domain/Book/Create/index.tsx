@@ -4,23 +4,26 @@ import { Box, Button, Container } from '@mui/material';
 
 import Header from './Header';
 import Item from './Item';
-import bookReducer, {
-  updateBook,
-  initBookState,
-  toTransactionType,
-} from '../bookReducer';
+import bookReducer, { updateBook, initBookState } from '../bookReducer';
 import {
   apiCreateTransaction,
+  apiUpdateTransaction,
   apiValidateCreateTransaction,
-} from '../api/bookApi';
-import { CreateParamType } from '../types';
+  toTransactionType,
+} from '../api/bookWriteApi';
+import { ReceiptStateType } from '../types';
 import DeleteButton from './DeleteButton';
 import AddButton from './AddButton';
+import { ReadTransactionResType } from '../api/bookReadApi';
 
 export default function BookCreate() {
+  // 주소에 있는 모임 ID 가져옴
   const { id: clubId } = useParams();
+  // 이전 페이지에서 보낸 데이터 받음
   const location = useLocation();
-  const params = location.state as CreateParamType;
+  const params = location.state as ReceiptStateType | ReadTransactionResType;
+  const isUpdate = () => params && 'transactionId' in params;
+  // 다음 페이지로 보내기 위한 변수 선언
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(
@@ -52,19 +55,39 @@ export default function BookCreate() {
     }
   };
 
+  const updateTransaction = async () => {
+    const transactionId =
+      'transactionId' in params ? params.transactionId : null;
+    const requestId = 'requestId' in params ? params.requestId : null;
+    const payload = toTransactionType(state, requestId);
+
+    if (apiValidateCreateTransaction(payload)) {
+      if (confirm('등록하시겠습니까?')) {
+        await apiUpdateTransaction(transactionId, payload).then((res) => {
+          res.data.msg === '성공'
+            ? navigate(`/club/${clubId}/book/detail`, {
+                state: {
+                  transactionId: transactionId,
+                  transactionDetailId: state.items[0].transactionDetailId,
+                },
+              })
+            : null;
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     sumTotalValue();
   }, [state.items]);
 
   useEffect(() => {
-    console.log('state', state);
-    console.log('page', page);
-    console.log('params', params);
-  }, [state, page]);
+    console.log('BookCreate params', params);
+  }, []);
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', marginBottom: 8 }}>
-      <h2>거래등록</h2>
+      <h2>{isUpdate() ? '거래수정' : '거래등록'}</h2>
 
       {/* 거래 정보 */}
       <Header
@@ -73,7 +96,7 @@ export default function BookCreate() {
         length={state.items.length}
         imageUrl={state.imageUrl}
         dispatch={dispatch}
-        editable={!params}
+        editable={!(params && params.requestId)}
       />
 
       {/* 페이지네이션 버튼들 */}
@@ -115,7 +138,10 @@ export default function BookCreate() {
         <DeleteButton page={page} setPage={setPage} dispatch={dispatch} />
       </Box>
 
-      <Button onClick={createTransaction} variant="contained">
+      <Button
+        onClick={isUpdate() ? updateTransaction : createTransaction}
+        variant="contained"
+      >
         등록!
       </Button>
     </Container>
