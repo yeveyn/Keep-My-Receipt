@@ -6,7 +6,7 @@ import ResponsiveDrawer from './Drawer2';
 import { NavBarContainer } from './styles';
 
 export default function NavBar() {
-  const matches = useMediaQuery('(min-width:500px)');
+  const matches = useMediaQuery('(min-width:1030px)');
 
   return (
     <Box height="62px">

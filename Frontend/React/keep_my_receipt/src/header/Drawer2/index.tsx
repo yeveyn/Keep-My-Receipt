@@ -162,8 +162,7 @@ export default function PersistentDrawerRight() {
                 paddingRight={3}
                 paddingTop={1}
               >
-                {/* <Box> */}
-
+                {/* 동아리  / 로고 사진 */}
                 <Grid item xs={2} textAlign="left">
                   {id ? (
                     <>
@@ -183,26 +182,25 @@ export default function PersistentDrawerRight() {
                     </ListItemAvatar>
                   )}
                 </Grid>
+                {/* 동아리 명 */}
                 <Grid item xs={2}>
                   <ClubName>{clubName}</ClubName>
                 </Grid>
 
+                {/* 왕관 */}
                 {crown ? (
-                  <Grid item xs={7} textAlign="left">
-                    <Button onClick={onClick} sx={{ pt: '35px' }}>
-                      <img width="20px" src={crown}></img>
+                  <Grid item xs={7} paddingTop="1.5rem">
+                    <Button onClick={onClick}>
+                      <img width="25rem" src={crown}></img>
                     </Button>
                   </Grid>
                 ) : (
                   <Grid item xs={7} textAlign="left"></Grid>
                 )}
-
-                {/* </Box> */}
-                {/* <Box> */}
-                <Grid item>
+                {/* 알림 버튼 */}
+                <Grid item xs={1}>
                   <Box
                     sx={{
-                      // pl: '60px',
                       my: 2,
                       color: 'black',
                       pt: '15px',
@@ -211,7 +209,6 @@ export default function PersistentDrawerRight() {
                     <AlarmItem />
                   </Box>
                 </Grid>
-                {/* </Box> */}
               </Grid>
             </>
           ) : (

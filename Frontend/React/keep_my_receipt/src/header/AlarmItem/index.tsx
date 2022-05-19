@@ -7,10 +7,10 @@ import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import Pagination from '../../components/Pagination';
-import { Grid } from '@mui/material';
+import { Divider, Grid } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
-
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 interface AlarmType {
   notificationId: number;
   title: string;
@@ -132,7 +132,7 @@ export default function AlarmItem() {
       .get('https://k6d104.p.ssafy.io/api/spring/notifications', {
         params: {
           page: page ? page : 0,
-          size: 5,
+          size: 3,
           sort: 'id,DESC',
         },
       })
@@ -170,70 +170,111 @@ export default function AlarmItem() {
         open={Boolean(anchorElUser2)}
         onClose={handleCloseUserMenu2}
       >
-        {alarms.map((alarm) => (
-          <MenuItem
-            key={alarm.notificationId.toString()}
-            sx={{
-              ':hover': {
-                backgroundColor: '#FFF5E1',
-              },
-            }}
-            style={{ maxWidth: '90vw' }}
-          >
-            <Grid container justifyContent="space-between" alignItems="center">
-              <Typography
-                textAlign="center"
-                style={
-                  alarm.read.toString() === 'false'
-                    ? { fontWeight: 'bold' }
-                    : {}
-                }
-                onClick={() => connectNotification(alarm)}
-              >
-                {alarm.date.split('T')[0].substring(5)[0] === '0'
-                  ? alarm.date.split('T')[0].substring(6).replace('-', '/')
-                  : alarm.date.split('T')[0].substring(5).replace('-', '/')}
-              </Typography>
-              <Typography
-                textAlign="center"
-                style={
-                  alarm.read.toString() === 'false'
-                    ? { fontWeight: 'bold' }
-                    : {}
-                }
-                onClick={() => connectNotification(alarm)}
-              >
-                {alarm.title}
-              </Typography>
-              <CancelIcon
-                onClick={() => deleteNotification(alarm.notificationId)}
-              />
-            </Grid>
-          </MenuItem>
-        ))}
-        <Typography fontSize="0.8rem" textAlign="center">
-          ...
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '20px',
+
+            padding: '10px',
+            paddingLeft: '18px',
+            paddingBottom: '20px',
+          }}
+        >
+          알림
         </Typography>
+
+        {alarms.map((alarm) => (
+          <>
+            <MenuItem
+              key={alarm.notificationId.toString()}
+              sx={{
+                paddingX: 2,
+                paddingY: 0.2,
+                ':hover': {
+                  backgroundColor: '#FFF5E1',
+                },
+              }}
+              style={{ maxWidth: '90vw' }}
+            >
+              <Grid
+                sx={{
+                  // backgroundColor: '#fcf0d4',
+                  borderRadius: '16px',
+                  padding: '5px',
+                }}
+                container
+                justifyContent="space-between"
+              >
+                {/* 날짜 */}
+                <Grid item xs={11}>
+                  <Typography
+                    fontSize="15px"
+                    // style={
+                    //   alarm.read.toString() === 'false'
+                    //     ? { fontWeight: 'bold' }
+                    //     : {}
+                    // }
+                    onClick={() => connectNotification(alarm)}
+                  >
+                    {alarm.date.split('T')[0].substring(5)[0] === '0'
+                      ? alarm.date.split('T')[0].substring(6).replace('-', '/')
+                      : alarm.date.split('T')[0].substring(5).replace('-', '/')}
+                  </Typography>
+                </Grid>
+
+                {/* 취소버튼 */}
+                <Grid item xs={1}>
+                  {' '}
+                  <ClearOutlinedIcon
+                    fontSize="small"
+                    color="disabled"
+                    onClick={() => deleteNotification(alarm.notificationId)}
+                  />
+                </Grid>
+
+                {/*내용 */}
+                <Grid item xs={12} alignItems="space-between">
+                  <Typography
+                    style={
+                      alarm.read.toString() === 'false'
+                        ? { fontWeight: 'bold' }
+                        : {}
+                    }
+                    onClick={() => connectNotification(alarm)}
+                  >
+                    {alarm.title}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </MenuItem>
+            <Divider />
+          </>
+        ))}
+        {/* <Typography fontSize="0.8rem" textAlign="center">
+          ...
+        </Typography> */}
         <Typography
           fontSize="0.8rem"
           color="primary"
           textAlign="center"
           onClick={navigateAlarms}
         >
-          알림 목록 자세히 보기
+          더보기
         </Typography>
-        <hr></hr>
+        {/* <hr></hr> */}
+
         {alarms.length < 1 ? (
           <Typography textAlign="center">
             &nbsp;&nbsp;알림이 존재하지 않습니다.&nbsp;&nbsp;
           </Typography>
         ) : (
-          <Pagination
-            pageInfo={res}
-            paginationSize={5}
-            onClickPage={getAlarms}
-            bgColor="#ffaa00"
-          />
+          ''
+          // <Pagination
+          //   pageInfo={res}
+          //   paginationSize={5}
+          //   onClickPage={getAlarms}
+          //   bgColor="#ffaa00"
+          // />
         )}
       </Menu>
     </Box>
