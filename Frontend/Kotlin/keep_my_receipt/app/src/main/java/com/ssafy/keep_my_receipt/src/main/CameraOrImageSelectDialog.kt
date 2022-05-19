@@ -9,12 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.ssafy.keep_my_receipt.R
 
 class CameraOrImageSelectDialog(private val listener: OnClickSelectListener) : DialogFragment() {
-    private lateinit var llSelectCamera: Button
-    private lateinit var llSelectImage : Button
+    private lateinit var llSelectCamera: ImageView
+    private lateinit var llSelectImage : ImageView
 
     interface OnClickSelectListener {
         fun onClickCamera()
