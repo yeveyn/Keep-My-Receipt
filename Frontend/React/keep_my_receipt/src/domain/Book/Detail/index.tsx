@@ -184,14 +184,6 @@ export default function BookDetail() {
                   <b>{state.items[page - 1].largeTag}</b>
                 </Typography>
               </Stack>
-              <Stack direction="row" spacing={0.5} paddingTop={0.5}>
-                <Typography sx={{ width: '4rem', color: '#757575' }}>
-                  메모
-                </Typography>
-                <Typography>
-                  <b>{state.items[page - 1].memo}</b>
-                </Typography>
-              </Stack>
             </Stack>
           </Stack>
         </Card>
