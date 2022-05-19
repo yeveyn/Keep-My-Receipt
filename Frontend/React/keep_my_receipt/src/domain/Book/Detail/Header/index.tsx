@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
-import { ArrowLeft, ArrowRight, Search } from '@mui/icons-material';
+import { ArrowBackIos } from '@mui/icons-material';
 import toCurrency from '../../../../services/toCurrency';
 import { apiDeleteTransaction } from '../../api/bookApi';
 
@@ -19,7 +19,15 @@ export default function DetailHeader({ state, params }: DetailHeaderProps) {
   };
   return (
     <Stack width="100%">
-      <Stack paddingLeft="1rem">
+      <Stack direction="row" alignItems="center">
+        <IconButton
+          onClick={() => {
+            navigate(-1);
+          }}
+          color="inherit"
+        >
+          <ArrowBackIos sx={{ fontSize: '1.8rem' }} />
+        </IconButton>
         <h2>거래내역 상세</h2>
       </Stack>
 
@@ -49,7 +57,7 @@ export default function DetailHeader({ state, params }: DetailHeaderProps) {
           {receiptUrl ? '영수증 확인' : '영수증 없음'}
         </Button>
         {/* 수정, 삭제 버튼 */}
-        <Stack direction="row" justifyContent="space-around" marginTop={1}>
+        <Stack direction="row" justifyContent="end" marginTop={1}>
           <Button
             onClick={() => {
               navigate('../create', { state: state });
