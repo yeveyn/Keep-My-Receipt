@@ -115,6 +115,23 @@ export default function AssetReport() {
     }
     setMonth(tmpMonth);
   }
+  function clearData() {
+    setAssetList(defaultData);
+    setSumAsset(0);
+  }
+  const checkEmpty = (previousList: ReportType[]) => {
+    console.log('checkEmpty', previousList);
+    if (previousList === null) {
+      clearData();
+      return false;
+    }
+    const tmpList = [...previousList];
+    if (tmpList[0].lcName === 'test') {
+      clearData();
+      return false;
+    }
+    return true;
+  };
   const loadData = async () => {
     // Todo API connect
     await axios
@@ -126,10 +143,16 @@ export default function AssetReport() {
       .then((response) => {
         //console.log(response.data.data);
         const lists = response.data.data;
+        if (!checkEmpty(lists)) {
+          return;
+        }
         lists.forEach((mainCat) => {
           if (mainCat.type === '자산') {
             const tmpList = [...mainCat.list];
             let tmp = 0;
+            if (tmpList[0].lcName === 'test') {
+              return;
+            }
             tmpList.forEach((lcName) => {
               let tmp2 = 0;
               lcName.list.forEach((rcName) => {
