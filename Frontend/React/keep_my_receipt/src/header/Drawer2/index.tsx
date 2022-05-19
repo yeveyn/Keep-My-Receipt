@@ -136,25 +136,6 @@ export default function PersistentDrawerRight() {
         .catch(function (error) {
           console.log(error);
         });
-
-      // 현재 유저 동아리 권한에 따른 왕관 색깔
-      axios
-        .get(`api/spring/club/${id}/crew/auth`)
-        .then((res) => {
-          if (res.data) {
-            if (res.data.data === '리더') {
-              setCrown('/images/randing/gold.png');
-            } else if (res.data.data === '관리자') {
-              setCrown('/images/randing/silver.png');
-            } else if (res.data.data === '회원') {
-              setCrown('/images/randing/bronze.png');
-            }
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          return;
-        });
     }
   }, [id]);
 
@@ -186,9 +167,15 @@ export default function PersistentDrawerRight() {
                           {clubImage ? (
                             <ListItemAvatar
                               onClick={onClick}
-                              sx={{ pt: '24px' }}
+                              sx={{ pt: '30px' }}
                             >
-                              <Avatar src="/images/randing/home.png" />
+                              <img
+                                width="30rem"
+                                // src="/images/randing/home1.png"
+                                // src="/images/randing/homeLogo.png"
+                                // src="/images/randing/home.png"
+                                src="/images/randing/home3.png"
+                              ></img>
                             </ListItemAvatar>
                           ) : (
                             <ListItemAvatar
