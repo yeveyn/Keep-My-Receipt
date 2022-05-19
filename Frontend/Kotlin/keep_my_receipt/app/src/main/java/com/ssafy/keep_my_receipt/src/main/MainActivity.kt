@@ -1,6 +1,6 @@
 package com.ssafy.keep_my_receipt.src.main
 
-import android.content.Intent
+import android.Manifest
 import android.net.Uri
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
@@ -10,24 +10,34 @@ import com.ssafy.keep_my_receipt.config.BaseActivity
 import com.ssafy.keep_my_receipt.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import com.ssafy.keep_my_receipt.config.ApplicationClass
-import com.nguyenhoanglam.imagepicker.model.Config
-import com.nguyenhoanglam.imagepicker.model.Image
 import android.provider.MediaStore
-import android.content.ContentValues
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
+import android.app.AlertDialog
+import android.app.DownloadManager
+import android.content.*
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.os.Build
+import android.os.Environment
 import android.os.Environment.getExternalStorageDirectory
+import android.text.TextUtils
 import android.webkit.*
 import android.webkit.WebChromeClient.FileChooserParams
 import android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
+import com.nguyenhoanglam.imagepicker.model.Config
+import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import java.io.*
 import com.ssafy.keep_my_receipt.src.main.CustomWebChromeClient
+import java.net.URLDecoder
+import android.webkit.DownloadListener
+
+
+
 
 
 interface IImageHandler {
@@ -69,24 +79,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
         webView.settings.javaScriptEnabled = true // 자바스크립트 허용
         webView.webViewClient = WebViewClient() // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
         webView.webChromeClient = CustomWebChromeClient(this) // 웹뷰에서 새 창이 뜨지 않도록 방지하는 구문 1
-//        webView.webChromeClient = object : WebChromeClient() {
-//            override fun onShowFileChooser(
-//                webView: WebView?,
-//                filePathCallback: ValueCallback<Array<Uri>>?,
-//                fileChooserParams: FileChooserParams?
-//            ): Boolean {
-//                if (filePathCallback != null) {
-//                    filePathCallbackLollipop = filePathCallback
-//                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-//                    intent.addCategory(Intent.CATEGORY_OPENABLE)
-//                    intent.type = "image/*"
-//                    startActivityForResult(intent, 0)
-//                    return true
+//        webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+//            Log.e("DOWNLOADURLLLLLLLLLL", url.toString())
+//            val downloadManager = this.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+//            val _contentDisposition = URLDecoder.decode(contentDisposition, "UTF-8")
+//            val _mimetype = mimetype
+//            var fileName = _contentDisposition.replace("attachment; filename=", "")
+//            if (!TextUtils.isEmpty(fileName)) {
+//                val mimetype = MimeTypeMap.getSingleton().getMimeTypeFromExtension(mimetype)
+//                if (fileName.endsWith(";")) {
+//                    fileName = fileName.substring(0, fileName.length - 1)
 //                }
-//                return true
 //            }
-//        }
-        webview.addJavascriptInterface(WebAppInterface(this), "Android")
+//            if (fileName.startsWith("\"") && fileName.endsWith("\"")) {
+//                fileName = fileName.substring(1, fileName.length - 1)
+//            }
+//            var request = DownloadManager.Request(Uri.parse(url)).apply {
+//                setMimeType(_mimetype)
+//                addRequestHeader("User-Agent", userAgent)
+//                setDescription("Downloading File")
+//                setAllowedOverMetered(true)
+//                setAllowedOverRoaming(true)
+//                setTitle(fileName)
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    setRequiresCharging(false)
+//                }
+//                allowScanningByMediaScanner()
+//                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//                setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+//            }
+//            registerDownloadReceiver(downloadManager, this)
+//            showToastMessage("다운로드 시작중..")
+//        })
+        webView.addJavascriptInterface(WebAppInterface(this), "Android")
         Log.e("EEEEEEEEEEEEEE", isStart.toString())
         if (!isStart) {
             Log.e("EEEEEEEEEEEEEE", "태초마을 갑니다.....")
@@ -94,6 +119,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
             isStart = true
         }
     }
+
+    private fun registerDownloadReceiver(downloadManager: DownloadManager, activity: BaseActivity<*>) {
+        var downloadReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                var id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1) ?: -1
+                when (intent?.action) {
+                    DownloadManager.ACTION_DOWNLOAD_COMPLETE -> {
+                        val query: DownloadManager.Query = DownloadManager.Query()
+                        query.setFilterById(id)
+                        var cursor = downloadManager.query(query)
+                        if (!cursor.moveToFirst()) {
+                            return
+                        }
+                        var columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                        var status = cursor.getInt(columnIndex)
+                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                            showToastMessage("다운로드가 완료됐습니다.")
+                        }
+                        else if (status == DownloadManager.STATUS_FAILED) {
+                            showToastMessage("다운로드가 실패했습니다.")
+                        }
+                    }
+                }
+            }
+        }
+        IntentFilter().run {
+            addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            activity.registerReceiver(downloadReceiver, this)
+        }
+    }
+
 
     private fun setFCM() {
         // client FCM token 확인
@@ -137,22 +193,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
                 }
             }
         }
-//        if(requestCode == 0 && resultCode == Activity.RESULT_OK){
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                if (intent != null) {
-//                    filePathCallbackLollipop?.onReceiveValue(
-//                        WebChromeClient.FileChooserParams.parseResult(resultCode, intent)
-//                    )
-//                    filePathCallbackLollipop = null
-//                }
-//            } else {
-//                filePathCallbackLollipop?.onReceiveValue(null)
-//                filePathCallbackLollipop = null
-//            }
-//        } else {
-//            filePathCallbackLollipop?.onReceiveValue(null)
-//            filePathCallbackLollipop = null
-//        }
         super.onActivityResult(requestCode, resultCode, intent)
     }
 
