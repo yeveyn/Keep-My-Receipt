@@ -188,9 +188,7 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
       {item.type && (
         <Autocomplete
           /** 1. 옵션 목록 & 목록 출력 */
-          options={
-            item.type ? largeCategories[item.type] : largeCategories['자산']
-          }
+          options={largeCategories[item.type]}
           renderOption={(props, option) => (
             <li {...props}>
               {option}
