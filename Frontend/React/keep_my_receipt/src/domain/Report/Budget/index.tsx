@@ -121,12 +121,29 @@ export default function BudgetReport() {
     }
     setMonth(tmpMonth);
   }
+  function clearData() {
+    setBudgetList(defaultData);
+    setSumBudget(0);
+    setExpenseList(defaultData);
+    setSumExpense(0);
+    setRevenueList(defaultData);
+    setSumRevenue(0);
+  }
+  const checkEmpty = (previousList: ReportType[]) => {
+    console.log('checkEmpty', previousList);
+    if (previousList === null) {
+      clearData();
+      return false;
+    }
+    const tmpList = [...previousList];
+    if (tmpList[0].lcName === 'test') {
+      clearData();
+      return false;
+    }
+    return true;
+  };
   const loadData = async () => {
     // Todo API connect
-    const params = {
-      date: curYear.concat('-').concat(curMonth),
-    };
-    console.log(axios.defaults.headers);
     await axios
       .get(
         `https://k6d104.p.ssafy.io/api/spring/${id}/report/budget?date=${curYear
@@ -134,8 +151,10 @@ export default function BudgetReport() {
           .concat(curMonth)}`,
       )
       .then((response) => {
-        console.log(response.data.data);
         const lists = response.data.data;
+        if (!checkEmpty(lists)) {
+          return;
+        }
         lists.forEach((mainCat) => {
           if (mainCat.type === '예산') {
             const tmpList = [...mainCat.list];
@@ -150,7 +169,7 @@ export default function BudgetReport() {
             });
             setSumBudget(tmp);
             setBudgetList(tmpList);
-            console.log(tmpList);
+            console.log(budgetList);
           } else if (mainCat.type === '지출') {
             const tmpList = [...mainCat.list];
             let tmp = 0;
