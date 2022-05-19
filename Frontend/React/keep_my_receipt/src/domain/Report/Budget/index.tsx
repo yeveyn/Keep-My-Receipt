@@ -326,7 +326,7 @@ export default function BudgetReport() {
               width: '100%',
               paddingTop: 15,
               paddingBottom: 15,
-              backgroundColor: 'lightGreen',
+              backgroundColor: '#FFF5E1',
             }}
           >
             <Typography textAlign="center">예산운영표</Typography>

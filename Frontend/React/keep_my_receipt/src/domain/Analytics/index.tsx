@@ -18,8 +18,6 @@ import {
 
 import LargeTagChart from './LargeTagChart';
 import FlowChart from './FlowChart';
-import sample1 from './sample1.json';
-import sample3 from './sample3.json';
 import {
   apiLoadFirstChartData,
   apiLoadFlowChartData,
@@ -96,7 +94,7 @@ export default function MainChartIndex() {
   /** 밑으로 내려보낼 데이터들 */
   // id는 태그 이름, value는 금액, rate는 퍼센트
   const [tagItems, setTagItems] = useState([
-    { id: '0', value: '0', rate: '0' },
+    { id: 'no data', value: '-1', rate: '0' },
   ]);
   const [sumTagValue, setSumTagValue] = useState(0);
   const [flowItems, setFlowItems] = useState([
@@ -104,31 +102,28 @@ export default function MainChartIndex() {
   ]);
   const [sumFlowValue, setSumFlowValue] = useState(0);
 
-  /** 태그 데이터를 샘플로부터 가져옴 */
-  const loadTagDataFromSample = () => {
-    // 그래프용 태그 데이터 세팅
-    setTagItems(sample1);
-
-    // 태그 금액 총합 구하기
-    let tmpSumTagValue = 0;
-    sample1.forEach((item) => {
-      tmpSumTagValue += parseInt(item.value);
-    });
-    setSumTagValue(tmpSumTagValue);
-  };
-
   /** 태그 데이터 API 요청 함수 */
   const loadTagDataFromServer = async () => {
     console.log('Analytics : load Data from DB');
     // API 요청
-    await apiLoadFirstChartData(id, year, month).then((response) => {
+    await apiLoadFirstChartData(id, curYear, curMonth).then((response) => {
       // 결과값 받음
       const responseData: FirstChartResponseType[] = response.data.data;
       // 결과값을 현재 컴포넌트에서 쓰는 형태로 변환
-      const { tagItems, tagTotalCost } = toTagItemType(responseData);
-      // 값 세팅
-      setTagItems(tagItems);
-      setSumTagValue(tagTotalCost);
+      if (responseData.length > 0) {
+        const { tagItems, tagTotalCost } = toTagItemType(responseData);
+        setTagItems(tagItems);
+        setSumTagValue(tagTotalCost);
+      } else {
+        setTagItems([
+          {
+            id: 'no data',
+            value: '-1',
+            rate: '100',
+          },
+        ]);
+        setSumTagValue(0);
+      }
     });
   };
 
