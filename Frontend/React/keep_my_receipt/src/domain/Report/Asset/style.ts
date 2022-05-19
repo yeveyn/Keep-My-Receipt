@@ -15,7 +15,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
 
 export const GreenTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: 'lightGreen',
+    backgroundColor: '#FFF5E1',
   },
 }));
 
