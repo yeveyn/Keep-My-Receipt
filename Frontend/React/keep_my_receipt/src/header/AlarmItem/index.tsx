@@ -209,11 +209,6 @@ export default function AlarmItem() {
                 <Grid item xs={11}>
                   <Typography
                     fontSize="15px"
-                    // style={
-                    //   alarm.read.toString() === 'false'
-                    //     ? { fontWeight: 'bold' }
-                    //     : {}
-                    // }
                     onClick={() => connectNotification(alarm)}
                   >
                     {alarm.date.split('T')[0].substring(5)[0] === '0'

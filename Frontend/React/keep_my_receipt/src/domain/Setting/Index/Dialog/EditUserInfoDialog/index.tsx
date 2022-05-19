@@ -92,7 +92,7 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
             name="nickname"
             fullWidth
             label="이름"
-            value={userName}
+            // value={userName}
             autoComplete="current-password"
             variant="outlined"
             size="small"

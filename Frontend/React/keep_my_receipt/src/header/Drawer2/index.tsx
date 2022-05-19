@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Avatar, Button, Grid, ListItemAvatar } from '@mui/material';
+import { Avatar, Button, Grid, ListItemAvatar, Stack } from '@mui/material';
 import AlarmItem from '../AlarmItem';
 import { Content2, ClubName } from '../styles';
 
@@ -158,45 +158,60 @@ export default function PersistentDrawerRight() {
               <Grid
                 container
                 // justifyContent="spaceBetween"
-                paddingLeft={3}
-                paddingRight={3}
+                paddingLeft={1}
+                paddingRight={2}
                 paddingTop={1}
               >
-                {/* 동아리  / 로고 사진 */}
-                <Grid item xs={2} textAlign="left">
-                  {id ? (
-                    <>
-                      {clubImage ? (
-                        <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
-                          <Avatar src={clubImage} />
-                        </ListItemAvatar>
+                {/* 사진, 동아리명, 왕관*/}
+                <Grid item xs={11} textAlign="left">
+                  <Stack
+                    direction="row"
+                    // alignItems="center"
+                    // justifyContent="center"
+                  >
+                    <Stack>
+                      {id ? (
+                        <>
+                          {clubImage ? (
+                            <ListItemAvatar
+                              onClick={onClick}
+                              sx={{ pt: '24px' }}
+                            >
+                              <Avatar src={clubImage} />
+                            </ListItemAvatar>
+                          ) : (
+                            <ListItemAvatar
+                              onClick={onClick}
+                              sx={{ pt: '24px' }}
+                            >
+                              <Avatar src="/images/adginnr/jw3.png" />
+                            </ListItemAvatar>
+                          )}
+                        </>
                       ) : (
                         <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
-                          <Avatar src="/images/adginnr/jw3.png" />
+                          <Avatar src="/images/randing/jw3.png" />
                         </ListItemAvatar>
                       )}
-                    </>
-                  ) : (
-                    <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
-                      <Avatar src="/images/randing/jw3.png" />
-                    </ListItemAvatar>
-                  )}
-                </Grid>
-                {/* 동아리 명 */}
-                <Grid item xs={2}>
-                  <ClubName>{clubName}</ClubName>
+                    </Stack>
+
+                    <Stack>{id ? <ClubName>{clubName}</ClubName> : ''}</Stack>
+
+                    {id ? (
+                      <Stack>
+                        <Button
+                          onClick={onClick}
+                          sx={{ pt: '30px', mr: '6rem' }}
+                        >
+                          <img width="25rem" src={crown}></img>
+                        </Button>
+                      </Stack>
+                    ) : (
+                      ''
+                    )}
+                  </Stack>
                 </Grid>
 
-                {/* 왕관 */}
-                {crown ? (
-                  <Grid item xs={7} paddingTop="1.5rem">
-                    <Button onClick={onClick}>
-                      <img width="25rem" src={crown}></img>
-                    </Button>
-                  </Grid>
-                ) : (
-                  <Grid item xs={7} textAlign="left"></Grid>
-                )}
                 {/* 알림 버튼 */}
                 <Grid item xs={1}>
                   <Box

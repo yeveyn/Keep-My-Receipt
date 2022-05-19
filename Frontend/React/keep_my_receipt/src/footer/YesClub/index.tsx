@@ -130,26 +130,22 @@ export default function () {
             icon={<MenuIcon />}
           ></BottomNavigationAction>
 
-          {userAuthNum <= 2 ? (
-            <BottomNavigationAction
-              sx={{
-                padding: 0,
-                '@media (max-width: 768px)': {
-                  minWidth: 'auto',
-                  padding: '6px 0',
-                },
-              }}
-              onClick={() => {
-                onClickButton(`/club/${id}/book`);
-              }}
-              label={'거래 내역'}
-              icon={<PlaylistAddIcon />}
-            ></BottomNavigationAction>
-          ) : (
-            <></>
-          )}
+          <BottomNavigationAction
+            sx={{
+              padding: 0,
+              '@media (max-width: 768px)': {
+                minWidth: 'auto',
+                padding: '6px 0',
+              },
+            }}
+            onClick={() => {
+              onClickButton(`/club/${id}/book`);
+            }}
+            label={'거래 내역'}
+            icon={<PlaylistAddIcon />}
+          ></BottomNavigationAction>
 
-          {/* 거래 등록 */}
+          {/* 거래 등록 관리자 이상만 가능,  */}
           {userAuthNum <= 2 ? (
             <BottomNavigationAction
               sx={{
@@ -166,20 +162,8 @@ export default function () {
               icon={<PeopleAltIcon />}
             ></BottomNavigationAction>
           ) : (
-            <BottomNavigationAction
-              sx={{
-                padding: 0,
-                '@media (max-width: 768px)': {
-                  minWidth: 'auto',
-                  padding: '6px 0',
-                },
-              }}
-              onClick={() => {
-                onClickButton(`/club/${id}/book`);
-              }}
-              label={'거래내역'}
-              icon={<PeopleAltIcon />}
-            ></BottomNavigationAction>
+            // 만약 관리자가 아니라면?
+            ''
           )}
 
           {/* 영수증 내역 */}
