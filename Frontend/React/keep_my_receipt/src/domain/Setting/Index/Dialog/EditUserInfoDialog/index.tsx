@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DialogType {
   open: boolean;
@@ -22,6 +22,22 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
   };
 
   const [userName, setUserName] = useState('');
+
+  const onGetName = () => {
+    axios
+      .get(`/api/spring/crew/info`)
+      .then(function (response) {
+        setUserName(response.data.data.name);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    onGetName();
+    console.log(userName);
+  });
 
   //확인 버튼
   const changeName = (e: any) => {
@@ -52,19 +68,23 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       aria-describedby="join-dialog-description"
     >
       <DialogContent>
-        <DialogContentText>
+        {/* <DialogContentText>
           <Typography
             sx={{
-              fontSize: 30,
+              fontSize: 20,
+              fontWeight: 'bold',
+              letterSpacing: '-2px',
               margin: 2,
-              fontFamily: 'EastSeaDokdoRegular',
+              fontFamily: 'NanumGothicBold',
             }}
           >
-            {' '}
-            내 이름 수정하기
+            수정하기
           </Typography>
-        </DialogContentText>
-        <DialogContentText id="join-dialog-description">
+        </DialogContentText> */}
+        <DialogContentText
+          id="join-dialog-description"
+          sx={{ paddingTop: '40px' }}
+        >
           <TextField
             onChange={changeName}
             type="text"
@@ -72,6 +92,7 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
             name="nickname"
             fullWidth
             label="이름"
+            value={userName}
             autoComplete="current-password"
             variant="outlined"
             size="small"
