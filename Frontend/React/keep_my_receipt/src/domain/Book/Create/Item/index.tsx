@@ -14,7 +14,7 @@ import { InfoOutlined } from '@mui/icons-material';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import EditableAutocomplete from '../../EditableAutocomplete';
 import EditableAutocompleteTag from '../../EditableAutocompleteTag';
-import { MainCategoryDialog } from '../../tagDialogContents';
+import { MainTypeGuide } from '../ItemGuide/classification';
 import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 import { largeCategories } from '../../tagListSample';
 import { toNumberOnly } from '../../../../services/toCurrency';
@@ -204,7 +204,7 @@ export default function Item({
         {/* 아이콘 버튼 & 다이얼로그 */}
         <DialogWithIconButton
           icon={<InfoOutlined />}
-          content={<MainCategoryDialog />}
+          content={<MainTypeGuide />}
         />
       </Stack>
 
