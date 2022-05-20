@@ -1,23 +1,23 @@
 /** 상태 */
 
-import { CreateParamType } from './types';
-import { TransactionType } from './api/bookApi';
+import { ReadTransactionResType } from './api/bookReadApi';
+import { ReceiptStateType } from './types';
 
 /* 상태 타입 선언 */
 export type TypeNameKeys = '자산' | '지출' | '수입' | '예산' | '';
 
 export type BookItemType = {
-  id?: number;
+  transactionDetailId?: number;
   name: string;
   price: number;
   type: TypeNameKeys;
   largeCategory: string;
   smallCategory: string;
-  categoryId: number;
+  // categoryId: number;
   largeTag: string;
   smallTag: string;
-  tagId: number;
-  memo: string;
+  // tagId?: number;
+  memo?: string;
 };
 
 export type BookItemKeys =
@@ -33,10 +33,11 @@ export type BookItemKeys =
   | 'memo';
 
 export type BookState = {
-  transactionId?: number;
-  clubId: number;
   date: string;
   totalPrice: number;
+  clubId: number;
+  transactionId?: number;
+  receiptId?: number;
   imageUrl?: string;
   items: BookItemType[];
 };
@@ -47,10 +48,10 @@ export const blankBookItem: BookItemType = {
   type: '',
   largeCategory: '',
   smallCategory: '',
-  categoryId: 0,
+  // categoryId: 0,
   largeTag: '',
   smallTag: '',
-  tagId: 0,
+  // tagId: 0,
   memo: '',
 };
 
@@ -62,10 +63,30 @@ export const blankBook: BookState = {
 };
 
 export const initBookState = (
-  param: CreateParamType,
+  param: ReceiptStateType | ReadTransactionResType,
   clubId: number,
 ): BookState => {
-  if (param) {
+  // 영수증 없이 거래 등록하는 경우
+  if (!param) {
+    return {
+      ...blankBook,
+      clubId: clubId,
+    };
+  }
+  // 기존 거래 내역 수정하는 경우
+  else if ('transactionId' in param) {
+    return {
+      date: param.date,
+      totalPrice: param.totalPrice,
+      clubId: clubId,
+      transactionId: param.transactionId,
+      receiptId: param.requestId,
+      imageUrl: param.receiptUrl,
+      items: param.items,
+    };
+  }
+  // 영수증 승인으로부터 거래 등록하는 경우
+  else if ('requestId' in param) {
     return {
       clubId: clubId,
       date: param.date,
@@ -75,35 +96,10 @@ export const initBookState = (
         ...blankBookItem,
         name: item.content,
         price: Number(item.money),
-        // 각 아이템마다의 id가 뭐지?
       })),
-    };
-  } else {
-    return {
-      ...blankBook,
-      clubId: clubId,
     };
   }
 };
-
-export const toTransactionType = (
-  bookState: BookState,
-  requestId?: number,
-): TransactionType => ({
-  ...(requestId && { requestId: requestId }),
-  totalPrice: bookState.totalPrice,
-  date: bookState.date,
-  list: bookState.items.map((item) => ({
-    name: item.name,
-    price: item.price,
-    type: item.type,
-    largeCategory: item.largeCategory,
-    smallCategory: item.smallCategory,
-    ...(item.largeTag && { largeTag: item.largeTag }),
-    ...(item.smallTag && { smallTag: item.smallTag }),
-    ...(item.memo && { memo: item.memo }),
-  })),
-});
 
 /** 액션 */
 

@@ -15,9 +15,9 @@ import PageButtons from '../Create/PageButtons';
 import {
   // apiDeleteTransaction,
   apiGetTransaction,
-  ReadResponseType,
+  ReadTransactionResType,
   initialReadResponse,
-} from '../api/bookApi';
+} from '../api/bookReadApi';
 import { DetailParamType } from '../types';
 import toCurrency from '../../../services/toCurrency';
 import {
@@ -57,8 +57,10 @@ export default function BookDetail() {
   const params = location.state as DetailParamType;
   const navigate = useNavigate();
 
-  // 거래내역
-  const [state, setState] = useState<ReadResponseType>(initialReadResponse);
+  // 임시로 추가
+
+  const [state, setState] =
+    useState<ReadTransactionResType>(initialReadResponse);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState<pageInfoType>({
     pageNumber: 0,
@@ -70,8 +72,7 @@ export default function BookDetail() {
       // console.log('readTransaction', res.data.data);
 
       // 아이템 설정
-      const data: ReadResponseType = res.data.data;
-      // console.log(data.items[0]);
+      const data: ReadTransactionResType = res.data.data;
       setState(data);
 
       // 페이지 설정
