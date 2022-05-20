@@ -290,5 +290,5 @@ sudo docker run -p 8185:8185 -d seojiwon335/keep_my_receipt:spring
 sudo docker run -p 5555:5555 -d seojiwon335/keep_my_receipt:fastapi
 
 # react frontend 컨테이너 실행
-sudo docker pull -p 3000:3000 -d seojiwon335/keep_my_receipt:react
+sudo docker run -p 3000:3000 -d seojiwon335/keep_my_receipt:react
 ```
