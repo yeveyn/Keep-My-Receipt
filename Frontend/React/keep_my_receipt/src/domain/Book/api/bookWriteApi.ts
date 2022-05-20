@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { WarningToast } from '../../../services/customSweetAlert';
 import { BookState, TypeNameKeys } from '../bookReducer';
 
 export const BASE_URL = 'https://k6d104.p.ssafy.io/api/spring';
@@ -53,13 +53,19 @@ export const apiValidateCreateTransaction = (
 ): boolean => {
   if (data.list.length === 1) {
     if (data.list[0].name === '') {
-      alert(`내용을 입력해주세요`);
+      WarningToast.fire({
+        title: '내용을 입력해주세요',
+      });
       return false;
     } else if (data.list[0].price === 0) {
-      alert(`금액은 0보다 커야 합니다`);
+      WarningToast.fire({
+        title: '금액은 0보다 커야 합니다',
+      });
       return false;
     } else if (data.list[0].smallCategory === '') {
-      alert(`대분류와 소분류를 선택해주세요`);
+      WarningToast.fire({
+        title: '대분류와 소분류를 선택해주세요',
+      });
       return false;
     }
     return true;
@@ -69,13 +75,19 @@ export const apiValidateCreateTransaction = (
   let index = 1;
   for (const item of data.list) {
     if (item.name === '') {
-      alert(`${index}번째 항목의 내용을 입력해주세요`);
+      WarningToast.fire({
+        title: `${index}번째 항목의 \n 내용을 입력해주세요`,
+      });
       return false;
     } else if (item.price === 0) {
-      alert(`${index}번째 항목의 금액은 0보다 커야 합니다`);
+      WarningToast.fire({
+        title: `${index}번째 항목의 \n 금액은 0보다 커야 합니다`,
+      });
       return false;
     } else if (item.smallCategory === '') {
-      alert(`${index}번째 항목의 대분류와 소분류를 선택해주세요`);
+      WarningToast.fire({
+        title: `${index}번째 항목의 \n 대분류와 소분류를 \n 선택해주세요`,
+      });
       return false;
     }
     index += 1;
@@ -120,7 +132,10 @@ export const apiUpdateTransaction = async (
       if (res.data.output == 200) {
         console.log(res.data.msg);
       } else {
-        alert(res.data.msg);
+        WarningToast.fire({
+          icon: 'error',
+          title: res.data.msg,
+        });
       }
       return res;
     })
