@@ -1,5 +1,5 @@
 import { Box, Divider, Typography } from '@mui/material';
-import { BlueText, GreenText, OrangeText, RedText } from './style';
+import { BlueText, GreenText, GreyText, OrangeText, RedText } from './style';
 
 export function MainTypeGuide() {
   return (
@@ -22,7 +22,7 @@ export function MainTypeGuide() {
         이유로 <RedText>사용</RedText>한 돈을 뜻합니다.
         <br />(<RedText>자산 구매를 제외</RedText>한 사용한 돈을 뜻합니다.)
         <br />
-        <i>예: 식비, 택시비</i>
+        <GreyText>예: 식비, 택시비</GreyText>
       </Box>
       <br />
       <Typography variant="h6">수입</Typography>
@@ -32,7 +32,7 @@ export function MainTypeGuide() {
         경우를 뜻합니다.
         <br />(<BlueText>지출의 결과</BlueText>로 돈이 들어온 경우를 뜻합니다.)
         <br />
-        <i>예: 맥주의 재료를 구매한 다음, 맥주를 만들어 판매</i>
+        <GreyText>예: 맥주의 재료를 구매한 다음, 맥주를 만들어 판매</GreyText>
       </Box>
       <br />
       <Typography variant="h6">예산</Typography>
@@ -43,7 +43,7 @@ export function MainTypeGuide() {
         <br />(<GreenText>지출과 상관 없이</GreenText> 돈이 들어온 경우를
         뜻합니다.)
         <br />
-        <i>예: 회비 </i>
+        <GreyText>예: 회비 </GreyText>
       </Box>
     </Box>
   );
@@ -58,9 +58,9 @@ export function SmallCategoryGuide() {
       모임에서 <b>자주 사용하는 분류</b>를 자유롭게 적으시면 됩니다.
       <br />
       <br />
-      <i>
+      <GreyText>
         예) 지출 ＞ 복리후생비 ＞ <b>회식비</b>
-      </i>
+      </GreyText>
     </Box>
   );
 }

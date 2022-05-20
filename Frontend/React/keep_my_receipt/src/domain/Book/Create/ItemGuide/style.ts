@@ -20,3 +20,9 @@ export const GreenText = styled(Typography)<TypographyProps>(() => ({
   display: 'inline',
   color: 'green',
 }));
+
+export const GreyText = styled(Typography)<TypographyProps>(() => ({
+  display: 'inline-block',
+  marginTop: '0.75rem',
+  color: 'grey',
+}));
