@@ -20,7 +20,7 @@ export default function AddButton({
       <IconButton
         onClick={() => {
           // 현재 페이지 뒤에 추가
-          dispatch && dispatch(createItem(page));
+          dispatch && dispatch(createItem(page + 1));
           setPage((page) => page + 1);
         }}
       >
