@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Avatar, Button, Grid, ListItemAvatar, Stack } from '@mui/material';
 import AlarmItem from '../AlarmItem';
-import { Content2, ClubName } from '../styles';
+import { Content2, ClubName, Content3 } from '../styles';
 
 const drawerWidth = 240;
 
@@ -80,7 +80,7 @@ export default function PersistentDrawerRight() {
     } else {
       setIsLogin(false);
     }
-  }, []);
+  }, [myAccessToken]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -153,67 +153,79 @@ export default function PersistentDrawerRight() {
             <>
               <Grid
                 container
-                // justifyContent="spaceBetween"
+                // alignContent="center"
                 paddingLeft={1}
                 paddingRight={2}
                 paddingTop={1}
               >
                 {/* 사진, 동아리명, 왕관*/}
-                <Grid item xs={10} textAlign="left">
-                  <Stack direction="row">
-                    <Stack>
-                      {id ? (
-                        <>
-                          {clubImage ? (
-                            <ListItemAvatar
-                              onClick={onClick}
-                              sx={{ pl: '20px', pt: '30px' }}
-                            >
-                              <img
-                                width="30rem"
-                                src="/images/randing/home3.png"
-                              ></img>
-                            </ListItemAvatar>
-                          ) : (
-                            <ListItemAvatar
-                              onClick={onClick}
-                              sx={{ pt: '24px' }}
-                            >
-                              <Avatar src="/images/adginnr/jw3.png" />
-                            </ListItemAvatar>
-                          )}
-                        </>
-                      ) : (
-                        <ListItemAvatar onClick={onClick} sx={{ pt: '24px' }}>
-                          <Avatar src="/images/randing/jw3.png" />
+                {id ? (
+                  <>
+                    <Grid item xs={10} textAlign="left">
+                      <Stack direction="row">
+                        <ListItemAvatar
+                          onClick={onClick}
+                          sx={{ pl: '20px', pt: '30px' }}
+                        >
+                          <img
+                            width="30rem"
+                            src="/images/randing/home3.png"
+                          ></img>
                         </ListItemAvatar>
-                      )}
-                    </Stack>
-
-                    <Stack>{id ? <ClubName>{clubName}</ClubName> : ''}</Stack>
-                  </Stack>
-                </Grid>
+                        <Stack>
+                          {id ? <ClubName>{clubName}</ClubName> : ''}
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                  </>
+                ) : (
+                  <>
+                    <Grid item xs={9} textAlign="left">
+                      <Stack direction="row">
+                        <img
+                          width="160rem"
+                          src="/images/randing/last.png"
+                        ></img>
+                        <Stack>
+                          {id ? <ClubName>{clubName}</ClubName> : ''}
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                  </>
+                )}
 
                 {/* 알림 버튼 */}
-                <Grid item xs={2}>
-                  <Box
-                    sx={{
-                      my: 2,
-                      color: 'black',
-                      pt: '15px',
-                    }}
-                  >
-                    {id && isLogin ? (
-                      <>
-                        <AlarmItem />
-                      </>
-                    ) : (
-                      <Typography onClick={onLogout} fontSize="0.8rem">
-                        로그아웃
-                      </Typography>
-                    )}
-                  </Box>
-                </Grid>
+
+                {id && isLogin ? (
+                  <Grid item xs={2}>
+                    <Box
+                      sx={{
+                        my: 2,
+                        color: 'black',
+                        pt: '15px',
+                      }}
+                    >
+                      <AlarmItem />
+                    </Box>
+                  </Grid>
+                ) : (
+                  <Grid item xs={3}>
+                    <Box
+                      sx={{
+                        pt: '15px',
+                      }}
+                    >
+                      <Button
+                        onClick={onLogout}
+                        sx={{
+                          float: 'right',
+                        }}
+                      >
+                        <Content3>로그아웃</Content3>
+                      </Button>
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
             </>
           ) : (

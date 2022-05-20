@@ -27,7 +27,6 @@ function Landing() {
       <GuideFirst />
       <GuideSecond />
       <GuideThird />
-      {/* <GuideFourthFirst /> */}
     </div>
   );
 }
