@@ -115,6 +115,10 @@ export default function PersistentDrawerRight() {
     navigate('/club');
   };
 
+  const onHome = () => {
+    navigate('/');
+  };
+
   const onClickLogin = () => {
     navigate('/login');
   };
@@ -183,6 +187,7 @@ export default function PersistentDrawerRight() {
                     <Grid item xs={9} textAlign="left">
                       <Stack direction="row">
                         <img
+                          onClick={onHome}
                           width="160rem"
                           src="/images/randing/last.png"
                         ></img>
