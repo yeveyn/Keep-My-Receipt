@@ -51,20 +51,31 @@ export const toTransactionType = (
 export const apiValidateCreateTransaction = (
   data: CreateTransactionReqType,
 ): boolean => {
+  if (data.list.length === 1) {
+    if (data.list[0].name === '') {
+      alert(`내용을 입력해주세요`);
+      return false;
+    } else if (data.list[0].price === 0) {
+      alert(`금액은 0보다 커야 합니다`);
+      return false;
+    } else if (data.list[0].smallCategory === '') {
+      alert(`대분류와 소분류를 선택해주세요`);
+      return false;
+    }
+    return true;
+  }
+
   // 몇 번째 아이템인지 나타냄
   let index = 1;
   for (const item of data.list) {
     if (item.name === '') {
-      alert(`${index}번째 세부 항목명을 입력해주세요`);
+      alert(`${index}번째 항목의 내용을 입력해주세요`);
       return false;
     } else if (item.price === 0) {
-      alert(`${index}번째 세부 항목의 금액은 0보다 커야 합니다`);
-      return false;
-    } else if (item.largeCategory === '') {
-      alert(`${index}번째 세부 항목의 대분류를 선택해주세요`);
+      alert(`${index}번째 항목의 금액은 0보다 커야 합니다`);
       return false;
     } else if (item.smallCategory === '') {
-      alert(`${index}번째 세부 항목의 소분류를 선택해주세요`);
+      alert(`${index}번째 항목의 대분류와 소분류를 선택해주세요`);
       return false;
     }
     index += 1;
