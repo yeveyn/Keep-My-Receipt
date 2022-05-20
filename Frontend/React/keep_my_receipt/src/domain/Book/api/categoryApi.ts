@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { WarningToast } from '../../../services/customSweetAlert';
 import { TypeNameKeys } from '../bookReducer';
 
 const BASE_URL = 'https://k6d104.p.ssafy.io/api/spring';
@@ -32,7 +33,9 @@ export const apiCreateCategory = async (
   })
     .then((res) => {
       if (res.data.output !== 200) {
-        alert(res.data.msg);
+        WarningToast.fire({
+          title: res.data.msg,
+        });
       }
       return res;
     })
@@ -61,7 +64,9 @@ export const apiUpdateCategory = async (
   })
     .then((res) => {
       if (res.data.output !== 200) {
-        alert(res.data.msg);
+        WarningToast.fire({
+          title: res.data.msg,
+        });
       }
       return res;
     })
@@ -85,7 +90,9 @@ export const apiReadAllCategory = async (
   })
     .then((res) => {
       if (res.data.output !== 200) {
-        alert(res.data.msg);
+        WarningToast.fire({
+          title: res.data.msg,
+        });
       }
       return res;
     })
@@ -106,7 +113,9 @@ export const apiDeleteCategory = async (
   })
     .then((res) => {
       if (res.data.output !== 200) {
-        alert(res.data.msg);
+        WarningToast.fire({
+          title: res.data.msg,
+        });
       }
       return res;
     })

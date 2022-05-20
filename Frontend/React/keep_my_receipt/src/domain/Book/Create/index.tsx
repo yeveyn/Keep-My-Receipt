@@ -15,6 +15,7 @@ import { ReceiptStateType } from '../types';
 import DeleteButton from './DeleteButton';
 import AddButton from './AddButton';
 import { ReadTransactionResType } from '../api/bookReadApi';
+import { ConfirmSwal } from '../../../services/customSweetAlert';
 
 export default function BookCreate() {
   // 다음 페이지로 보내기 위한 변수 선언
@@ -52,11 +53,13 @@ export default function BookCreate() {
     const requestId = params && params.requestId;
     const payload = toTransactionType(state, requestId);
     if (apiValidateCreateTransaction(payload)) {
-      if (confirm('등록하시겠습니까?')) {
-        await apiCreateTransaction(Number(clubId), payload).then((res) => {
-          res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
-        });
-      }
+      ConfirmSwal('등록하시겠습니까?').then(async (res) => {
+        if (res.isConfirmed) {
+          await apiCreateTransaction(Number(clubId), payload).then((res) => {
+            res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
+          });
+        }
+      });
     }
   };
 
@@ -67,18 +70,20 @@ export default function BookCreate() {
     const payload = toTransactionType(state, requestId);
 
     if (apiValidateCreateTransaction(payload)) {
-      if (confirm('등록하시겠습니까?')) {
-        await apiUpdateTransaction(transactionId, payload).then((res) => {
-          res.data.msg === '성공'
-            ? navigate(`/club/${clubId}/book/detail`, {
-                state: {
-                  transactionId: transactionId,
-                  transactionDetailId: state.items[0].transactionDetailId,
-                },
-              })
-            : null;
-        });
-      }
+      ConfirmSwal('등록하시겠습니까?').then(async (res) => {
+        if (res.isConfirmed) {
+          await apiCreateTransaction(Number(clubId), payload).then((res) => {
+            res.data.msg === '성공'
+              ? navigate(`/club/${clubId}/book/detail`, {
+                  state: {
+                    transactionId: transactionId,
+                    transactionDetailId: state.items[0].transactionDetailId,
+                  },
+                })
+              : null;
+          });
+        }
+      });
     }
   };
 
