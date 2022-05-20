@@ -12,6 +12,8 @@
 
 
 
+
+
 #### 🧐 기획 의도
 
 모든 모임은 회계 관리에 대한 니즈가 있습니다. 하지만 회계 관리를 투명하게 관리하기란 쉽지 않습니다. 총무는 회원들에게 일일이 영수증을 받으러 다녀야하고, 이렇게 얻은 실물 영수증은 누락, 분실 등의 위험이 존재하기 때문입니다. 또한 모임 장부는 총무 개인이 관리하는 경우가 많아 회원들이 실시간으로 확인하기는 어렵습니다. 뿐만 아니라 회계에 대한 전문 지식이 없는 회원이 총무를 담당하게 될 경우에는 보고서 작성에 어려움을 겪기도 합니다. 
@@ -20,15 +22,17 @@
 
 
 
+
+
 #### 🎯 타겟
 
 - 거래 내역을 편리하게 관리하고 싶은 총무
-
 - 회계를 잘 모르지만 총무를 맡게 된 회원
-
 - 매번 총무에게 장부를 보여달라고 하기 민망한 회원
 
-  
+
+
+
 
 #### ⚙️ 주요 기능
 
@@ -44,9 +48,13 @@
 
 
 
+
+
 ## ⛑ 아키텍처
 
 ![아키텍처](images/아키텍처.png)
+
+
 
 
 
@@ -54,29 +62,37 @@
 
 #### 💻 프론트엔드
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> 
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">  
 
-<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white"><img src="https://img.shields.io/badge/Kotlin-007396?style=for-the-badge&logo=Kotlin&logoColor=white"><img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"> 
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white"> <img src="https://img.shields.io/badge/Kotlin-007396?style=for-the-badge&logo=Kotlin&logoColor=white"> <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"> 
+
+
 
 
 
 #### 🛢 백엔드
 
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring-Boot&logoColor=white"><img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"><img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white">
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring-Boot&logoColor=white"> <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white">
 
-<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white"><img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white"> <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
+
+
 
 
 
 #### 📡 인프라
 
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"><img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"><img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"><img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
+
+
 
 
 
 ## 🗃 ERD
 
 ![erd](images/erd.png)
+
+
 
 
 
@@ -146,7 +162,9 @@
 
 
 
-## 👨‍👧‍👧 팀 소개
+
+
+## 🐱‍💻 팀 소개
 
 | 팀원     | 담당                      | GitHub                                           |
 | -------- | ------------------------- | ------------------------------------------------ |
@@ -156,6 +174,8 @@
 | 양아름   | 백엔드 개발               | [@yeveyn](https://github.com/yeveyn)             |
 | 신인호   | 프론트엔드 개발           | [@adiens916](https://github.com/adiens916)       |
 | 조태연   | 프론트엔드 개발           | [@charleyCho](https://github.com/charleyCho)     |
+
+
 
 
 
