@@ -17,14 +17,19 @@ import AddButton from './AddButton';
 import { ReadTransactionResType } from '../api/bookReadApi';
 
 export default function BookCreate() {
+  // 다음 페이지로 보내기 위한 변수 선언
+  const navigate = useNavigate();
   // 주소에 있는 모임 ID 가져옴
   const { id: clubId } = useParams();
   // 이전 페이지에서 보낸 데이터 받음
   const location = useLocation();
   const params = location.state as ReceiptStateType | ReadTransactionResType;
+
+  // 영수증 ID가 없으면 수정 가능
+  const isEditable = () =>
+    params === null || (params && params.requestId === null);
+  // 거래 ID가 있으면 기존 거래 수정 중
   const isUpdate = () => params && 'transactionId' in params;
-  // 다음 페이지로 보내기 위한 변수 선언
-  const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(
     bookReducer,
@@ -83,7 +88,7 @@ export default function BookCreate() {
 
   useEffect(() => {
     console.log('BookCreate params', params);
-  }, []);
+  }, [params]);
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', marginBottom: 8 }}>
@@ -96,7 +101,8 @@ export default function BookCreate() {
         length={state.items.length}
         imageUrl={state.imageUrl}
         dispatch={dispatch}
-        editable={!(params && params.requestId)}
+        // 넘어온 값이 없음 or 넘어온 값에 requestId가 없으면 수정 가능
+        editable={isEditable()}
       />
 
       {/* 페이지네이션 버튼들 */}
@@ -128,7 +134,7 @@ export default function BookCreate() {
             item={item}
             itemIndex={index}
             dispatch={dispatch}
-            currencyEditable={params && 'requestId' in params}
+            currencyEditable={isEditable()}
           />
         </div>
       ))}
