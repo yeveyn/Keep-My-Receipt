@@ -4,9 +4,20 @@ import NavMenuItem from './NavMenuList';
 
 import ResponsiveDrawer from './Drawer2';
 import { NavBarContainer } from './styles';
+import { useEffect, useState } from 'react';
 
 export default function NavBar() {
   const matches = useMediaQuery('(min-width:1030px)');
+  const [isLogin, setIsLogin] = useState(false);
+  const accessToken = sessionStorage.getItem('accessToken');
+
+  useEffect(() => {
+    if (accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [accessToken]);
 
   return (
     <Box height="62px">

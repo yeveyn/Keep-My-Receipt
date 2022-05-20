@@ -39,6 +39,17 @@ export const Content2 = styled.p`
   }
 `;
 
+export const Content3 = styled.p`
+  font-size: 1.2vw;
+  font-family: NanumGothicBold;
+  letter-spacing: -2px;
+  margin: 0 0 0 0;
+  color: #494949;
+  @media only screen and (max-width: 768px) {
+    font-size: 4vw;
+  }
+`;
+
 export const ClubName = styled.p`
   font-size: 1rem;
   font-family: NanumGothicBold;
@@ -46,7 +57,7 @@ export const ClubName = styled.p`
   margin: 0 0 0 0;
   color: #494949;
   @media only screen and (max-width: 768px) {
-    font-size: 6vw;
-    padding-top: 25px;
+    font-size: 5vw;
+    padding-top: 30px;
   }
 `;

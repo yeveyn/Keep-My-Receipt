@@ -1,24 +1,35 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Container, Divider } from '@mui/material';
+import { Box, Button, Container, Card, Stack } from '@mui/material';
 
 import Header from './Header';
 import Item from './Item';
-import bookReducer, {
-  updateBook,
-  initBookState,
+import bookReducer, { updateBook, initBookState } from '../bookReducer';
+import {
+  apiCreateTransaction,
+  apiUpdateTransaction,
+  apiValidateCreateTransaction,
   toTransactionType,
-} from '../bookReducer';
-import { apiCreateTransaction } from '../api/bookApi';
-import { CreateParamType } from '../types';
+} from '../api/bookWriteApi';
+import { ReceiptStateType } from '../types';
 import DeleteButton from './DeleteButton';
 import AddButton from './AddButton';
+import { ReadTransactionResType } from '../api/bookReadApi';
 
 export default function BookCreate() {
-  const { id: clubId } = useParams();
-  const location = useLocation();
-  const params = location.state as CreateParamType;
+  // 다음 페이지로 보내기 위한 변수 선언
   const navigate = useNavigate();
+  // 주소에 있는 모임 ID 가져옴
+  const { id: clubId } = useParams();
+  // 이전 페이지에서 보낸 데이터 받음
+  const location = useLocation();
+  const params = location.state as ReceiptStateType | ReadTransactionResType;
+
+  // 영수증 ID가 없으면 수정 가능
+  const isEditable = () =>
+    params === null || (params && params.requestId === null);
+  // 거래 ID가 있으면 기존 거래 수정 중
+  const isUpdate = () => params && 'transactionId' in params;
 
   const [state, dispatch] = useReducer(
     bookReducer,
@@ -40,9 +51,35 @@ export default function BookCreate() {
   const createTransaction = async () => {
     const requestId = params && params.requestId;
     const payload = toTransactionType(state, requestId);
-    await apiCreateTransaction(Number(clubId), payload).then((res) => {
-      res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
-    });
+    if (apiValidateCreateTransaction(payload)) {
+      if (confirm('등록하시겠습니까?')) {
+        await apiCreateTransaction(Number(clubId), payload).then((res) => {
+          res.data.msg === '성공' ? navigate(`/club/${clubId}/book`) : null;
+        });
+      }
+    }
+  };
+
+  const updateTransaction = async () => {
+    const transactionId =
+      'transactionId' in params ? params.transactionId : null;
+    const requestId = 'requestId' in params ? params.requestId : null;
+    const payload = toTransactionType(state, requestId);
+
+    if (apiValidateCreateTransaction(payload)) {
+      if (confirm('등록하시겠습니까?')) {
+        await apiUpdateTransaction(transactionId, payload).then((res) => {
+          res.data.msg === '성공'
+            ? navigate(`/club/${clubId}/book/detail`, {
+                state: {
+                  transactionId: transactionId,
+                  transactionDetailId: state.items[0].transactionDetailId,
+                },
+              })
+            : null;
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -50,14 +87,12 @@ export default function BookCreate() {
   }, [state.items]);
 
   useEffect(() => {
-    console.log('state', state);
-    console.log('page', page);
-    console.log('params', params);
-  }, [state, page]);
+    console.log('BookCreate params', params);
+  }, [params]);
 
   return (
     <Container maxWidth="md" sx={{ display: 'grid', marginBottom: 8 }}>
-      <h2>거래등록</h2>
+      <h2>{isUpdate() ? '거래수정' : '거래등록'}</h2>
 
       {/* 거래 정보 */}
       <Header
@@ -66,7 +101,8 @@ export default function BookCreate() {
         length={state.items.length}
         imageUrl={state.imageUrl}
         dispatch={dispatch}
-        editable={!params}
+        // 넘어온 값이 없음 or 넘어온 값에 requestId가 없으면 수정 가능
+        editable={isEditable()}
       />
 
       {/* 페이지네이션 버튼들 */}
@@ -91,16 +127,27 @@ export default function BookCreate() {
       )} */}
 
       {/* 각각의 항목 정보들 */}
-      {state.items.map((item, index) => (
-        <div key={index}>
-          <Item
-            clubId={clubId}
-            item={item}
-            itemIndex={index}
-            dispatch={dispatch}
-          />
-        </div>
-      ))}
+      <Stack spacing={2}>
+        {state.items.map((item, index) => (
+          <Card
+            key={index}
+            variant="outlined"
+            sx={{
+              BoxShadow: 2,
+              paddingY: '1rem',
+              paddingX: '0.7rem',
+            }}
+          >
+            <Item
+              clubId={clubId}
+              item={item}
+              itemIndex={index}
+              dispatch={dispatch}
+              currencyEditable={isEditable()}
+            />
+          </Card>
+        ))}
+      </Stack>
 
       <Box justifySelf="end">
         항목
@@ -109,11 +156,7 @@ export default function BookCreate() {
       </Box>
 
       <Button
-        onClick={() => {
-          if (confirm('등록하시겠습니까?')) {
-            createTransaction();
-          }
-        }}
+        onClick={isUpdate() ? updateTransaction : createTransaction}
         variant="contained"
       >
         등록!

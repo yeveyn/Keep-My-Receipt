@@ -5,7 +5,7 @@ import Banner from './Landing/Banner';
 import GuideFirst from './Landing/Guide-1';
 import GuideSecond from './Landing/Guide-2';
 import GuideThird from './Landing/Guide-3';
-import GuideFourthFirst from './Landing/Guide-4-1';
+// import GuideFourthFirst from './Landing/Guide-4-1';
 
 function Landing() {
   //로그인한 상태라면 navbar 보여주기
@@ -27,7 +27,6 @@ function Landing() {
       <GuideFirst />
       <GuideSecond />
       <GuideThird />
-      <GuideFourthFirst />
     </div>
   );
 }
