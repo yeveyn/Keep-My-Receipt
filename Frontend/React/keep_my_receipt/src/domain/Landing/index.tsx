@@ -28,6 +28,9 @@ function Landing() {
           fcmToken: mobileToken,
         })
         .then(function (response) {
+          console.log(
+            `랜딩페이지 response.toString() : ${response.data.toString()}`,
+          );
           console.log(`랜딩페이지 response : ${response.data}`);
           const { accessToken } = response.data;
           axios.defaults.headers.common[
@@ -43,6 +46,7 @@ function Landing() {
   }, []);
 
   useEffect(() => {
+    console.log(accessToken);
     window.scrollTo(0, 0);
     if (accessToken) {
       setIsLogin(true);
