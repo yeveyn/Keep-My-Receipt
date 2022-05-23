@@ -15,34 +15,36 @@ function Landing() {
 
   useEffect(() => {
     if (window['Android']) {
-      const id = window['Android']['getId']();
-      const password = window['Android']['getPassword']();
-      const mobileToken = window['Android']['requestToken']();
-      console.log(`id ${id}`);
-      console.log(`pw : ${password}`);
-      console.log(`mobileToken : ${mobileToken}`);
-      axios
-        .post('/api/spring/crew/login', {
-          email: id,
-          password: password,
-          fcmToken: mobileToken,
-        })
-        .then(function (response) {
-          // alert(response.data.toString());
-          console.log(
-            `랜딩페이지 response.toString() : ${response.data.data.toString()}`,
-          );
-          console.log(`랜딩페이지 response : ${response.data.data}`);
-          const { accessToken } = response.data.data;
-          axios.defaults.headers.common[
-            'Authorization'
-          ] = `Bearer ${accessToken}`; // header accessToken 설정
-          sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
-          console.log(`accessToken : ${accessToken}`);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      if (window['Android']['getAutoLogin']()) {
+        const id = window['Android']['getId']();
+        const password = window['Android']['getPassword']();
+        const mobileToken = window['Android']['requestToken']();
+        console.log(`id ${id}`);
+        console.log(`pw : ${password}`);
+        console.log(`mobileToken : ${mobileToken}`);
+        axios
+          .post('/api/spring/crew/login', {
+            email: id,
+            password: password,
+            fcmToken: mobileToken,
+          })
+          .then(function (response) {
+            // alert(response.data.toString());
+            console.log(
+              `랜딩페이지 response.toString() : ${response.data.data.toString()}`,
+            );
+            console.log(`랜딩페이지 response : ${response.data.data}`);
+            const { accessToken } = response.data.data;
+            axios.defaults.headers.common[
+              'Authorization'
+            ] = `Bearer ${accessToken}`; // header accessToken 설정
+            sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+            console.log(`accessToken : ${accessToken}`);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
   }, []);
 
