@@ -99,4 +99,24 @@ class WebAppInterface(private val mContext: Context) {
     }
     // window['Android']['setAutoLogin'](status);
 
+    @JavascriptInterface
+    fun setId(id: String) {
+        ApplicationClass.sSharedPreferences.setId(id)
+    }
+
+    @JavascriptInterface
+    fun getId(): String? {
+        return ApplicationClass.sSharedPreferences.getId()
+    }
+
+    @JavascriptInterface
+    fun setPassword(password: String) {
+        ApplicationClass.sSharedPreferences.setPassword(password)
+    }
+
+    @JavascriptInterface
+    fun getPassword(): String? {
+        return ApplicationClass.sSharedPreferences.getPassword()
+    }
+
 }
