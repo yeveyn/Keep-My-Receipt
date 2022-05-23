@@ -97,11 +97,15 @@ export default function PersistentDrawerRight() {
   };
 
   const fcmToken = sessionStorage.getItem('fcmToken');
+  // 로그아웃
   const onLogout = () => {
     if (myAccessToken) {
       axios
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
+          if (window['Android']) {
+            window['Android']['setAutoLogin'](false);
+          }
           sessionStorage.removeItem('accessToken');
           axios.defaults.headers.common['Authorization'] = '';
           navigate('/');
