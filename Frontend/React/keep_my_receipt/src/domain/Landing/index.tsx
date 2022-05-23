@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import Navigation from '../../header';
@@ -12,6 +13,30 @@ function Landing() {
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
 
+  useEffect(() => {
+    if (window['Android']) {
+      const id = window['Android']['getId']();
+      const password = window['Android']['getPassword']();
+      const mobileToken = window['Android']['requestToken']();
+
+      axios
+        .post('/api/spring/crew/login', {
+          email: id,
+          password: password,
+          fcmToken: mobileToken,
+        })
+        .then(function (response) {
+          const { accessToken } = response.data;
+          axios.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${accessToken}`; // header accessToken 설정
+          sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
     if (accessToken) {
