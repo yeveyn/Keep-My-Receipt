@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Chip,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Chip, InputAdornment, Stack, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { InfoOutlined } from '@mui/icons-material';
 
@@ -14,16 +7,23 @@ import { InfoOutlined } from '@mui/icons-material';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import EditableAutocomplete from '../../EditableAutocomplete';
 import EditableAutocompleteTag from '../../EditableAutocompleteTag';
-import { MainCategoryDialog } from '../../tagDialogContents';
+import { MainTypeGuide } from '../ItemGuide/classification';
 import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 import { largeCategories } from '../../tagListSample';
 import { toNumberOnly } from '../../../../services/toCurrency';
+import {
+  AssetLargeCategoryGuide,
+  BudgetLargeCategoryGuide,
+  ExpenditureLargeCategoryGuide,
+  RevenueLargeCategoryGuide,
+} from '../ItemGuide/largeCategory';
 
 type ItemType = {
   clubId: string;
   item: BookItemType;
   itemIndex: number;
   dispatch: React.Dispatch<BookAction>;
+  currencyEditable: boolean;
 };
 
 const mainTypes: { name: string; color: string }[] = [
@@ -33,7 +33,13 @@ const mainTypes: { name: string; color: string }[] = [
   { name: '예산', color: 'green' },
 ];
 
-export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
+export default function Item({
+  clubId,
+  item,
+  itemIndex,
+  dispatch,
+  currencyEditable,
+}: ItemType) {
   const [inputValue, setInputValue] = useState('');
 
   // 토글 값 바꾸는 함수
@@ -73,6 +79,28 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
   //   // 태그2 선택을 취소할 경우, 기존 태그 id로 복구
   //   dispatch(updateItem(itemIndex, 'tagId', tagId === 0 ? tempTagId : tagId));
   // };
+
+  const [LargeCategoryGuide, setLargeCategoryGuide] =
+    useState<() => JSX.Element>();
+  useEffect(() => {
+    switch (item.type) {
+      case '자산':
+        setLargeCategoryGuide(() => AssetLargeCategoryGuide);
+        break;
+      case '지출':
+        setLargeCategoryGuide(() => ExpenditureLargeCategoryGuide);
+        break;
+      case '수입':
+        setLargeCategoryGuide(() => RevenueLargeCategoryGuide);
+        break;
+      case '예산':
+        setLargeCategoryGuide(() => BudgetLargeCategoryGuide);
+        break;
+      default:
+        setLargeCategoryGuide(() => <></>);
+        break;
+    }
+  }, [item.type]);
 
   return (
     <>
@@ -126,9 +154,13 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
                   }
                 : undefined
             }
+            disabled={!currencyEditable}
+            helperText={
+              !currencyEditable ? '영수증 등록 금액과 같아야 합니다' : ''
+            }
+            required
             variant="standard"
             fullWidth
-            required
           />
         </Box>
 
@@ -160,7 +192,7 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
           <Stack
             direction="row"
             alignItems="center"
-            marginLeft={(theme) => (theme.breakpoints.down('sm') ? 2 : 5)}
+            marginLeft={(theme) => (theme.breakpoints.down('sm') ? 1 : 5)}
             spacing={1}
           >
             {mainTypes.map((eachType) => (
@@ -193,7 +225,7 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
         {/* 아이콘 버튼 & 다이얼로그 */}
         <DialogWithIconButton
           icon={<InfoOutlined />}
-          content={<MainCategoryDialog />}
+          content={<MainTypeGuide />}
         />
       </Stack>
 
@@ -202,18 +234,7 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
         <Autocomplete
           /** 1. 옵션 목록 & 목록 출력 */
           options={largeCategories[item.type]}
-          renderOption={(props, option) => (
-            <li {...props}>
-              {option}
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <InfoOutlined />
-              </IconButton>
-            </li>
-          )}
+          renderOption={(props, option) => <li {...props}>{option}</li>}
           /** 2. 입력란 & 입력 변화 */
           inputValue={inputValue}
           renderInput={(params) => (
@@ -230,7 +251,10 @@ export default function Item({ clubId, item, itemIndex, dispatch }: ItemType) {
                 variant="standard"
               />
               {/* <Interests sx={{ color: 'action.active', mr: 1, my: 0.5 }} /> */}
-              <InfoOutlined />
+              <DialogWithIconButton
+                icon={<InfoOutlined />}
+                content={<LargeCategoryGuide />}
+              />
             </Stack>
           )}
           onInputChange={(event, newInputValue) => {

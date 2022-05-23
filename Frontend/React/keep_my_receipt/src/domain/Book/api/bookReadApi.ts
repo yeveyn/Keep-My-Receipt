@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { WarningToast } from '../../../services/customSweetAlert';
 import { TypeNameKeys } from '../bookReducer';
 
 import { BASE_URL, setToken } from './bookWriteApi';
@@ -53,7 +54,10 @@ export const apiGetTransaction = async (transactionId: number) => {
       if (res.data.output == 200) {
         console.log(res.data.msg);
       } else {
-        alert(res.data.msg);
+        WarningToast.fire({
+          icon: 'error',
+          title: res.data.msg,
+        });
       }
       return res;
     })
@@ -95,7 +99,10 @@ export const apiDeleteTransaction = async (transactionId: number) => {
       if (res.data.output == 200) {
         console.log(res.data.msg);
       } else {
-        alert(res.data.msg);
+        WarningToast.fire({
+          icon: 'error',
+          title: res.data.msg,
+        });
       }
       return res;
     })

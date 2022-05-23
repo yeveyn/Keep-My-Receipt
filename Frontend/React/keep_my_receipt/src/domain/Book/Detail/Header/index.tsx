@@ -5,6 +5,7 @@ import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
 import { ArrowBackIos } from '@mui/icons-material';
 import toCurrency from '../../../../services/toCurrency';
 import { apiDeleteTransaction } from '../../api/bookReadApi';
+import { ConfirmSwal } from '../../../../services/customSweetAlert';
 
 interface DetailHeaderProps {
   state: any;
@@ -68,9 +69,11 @@ export default function DetailHeader({ state, params }: DetailHeaderProps) {
           </Button>
           <Button
             onClick={async () => {
-              if (confirm('삭제하시겠습니까?')) {
-                await apiDeleteTransaction(params.transactionId);
-              }
+              ConfirmSwal('삭제하시겠습니까?').then(async (res) => {
+                if (res.isConfirmed) {
+                  await apiDeleteTransaction(params.transactionId);
+                }
+              });
             }}
             variant="text"
             color="warning"

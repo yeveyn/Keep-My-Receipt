@@ -42,18 +42,6 @@ function LandingSecond() {
           <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
             <Box textAlign="center" width={'100%'}>
               <img
-                src="/images/randing/report.png"
-                width="70%"
-                height="40%"
-              ></img>
-            </Box>
-          </AnimationOnScroll>
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
-            <Box textAlign="center" width={'100%'}>
-              <img
                 src="/images/randing/chart.png"
                 width="70%"
                 height="40%"
@@ -66,7 +54,19 @@ function LandingSecond() {
           <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
             <Box textAlign="center" width={'100%'}>
               <img
-                src="/images/randing/chart2.png"
+                src="/images/randing/report2.png"
+                width="70%"
+                height="40%"
+              ></img>
+            </Box>
+          </AnimationOnScroll>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
+            <Box textAlign="center" width={'100%'}>
+              <img
+                src="/images/randing/asset.png"
                 width="70%"
                 height="40%"
               ></img>
