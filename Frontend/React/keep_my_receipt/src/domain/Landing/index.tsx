@@ -28,6 +28,7 @@ function Landing() {
           fcmToken: mobileToken,
         })
         .then(function (response) {
+          alert(response.data.toString());
           console.log(
             `랜딩페이지 response.toString() : ${response.data.toString()}`,
           );
