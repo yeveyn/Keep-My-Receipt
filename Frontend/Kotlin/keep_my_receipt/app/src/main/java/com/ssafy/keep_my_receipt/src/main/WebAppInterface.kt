@@ -88,4 +88,15 @@ class WebAppInterface(private val mContext: Context) {
 
     }
 
+    @JavascriptInterface
+    fun setAutoLogin(status: Boolean) {
+        ApplicationClass.sSharedPreferences.setAutoLogin(status)
+    }
+
+    @JavascriptInterface
+    fun getAutoLogin(): Boolean {
+        return ApplicationClass.sSharedPreferences.getAutoLogin()
+    }
+    // window['Android']['setAutoLogin'](status);
+
 }
