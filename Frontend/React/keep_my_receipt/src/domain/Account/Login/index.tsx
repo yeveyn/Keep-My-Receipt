@@ -125,6 +125,7 @@ export default function LoginForm() {
       const mobileToken = window['Android']['requestToken']();
       token = mobileToken;
       window['Android']['setAutoLogin'](status); // 모바일 자동로그인
+      console.log(`status : ${status}`);
     }
 
     // (2) 웹의 경우, axios 요청

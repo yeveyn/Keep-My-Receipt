@@ -18,7 +18,9 @@ function Landing() {
       const id = window['Android']['getId']();
       const password = window['Android']['getPassword']();
       const mobileToken = window['Android']['requestToken']();
-
+      console.log(`id ${id}`);
+      console.log(`pw : ${password}`);
+      console.log(`mobileToken : ${mobileToken}`);
       axios
         .post('/api/spring/crew/login', {
           email: id,
@@ -31,6 +33,7 @@ function Landing() {
             'Authorization'
           ] = `Bearer ${accessToken}`; // header accessToken 설정
           sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+          console.log(`accessToken : ${accessToken}`);
         })
         .catch(function (error) {
           console.log(error);
