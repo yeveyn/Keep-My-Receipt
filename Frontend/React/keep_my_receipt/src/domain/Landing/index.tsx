@@ -33,7 +33,7 @@ function Landing() {
             `랜딩페이지 response.toString() : ${response.data.data.toString()}`,
           );
           console.log(`랜딩페이지 response : ${response.data.data}`);
-          const { accessToken } = response.data;
+          const { accessToken } = response.data.data;
           axios.defaults.headers.common[
             'Authorization'
           ] = `Bearer ${accessToken}`; // header accessToken 설정
