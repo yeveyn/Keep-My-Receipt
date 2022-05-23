@@ -28,7 +28,7 @@ function Landing() {
           fcmToken: mobileToken,
         })
         .then(function (response) {
-          console.log(`랜딩페이지 response : ${response}`);
+          console.log(`랜딩페이지 response : ${response.data}`);
           const { accessToken } = response.data;
           axios.defaults.headers.common[
             'Authorization'
