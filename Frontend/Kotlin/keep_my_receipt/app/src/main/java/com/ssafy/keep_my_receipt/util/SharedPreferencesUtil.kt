@@ -27,4 +27,24 @@ class SharedPreferencesUtil(context: Context) {
         return preferences.getBoolean("autologin", false)
     }
 
+    fun setId(id: String){
+        val editor = preferences.edit()
+        editor.putString("id", id)
+        editor.apply()
+    }
+
+    fun getId() : String? {
+        return preferences.getString("id", "nothing")
+    }
+
+    fun setPassword(password: String){
+        val editor = preferences.edit()
+        editor.putString("password", password)
+        editor.apply()
+    }
+
+    fun getPassword() : String? {
+        return preferences.getString("password", "nothing")
+    }
+
 }
