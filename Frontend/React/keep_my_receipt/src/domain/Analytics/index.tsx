@@ -37,6 +37,7 @@ export default function MainChartIndex() {
   const yearList = ['2022', '2021', '2020', '2019', '2018'];
   const [monthList, setMonthList] = useState(getMonthList);
 
+  // 선택한 연도가 현재 연도일 경우, 선택가능한 월 리스트를 가공하여 리턴
   function getMonthList() {
     return [
       '1',
@@ -53,6 +54,7 @@ export default function MainChartIndex() {
       '12',
     ].filter((item) => parseInt(item) <= parseInt(month));
   }
+  // 기간변경 토글창에서 연도 변경 시 유효성 체크 후 state 변경
   function changeYear(e: SelectChangeEvent<string>) {
     const newYear = e.target.value;
     if (newYear > year) {
@@ -87,6 +89,7 @@ export default function MainChartIndex() {
       setMonth(month);
     }
   }
+  // 기간변경 토글창에서 월 변경 시 state 변경
   function changeMonth(e: SelectChangeEvent<string>) {
     setMonth(e.target.value);
   }
@@ -127,11 +130,12 @@ export default function MainChartIndex() {
     });
   };
 
-  /** 플로우 차트 데이터를 샘플로부터 가져옴 */
+  /* 플로우 차트 데이터를 샘플로부터 가져옴 */
   const loadFlowDataFromSample = async () => {
     await apiLoadFlowChartData(id, curYear, curMonth).then((response) => {
       const flowChartData = response.data.data;
       let tmpSumFlowValue = 0;
+      // 1년 간 지출 통계를 별도로 추출하기 위한 로직
       flowChartData.forEach((item) => {
         tmpSumFlowValue += parseInt(item.totalCost);
       });
@@ -139,7 +143,7 @@ export default function MainChartIndex() {
       setFlowItems(flowChartData);
     });
   };
-
+  // 기간변경 토글창 on/off
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -149,11 +153,9 @@ export default function MainChartIndex() {
     loadFlowDataFromSample();
     setOpen(false);
   };
-
+  // 지출분석 페이지가 처음 렌더링 될 때, 태그별 통계 및 월별 추이 구성에 필요한 데이터를 비동기 요청
   useEffect(() => {
-    // loadTagDataFromSample();
     loadTagDataFromServer();
-
     loadFlowDataFromSample();
   }, []);
 
@@ -175,6 +177,7 @@ export default function MainChartIndex() {
             spacing={3}
           >
             <Grid item xs={5.8} sm={5.8} md={5.8}>
+              {/* 연도 변경을 선택할 수 있는 UI */}
               <Select
                 id="year"
                 value={curYear}
@@ -188,6 +191,7 @@ export default function MainChartIndex() {
               </Select>
             </Grid>
             <Grid item xs={5.8} sm={5.8} md={5.8}>
+              {/* 월 변경을 선택할 수 있는 UI */}
               <Select
                 id="month"
                 value={curMonth[0] === '0' ? curMonth[1] : curMonth}
