@@ -2,6 +2,7 @@ import React from 'react';
 import Graph from './Graph';
 import { Grid, Typography, Stack, Paper } from '@mui/material';
 
+// 지출분석 페이지에서 넘겨받는 prop 데이터 type
 interface ItemType {
   year: number;
   month: number;
@@ -36,6 +37,7 @@ export default function FlowChart({
           justifyContent="center"
           style={{ width: '100%', marginTop: 30 }}
         >
+          {/* 월별 추이 플로우차트 컴포넌트 */}
           <Graph items={items} />
         </Grid>
         <Paper
@@ -56,6 +58,7 @@ export default function FlowChart({
               <Typography style={{ fontWeight: 'bold' }}>연 지출액</Typography>
             </Grid>
             <Grid xs={4} sm={4} md={4} container justifyContent="end">
+              {/* 1년 간 총 지출액 */}
               <Typography>
                 {String(sumValue)
                   .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')

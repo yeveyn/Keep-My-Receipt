@@ -9,6 +9,7 @@ interface ItemType {
   rate: string;
 }
 
+/* Deprecated */
 export default function Graph({ items }: { items: ItemType[] }) {
   Chart.register(ArcElement);
   Chart.register(ChartDataLabels);

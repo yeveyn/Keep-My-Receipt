@@ -20,6 +20,7 @@ interface ItemType {
   rate: string;
 }
 
+/* Deprecated */
 export default function SubChartIndex() {
   const { params } = useParams();
   const matches = useMediaQuery('(min-width:500px)');

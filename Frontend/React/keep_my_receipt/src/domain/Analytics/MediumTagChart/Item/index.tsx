@@ -7,6 +7,7 @@ interface ItemType {
   rate: String;
 }
 
+/* Deprecated */
 export default function ItemIndex({ item }: { item: ItemType }) {
   return (
     <Grid
