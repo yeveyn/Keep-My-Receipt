@@ -156,7 +156,7 @@
 
 10. **보고서 다운로드**
 
-    ![보고서 다운로드](images/보고서 다운로드-16532808155031.gif)
+    ![보고서 다운로드](images/보고서 다운로드.gif)
 
     - 보고서는 Excel 파일로 저장하여 활용할 수 있습니다.
 
@@ -226,8 +226,6 @@
 
 
 <details> <summary>개발 환경</summary> <div markdown="1">
-
-### 개발 환경
 
 ## **Development Environment**
 
