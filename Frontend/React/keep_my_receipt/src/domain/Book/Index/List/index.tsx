@@ -9,7 +9,6 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toCurrency from '../../../../services/toCurrency';
-import ListItem from '../ListItem';
 
 interface BookListProps {
   result: any;
@@ -42,6 +41,7 @@ export default function BookList({
 
   return (
     <>
+      {/* 리스트 */}
       {historyList.map((item: any) => (
         <Box
           key={item.transactionDetailId}
@@ -59,6 +59,7 @@ export default function BookList({
               '&:hover': { backgroundColor: '#f5f5f5', cursor: 'pointer' },
             }}
           >
+            {/* 날짜, 항목 */}
             <Stack spacing={0.5} paddingTop={0.5} sx={{ width: '10rem' }}>
               <Typography variant="body2" color="#757575">
                 {item.date}
@@ -67,6 +68,7 @@ export default function BookList({
                 <b>{item.name}</b>
               </Typography>
             </Stack>
+            {/* 금액 */}
             <Typography color={item.price > 0 ? '#4caf50' : '#aa2626'}>
               <b>{toCurrency(item.price)}</b>
             </Typography>
@@ -74,6 +76,7 @@ export default function BookList({
           <Divider />
         </Box>
       ))}
+      {/* 버튼 (더보기) */}
       {checkAdd && historyList.length > 0 ? (
         <Stack
           direction="row"

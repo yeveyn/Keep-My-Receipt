@@ -79,6 +79,8 @@ export default function CrewMenu({
           >
             <ManageAccounts sx={{ fontSize: '2rem' }} />
           </IconButton>
+
+          {/* 메뉴 */}
           <Menu
             id="long-menu"
             anchorOrigin={{

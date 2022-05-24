@@ -107,20 +107,20 @@ export default function GroupSearch() {
             navi={'.'}
           />
         </Stack>
+
+        {/* 검색 결과 */}
         {loading ? (
           <Stack alignItems="center" marginTop="5rem">
             <CircularProgress sx={{ color: '#ffa500' }} />
           </Stack>
         ) : (
           <>
-            {/* 검색 결과 */}
             <Stack
               direction="column"
               spacing={2}
               alignItems="center"
               sx={{ marginTop: '1rem' }}
             >
-              {/* 상단 */}
               {/* 리스트 */}
               {list.length ? (
                 <SearchList clubList={list} />

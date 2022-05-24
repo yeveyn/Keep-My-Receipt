@@ -93,7 +93,6 @@ export default function ManageClub({ clubInfo, getClubInfo }: ManageClubProps) {
   };
   return (
     <Container maxWidth="md" sx={{ padding: 0 }}>
-      {/* 본문 */}
       {/* Form */}
       <ClubUpdateForm
         clubInfo={clubInfo}
