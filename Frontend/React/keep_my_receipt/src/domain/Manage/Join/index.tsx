@@ -38,6 +38,7 @@ export default function ManageJoin({ clubInfo }: { clubInfo: any }) {
     name: '',
     email: '',
   });
+  // 모임 가입 신청자 리스트 조회
   const getRequestList = async (page?: number) => {
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/crews/requests`, {

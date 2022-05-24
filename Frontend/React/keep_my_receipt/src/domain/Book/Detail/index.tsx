@@ -55,9 +55,6 @@ interface pageInfoType {
 export default function BookDetail() {
   const location = useLocation();
   const params = location.state as DetailParamType;
-  const navigate = useNavigate();
-
-  // 임시로 추가
 
   const [state, setState] =
     useState<ReadTransactionResType>(initialReadResponse);
@@ -67,11 +64,12 @@ export default function BookDetail() {
     totalPages: 0,
   });
 
+  // 거래내역 상세 조회
   const readTransaction = async (transactionId: number) => {
     await apiGetTransaction(transactionId).then((res) => {
       // console.log('readTransaction', res.data.data);
 
-      // 아이템 설정
+      // 거래내역 상세 리스트를 data에 저장
       const data: ReadTransactionResType = res.data.data;
       setState(data);
 
@@ -88,6 +86,8 @@ export default function BookDetail() {
       }
     });
   };
+
+  // 페이지 설정( for 페이지네이션 )
   const getBookPage = (page: number) => {
     const targetItems = state.items.filter(
       (item) =>

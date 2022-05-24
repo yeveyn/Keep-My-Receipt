@@ -19,6 +19,7 @@ export default function IndexList({
     description: '',
     image: '',
   });
+  // 클릭하면 모임 거래내역 페이지로 이동
   const onClick = (info: any) => {
     navigate(`./${info.id}/book`);
     window.scrollTo(0, 0);

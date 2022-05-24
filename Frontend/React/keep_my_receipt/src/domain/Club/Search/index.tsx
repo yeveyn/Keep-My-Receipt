@@ -47,6 +47,7 @@ export default function GroupSearch() {
 
   useEffect(() => {
     if (keyWord) {
+      // 새로고침해도 현재 키워드로 검색 결과 보여주기
       setWord(keyWord);
       getClubList();
     } else {
@@ -54,6 +55,7 @@ export default function GroupSearch() {
     }
   }, [keyWord]);
 
+  // 검색 결과 가져오기
   const getClubList = async (page?: number) => {
     const accessToken = sessionStorage.getItem('accessToken');
     await axios

@@ -45,6 +45,7 @@ export default function ManageCrew({ clubInfo }: { clubInfo: any }) {
 
   // axios
   const crewListAxios = axios.create({
+    // 파라미터 값에 배열로 넣기
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
   });
