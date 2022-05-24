@@ -11,6 +11,8 @@ import { Divider, Grid } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+
+// axios로 받는 알림 객체
 interface AlarmType {
   notificationId: number;
   title: string;
@@ -22,6 +24,7 @@ interface AlarmType {
   read: string;
 }
 
+// axios로 받는 알림 객체배열 및 Pagination에 필요한 데이터
 interface ResponseType {
   pageNumber: number;
   size: number;
@@ -33,6 +36,8 @@ interface ResponseType {
 
 export default function AlarmItem() {
   const navigate = useNavigate();
+
+  // 알림 아이콘 클릭 시 토글창 on/off 기능 구현을 위한 변수
   const [anchorElUser2, setAnchorElUser2] = React.useState<null | HTMLElement>(
     null,
   );
@@ -42,6 +47,8 @@ export default function AlarmItem() {
   const handleCloseUserMenu2 = () => {
     setAnchorElUser2(null);
   };
+
+  // 새로운 알림 클릭 시 읽음 처리 && 알림 목적에 따라 navigate
   function connectNotification(alarm: AlarmType) {
     updateNotification(alarm.notificationId);
     const notiCode = alarm.notiCode;
@@ -54,6 +61,7 @@ export default function AlarmItem() {
       getAlarms();
     }
   }
+  // 새로운 알림 클릭 시 읽음 처리
   const updateNotification = async (notificationId: number) => {
     await axios
       .put(
@@ -66,6 +74,7 @@ export default function AlarmItem() {
         console.log(e);
       });
   };
+  // x 버튼 클릭 시 해당 알림 삭제 처리
   const deleteNotification = async (notificationId: number) => {
     await axios
       .delete(
@@ -79,6 +88,7 @@ export default function AlarmItem() {
         console.log(e);
       });
   };
+  // 청구 목적의 알림 클릭 시 전달해야하는 prop 데이터 생성 후 승인페이지로 navigate
   const navigateApprove = async (clubId: number, requestId: number) => {
     axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)
@@ -103,10 +113,11 @@ export default function AlarmItem() {
         console.log(e);
       });
   };
+  // 알림 페이지로 navigate
   const navigateAlarms = () => {
     navigate('/alert');
   };
-
+  // 알림 객체 default 값으로 초기화한 useState
   const [alarms, setAlarms] = React.useState([
     {
       notificationId: 0,
@@ -119,6 +130,7 @@ export default function AlarmItem() {
       read: 'false',
     },
   ]);
+  // 알림 객체배열 default 값으로 초기화한 useState
   const [res, setRes] = React.useState<ResponseType>({
     pageNumber: 0,
     size: 0,
@@ -127,6 +139,7 @@ export default function AlarmItem() {
     totalElements: 0,
     list: [],
   });
+  // 알림 객체배열을 비동기로 로드하는 axios
   const getAlarms = async (page?: number) => {
     await axios
       .get('https://k6d104.p.ssafy.io/api/spring/notifications', {
@@ -144,17 +157,19 @@ export default function AlarmItem() {
         console.log(e);
       });
   };
-
+  // 알림 아이콘이 표기되는 모든 페이지가 처음 렌더링될 때 알림 객체배열을 로드한다.
   React.useEffect(() => {
     getAlarms();
   }, []);
 
   return (
     <Box>
+      {/* 알림 아이콘 */}
       <IconButton onClick={handleOpenUserMenu2} sx={{ p: 0, pl: 2 }}>
         <NotificationsIcon></NotificationsIcon>
       </IconButton>
 
+      {/* 알림 아이콘 클릭 시 on/off 되는 토글창 */}
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
@@ -182,7 +197,7 @@ export default function AlarmItem() {
         >
           알림
         </Typography>
-
+        {/* 알림 객체배열이 렌더링 되는 곳 */}
         {alarms.map((alarm) => (
           <>
             <MenuItem
