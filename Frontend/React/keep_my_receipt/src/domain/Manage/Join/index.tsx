@@ -80,7 +80,7 @@ export default function ManageJoin({ clubInfo }: { clubInfo: any }) {
         clubCrewInfo={dialogInfo}
         updateInfo={getRequestList}
       />
-      {/* Table */}
+      {/* 내용 */}
       {loading ? (
         <Stack alignItems="center" marginTop="5rem">
           <CircularProgress sx={{ color: '#ffa500' }} />

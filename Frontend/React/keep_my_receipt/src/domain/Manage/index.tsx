@@ -199,6 +199,7 @@ export default function ManageIndex() {
               />
             </ManageTabs>
           </Box>
+          {/* Tab content */}
           <TabPanel value={value} index={0}>
             <ManageCrew clubInfo={clubInfo} />
           </TabPanel>

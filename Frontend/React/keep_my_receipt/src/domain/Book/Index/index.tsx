@@ -129,7 +129,7 @@ export default function BookIndex() {
   return (
     <Container maxWidth="md" sx={{ paddingY: 0, paddingX: '1rem' }}>
       <Grid container direction="column" sx={{ marginBottom: 1 }}>
-        {/* 월, 지출, 수입 */}
+        {/* 상단 (월, 지출, 수입) */}
         <IndexHeader
           month={month}
           setMonth={setMonth}

@@ -11,6 +11,8 @@ import {
 import ItemIndex from './Item';
 import axios from 'axios';
 import Pagination from '../../../components/Pagination';
+
+// 요청사항 개별의 type
 interface ItemType {
   requestId: number;
   crewName: string;
@@ -18,6 +20,7 @@ interface ItemType {
   state: string;
 }
 
+// 특정 Pagination에 따른 요청사항 객체배열 type
 interface resopnseType {
   pageNumber: number;
   size: number;
@@ -27,6 +30,7 @@ interface resopnseType {
   list: ItemType[];
 }
 
+// 요청사항 목록들을 보여주고 클릭 시 해당 요청사항을 해결할 수 있는 페이지로 이동시켜주는 역할
 export default function RequestListIndex() {
   const { id } = useParams();
   const matches = useMediaQuery('(min-width:500px)');
@@ -39,6 +43,7 @@ export default function RequestListIndex() {
     list: [],
   });
   const [requests, setRequests] = useState(res.list);
+  // 요청사항 객체배열을 현재 선택된 Pagination에 따라 비동기 요청
   const getRequestList = async (page?: number) => {
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/requests`, {
@@ -58,6 +63,7 @@ export default function RequestListIndex() {
       });
   };
   const [manageable, setManageable] = useState(false);
+  // 해당 요청사항을 변경할 권한이 있는지 판단하는 함수
   const checkManageable = async () => {
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/club/${id}/crew/auth`)
@@ -89,6 +95,7 @@ export default function RequestListIndex() {
             : { marginTop: 0, marginBottom: 100, width: '100%' }
         }
       >
+        {/* 목록 최상단 카테고리를 표시하는 컴포넌트 */}
         <Card
           variant="outlined"
           style={{
@@ -158,6 +165,7 @@ export default function RequestListIndex() {
             </Grid>
           </Grid>
         </Card>
+        {/* 요청사항 객체목록을 렌더링하는 곳 */}
         {requests.map((request: ItemType) => (
           <ItemIndex
             requestId={request.requestId}
@@ -169,6 +177,7 @@ export default function RequestListIndex() {
           />
         ))}
         <br></br>
+        {/* 페이지네이션 컴포넌트 렌더링하는 곳 */}
         <Pagination
           pageInfo={res}
           paginationSize={5}

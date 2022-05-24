@@ -88,7 +88,7 @@ export default function BookDetail() {
       }
     });
   };
-  const getBokkPage = (page: number) => {
+  const getBookPage = (page: number) => {
     const targetItems = state.items.filter(
       (item) =>
         item.transactionDetailId === state.items[page].transactionDetailId,
@@ -115,18 +115,17 @@ export default function BookDetail() {
         {/* 상단 */}
         <DetailHeader state={state} params={params} />
 
-        {/* 내역 */}
-
         {/* 페이지네이션 */}
         <Pagination
           pageInfo={pageInfo}
           paginationSize={5}
           onClickPage={(page: number) => {
             setPage(page + 1);
-            getBokkPage(page);
+            getBookPage(page);
           }}
           // showOne={true}
         />
+
         {/* 거래내역 상세 */}
         <Card
           variant="outlined"

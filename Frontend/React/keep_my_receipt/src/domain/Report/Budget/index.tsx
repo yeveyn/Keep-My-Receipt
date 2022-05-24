@@ -15,23 +15,27 @@ import ReportIndex from './form/index';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// 유형 객체 (=== 대분류 객체배열)
 interface ListType {
   type: string;
   list: ReportType[];
 }
 
+// 대분류 객체 (=== 소분류 객체배열)
 interface ReportType {
   lcName: string;
   list: ItemType[];
   total: number;
 }
 
+// 소분류 객체
 interface ItemType {
   scName: string;
   balance: number;
 }
 
 export default function BudgetReport() {
+  // 유형별 대분류 객체배열 default값 설정
   const defaultData = [
     {
       lcName: 'test',
@@ -69,6 +73,7 @@ export default function BudgetReport() {
     loadData();
     setOpen(false);
   };
+  // 선택한 연도가 현재 연도일 경우, 선택가능한 월 리스트를 가공하여 리턴
   function getMonthList() {
     return [
       '1',
@@ -85,6 +90,7 @@ export default function BudgetReport() {
       '12',
     ].filter((item) => parseInt(item) <= parseInt(month));
   }
+  // 기간변경 토글창에서 연도 변경 시 유효성 체크 후 state 변경
   function changeYear(e: any) {
     const newYear = e.target.value;
     if (newYear > year) {
@@ -119,6 +125,7 @@ export default function BudgetReport() {
       setMonth(month);
     }
   }
+  // 기간변경 토글창에서 월 변경 시 state 변경
   function changeMonth(e: any) {
     let tmpMonth = e.target.value;
     if (tmpMonth.length < 2) {
@@ -126,6 +133,7 @@ export default function BudgetReport() {
     }
     setMonth(tmpMonth);
   }
+  // 유효성 검사 결과 유효하지 않을 시 모든 유형 객체배열 및 자산총합 초기화
   function clearData() {
     setBudgetList(defaultData);
     setSumBudget(0);
@@ -134,6 +142,7 @@ export default function BudgetReport() {
     setRevenueList(defaultData);
     setSumRevenue(0);
   }
+  // 유형별 객체배열 유효성 검사
   const checkEmpty = (previousList: ListType[]) => {
     console.log('checkEmpty', previousList);
     if (previousList === null) {
@@ -163,6 +172,7 @@ export default function BudgetReport() {
     });
     return true;
   };
+  // 예산, 지출, 수입 객체배열 데이터를 비동기 요청
   const loadData = async () => {
     // Todo API connect
     await axios
@@ -176,6 +186,7 @@ export default function BudgetReport() {
         if (!checkEmpty(lists)) {
           return;
         }
+        // 예산의 대분류별 총계를 추출하기 위한 로직
         lists.forEach((mainCat) => {
           if (mainCat.type === '예산') {
             const tmpList = [...mainCat.list];
@@ -196,6 +207,7 @@ export default function BudgetReport() {
             setSumBudget(tmp);
             setBudgetList(tmpList);
             console.log(budgetList);
+            // 지출의 대분류별 총계를 추출하기 위한 로직
           } else if (mainCat.type === '지출') {
             const tmpList = [...mainCat.list];
             let tmp = 0;
@@ -209,6 +221,7 @@ export default function BudgetReport() {
             });
             setSumExpense(tmp);
             setExpenseList(tmpList);
+            // 수입의 대분류별 총계를 추출하기 위한 로직
           } else if (mainCat.type === '수입') {
             const tmpList = [...mainCat.list];
             let tmp = 0;
@@ -238,6 +251,7 @@ export default function BudgetReport() {
     '기타 비용',
   ];
   const revenueMainCategories = ['수입', '기타 수입'];
+  // 다운로드 버튼 클릭 시 엑셀 파일 다운로드
   const clickDownload = async () => {
     console.log('다운로드 버튼 클릭!');
     await axios
@@ -270,13 +284,14 @@ export default function BudgetReport() {
         console.log(e);
       });
   };
-
+  // 예산운영표 페이지 첫 렌더링 시, 자산 객체배열 비동기 요청
   useEffect(() => {
     loadData();
   }, []);
 
   return (
     <Container maxWidth="md">
+      {/* 기간변경 다이알로그 */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -325,7 +340,7 @@ export default function BudgetReport() {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* 기간 설정 부분 */}
+      {/* 기간설정 컴포넌트 */}
       <Grid
         container
         direction="row"
@@ -400,24 +415,28 @@ export default function BudgetReport() {
           </Grid>
         </Grid>
       </Card>
+      {/* 예산운영표 - 전기이월 예산 컴포넌트 */}
       <ReportIndex
         title="예산"
         itemList={budgetList}
         catList={budgetMainCategories}
         sumValue={sumBudget}
       />
+      {/* 예산운영표 - 지출 컴포넌트 */}
       <ReportIndex
         title="지출"
         itemList={expenseList}
         catList={expenseMainCategories}
         sumValue={sumExpense}
       />
+      {/* 예산운영표 - 수입 컴포넌트 */}
       <ReportIndex
         title="수입"
         itemList={revenueList}
         catList={revenueMainCategories}
         sumValue={sumRevenue}
       />
+      {/* 예산운영표 - 차기이월 예산 컴포넌트 */}
       <ReportIndex
         title="합계"
         itemList={[
@@ -432,6 +451,7 @@ export default function BudgetReport() {
       />
       <br></br>
       <br></br>
+      {/* 엑셀 파일 다운로드 버튼 */}
       <Grid container justifyContent="center" alignItems="center">
         <Button variant="contained" color="primary" onClick={clickDownload}>
           다운로드

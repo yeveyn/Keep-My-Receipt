@@ -69,6 +69,7 @@ export default function CreateImage({ onImgChange }: CreateImageProps) {
       >
         <Box sx={{ position: 'absolute', right: 0, bottom: 0 }}>
           <label htmlFor="icon-btn-file">
+            {/* capture : 카메라 켜지게 하는 속성 (모바일용) */}
             <Input
               onChange={onChange}
               accept="image/*"

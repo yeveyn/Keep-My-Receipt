@@ -11,6 +11,7 @@ import {
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+// 영수증 등록 후 청구하기 위한 페이지
 export default function RequestIndex() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -20,9 +21,10 @@ export default function RequestIndex() {
   const imgUrl = state.receiptUrl;
   const matches = useMediaQuery('(min-width:500px)');
 
+  // 청구하기 전에 날짜 형식이 yyyy-MM-dd 형식인지 체크 -> 영수증 청구 처리
   function submitHandler(event: any) {
     event.preventDefault();
-    // date 및 money 제약사항
+
     const dateSlice = newDate.split('-');
     if (dateSlice.length !== 3) {
       alert('날짜 형식이 올바르지 않습니다 : xxxx-xx-xx');

@@ -11,7 +11,7 @@ interface formProps {
   intro?: any;
 }
 
-export default function GroupCreate() {
+export default function ClubCreate() {
   const navigate = useNavigate();
   const [check, setCheck] = useState(false);
   // form

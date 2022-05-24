@@ -96,7 +96,7 @@ export default function SearchHeader({
   return (
     <Stack width="100%">
       <Stack paddingLeft="1rem">
-        {/* 검색 창 */}
+        {/* 검색 */}
         <Stack
           direction="row"
           justifyContent="center"
@@ -113,6 +113,7 @@ export default function SearchHeader({
           >
             <ArrowBackIos sx={{ fontSize: '1.8rem' }} />
           </IconButton>
+          {/* 검색 창 */}
           <SearchBar
             value={value}
             setValue={setValue}
@@ -139,6 +140,7 @@ export default function SearchHeader({
         </Stack>
         {/* 기간 */}
         <Stack spacing={0.5} sx={{ marginBottom: '1rem' }}>
+          {/* 선택 버튼 */}
           <Stack direction="row" alignItems="center" spacing={1}>
             <Button
               variant="outlined"
@@ -162,6 +164,7 @@ export default function SearchHeader({
               6개월
             </Button>
           </Stack>
+          {/* 검색 기간 확인/선택 */}
           <Stack direction="row" alignItems="center" spacing={1}>
             <TextField
               type="date"

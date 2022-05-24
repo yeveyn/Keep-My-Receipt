@@ -13,6 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+// 청구된 영수증을 승인하는 페이지
 export default function ApproveIndex() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,8 +24,10 @@ export default function ApproveIndex() {
   const [newItems, setItems] = useState([
     { id: Math.random().toString(36).substr(2, 11), content: '', money: '' },
   ]);
+  // 현재 인터페이스가 웹인지 앱인지 구분하는 변수
   const matches = useMediaQuery('(min-width:500px)');
 
+  // + 버튼 누르면 입력할 수 있는 form 추가
   function createItem() {
     const nextItems = [...newItems];
     const newSize = nextItems.length;
@@ -36,6 +39,7 @@ export default function ApproveIndex() {
     setItems(nextItems);
   }
 
+  // form이 변할 때마다 다시 렌더링 해주는 함수
   function renderingItems() {
     return newItems.map((item) => (
       <ListItem
@@ -49,6 +53,7 @@ export default function ApproveIndex() {
     ));
   }
 
+  // (총금액 !== 항목별 금액 합계) 유효성 검사 -> 거래 등록 페이지로 이동
   function approveHandler(event: any) {
     event.preventDefault();
 
@@ -103,6 +108,7 @@ export default function ApproveIndex() {
     navigate(`/club/${id}/book/create`, { state: prop });
   }
 
+  // 청구된 영수증을 거절할 때 실행되는 함수
   function rejectHandler(event: any) {
     event.preventDefault();
     axios

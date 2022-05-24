@@ -46,7 +46,7 @@ export default function ClubUpdateForm({
       />
       {/* 이미지 */}
       <UpdateFormImage onImgChange={onImgChange} formImage={formImage} />
-      {/* 텍스트 */}
+      {/* 텍스트 Form */}
       <Stack justifyContent="center">
         <Container maxWidth="sm">
           <Grid container rowSpacing={2} justifyContent="center">
@@ -76,6 +76,8 @@ export default function ClubUpdateForm({
                 maxRows={4}
               />
             </Grid>
+
+            {/* 버튼 (저장) */}
             <Grid item xs={12} sx={{ marginTop: 1 }}>
               <Box sx={{ m: 0, position: 'relative' }}>
                 <Button
@@ -101,6 +103,7 @@ export default function ClubUpdateForm({
                 )}
               </Box>
             </Grid>
+            {/* 버튼 (모임 폐쇄) */}
             <Button
               onClick={() => {
                 setOpenDelete(true);
