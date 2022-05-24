@@ -11,6 +11,7 @@ interface ItemType {
   manageable: boolean;
 }
 
+// 각각의 요청사항 렌더링 및 클릭 시 navigate / update / delete 기능을 구현한 컴포넌트
 export default function ItemIndex({
   requestId,
   name,
@@ -20,6 +21,7 @@ export default function ItemIndex({
 }: ItemType) {
   const navigate = useNavigate();
   const { id } = useParams();
+  // 요청사항을 클릭 시 목적에 맞게 navigate 해주는 함수
   function connect() {
     if (manageable === false) {
       return;
@@ -42,6 +44,7 @@ export default function ItemIndex({
         });
     }
   }
+  // x 버튼 클릭 시 해당 요청사항을 삭제해주는 함수
   const deleteRequest = async () => {
     axios
       .delete(`https://k6d104.p.ssafy.io/api/spring/club/request/${requestId}`)

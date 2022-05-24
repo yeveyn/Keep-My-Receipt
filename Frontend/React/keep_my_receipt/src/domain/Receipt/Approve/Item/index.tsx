@@ -16,6 +16,7 @@ interface ListItemType {
   newItems: ItemType[];
 }
 
+// 영수증 승인페이지에서 영수증을 구성하는 항목을 적어주는 form
 export default function ListItem({
   id,
   content,
@@ -27,11 +28,13 @@ export default function ListItem({
   const [newContent, setContent] = useState(content);
   const [newMoney, setMoney] = useState(money);
 
+  // x 버튼 누르면 해당 항목란 삭제 및 렌더링
   const deleteItem = () => {
     const nextItems = newItems.filter((items) => items.id !== newId);
     setItems(nextItems);
   };
 
+  // 항목, 금액 입력 시마다 렌더링
   const updateItem = () => {
     const nextItems = [...newItems];
     nextItems.forEach((item) => {
@@ -43,6 +46,7 @@ export default function ListItem({
     setItems(nextItems);
   };
 
+  // 금액 입력 시마다 isNaN 체크
   useEffect(() => {
     if (isNaN(Number(newMoney))) {
       alert('숫자만 기입할 수 있습니다');

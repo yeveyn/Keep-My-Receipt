@@ -10,6 +10,7 @@ interface formProps {
   imgFile?: any;
 }
 
+// 영수증 이미지를 등록하는 페이지
 export default function ReceiptCreate() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -36,6 +37,7 @@ export default function ReceiptCreate() {
     });
   };
 
+  // 사용자가 올린 이미지를 받아서 FastAPI로 넘겨주는 axios
   const createReceipt = async () => {
     if (form.type === '') {
       setCheck(true);
