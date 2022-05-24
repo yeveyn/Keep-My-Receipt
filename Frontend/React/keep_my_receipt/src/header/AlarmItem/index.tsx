@@ -6,9 +6,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
-import Pagination from '../../components/Pagination';
 import { Divider, Grid } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 interface AlarmType {
@@ -190,7 +188,6 @@ export default function AlarmItem() {
               sx={{
                 paddingX: 2,
                 paddingY: 0.2,
-                // backgroundColor: '#fcf0d4',
                 ':hover': {
                   backgroundColor: '#FFF5E1',
                 },
@@ -244,9 +241,6 @@ export default function AlarmItem() {
             <Divider />
           </>
         ))}
-        {/* <Typography fontSize="0.8rem" textAlign="center">
-          ...
-        </Typography> */}
         <Typography
           fontSize="0.8rem"
           color="primary"
@@ -263,12 +257,6 @@ export default function AlarmItem() {
           </Typography>
         ) : (
           ''
-          // <Pagination
-          //   pageInfo={res}
-          //   paginationSize={5}
-          //   onClickPage={getAlarms}
-          //   bgColor="#ffaa00"
-          // />
         )}
       </Menu>
     </Box>

@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -9,7 +8,6 @@ import PaidIcon from '@mui/icons-material/Paid';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import CelebrationIcon from '@mui/icons-material/Celebration';
 import MenuIcon from '@mui/icons-material/Menu';
 import * as React from 'react';
 

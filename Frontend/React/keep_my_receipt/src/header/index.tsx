@@ -28,11 +28,13 @@ export default function NavBar() {
             float: 'right',
           }}
         >
+          {/* 모바일 ver navigation */}
           {!matches ? (
             <>
               <ResponsiveDrawer />
             </>
           ) : (
+            // 웹 ver navigation
             <>
               <Grid item xs={2} sm={6} sx={{ p: 0 }}>
                 <Logo />

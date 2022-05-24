@@ -140,7 +140,6 @@ export default function LoginForm() {
 
         if (response.data.output == 0) {
           console.log('로그인 실패');
-          alert(response.data.msg);
         } else {
           onLoginSuccess(response.data);
           navigate('/club', { replace: true });

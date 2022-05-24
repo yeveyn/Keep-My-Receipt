@@ -1,27 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-
-import Navigation from '../../header';
+import { useEffect, useState } from 'react';
 import Banner from './Landing/Banner';
 import GuideFirst from './Landing/Guide-1';
 import GuideSecond from './Landing/Guide-2';
 import GuideThird from './Landing/Guide-3';
-// import GuideFourthFirst from './Landing/Guide-4-1';
 
-function Landing() {
+export default function Landing() {
   //로그인한 상태라면 navbar 보여주기
   const [isLogin, setIsLogin] = useState(false);
   const accessToken = sessionStorage.getItem('accessToken');
 
   useEffect(() => {
+    //모바일 기기일 경우, 자동로그인 axios 요청
     if (window['Android']) {
       if (window['Android']['getAutoLogin']()) {
         const id = window['Android']['getId']();
         const password = window['Android']['getPassword']();
         const mobileToken = window['Android']['requestToken']();
-        console.log(`id ${id}`);
-        console.log(`pw : ${password}`);
-        console.log(`mobileToken : ${mobileToken}`);
+
         axios
           .post('/api/spring/crew/login', {
             email: id,
@@ -29,17 +25,11 @@ function Landing() {
             fcmToken: mobileToken,
           })
           .then(function (response) {
-            // alert(response.data.toString());
-            console.log(
-              `랜딩페이지 response.toString() : ${response.data.data.toString()}`,
-            );
-            console.log(`랜딩페이지 response : ${response.data.data}`);
             const { accessToken } = response.data.data;
             axios.defaults.headers.common[
               'Authorization'
-            ] = `Bearer ${accessToken}`; // header accessToken 설정
+            ] = `Bearer ${accessToken}`;
             sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
-            console.log(`accessToken : ${accessToken}`);
           })
           .catch(function (error) {
             console.log(error);
@@ -48,15 +38,15 @@ function Landing() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(accessToken);
-    window.scrollTo(0, 0);
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   console.log(accessToken);
+  //   window.scrollTo(0, 0);
+  //   if (accessToken) {
+  //     setIsLogin(true);
+  //   } else {
+  //     setIsLogin(false);
+  //   }
+  // }, [accessToken]);
 
   return (
     <div>
@@ -67,5 +57,3 @@ function Landing() {
     </div>
   );
 }
-
-export default Landing;
