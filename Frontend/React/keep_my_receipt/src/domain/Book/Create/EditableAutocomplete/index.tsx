@@ -17,11 +17,11 @@ import {
   apiUpdateCategory,
   apiReadAllCategory,
   apiDeleteCategory,
-} from '../api/categoryApi';
-import { TypeNameKeys } from '../bookReducer';
-import { ASType, BSType } from '../types';
-import DialogWithIconButton from '../../../components/DialogWithIconButton';
-import { SmallCategoryGuide } from '../Create/ItemGuide/classification';
+} from '../../api/categoryApi';
+import { TypeNameKeys } from '../../bookReducer';
+import { ASType, BSType } from '../../types';
+import DialogWithIconButton from '../../../../components/DialogWithIconButton';
+import { SmallCategoryGuide } from '../ItemGuide/classification';
 
 type OptionType = BSType &
   ASType & {

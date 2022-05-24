@@ -5,8 +5,8 @@ import { InfoOutlined } from '@mui/icons-material';
 
 // 컴포넌트
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
-import EditableAutocomplete from '../../EditableAutocomplete';
-import EditableAutocompleteTag from '../../EditableAutocompleteTag';
+import EditableAutocomplete from '../EditableAutocomplete';
+import EditableAutocompleteTag from '../EditableAutocompleteTag';
 import { MainTypeGuide } from '../ItemGuide/classification';
 import { BookAction, BookItemType, updateItem } from '../../bookReducer';
 import { largeCategories } from '../../tagListSample';

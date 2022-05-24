@@ -18,10 +18,10 @@ import {
   apiUpdateTag,
   apiGetLargeTags,
   apiDeleteTag,
-} from '../api/tagApi';
-import { TagType } from '../types';
-import DialogWithIconButton from '../../../components/DialogWithIconButton';
-import { TagGuide } from '../Create/ItemGuide/classification';
+} from '../../api/tagApi';
+import { TagType } from '../../types';
+import DialogWithIconButton from '../../../../components/DialogWithIconButton';
+import { TagGuide } from '../ItemGuide/classification';
 
 type OptionType = {
   inputValue?: string;
