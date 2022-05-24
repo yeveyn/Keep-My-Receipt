@@ -94,11 +94,10 @@ export default function BookCreate() {
       {/* 페이지 제목 */}
       <h2>{isUpdating(params) ? '거래수정' : '거래등록'}</h2>
 
-      {/* 거래 정보 */}
+      {/* 거래 정보: 날짜, 총금액, 영수증 이미지 등 */}
       <Header
         date={state.date}
         totalValue={state.totalPrice}
-        length={state.items.length}
         imageUrl={state.imageUrl}
         dispatch={dispatch}
         // 이전 페이지에서 넘어온 값이 없거나 || 넘어온 값에 requestId가 없으면 수정 가능
