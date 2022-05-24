@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import ListItem from '../Listitem';
 import axios from 'axios';
 import Pagination from '../../../../components/Pagination';
-import { Grid, Card, CardContent, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Grid, Typography } from '@mui/material';
 
+// axios로 받는 알림 객체
 interface AlarmType {
   notificationId: number;
   title: string;
@@ -16,6 +16,7 @@ interface AlarmType {
   read: string;
 }
 
+// axios로 받는 알림 객체배열 및 Pagination에 필요한 데이터
 interface ResponseType {
   pageNumber: number;
   size: number;
@@ -26,7 +27,7 @@ interface ResponseType {
 }
 
 export default function AlertList() {
-  const navigate = useNavigate();
+  // 알림 객체 default 값으로 초기화한 useState
   const [alarms, setAlarms] = useState([
     {
       notificationId: 0,
@@ -39,6 +40,7 @@ export default function AlertList() {
       read: 'false',
     },
   ]);
+  // 알림 객체배열 default 값으로 초기화한 useState
   const [res, setRes] = useState<ResponseType>({
     pageNumber: 0,
     size: 0,
@@ -47,6 +49,7 @@ export default function AlertList() {
     totalElements: 0,
     list: [],
   });
+  // 알림 객체배열을 비동기로 로드하는 axios
   const getAlarms = async (page?: number) => {
     console.log(axios.defaults.headers);
     await axios
@@ -65,7 +68,7 @@ export default function AlertList() {
         console.log(e);
       });
   };
-
+  // 알림 페이지가 처음 렌더링될 때 알림 객체배열을 로드한다.
   useEffect(() => {
     getAlarms();
   }, []);
@@ -78,6 +81,7 @@ export default function AlertList() {
       alignItems="center"
       style={{ width: '100%' }}
     >
+      {/* 알림 객체배열이 렌더링 되는 곳 */}
       {alarms.map((alarm) => (
         <ListItem
           item={alarm}
