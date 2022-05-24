@@ -5,13 +5,9 @@ import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
-
 import Typography from '@mui/material/Typography';
-
-import Logo from '../Logo';
-
+import Logo from '../WebHeader/Logo';
 import { useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -19,26 +15,8 @@ import { Avatar, Button, Grid, ListItemAvatar, Stack } from '@mui/material';
 import AlarmItem from '../AlarmItem';
 import { Content2, ClubName, Content3 } from '../styles';
 
+// 햄버거버튼 메뉴 사이즈
 const drawerWidth = 240;
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginRight: -drawerWidth,
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: 0,
-  }),
-}));
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -61,15 +39,6 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-start',
-}));
-
 export default function PersistentDrawerRight() {
   const [isLogin, setIsLogin] = useState(false);
   const myAccessToken = sessionStorage.getItem('accessToken');
@@ -84,28 +53,21 @@ export default function PersistentDrawerRight() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  // let userAuth = '';
 
-  const [userAuthNum, setUserAuthNum] = useState(3);
   const [addMenu, setAddMenu] = React.useState<null | HTMLElement>(null);
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    if (addMenu == null) {
-      setAddMenu(event.currentTarget);
-    } else {
-      setAddMenu(null);
-    }
-  };
 
-  const fcmToken = sessionStorage.getItem('fcmToken');
-  // 로그아웃
+  // drawer안에 로그아웃 기능
   const onLogout = () => {
+    const fcmToken = sessionStorage.getItem('fcmToken');
     if (myAccessToken) {
       axios
         .post('/api/spring/crew/logout', { fcmToken: fcmToken })
         .then(function (response) {
+          // 모바일 앱에서 로그아웃하는 경우, 자동 로그인 false로 바꿔주기
           if (window['Android']) {
             window['Android']['setAutoLogin'](false);
           }
+          // 로그아웃 상황이기 때문에 accessToken 삭제, header도 빈값으로 바꿈
           sessionStorage.removeItem('accessToken');
           axios.defaults.headers.common['Authorization'] = '';
           navigate('/');
@@ -115,26 +77,18 @@ export default function PersistentDrawerRight() {
         });
     }
   };
-  const onClick = () => {
-    navigate('/club');
-  };
 
-  const onHome = () => {
-    navigate('/');
-  };
-
-  const onClickLogin = () => {
-    navigate('/login');
+  const onClickButton = (url: string) => {
+    navigate(url);
   };
 
   const [open, setOpen] = React.useState(false);
-  const [crown, setCrown] = useState('');
   const [clubImage, setClubImage] = useState('');
   const [clubName, setClubName] = useState('');
 
   useEffect(() => {
     if (id) {
-      // 동아리 이름, 이미지 받기
+      // 동아리 이름과 이미지 받기
       axios
         .get(`/api/spring/club/${id}`)
         .then(function (response) {
@@ -157,22 +111,19 @@ export default function PersistentDrawerRight() {
         sx={{ backgroundColor: 'white' }}
       >
         <Toolbar>
+          {/* 로그인한 경우 */}
           {isLogin ? (
             <>
-              <Grid
-                container
-                // alignContent="center"
-                paddingLeft={1}
-                paddingRight={2}
-                paddingTop={1}
-              >
-                {/* 사진, 동아리명, 왕관*/}
+              <Grid container paddingLeft={1} paddingRight={2} paddingTop={1}>
+                {/* 내 모임 선택한 경우 */}
                 {id ? (
                   <>
                     <Grid item xs={10} textAlign="left">
                       <Stack direction="row">
                         <ListItemAvatar
-                          onClick={onClick}
+                          onClick={() => {
+                            onClickButton('/club');
+                          }}
                           sx={{ pl: '20px', pt: '30px' }}
                         >
                           <img
@@ -191,7 +142,9 @@ export default function PersistentDrawerRight() {
                     <Grid item xs={9} textAlign="left">
                       <Stack direction="row">
                         <img
-                          onClick={onHome}
+                          onClick={() => {
+                            onClickButton('/');
+                          }}
                           width="160rem"
                           src="/images/randing/last.png"
                         ></img>
@@ -249,7 +202,9 @@ export default function PersistentDrawerRight() {
               </Typography>
 
               <Button
-                onClick={onClickLogin}
+                onClick={() => {
+                  onClickButton('/login');
+                }}
                 sx={{
                   my: 2,
                   color: 'black',

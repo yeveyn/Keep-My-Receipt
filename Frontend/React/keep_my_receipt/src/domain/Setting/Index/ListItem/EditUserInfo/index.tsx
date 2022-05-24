@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditUserInfoDialog from '../../Dialog/EditUserInfoDialog';
-import { Content } from '../../../../Landing/Landing/Banner/styles';
+import { Content } from '../../../../Landing/Banner/styles';
 
 export default function EditUserInfo() {
   const [open, setOpen] = useState(false);

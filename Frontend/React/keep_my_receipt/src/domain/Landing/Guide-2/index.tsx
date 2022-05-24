@@ -5,18 +5,10 @@ import {
   CardMedia,
   Container,
   Grid,
-  Typography,
 } from '@mui/material';
-import {
-  Title,
-  Description,
-  Point,
-  Point2,
-  CardTitle,
-  CardDescription,
-} from '../Guide-2/styles';
+import { Title, Description, CardTitle, CardDescription } from './styles';
+//스크롤 내릴때마다 생기는 애니메이션
 import { AnimationOnScroll } from 'react-animation-on-scroll';
-
 import 'animate.css/animate.min.css';
 
 export default function GuideSecond() {
@@ -26,7 +18,6 @@ export default function GuideSecond() {
         paddingTop: '1vw',
         paddingBottom: '1vw',
         background: '#f6f4ee',
-        // background: '#fff',
         objectFit: 'cover',
       }}
     >
@@ -52,7 +43,7 @@ export default function GuideSecond() {
                   marginBottom: '20px',
                 }}
               >
-                <Title>거래 등록</Title>
+                <Title>영수증 등록</Title>
                 <Description></Description>
               </Box>
             </AnimationOnScroll>

@@ -1,11 +1,10 @@
 import { Container } from '@mui/material';
-import './index.css';
 import AlarmToggle from '../ListItem/AlarmToggle';
 import EditUserInfo from '../ListItem/EditUserInfo';
 import LeaveApp from '../ListItem/LeaveApp';
 import Logout from '../ListItem/Logout';
 import Notice from '../ListItem/Notice';
-import { useParams } from 'react-router-dom';
+import './index.css';
 
 export default function SettingList() {
   return (

@@ -5,16 +5,13 @@ import {
   CardMedia,
   Container,
   Grid,
-  Typography,
 } from '@mui/material';
 import {
   Title,
   Description,
-  Point,
-  Point2,
   CardTitle,
   CardDescription,
-} from './styles';
+} from '../Guide-2/styles';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 
 import 'animate.css/animate.min.css';
@@ -26,7 +23,6 @@ export default function GuideSecond() {
         paddingTop: '1vw',
         paddingBottom: '1vw',
         background: '#f6f4ee',
-        // background: '#fff',
         objectFit: 'cover',
       }}
     >
@@ -52,7 +48,7 @@ export default function GuideSecond() {
                   marginBottom: '20px',
                 }}
               >
-                <Title>영수증 등록</Title>
+                <Title>거래 등록</Title>
                 <Description></Description>
               </Box>
             </AnimationOnScroll>

@@ -1,12 +1,13 @@
-import { Title, Description, Point, Point2 } from './styles';
-import { Box, Button, Container, Grid, useMediaQuery } from '@mui/material';
+import { Title, Description, Point2 } from './styles';
+import { Box, Container, Grid, useMediaQuery } from '@mui/material';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import 'animate.css/animate.min.css';
-import { Video } from '../Banner/styles';
 export default function GuideFirst() {
+  // 모바일 크기 버전 고려
   const matches = useMediaQuery('(min-width:500px)');
   return (
     <Container
+      // 모바일 버전인 경우, 아닌 경우 레이아웃 변화
       style={
         matches
           ? { width: '100%', marginTop: '100px', marginBottom: '100px' }
@@ -22,10 +23,9 @@ export default function GuideFirst() {
         }}
         spacing={2}
       >
-        {/* 설명 */}
+        {/* 그리드 아이템은 글자와 휴대폰 이미지 */}
 
         <Grid item xs={12} sm={6}>
-          {/* <AnimationOnScroll animateIn="animate__fadeIn animate__slower"> */}
           <Box
             style={
               matches
@@ -40,7 +40,6 @@ export default function GuideFirst() {
               회비를 어떻게 쓰는지 일자별로 확인해 보세요
             </Description>
           </Box>
-          {/* </AnimationOnScroll> */}
         </Grid>
 
         <Grid item xs={12} sm={6}>

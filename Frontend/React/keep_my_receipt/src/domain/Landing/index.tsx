@@ -1,18 +1,15 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import Banner from './Landing/Banner';
-import GuideFirst from './Landing/Guide-1';
-import GuideSecond from './Landing/Guide-2';
-import GuideThird from './Landing/Guide-3';
+import { useEffect } from 'react';
+import Banner from './Banner';
+import GuideFirst from './Guide-1';
+import GuideSecond from './Guide-2';
+import GuideThird from './Guide-3';
 
 export default function Landing() {
-  //로그인한 상태라면 navbar 보여주기
-  const [isLogin, setIsLogin] = useState(false);
-  const accessToken = sessionStorage.getItem('accessToken');
-
   useEffect(() => {
-    //모바일 기기일 경우, 자동로그인 axios 요청
+    // 모바일 기기일 경우,
     if (window['Android']) {
+      // 자동 로그인 설정해놓은 경우에 로그인 axios useeffect로 요청
       if (window['Android']['getAutoLogin']()) {
         const id = window['Android']['getId']();
         const password = window['Android']['getPassword']();
@@ -37,16 +34,6 @@ export default function Landing() {
       }
     }
   }, []);
-
-  // useEffect(() => {
-  //   console.log(accessToken);
-  //   window.scrollTo(0, 0);
-  //   if (accessToken) {
-  //     setIsLogin(true);
-  //   } else {
-  //     setIsLogin(false);
-  //   }
-  // }, [accessToken]);
 
   return (
     <div>

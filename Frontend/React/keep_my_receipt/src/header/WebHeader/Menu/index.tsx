@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import Item from './ListItem';
+import Item from './MenuItem';
 
 export default function List() {
   return (

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LeaveAppDialog from '../../Dialog/LeaveAppDialog';
-import { Content } from '../../../../Landing/Landing/Banner/styles';
+import { Content } from '../../../../Landing/Banner/styles';
 
 export default function LeaveApp() {
   const [open, setOpen] = useState(false);

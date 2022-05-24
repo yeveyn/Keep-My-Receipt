@@ -6,9 +6,8 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
-  Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface DialogType {
   open: boolean;
@@ -16,33 +15,20 @@ interface DialogType {
 }
 
 export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
+  // 유저 이름 받아오기
+  const [userName, setUserName] = useState('');
+
   //취소 버튼
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [userName, setUserName] = useState('');
-
-  const onGetName = () => {
-    axios
-      .get(`/api/spring/crew/info`)
-      .then(function (response) {
-        setUserName(response.data.data.name);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  // useEffect(() => {
-  //   onGetName();
-  // });
-
-  //확인 버튼
+  //확인 버튼 눌렀을 때, userName input value로 바꾸기
   const changeName = (e: any) => {
     setUserName(e.target.value);
   };
 
+  // 유저 이름 수정 axios 요청
   const onChangeName = () => {
     axios
       .put(`api/spring/crew/info/?name=${userName}`, {
@@ -50,7 +36,6 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       })
       .then(function (response) {
         console.log(response);
-        console.log('유저 이름 수정 클릭');
       })
       .catch(function (error) {
         console.log(error);
@@ -66,19 +51,6 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       aria-describedby="join-dialog-description"
     >
       <DialogContent>
-        {/* <DialogContentText>
-          <Typography
-            sx={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              letterSpacing: '-2px',
-              margin: 2,
-              fontFamily: 'NanumGothicBold',
-            }}
-          >
-            수정하기
-          </Typography>
-        </DialogContentText> */}
         <DialogContentText
           id="join-dialog-description"
           sx={{ paddingTop: '40px' }}
@@ -90,7 +62,6 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
             name="nickname"
             fullWidth
             label="이름"
-            // value={userName}
             autoComplete="current-password"
             variant="outlined"
             size="small"

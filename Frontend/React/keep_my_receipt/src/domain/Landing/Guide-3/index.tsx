@@ -61,7 +61,7 @@ function LandingSecond() {
             </Box>
           </AnimationOnScroll>
         </Grid>
-
+        {/* 휴대폰 사진 2 */}
         <Grid item xs={12} sm={6}>
           <AnimationOnScroll animateIn="animate__fadeIn animate__slower">
             <Box textAlign="center" width={'100%'}>
