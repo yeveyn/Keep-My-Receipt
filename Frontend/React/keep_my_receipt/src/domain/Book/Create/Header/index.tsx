@@ -3,7 +3,7 @@ import { Button, Stack, TextField, Box } from '@mui/material';
 // import { Schedule, PointOfSale } from '@mui/icons-material';
 
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
-import { BookAction, updateBook } from '../../bookReducer';
+import { BookAction, updateBook } from '../bookReducer';
 import toCurrency from '../../../../services/toCurrency';
 import {
   ContentTypography,

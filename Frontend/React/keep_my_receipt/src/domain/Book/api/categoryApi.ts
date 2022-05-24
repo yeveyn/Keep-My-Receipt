@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { WarningToast } from '../../../services/customSweetAlert';
-import { TypeNameKeys } from '../bookReducer';
+import { TypeNameKeys } from '../Create/bookReducer';
 
 const BASE_URL = 'https://k6d104.p.ssafy.io/api/spring';
 

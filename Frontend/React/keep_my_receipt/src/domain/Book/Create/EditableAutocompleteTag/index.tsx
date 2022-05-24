@@ -19,7 +19,7 @@ import {
   apiGetLargeTags,
   apiDeleteTag,
 } from '../../api/tagApi';
-import { TagType } from '../../types';
+import { TagType } from '../types';
 import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import { TagGuide } from '../ItemGuide/classification';
 

@@ -8,8 +8,8 @@ import DialogWithIconButton from '../../../../components/DialogWithIconButton';
 import EditableAutocomplete from '../EditableAutocomplete';
 import EditableAutocompleteTag from '../EditableAutocompleteTag';
 import { MainTypeGuide } from '../ItemGuide/classification';
-import { BookAction, BookItemType, updateItem } from '../../bookReducer';
-import { largeCategories } from '../../tagListSample';
+import { BookAction, BookItemType, updateItem } from '../bookReducer';
+import { largeCategories } from '../tagListSample';
 import { toNumberOnly } from '../../../../services/toCurrency';
 import {
   AssetLargeCategoryGuide,

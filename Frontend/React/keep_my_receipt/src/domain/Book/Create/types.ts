@@ -11,11 +11,6 @@ export type ReceiptStateType = {
   }[];
 };
 
-export type DetailParamType = {
-  transactionId: number;
-  transactionDetailId: number;
-};
-
 export type BSType = {
   bscName: string;
   bscId: number;

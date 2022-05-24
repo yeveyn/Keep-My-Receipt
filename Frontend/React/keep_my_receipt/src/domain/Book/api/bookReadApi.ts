@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { WarningToast } from '../../../services/customSweetAlert';
-import { TypeNameKeys } from '../bookReducer';
+import { TypeNameKeys } from '../Create/bookReducer';
 
 import { BASE_URL, setToken } from './bookWriteApi';
 

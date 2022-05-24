@@ -4,14 +4,14 @@ import { Box, Button, Container, Card, Stack } from '@mui/material';
 
 import Header from './Header';
 import Item from './Item';
-import bookReducer, { updateBook, initBookState } from '../bookReducer';
+import bookReducer, { updateBook, initBookState } from './bookReducer';
 import {
   apiCreateTransaction,
   apiUpdateTransaction,
   apiValidateCreateTransaction,
   toTransactionType,
 } from '../api/bookWriteApi';
-import { ReceiptStateType } from '../types';
+import { ReceiptStateType } from './types';
 import DeleteButton from './DeleteButton';
 import AddButton from './AddButton';
 import { ReadTransactionResType } from '../api/bookReadApi';

@@ -1,7 +1,7 @@
 /** 상태 */
 
-import { WarningToast } from '../../services/customSweetAlert';
-import { ReadTransactionResType } from './api/bookReadApi';
+import { WarningToast } from '../../../services/customSweetAlert';
+import { ReadTransactionResType } from '../api/bookReadApi';
 import { ReceiptStateType } from './types';
 
 /* 상태 타입 선언 */
