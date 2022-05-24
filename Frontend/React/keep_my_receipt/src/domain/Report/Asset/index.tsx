@@ -10,24 +10,26 @@ import {
   MenuItem,
   DialogActions,
   Container,
-  useMediaQuery,
 } from '@mui/material';
 import ReportIndex from './form/index';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// 대분류 객체
 interface ReportType {
   lcName: string;
   list: ItemType[];
   total: number;
 }
 
+// 소분류 객체
 interface ItemType {
   scName: string;
   balance: number;
 }
 
 export default function AssetReport() {
+  // 대분류 객체배열 default값 설정
   const defaultData = [
     {
       lcName: 'test',
@@ -35,6 +37,7 @@ export default function AssetReport() {
       total: 0,
     },
   ];
+  // 자산유형 객체배열 default값 설정
   const [assetList, setAssetList]: [ReportType[], Function] =
     useState(defaultData);
 
@@ -59,6 +62,7 @@ export default function AssetReport() {
     loadData();
     setOpen(false);
   };
+  // 선택한 연도가 현재 연도일 경우, 선택가능한 월 리스트를 가공하여 리턴
   function getMonthList() {
     return [
       '1',
@@ -75,6 +79,7 @@ export default function AssetReport() {
       '12',
     ].filter((item) => parseInt(item) <= parseInt(month));
   }
+  // 기간변경 토글창에서 연도 변경 시 유효성 체크 후 state 변경
   function changeYear(e: any) {
     const newYear = e.target.value;
     if (newYear > year) {
@@ -109,6 +114,7 @@ export default function AssetReport() {
       setMonth(month);
     }
   }
+  // 기간변경 토글창에서 월 변경 시 state 변경
   function changeMonth(e: any) {
     let tmpMonth = e.target.value;
     if (tmpMonth.length < 2) {
@@ -116,10 +122,12 @@ export default function AssetReport() {
     }
     setMonth(tmpMonth);
   }
+  // 유효성 검사 결과 유효하지 않을 시 자산 객체배열 및 자산총합 초기화
   function clearData() {
     setAssetList(defaultData);
     setSumAsset(0);
   }
+  // 자산 객체배열 유효성 검사
   const checkEmpty = (previousList: ReportType[]) => {
     console.log('checkEmpty', previousList);
     if (previousList === null) {
@@ -133,8 +141,8 @@ export default function AssetReport() {
     }
     return true;
   };
+  // 자산 객체배열 데이터를 비동기 요청
   const loadData = async () => {
-    // Todo API connect
     await axios
       .get(
         `https://k6d104.p.ssafy.io/api/spring/${id}/report/asset?date=${curYear
@@ -142,11 +150,11 @@ export default function AssetReport() {
           .concat(curMonth)}`,
       )
       .then((response) => {
-        //console.log(response.data.data);
         const lists = response.data.data;
         if (!checkEmpty(lists)) {
           return;
         }
+        // 자산의 대분류별 총계를 추출하기 위한 로직
         lists.forEach((mainCat) => {
           if (mainCat.type === '자산') {
             const tmpList = [...mainCat.list];
@@ -180,8 +188,8 @@ export default function AssetReport() {
     '선급금',
     '기타자산',
   ];
+  // 다운로드 버튼 클릭 시 엑셀 파일 다운로드
   const clickDownload = async () => {
-    console.log('다운로드 버튼 클릭!');
     await axios
       .get(`https://k6d104.p.ssafy.io/api/spring/${id}/report/asset/excel`, {
         responseType: 'blob',
@@ -212,11 +220,13 @@ export default function AssetReport() {
         console.log(e);
       });
   };
+  // 자산현황표 페이지 첫 렌더링 시, 자산 객체배열 비동기 요청
   useEffect(() => {
     loadData();
   }, []);
   return (
     <Container maxWidth="md">
+      {/* 기간변경 다이알로그 */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -265,7 +275,7 @@ export default function AssetReport() {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* 기간 설정 부분 */}
+      {/* 기간설정 컴포넌트 */}
       <Grid
         container
         direction="row"
@@ -340,6 +350,7 @@ export default function AssetReport() {
           </Grid>
         </Grid>
       </Card>
+      {/* 자산현황표 컴포넌트 */}
       <ReportIndex
         title="자산"
         itemList={assetList}
@@ -348,6 +359,7 @@ export default function AssetReport() {
       />
       <br></br>
       <br></br>
+      {/* 엑셀 파일 다운로드 버튼 */}
       <Grid container justifyContent="center" alignItems="center">
         <Button variant="contained" color="primary" onClick={clickDownload}>
           다운로드
