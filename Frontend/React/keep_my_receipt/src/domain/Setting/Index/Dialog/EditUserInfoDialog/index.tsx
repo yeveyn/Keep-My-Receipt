@@ -51,6 +51,7 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
       aria-describedby="join-dialog-description"
     >
       <DialogContent>
+        {/* 다이얼로그 글 부분 */}
         <DialogContentText
           id="join-dialog-description"
           sx={{ paddingTop: '40px' }}
@@ -68,6 +69,7 @@ export default function EditUserInfoDialog({ open, setOpen }: DialogType) {
           />
         </DialogContentText>
       </DialogContent>
+      {/* 다이얼로그 액션 버튼 */}
       <DialogActions>
         <Button onClick={handleClose}>취소</Button>
         <Button

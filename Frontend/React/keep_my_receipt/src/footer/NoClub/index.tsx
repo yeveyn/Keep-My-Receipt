@@ -1,12 +1,9 @@
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import InsertChartIcon from '@mui/icons-material/InsertChart';
 import HomeIcon from '@mui/icons-material/Home';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 
 export default function NoClub() {
   const navigate = useNavigate();
@@ -23,7 +20,7 @@ export default function NoClub() {
         }}
         showLabels
       >
-        {/* 메인페이지 */}
+        {/* 홈으로 가기*/}
         <BottomNavigationAction
           sx={{
             padding: 0,

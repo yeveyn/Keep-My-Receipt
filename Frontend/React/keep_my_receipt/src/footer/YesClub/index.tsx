@@ -10,20 +10,20 @@ import InsertChartIcon from '@mui/icons-material/InsertChart';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import MenuIcon from '@mui/icons-material/Menu';
 import * as React from 'react';
-
 import Drawer from '@mui/material/Drawer';
-
-import YesFooter from './YesFooter';
-
 import YesDraw from './YesDraw';
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = 'left';
 
 export default function () {
+  // drawer 어디에 배치할 지
   const [state, setState] = React.useState({
     left: false,
   });
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
 
+  // drawer 기본 값 설정
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -38,6 +38,7 @@ export default function () {
       setState({ ...state, [anchor]: open });
     };
 
+  // 햄버거 메뉴 클릭시 보여줄 draw안의 list (YesDraw)
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: '250px' }}
@@ -45,44 +46,20 @@ export default function () {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <YesDraw />
+      <YesDraw id={id} userAuthNum={userAuthNum} />
     </Box>
   );
 
-  const [isLogin, setIsLogin] = useState(false);
-  const myAccessToken = sessionStorage.getItem('accessToken');
-
-  useEffect(() => {
-    if (myAccessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, []);
-
+  // 모임 id와 현재 유저의 권한 확인
   const { id } = useParams();
-  const navigate = useNavigate();
-  let userAuth = '';
-
   const [userAuthNum, setUserAuthNum] = useState(3);
-  const [addMenu, setAddMenu] = React.useState<null | HTMLElement>(null);
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    if (addMenu == null) {
-      setAddMenu(event.currentTarget);
-    } else {
-      setAddMenu(null);
-    }
-  };
-
-  const [open, setOpen] = React.useState(false);
-
   useEffect(() => {
     axios
       .get(`api/spring/club/${id}/crew/auth`)
       .then((res) => {
         if (res.data) {
           const check = res.data;
-          userAuth = check.data;
+          const userAuth = check.data;
           if (userAuth === '리더') {
             setUserAuthNum(1);
           } else if (userAuth === '관리자') {
@@ -93,11 +70,11 @@ export default function () {
         }
       })
       .catch((e) => {
-        console.log(e);
         return;
       });
   }, [id]);
 
+  // drawer 안의 메뉴 선택할 때마다 이동하고, drawer 닫히게 설정
   const onClickButton = (url: string) => {
     navigate(url);
     setOpen(false);
@@ -106,6 +83,7 @@ export default function () {
   return (
     <>
       <div>
+        {/* 하단 navbar 전체 레이아웃 */}
         <BottomNavigation
           sx={{
             width: '100%',
@@ -113,7 +91,7 @@ export default function () {
           }}
           showLabels
         >
-          {/* 햄버거 */}
+          {/* 하단 navbar 햄버거 버튼  */}
           <BottomNavigationAction
             sx={{
               ...(open && { display: 'none' }),
@@ -128,6 +106,7 @@ export default function () {
             icon={<MenuIcon />}
           ></BottomNavigationAction>
 
+          {/* 하단 navbar 거래 내역 버튼 */}
           <BottomNavigationAction
             sx={{
               padding: 0,
@@ -143,7 +122,7 @@ export default function () {
             icon={<PlaylistAddIcon />}
           ></BottomNavigationAction>
 
-          {/* 거래 등록 관리자 이상만 가능,  */}
+          {/* 하단 navbar 거래 등록 버튼 관리자 이상만 띄워주기,  */}
           {userAuthNum <= 2 ? (
             <BottomNavigationAction
               sx={{
@@ -160,11 +139,10 @@ export default function () {
               icon={<PeopleAltIcon />}
             ></BottomNavigationAction>
           ) : (
-            // 만약 관리자가 아니라면?
             ''
           )}
 
-          {/* 영수증 내역 */}
+          {/* 하단 navbar 버튼 영수증 내역 */}
           <BottomNavigationAction
             sx={{
               padding: 0,
@@ -179,7 +157,7 @@ export default function () {
             label={'영수증내역'}
             icon={<PaidIcon />}
           ></BottomNavigationAction>
-          {/* 분석차트 */}
+          {/* 하단 navbar 버튼 분석차트 */}
           <BottomNavigationAction
             sx={{
               padding: 0,
@@ -196,6 +174,7 @@ export default function () {
           ></BottomNavigationAction>
         </BottomNavigation>
 
+        {/* 하단 navbar 햄버거 버튼 클릭시 열릴 drawer */}
         <Drawer
           anchor={'left'}
           open={state['left']}
@@ -204,8 +183,6 @@ export default function () {
           {list('left')}
         </Drawer>
       </div>
-
-      <YesFooter />
     </>
   );
 }

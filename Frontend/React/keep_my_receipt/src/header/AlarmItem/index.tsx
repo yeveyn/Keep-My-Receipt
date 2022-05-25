@@ -197,7 +197,7 @@ export default function AlarmItem() {
         </Typography>
         {/* 알림 객체배열이 렌더링 되는 곳 */}
         {alarms.map((alarm) => (
-          <>
+          <div key={alarm.notificationId.toString()}>
             <MenuItem
               key={alarm.notificationId.toString()}
               sx={{
@@ -254,7 +254,7 @@ export default function AlarmItem() {
               </Grid>
             </MenuItem>
             <Divider />
-          </>
+          </div>
         ))}
         <Typography
           fontSize="0.8rem"

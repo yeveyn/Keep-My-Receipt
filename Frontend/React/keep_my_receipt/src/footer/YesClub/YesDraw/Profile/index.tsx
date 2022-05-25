@@ -8,60 +8,52 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 
-export default function Profile(props: any) {
+export default function Profile() {
   const { id } = useParams();
   const [userName, setUserName] = useState('');
   const [clubImage, setClubImage] = useState('');
   const [clubName, setClubName] = useState('');
   const [userAuth, setUserAuth] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
-  const accessToken = sessionStorage.getItem('accessToken');
 
   useEffect(() => {
-    if (accessToken) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    // 유저 이름 가져오기
+    axios
+      .get(`/api/spring/crew/info`)
+      .then(function (response) {
+        setUserName(response.data.data.name);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-    if (isLogin) {
-      axios
-        .get(`/api/spring/crew/info`)
-        .then(function (response) {
-          setUserName(response.data.data.name);
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-    if (id) {
-      axios
-        .get(`/api/spring/club/${id}`)
-        .then(function (response) {
-          setClubImage(response.data.data.image);
-          setClubName(response.data.data.name);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    // 모임 이미지와 이름 가져오기
+    axios
+      .get(`/api/spring/club/${id}`)
+      .then(function (response) {
+        setClubImage(response.data.data.image);
+        setClubName(response.data.data.name);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-      axios
-        .get(`api/spring/club/${id}/crew/auth`)
-        .then((res) => {
-          if (res.data) {
-            setUserAuth(res.data.data);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          return;
-        });
-    }
-  }, [accessToken, id, isLogin]);
+    // 유저 권한 가져오기
+    axios
+      .get(`api/spring/club/${id}/crew/auth`)
+      .then((res) => {
+        if (res.data) {
+          setUserAuth(res.data.data);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
+  }, []);
 
   return (
     <>
+      {/* 전체 프로필 */}
       <List
         sx={{
           width: '100%',
@@ -70,12 +62,15 @@ export default function Profile(props: any) {
         }}
       >
         <ListItem>
+          {/* 모임 이미지 */}
           <ListItemAvatar>
             <Avatar src={clubImage} />
           </ListItemAvatar>
+          {/* 모임 이름 */}
           <ListItemText
             primary={clubName}
             secondary={
+              // 유저 이름, 권한
               <Typography
                 sx={{ fontSize: '13px', wordBreak: 'keep-all' }}
               >{`안녕하세요!
