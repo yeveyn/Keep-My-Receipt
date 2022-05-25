@@ -46,6 +46,7 @@ export default function BookSearch() {
   const { expenditure, income, result } = res;
   const [checkAdd, setCheckAdd] = useState(false);
   const [historyList, setHistoryList] = useState([]);
+  // 날짜 형식 변환
   const toCustomDateString = (inputDate: Date, type?: boolean) => {
     const check = (num: number) => {
       if (num < 10) {
@@ -63,7 +64,10 @@ export default function BookSearch() {
     const date = check(inputDate.getDate());
     return type ? `${year}.${month}.${date}` : `${year}-${month}-${date}`;
   };
+
+  // axios
   const HistoryAxios = axios.create({
+    // 파라미터 값에 배열로 넣기
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
   });

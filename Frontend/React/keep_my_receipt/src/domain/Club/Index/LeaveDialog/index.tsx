@@ -33,7 +33,6 @@ export default function LeaveClubDialog({
   const handleClose = () => {
     setOpen(false);
   };
-  const navigate = useNavigate();
 
   const LeaveClub = () => {
     axios

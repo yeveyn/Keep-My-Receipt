@@ -13,6 +13,7 @@ interface formProps {
 
 export default function ClubCreate() {
   const navigate = useNavigate();
+  // 모임 이름 check
   const [check, setCheck] = useState(false);
   // form
   const [imgFile, setImgFile] = useState();
@@ -21,6 +22,7 @@ export default function ClubCreate() {
     intro: '',
   });
   const { name, intro } = form;
+
   const onFormChange = (e: any) => {
     const { name, value } = e.target;
     setForm({

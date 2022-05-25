@@ -37,7 +37,9 @@ export default function BookIndex() {
   // 현재 잔액
   const [balance, setBalance] = useState();
 
+  // axios
   const HistoryAxios = axios.create({
+    // 파라미터 값에 배열로 넣기
     paramsSerializer: (params) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
   });
@@ -101,8 +103,10 @@ export default function BookIndex() {
         },
       })
       .then((res) => {
-        // console.log(res.data.data[0].balance);
-        setBalance(res.data.data[0].balance);
+        // console.log(res.data.data);
+        if (res.data.data.length) {
+          setBalance(res.data.data[0].balance);
+        }
       })
       .catch((e) => {
         console.log(e);
