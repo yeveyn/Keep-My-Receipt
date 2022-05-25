@@ -16,9 +16,6 @@ interface DetailHeaderProps {
 export default function DetailHeader({ state, params }: DetailHeaderProps) {
   const navigate = useNavigate();
   const { date, totalPrice, receiptUrl } = state;
-  const onClickButton = () => {
-    console.log('영수증 보여주기');
-  };
   return (
     <Stack width="100%">
       <Stack direction="row" alignItems="center">
