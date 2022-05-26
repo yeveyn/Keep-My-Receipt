@@ -14,14 +14,15 @@ import { largeCategories } from '../tagListSample';
 import { BookItemType } from '../bookReducer';
 
 /** 항목 유형에 따라 대분류 가이드를 다르게 설정  
-이때 가이드는 리액트 컴포넌트이므로, 
-컴포넌트를 반환하는 형태로 해야 <></> 형태로 쓸 수 있음 */
+- 가이드는 리액트 컴포넌트(JSX.Element)임.  
+- 객체의 값을 아무 변수에 저장하고,  
+JSX.Element를 받는 곳에 그대로 전달하면 됨. */
 const largeCategoryGuideDict = {
-  자산: () => AssetLargeCategoryGuide,
-  지출: () => ExpenditureLargeCategoryGuide,
-  수입: () => RevenueLargeCategoryGuide,
-  예산: () => BudgetLargeCategoryGuide,
-  '': () => <></>,
+  자산: AssetLargeCategoryGuide,
+  지출: ExpenditureLargeCategoryGuide,
+  수입: RevenueLargeCategoryGuide,
+  예산: BudgetLargeCategoryGuide,
+  '': <div></div>,
 };
 
 interface ItemLargeCategoryType {
@@ -35,8 +36,7 @@ export default function ItemLargeCategory({
 }: ItemLargeCategoryType) {
   const [inputValue, setInputValue] = useState('');
 
-  const [LargeCategoryGuide, setLargeCategoryGuide] =
-    useState<() => JSX.Element>();
+  const [LargeCategoryGuide, setLargeCategoryGuide] = useState(<div></div>);
 
   // 유형이 바뀔 때마다 대분류 가이드도 바뀜
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function ItemLargeCategory({
             {/* 헬프 아이콘 */}
             <DialogWithIconButton
               icon={<InfoOutlined />}
-              content={<LargeCategoryGuide />}
+              content={LargeCategoryGuide}
             />
           </Stack>
         )}
