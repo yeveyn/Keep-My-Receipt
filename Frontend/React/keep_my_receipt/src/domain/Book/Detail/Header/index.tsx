@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
 import { ArrowBackIos } from '@mui/icons-material';
@@ -76,7 +77,15 @@ export default function DetailHeader({ state, params }: DetailHeaderProps) {
             onClick={async () => {
               ConfirmSwal('삭제하시겠습니까?').then(async (res) => {
                 if (res.isConfirmed) {
-                  await apiDeleteTransaction(params.transactionId);
+                  await apiDeleteTransaction(params.transactionId).then(
+                    (res) => {
+                      if (res.data.output === 200) {
+                        Swal.fire('삭제 성공!').then(() => {
+                          navigate('../');
+                        });
+                      }
+                    },
+                  );
                 }
               });
             }}
